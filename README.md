@@ -18,8 +18,9 @@ Nuestro mercado objetivo está formado por:
 - Dueños responsables de mascotas, sin distinción de edad, género que buscan brindarle a sus compañeritos atención de calidad;
 - Organizaciones sin fines de lucro cuyo fin es la protección animal;
 - Médicos veterinarios que utilizan y revenden nuestros productos;
-- Todo otro comercio minorista que adquiera nuestros productos para la posterior reventa
-Realizamos envíos a todo el país
+- Todo otro comercio minorista que adquiera nuestros productos para la posterior reventa. 
+
+Realizamos envíos a todo el país.
 
 ### Nuestros productos 
 En huellitasantiago somos conscientes de que la calidad es prioritaria cuando de cuidar a tu mascota se trata. Por eso, ofrecemos:
@@ -46,7 +47,7 @@ Estos sitios han sido seleccionados en base a:
 
 ## Integrantes
 El equipo a cargo del desarrollo de este exitoso market place esta formado por:
-* Sole Smith
+* [Sole Smith](https://github.com/SoleSmith/SoleSmith.git)
 * Mati Gomez
 * Mario Pereyra
 * Martu Abutti
