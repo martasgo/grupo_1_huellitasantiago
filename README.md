@@ -48,6 +48,6 @@ Estos sitios han sido seleccionados en base a:
 ## Integrantes
 El equipo a cargo del desarrollo de este exitoso market place esta formado por:
 * [Sole Smith](https://github.com/SoleSmith/SoleSmith.git)
-* Mati Gomez
+* [Mati Gomez] (https://github.com/matigomez1611)
 * Mario Pereyra
 * Martu Abutti
