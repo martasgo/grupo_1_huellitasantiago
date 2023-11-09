@@ -1,0 +1,24 @@
+{
+  "name": "grupo_1_huellitasantiago",
+  "version": "1.0.0",
+  "description": "Repositorio referido al proyecto integrador market place de productos para mascotas, huellitasantiago",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martasgo/grupo_1_huellitasantiago.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martasgo/grupo_1_huellitasantiago/issues"
+  },
+  "homepage": "https://github.com/martasgo/grupo_1_huellitasantiago#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
