@@ -19,12 +19,12 @@ body {
 
 header,
 footer {
-  padding: 10px; 
+  padding: 10px;
   background-color: #6dbd9bff;
 }
 
 main {
-  background-color: gray;
+  background-color: white;
 }
 
 nav {
@@ -38,6 +38,14 @@ nav {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 10px;
+}
+
+.header-inicial a {
+  color: black;
+}
+
+.header-inicial a:hover {
+  color: #fbdd5bff;
 }
 
 .logo {
@@ -84,6 +92,86 @@ i {
 }
 /* CLaSES MAIN */
 
+.categorias{
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.categorias div{
+  flex-grow: 1;
+  flex-basis: 100%;
+}
+
+.categorias img{
+  width: 100%;
+  border: solid;
+}
+
+.listadoArticulos{
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+article {
+  margin-bottom: 15px;
+  background-color: #ebebeb;
+  text-align: center;
+  flex-basis: 90%;
+  padding-bottom: 5px;
+  box-shadow: 0px 0px 5px rgb(100, 100, 100);
+}
+
+article img {
+  width: 95%;
+  margin-top: 10px;
+}
+
+.detalle p {
+  margin: 0px;
+  font-weight: bold;
+}
+
+.verproductos {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.verproductos input{
+  background-color: #18c1d8ff;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px black solid;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.verproductos input:hover{
+  background-color: #fbdd5bff;
+  text-decoration: underline;
+}
+
+.marcas{
+  justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.marcas img{
+  width: 70%;
+}
+/* fin class main*/
+
 /* CLASES FOOTER*/
 .seccionesFooter {
   text-align: center;
@@ -107,7 +195,7 @@ i {
 
 .formFooter form input {
   border: none;
-  padding: 6.5px;
+  padding: 6px;
 }
 
 #listadoFooter ul {
@@ -133,6 +221,18 @@ i {
 
 .header-tablet {
   display: none;
+}
+
+.logoFooter {
+  width: 20%;
+}
+
+.tituloProductosDestacados {
+  background-color: #18c1d8ff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
 }
 
 @media (min-width: 361px) {
@@ -167,19 +267,55 @@ i {
   #sobre {
     font-size: 13px;
   }
+
+  /* .categorias div{
+    flex-basis: 200px;
+  } */
+  .marcas img{
+    width: 50%;
+    flex-basis: 50%;
+  }
+
+  article{
+    flex-basis: 47%;
+  }
+
 }
 
 @media (min-width: 768px) {
-  header{
+  header {
     padding: 0px;
   }
-   
+  .marcas img{
+    width: 50%;
+    flex-basis: 20%;
+  }
+
+  .searchboxTablet {
+    display: inline-flex;
+    width: 60%;
+    align-items: center;
+    margin: auto;
+  }
+
+  .searchboxTablet input {
+    width: 100%;
+    border: none;
+  }
+
+  .searchboxTablet form {
+    display: flex;
+    flex-grow: 0.9;
+  }
+
   .header-inicial,
   .searchbox {
     display: none;
   }
+
   .logo {
-    width: 8%;
+    width: 10%;
+    margin: 0 15px;
   }
 
   .header-tablet {
@@ -197,6 +333,33 @@ i {
     justify-content: center;
     align-items: center;
     margin: auto;
+    flex-direction: column;
+  }
+
+  .carritoHeader {
+    background-color: black;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .carritoHeader a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .header-login-register a {
+    color: black;
+    text-decoration: none;
+  }
+
+  .header-login-register #registerButton {
+    padding-right: 8px;
+    border-right: solid 2px black;
+  }
+
+  .header-login-register #loginButton {
+    padding-left: 8px;
   }
 
   nav a {
@@ -218,5 +381,22 @@ i {
     padding: 0 20px;
     list-style: none;
     font-weight: bold;
+  }
+
+  .logoFooter {
+    width: 20%;
+  }
+
+  .categorias div{
+    flex-basis: 50%;
+    text-align: center;
+  }
+
+  .categorias img{
+    width: 90%;
+  }
+
+  article{
+    flex-basis: 22%;
   }
 }
