@@ -48,7 +48,6 @@
                     <a id="registerButton" href="/regiter">Registro</a>
                     <a id="loginButton" href="/login">Iniciar sesión</a>
                 </div>
-
             </div>
         </div>
         <nav>
@@ -64,28 +63,43 @@
     <section>
         <img class="banner" src="/images/banner-home.png" alt="Banner">
     </section>
-    <main class="mainlogin">
-        <p class="rutahome"><a href="/">Home</a> / login</p>
-        <form action="/login" method="POST">
-            <label for="email">Email</label> 
-            <input type="email" name="email" id="email">
+    <main class="mainusuario">
+        <div class="cabezausuario">
+            <img src="/images/user-solid.svg"/>
+        <div class="identidad">
+            <p class="nombre">Juan José Pérez</p>
+            <p class="correo">jjperez@gmail.com</p>
+        </div>
+        </div>
+
+        <div class="perfil">
+            <p><strong>Perfil</strong></p>
             <br>
+            <p class="opciones"><i class="fa-solid fa-location-dot"></i> Direcciones</p>
+            <p class="opciones"><i class="fa-solid fa-heart"></i> Favoritos</p>
+            <p class="opciones"><i class="fa-solid fa-money-check-dollar"></i> Medios de pago</p>
+        </div>
+        <div class="actividad">
+            <p><strong>Actividad</strong></p>
             <br>
-            <label for="contraseña">Contraseña</label> 
-            <input type="password" name="contraseña" id="contraseña">
-            <p class="olvidasteclave"><a href="#">¿Olvidaste tu contraseña?</a></p>
+            <p class="historial"><i class="fa-solid fa-basket-shopping"></i> Últimas compras realizadas</p>
+            <p class="historial"><i class="fa-solid fa-star"></i> Productos más comprados</p>
+        </div>
+        <div class="configuracion">
+            <p><strong>Configuración</strong></p>
             <br>
+            <p class="config"><i class="fa-solid fa-bell"></i> Notificaciones</p>
+            <p class="config"><i class="fa-solid fa-circle-info"></i> Información legal</p>
+            <p class="config"><i class="fa-solid fa-gear"></i> Ajustes de cuenta</p>
+        </div>
+        <div class="sesiones">
             <br>
-            <button type="submit"><a href="/menu-usuario">INICIAR SESIÓN</a></button>
-            <br>
-            <div class="opcionrecordarme">
-                <label for="recordarme">Recordarme</label>
-                <input type="checkbox" name="recordarme">
-            </div>
-            <br>
-            <p class="notenescuenta">¿No tenés cuenta? <br>
-            <a href="/register"><strong>Crear cuenta</strong></a></p>
-        </form>
+            <p class="sesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</p>
+        </div>
+
+        
+        
+        
     </main>
 
     <footer>

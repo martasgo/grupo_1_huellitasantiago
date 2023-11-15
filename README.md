@@ -5,6 +5,7 @@ Repositorio referido al proyecto integrador market place de productos para masco
 1. [Descripción](#descripcion)
 2. [Sitios de referencia](#sitios-de-referencia)
 3. [Integrantes](#integrantes)
+4. [Tablero de trabajo](#tablero-de-trabajo)
 
 <a name="descripcion"></a>
 ## Descripción 
@@ -51,3 +52,9 @@ El equipo a cargo del desarrollo de este exitoso market place esta formado por:
 * [Mati Gomez](https://github.com/matigomez1611)
 * [Mario Pereyra](https://github.com/mPereyra1990)
 * [Martu Abutti](https://github.com/martasgo)
+
+<a name="tablero-de-trabajo"></a>
+
+## Tablero de trabajo
+Para planificar, organizar, dividir y controlar el cumplimiento de cada tarea, utilizamos el servicio Jira de Atlassian. A continuación dejamos el link al tablero de nuestro equipo:
+[Tablero en Jira](https://sole-smith.atlassian.net/jira/software/projects/HS/boards/1)
