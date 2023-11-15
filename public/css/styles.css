@@ -170,6 +170,116 @@ article img {
 .marcas img{
   width: 70%;
 }
+
+/*CSS Cart Page-*/
+
+.resumen-compra{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 20px 20px;
+  border-top: double 3px grey;  
+}
+
+#breadcrumbs{
+  border-top: solid 2px gray;
+  padding: 5px 20px;
+  font-size: 12px;
+}
+
+.detalle-producto{
+  justify-content: space-between;    
+  flex-direction: column;
+  display: flex;
+}
+
+p#nombre-producto{
+  padding: 0px 27px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.cant-producto{
+  padding: 0px 15px;
+  align-items: center;
+  justify-content: space-between;    
+  display: flex;
+}
+
+.cant-producto div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cant-producto img{
+  width: 30%;
+}
+
+.cant-icono {
+  border: none;
+  background-color: #6dbd9bff;
+  border-radius: 40% ;
+  font-weight: bold;
+  padding: 5px 5px;
+  font-weight: bold;
+  font-size: 14px;  
+}
+
+p#descripcion{
+  margin: 0px 2px;
+}
+
+#precio-producto{
+  text-align: right;
+  font-weight: bold;
+  margin-right: 15px;
+  margin-top: 0px;  
+}
+
+#cod-descuento{
+  margin-right: 5px; 
+  padding: 10px;
+  width: 55%;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px black solid;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#aplicar-cod, #fin-compra, #seguir-compra{
+  background-color: #6dbd9bff;
+  border: 2px black solid;
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.center{
+  text-align: center;
+}
+
+#aplicar-cod:hover, #fin-compra:hover, #seguir-compra:hover{
+  background-color: #fbdd5bff;
+}
+
+.detalle-compra{
+  text-align: right;
+  font-weight: bold;
+}
+
+table{
+  display:none;
+}
+
+/*fin CSS Cart Page*/
+
 /* fin class main*/
 
 /* CLASES FOOTER*/
@@ -280,7 +390,27 @@ article img {
     flex-basis: 47%;
   }
 
-}
+  /*Inicio CSS Cart Page*/
+
+  p#descripcion{
+    font-size: 20px;
+    margin: 0px 10px;
+  }
+
+  .cant-icono {       
+    padding: 10px 10px;
+   
+  }
+
+  .cant-producto{
+    justify-content: space-around;
+  }
+
+  .descuento{
+    text-align: right;
+  }
+
+} /*Fin CSS Cart Page*/
 
 @media (min-width: 768px) {
   header {
@@ -399,4 +529,88 @@ article img {
   article{
     flex-basis: 22%;
   }
+
+  /*CSS Cart Page*/
+
+  .descuento{
+    text-align: right;
+  }
+
+  #cod-descuento{
+    width: 30%;
+  }
+
+  /*CSS Cart Page tablet en adelante*/
+
+  .detalle-compra{
+    text-align: right;   
+  }
+
+  .detalle-producto{
+    display:none;
+  }
+
+  table{
+    justify-content: center;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px;
+    display: flex;
+    font-size: 16px;
+    margin: 0%;
+    padding: 0%;
+  }
+
+  table img{
+    width: 60%;
+    height: auto;
+  }
+
+  #row-img{
+    width: 20%;
+  }
+
+  tr{
+    text-align: center;
+    border-bottom: 2px solid grey;
+  }
+
+  th:nth-child(PRODUCTO) {
+    width: 20%;
+    height: auto;
+  }
+  
+  th:nth-child(PRECIO) {
+    width: 10%;
+    height: auto;
+  }
+  
+  th:nth-child(CANTIDAD) {
+    width: 30%;
+    height: auto;
+  }
+  
+  th:nth-child(TOTAL) {
+    width: 20%;
+    height: auto;
+  }
+  
+  th,
+  td {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .descuento{
+    text-align: right;   
+  }
+  
+  .resumen-compra{
+    border: none;
+  }
+  
+  /*Fin CSS Cart Page*/
+  
+
 }
