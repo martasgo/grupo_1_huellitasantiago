@@ -20,6 +20,11 @@ app.get('/login', function(req, res){
     res.sendFile(path.resolve('./views/login.html'));
 });
 
+// ruta para menu de usuario
+app.get('/menu-usuario', function(req, res){
+    res.sendFile(path.resolve('./views/menu-usuario.html'));
+});
+
 // ruta para carrito de compras
 app.get('/cart', function(req, res){
     res.sendFile(path.resolve('./views/cart.html'));

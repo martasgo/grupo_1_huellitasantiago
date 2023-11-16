@@ -485,6 +485,206 @@ table{
 }
   
 /* FIN CSS CART*/
+/* Estilos para el main menu usuario mobile */
+
+.cabezausuario {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.cabezausuario img {
+  margin-right: 20px;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  border-radius: 50px;
+}
+
+.cabezausuario .nombre {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.cabezausuario .correo {
+  font-size: 12px;
+  margin-top: 0;
+}
+
+.perfil , .actividad , .configuracion , .sesiones {
+  width: 90%;
+  margin: auto;
+  padding-top: 10px;
+  margin-bottom: 15px;
+}
+
+.perfil p , .actividad p , .configuracion p {
+  margin: 2px;
+  padding-bottom: 5px;
+}
+
+.perfil .opciones , .actividad .historial , .configuracion .config {
+  border-bottom: 1px lightgray solid;
+}
+
+.mainusuario i {
+  color: #6dbd9bff;
+  text-decoration: solid;
+}
+
+/* FIN Estilos para el main menu usuario mobile*/
+
+/* Estilos para el main login mobile */
+
+.mainlogin {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.rutahome a{
+  color: black;
+}
+
+.rutahome a:hover {
+  color: #18c1d8ff;
+  text-decoration: underline;
+}
+
+.mainlogin form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin: auto;
+  align-items: center;
+}
+
+.mainlogin input {
+  width: 100%;
+  background-color: rgb(240, 240, 240) ;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.olvidasteclave {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.olvidasteclave a {
+  color: black;
+}
+
+.olvidasteclave a:hover {
+  color: #18c1d8ff;
+  text-decoration: underline;
+}
+
+.mainlogin button {
+  background-color: #6dbd9bff;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px black solid;
+  font-size: 15px;
+  font-weight: bold;
+  width: 200px;
+}
+
+.mainlogin button:hover {
+  background-color: #fbdd5bff;
+  text-decoration: none;
+}
+
+button a {
+  color: black;
+  text-decoration: none;
+}
+
+.opcionrecordarme {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.opcionrecordarme input {
+  width: 20px;
+  height: 20px;
+}
+
+.notenescuenta {
+  text-align: center;
+}
+
+.notenescuenta a {
+  color: black;
+}
+
+.notenescuenta a:hover {
+  color: #18c1d8ff;
+  text-decoration: underline;
+}
+
+#formRegistro {
+  background-color: #EEEEEE;
+  padding: 20px 30px;
+  width: 80%;
+}
+
+.VALIDACION img {
+  width:200px ;
+}
+
+/* Estilos para el main menu usuario mobile */
+
+.cabezausuario {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.cabezausuario img {
+  margin-right: 20px;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  border-radius: 50px;
+}
+
+.cabezausuario .nombre {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.cabezausuario .correo {
+  font-size: 12px;
+  margin-top: 0;
+}
+
+.perfil , .actividad , .configuracion , .sesiones {
+  width: 90%;
+  margin: auto;
+  padding-top: 10px;
+  margin-bottom: 15px;
+}
+
+.perfil p , .actividad p , .configuracion p {
+  margin: 2px;
+  padding-bottom: 5px;
+}
+
+.perfil .opciones , .actividad .historial , .configuracion .config {
+  border-bottom: 1px lightgray solid;
+}
+
+.mainusuario i {
+  color: #6dbd9bff;
+  text-decoration: solid;
+}
 
 @media (min-width: 361px) {
   .seccionesFooter {
@@ -515,6 +715,11 @@ table{
 
   .categorias{
     flex-direction: row;
+  }
+   
+  .marcas img{
+    width: 50%;
+    flex-basis: 50%;
   }
 
   .categorias div {
@@ -560,8 +765,13 @@ table{
   .descuento{
     text-align: right;
   }
+  /*Fin CSS Cart Page*/
 
-} /*Fin CSS Cart Page*/
+  .rutahome {
+    display: none;
+  }
+
+} 
 
 @media (min-width: 768px) {
   header {
@@ -840,4 +1050,17 @@ table{
     margin-left: 20px;
   }
   /* fin */
+
+  /* Estilos para el main login tablet */
+   .rutahome {
+    padding-left: 15px;
+  }
+
+  .mainlogin form {
+    width: 460px;
+  }
+
+  #formRegistro {
+    width: 40%;
+  } 
 }
