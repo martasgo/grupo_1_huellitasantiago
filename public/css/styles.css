@@ -34,7 +34,7 @@ nav {
 .header-inicial {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 10px;
 }
@@ -543,6 +543,10 @@ table{
   padding-bottom: 20px;
 }
 
+.rutahome {
+  padding-left: 15px;
+}
+
 .rutahome a{
   color: black;
 }
@@ -767,9 +771,9 @@ button a {
   }
   /*Fin CSS Cart Page*/
 
-  .rutahome {
+  /* .rutahome {
     display: none;
-  }
+  } */
 
 } 
 
@@ -817,13 +821,21 @@ button a {
   }
 
   .logo {
-    width: 10%;
-    margin: 0 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-right: 15px;
   }
 
   .header-tablet {
     display: flex;
     padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-tablet a{
+    width: 10%;
+    padding: 0px 10px;
   }
 
   nav {
@@ -1052,11 +1064,7 @@ button a {
   /* fin */
 
   /* Estilos para el main login tablet */
-   .rutahome {
-    padding-left: 15px;
-  }
-
-  .mainlogin form {
+   .mainlogin form {
     width: 460px;
   }
 

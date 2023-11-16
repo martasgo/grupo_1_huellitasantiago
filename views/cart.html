@@ -18,35 +18,24 @@
     <header>
       <div class="header-inicial">
         <div class="burger-menu">
-          <i class="fa-solid fa-bars fa-lg"></i>
+            <i class="fa-solid fa-bars fa-lg"></i>
         </div>
-
-        <img
-          class="logo"
-          src="/images/logo-huellitasantiago-redondo.png"
-          alt="Logo de la empresa"
-        />
-
-        <div>
-          <a href="/login">
-            <i id="iconoUser" class="fa-regular fa-circle-user"></i
-          ></a>
-          <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
+        <a href="/"> <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"/></a>
+       
+        <div id="iconos-header">
+            <a href="/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
+            <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
         </div>
-      </div>
-      <div class="searchbox">
+    </div>
+    <div class="searchbox">
         <form action="/" method="get">
-          <input type="text" id="" placeholder="Buscar producto, marcas" />
-          <i id="busqueda" class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="" placeholder="Buscar producto, marcas"> <i id="busqueda"
+                class="fa-solid fa-magnifying-glass"></i>
         </form>
-      </div>
+    </div>
 
       <div class="header-tablet">
-        <img
-          class="logo"
-          src="/images/logo-huellitasantiago-redondo.png"
-          alt="Logo de la empresa"
-        />
+        <a href="/">  <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"></a>
         <div class="searchboxTablet">
           <form action="/" method="get">
             <input type="text" id="" placeholder="Buscar producto, marcas" />
@@ -76,9 +65,7 @@
     </header>
 
     <main>
-        <section id="breadcrumbs">
-            <p> Home / Carrito</p>
-        </section>
+        <p class="rutahome"><a href="/">Home</a> / Carrito</p>
         
         <div style="overflow-x:auto;">
         <table><!--Tabla Cart desde 361px-->
@@ -119,19 +106,6 @@
                     </div>      
             <p id="precio-producto">$3.500</p>
              </div>
-
-            <div class="detalle-producto"> <!--Producto agregado al cart -->
-                <p id="nombre-producto">Dispenser Azimut 1,5 lts.<i class="fa-regular fa-trash-can"></i></p>               
-                    <div class="cant-producto"><!--Producto mas cant seleccionada -->
-                      <img src="/images/productos/accesorios/dispensers/comedero-azimut.png" alt="dispenser-azimut"/>                 
-                        <div><!--Seccion para agregar o restar productos -->
-                          <i class="fa-solid fa-plus cant-icono"></i>
-                          <p id="descripcion">1</p>
-                          <i class="fa-solid fa-minus cant-icono"></i>
-                        </div>
-                    </div>      
-                <p id="precio-producto">$3.500</p>
-            </div>
 
             <div class="resumen-compra">      
                 <div class="descuento">        
