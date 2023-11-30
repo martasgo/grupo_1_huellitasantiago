@@ -21,3 +21,14 @@ RETROSPECTIVA - MÉTODO STARFISH
 5. Dejar de hacer:
 * Tareas que no contribuyan al objetivo del sprint.
 * Tareas duplicadas que hacen perder tiempo y energía para el cumplimiento del sprint.
+
+## RETRO Sprint-2 
+1. Comenzar a hacer:
+
+2. Hacer más:
+
+3. Continuar haciendo:
+
+4. Hacer menos:
+
+5. Dejar de hacer:
