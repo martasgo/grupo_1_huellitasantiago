@@ -3,12 +3,12 @@
 const mainController = {
     homeController: (req, res) => {
       res.render('../views/home.ejs', {
-        title: ''
+        title: 'Huellitasantiago'
       });
     },
     aboutController: (req, res) => {
       res.render('../views/quienes-somos.ejs', {
-        title: ''
+        title: 'AboutUs'
       });
     },
     salesController: (req, res) => {
