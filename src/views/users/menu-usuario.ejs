@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/3694d59e86.js" crossorigin="anonymous"></script>
+    <title>Huellitasantiago</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-inicial">
+            <div class="burger-menu">
+                <i class="fa-solid fa-bars fa-lg"></i>
+            </div>
+            <a href="/"> <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"/></a>
+           
+            <div id="iconos-header">
+                <a href="/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
+                <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+        <div class="searchbox">
+            <form action="/" method="get">
+                <input type="text" id="" placeholder="Buscar producto, marcas"> <i id="busqueda"
+                    class="fa-solid fa-magnifying-glass"></i>
+            </form>
+        </div>
+
+        <div class="header-tablet">
+            <a href="/">  <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"></a>
+            <div class="searchboxTablet">
+                <form action="/" method="get">
+                    <input type="text" id="" placeholder="Buscar producto, marcas"> <i id="busqueda"
+                        class="fa-solid fa-magnifying-glass"></i>
+                </form>
+            </div>
+            <div class="box-header-right">
+                <div class="carritoHeader">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <a href="/cart">Compra (1)</a>
+                </div>
+                <div class="header-login-register">
+                    <a id="registerButton" href="/regiter">Registro</a>
+                    <a id="loginButton" href="/login">Iniciar sesión</a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">MASCOTAS</a></li>
+                <li><a href="#">ENVIOS</a></li>
+                <li><a href="#">MAYORISTAS</a></li>
+                <li><a href="#">SALES</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="mainusuario">
+        <div class="cabezausuario">
+            <img src="/images/user-solid.svg"/>
+        <div class="identidad">
+            <p class="nombre">Juan José Pérez</p>
+            <p class="correo">jjperez@gmail.com</p>
+        </div>
+        </div>
+
+        <div class="perfil">
+            <p><strong>Perfil</strong></p>
+            <br>
+            <p class="opciones"><i class="fa-solid fa-location-dot"></i> Direcciones</p>
+            <p class="opciones"><i class="fa-solid fa-heart"></i> Favoritos</p>
+            <p class="opciones"><i class="fa-solid fa-money-check-dollar"></i> Medios de pago</p>
+        </div>
+        <div class="actividad">
+            <p><strong>Actividad</strong></p>
+            <br>
+            <p class="historial"><i class="fa-solid fa-basket-shopping"></i> Últimas compras realizadas</p>
+            <p class="historial"><i class="fa-solid fa-star"></i> Productos más comprados</p>
+        </div>
+        <div class="configuracion">
+            <p><strong>Configuración</strong></p>
+            <br>
+            <p class="config"><i class="fa-solid fa-bell"></i> Notificaciones</p>
+            <p class="config"><i class="fa-solid fa-circle-info"></i> Información legal</p>
+            <p class="config"><i class="fa-solid fa-gear"></i> Ajustes de cuenta</p>
+        </div>
+        <div class="sesiones">
+            <br>
+            <p class="sesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</p>
+        </div>
+
+        
+        
+        
+    </main>
+
+    <footer>
+        <div class="seccionesFooter">
+            <section class="footer1">
+                <div class="formFooter">
+                    <img class="logoFooter" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa">
+                    <form action="/" method="get">
+                        <input type="text" id="" placeholder="Email"> <i id="busqueda"
+                            class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </form>
+                </div>
+
+                <p><i id="sobre" class="fa-regular fa-envelope"></i> info@huellitasantiago.com</p>
+                <i class="fa-brands fa-square-instagram"></i>
+                <i class="fa-brands fa-square-facebook"></i>
+            </section>
+            <section id="listadoFooter">
+                <p class="negrita">Secciones</p>
+                <ul>
+                    <li><a>Quienes somos</a></li>
+                    <li><a>Mayoristas</a></li>
+                    <li><a>Sales</a></li>
+                    <li> <a>Envíos</a></li>
+                </ul>
+
+            </section>
+            <section id="listadoFooter">
+                <p class="negrita">Mascotas</p>
+                <ul>
+                    <li><a>Perros</a></li>
+                    <li><a>Gatos</a></li>
+                </ul>
+            </section>
+            <section>
+                <p class="negrita">Medios de pago</p>
+                <img class="imgEnviosPagos" src="./images/mastercard.png">
+                <img class="imgEnviosPagos" src="./images/visa.png">
+            </section>
+            <section>
+                <p class="negrita">Envios</p>
+                <img class="imgEnviosPagos" src="./images/andreani.png">
+                <img class="imgEnviosPagos" src="./images/correo-argentino.png">
+            </section>
+        </div>
+        <p id="copyright"> Copyright © 2023 Huellitasantiago</p>
+
+    </footer>
+</body>
+
+</html>
