@@ -1,67 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/3694d59e86.js" crossorigin="anonymous"></script>
-    <title>Huellitasantiago</title>
-</head>
+<!-- include head -->
+<%- include('./partials/head') %>
 
 <body>
-    <header>
-        <div class="header-inicial">
-            <div class="burger-menu">
-                <i class="fa-solid fa-bars fa-lg"></i>
-            </div>
-            <a href="/"> <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"/></a>
-           
-            <div id="iconos-header">
-                <a href="/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
-                <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
-            </div>
-        </div>
-        <div class="searchbox">
-            <form action="/" method="get">
-                <input type="text" id="" placeholder="Buscar producto, marcas"> <i id="busqueda"
-                    class="fa-solid fa-magnifying-glass"></i>
-            </form>
-        </div>
-
-        <div class="header-tablet">
-            <a href="/">  <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"></a>
-            <div class="searchboxTablet">
-                <form action="/" method="get">
-                    <input type="text" id="" placeholder="Buscar producto, marcas"> <i id="busqueda"
-                        class="fa-solid fa-magnifying-glass"></i>
-                </form>
-            </div>
-            <div class="box-header-right">
-                <div class="carritoHeader">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <a href="/cart">Compra (1)</a>
-                </div>
-                <div class="header-login-register">
-                    <a id="registerButton" href="user/register">Registro</a>
-                    <a id="loginButton" href="user/login">Iniciar sesión</a>
-                </div>
-
-            </div>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/">HOME</a></li>
-                <li><a href="#">MASCOTAS</a></li>
-                <li><a href="#">ENVIOS</a></li>
-                <li><a href="#">MAYORISTAS</a></li>
-                <li><a href="#">SALES</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- include header -->
+    <%- include('./partials/header') %>
     <section>
-        <img class="banner" src="/images/banner-home.png" alt="Banner">
+       <!-- include banner -->
+       <%- include('./partials/banner') %>
     </section>
     <main>
         <div class="categorias">
@@ -152,62 +99,12 @@
             <a href="#"> <input type="button" name="productos" id="productos" value="Ver más productos"/> </a>
         </div>
 
-        <div class="marcas">
-            <img src="./images/marcas/NUTRIQUE.png" />
-            <img src="./images/marcas/PURINA.png" />
-            <img src="./images/marcas/ROYAL-CANIN.png" />
-            <img src="./images/marcas/pedigree.png" />
-            <img src="./images/marcas/sieger.jpg" />
-            <img src="./images/marcas/VITALCAN.png" />
-        </div>
+        <!-- include marcas -->
+        <%- include('./partials/marcas') %>
     </main>
+     <!-- include footer -->
+     <%- include('./partials/footer') %>
 
-    <footer>
-        <div class="seccionesFooter">
-            <section class="footer1">
-                <div class="formFooter">
-                    <img class="logoFooter" src="/images/logo-marron-redondo.png" alt="Logo de la empresa">
-                    <form action="/" method="get">
-                        <input type="text" id="" placeholder="Email"> <i id="busqueda"
-                            class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </form>
-                </div>
-
-                <p><i id="sobre" class="fa-regular fa-envelope"></i> info@huellitasantiago.com</p>
-                <i class="fa-brands fa-square-instagram"></i>
-                <i class="fa-brands fa-square-facebook"></i>
-            </section>
-            <section id="listadoFooter">
-                <p class="negrita">Secciones</p>
-                <ul>
-                    <li><a>Quienes somos</a></li>
-                    <li><a>Mayoristas</a></li>
-                    <li><a>Sales</a></li>
-                    <li> <a>Envíos</a></li>
-                </ul>
-
-            </section>
-            <section id="listadoFooter">
-                <p class="negrita">Mascotas</p>
-                <ul>
-                    <li><a>Perros</a></li>
-                    <li><a>Gatos</a></li>
-                </ul>
-            </section>
-            <section>
-                <p class="negrita">Medios de pago</p>
-                <img class="imgEnviosPagos" src="./images/mastercard.png">
-                <img class="imgEnviosPagos" src="./images/visa.png">
-            </section>
-            <section>
-                <p class="negrita">Envios</p>
-                <img class="imgEnviosPagos" src="./images/andreani.png">
-                <img class="imgEnviosPagos" src="./images/correo-argentino.png">
-            </section>
-        </div>
-        <p id="copyright"> Copyright © 2023 Huellitasantiago</p>
-
-    </footer>
 </body>
 
 </html>
