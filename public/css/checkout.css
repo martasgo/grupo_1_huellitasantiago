@@ -1,0 +1,288 @@
+/*CSS Carrito-inicio-compra*/
+@font-face {
+    font-family: "fuenteAvenir";
+    src: url("/fonts/AVENIR.TTC");
+    src: url("/fonts/AvenirBlack.ttf");
+    src: url("/fonts/AvenirBook.ttf");
+    src: url("/fonts/AvenirHeavy.ttf");
+    src: url("/fonts/AvenirLight.ttf");
+    src: url("/fonts/AvenirRegular.ttf");
+  }
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: "fuenteAvenir";
+    margin: 0px;
+  }
+
+  
+/*Detalle de tú compra*/
+/*.cart-checkout{
+    display: none;
+}*/
+
+summary{
+    margin: 0px 10px;
+    font-size: 12px;
+    color: #6dbd9bff;    
+}
+
+/*Formulario datos para completar para realizar la compra*/
+.formulario-checkout{
+    /*width: 90%*/
+    background-color: #EEEEEE;
+    margin:auto;
+    padding: 20px;
+}
+
+.formulario-checkout input{
+    width: inherit;    
+    background-color: rgb(240, 240, 240);   
+    border-radius: 15px;
+    text-align: left;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.formulario-checkout input[type="radio"] {
+    margin: 5px 5px;    
+}
+
+/*Sección Envío Logos de andreani y correo argentino*/
+.imgEnvioCheckout{
+    width: 10%;
+    font-size: 12px;
+}
+
+/*Style inputs con texto a continuación*/
+.formulario-checkout input#dni-cuil{
+    margin-bottom: 0px;
+    width: -webkit-fill-available;
+}
+
+.formulario-checkout input#email{
+    margin-bottom: 0px;
+    width: -webkit-fill-available;
+}
+
+.formulario-checkout input#datos-facturacion{
+    margin-bottom: 0px;    
+}
+
+.formulario-checkout input#cod-ciudad{
+    margin-bottom: 0px;
+    width: -webkit-fill-available;    
+}
+
+.formulario-checkout input#numero{
+    margin-bottom: 0px;
+    width: -webkit-fill-available;
+}
+
+
+.title-form-checkout{    
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.select-checkout{
+    font-size: 11px;
+    padding: 5px;
+    justify-content: unset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.select-checkout label{
+    margin-top: 5px;
+    margin-left: 8px;
+}
+
+.cod-postal-checkout{
+    font-size: 11px;
+    justify-content: unset;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.cod-postal-checkout a{
+    margin-top: 5px;
+    margin-left: 8px;
+}
+
+
+/*Datos del destinatario*/
+
+.datos-destinatario{
+    display: flex;
+    flex-direction: column;
+}
+
+/*Domicilio del destinatario*/
+
+.domicilio-destinatario{
+    display: flex;
+    flex-direction: column;
+}
+
+.calle-numero-checkout{
+    font-size: 11px;
+    display: flex;
+    justify-content: unset;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+}
+
+.calle-numero-checkout label{
+    margin-top: 5px;
+    margin-left: 8px;
+}
+
+/*Sección Pago*/
+
+.nota-checkout{
+    font-size: 11px;    
+    margin-top: 10px;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/*Sección Pagos -Logos de visa y mastercard*/
+.imgPagoCheckout{
+    width: 10%;
+    font-size: 12px;
+}
+
+/*Botones editar, borrar, finalizar compra*/
+.botones-final-checkout{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+button#reset-checkout {
+    margin-bottom: 10px;
+    background-color: #6dbd9bff;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px black solid;
+    font-size: 15px;
+    font-weight: bold;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+}
+
+button#delete-checkout {
+    margin-bottom: 10px;
+    background-color: #6dbd9bff;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px black solid;
+    font-size: 15px;
+    font-weight: bold;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+}
+
+button#submit-checkout {
+    margin-bottom: 10px;
+    background-color: #6dbd9bff;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px black solid;
+    font-size: 15px;
+    font-weight: bold;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Div Select envío y pago*/
+
+.select-pago{
+    align-items: center;
+    width: auto;
+    text-align: center;
+    display: flex;
+}
+
+.select-pago label{
+    display: contents;
+}
+
+.select-pago input{
+    display: flex;
+    align-items: center;
+}
+
+.select-envio{
+    align-items: center;
+    width: auto;
+    text-align: center;
+    display: flex;
+}
+
+.select-envio label{
+    display: contents;
+}
+
+.select-envio input{
+    display: flex;
+    align-items: center;
+}
+
+
+/*Formulario checkout-Errores*/
+
+.error-checkout{
+    display: none;
+    font-size: 10px;    
+  }
+  
+  .formulario-checkout input:invalid{
+    border-color: red;
+  }
+  
+  .formulario-checkout input:invalid + .error-checkout{
+    display: block;
+    color:red;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    line-height: 0%;
+  }
+  
+  @media (min-width: 361px) {
+
+    /*#summary{
+        display: none;
+    }*/
+
+    details #content-checkout{
+        display: block;
+    }
+
+    .formulario-checkout input[type="radio"] {
+        margin: 10px 10px;
+    }
+
+    .botones-final-checkout {
+        justify-content: space-around;
+    }
+
+    .formulario-checkout {
+        font-size: 1.5em;
+    } 
+  }

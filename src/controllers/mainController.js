@@ -15,7 +15,9 @@ const mainController = {
       // res.render(path.resolve("./views/sales.ejs"));
     },
     mayoristasController: (req, res) => {
-        // res.render(path.resolve("./views/mayoristas.ejs"));
+        res.render("../views/mayoristas.ejs", {
+          title:'Mayoristas'
+        });
     },
     enviosController: (req, res) => {
         // res.render(path.resolve("./views/envios.ejs"));
