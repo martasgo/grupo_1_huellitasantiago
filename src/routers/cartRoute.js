@@ -5,9 +5,11 @@ const routeCart = Router();
 
 //variable para definir rutas dentro de /cart
 const routesCart = {
-  indexCartRoute: '/'
+  indexCartRoute: '/',
+  checkoutCart: '/checkout'
 };
 
 routeCart.get(routesCart.indexCartRoute, controllerCart.indexCartController);
+routeCart.get(routesCart.checkoutCart, controllerCart.checkoutCartController);
 
 module.exports = routeCart;

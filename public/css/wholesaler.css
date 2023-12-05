@@ -1,0 +1,42 @@
+/*CSS Carrito-inicio-compra*/
+@font-face {
+    font-family: "fuenteAvenir";
+    src: url("/fonts/AVENIR.TTC");
+    src: url("/fonts/AvenirBlack.ttf");
+    src: url("/fonts/AvenirBook.ttf");
+    src: url("/fonts/AvenirHeavy.ttf");
+    src: url("/fonts/AvenirLight.ttf");
+    src: url("/fonts/AvenirRegular.ttf");
+  }
+
+*{
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    /*width: 90%*/
+    font-family: "fuenteAvenir";
+    margin: 0px;
+}
+
+.desc-mayoristas{
+    max-width: max-content;
+    justify-content: center;
+    flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+    background-color: #EEEEEE;
+    margin:auto;
+    padding: 40px;
+}
+
+.desc-mayoristas a{    
+    margin-top: 15px;
+}
+
