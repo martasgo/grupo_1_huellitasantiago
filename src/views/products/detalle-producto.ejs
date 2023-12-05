@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- include head -->
+<%- include('../partials/head') %>
+  <body>
+    <!-- include header -->
+    <%- include('../partials/header') %>
+    <main>
+        <p class="rutahome"><a href="/">Home</a> / Mascotas / Perro / Accesorios / Dispenser-Azimut</p>
+      
+        <section class="ficha-producto">
+            <div id="img-precio">
+                <section id="imgProducto">
+                    <img class="imgPrincipal" src="/images/productos/accesorios/dispensers/comedero-azimut.png" />
+                    <div class="fotos">
+                        <img src="/images/productos/accesorios/dispensers/comedero-azimut-agua.png" />
+                        <img src="/images/productos/accesorios/dispensers/comedero-azimut-agua-2.png" />
+                        <img src="/images/productos/accesorios/dispensers/comedero-azimut-antideslizante.png" />
+                    </div>
+                </section>
+                <section id="carritoProducto">
+                    <h3 class="margin-top"> Dispenser Azimut-1,5 lts </h3>
+                    <p class="sinmargin">$3.500</p>
+                    <div id="comprar">
+                        <div> <button class="cantidad-icono">+</button> <input type="text" value="1" class="cantidad-producto"> <button class="cantidad-icono">-</button></div>
+                        <div><input type="button" class="addtocart" value="Agregar al carrito" />  </div>
+                    </div>
+                    <p><i class="fa-solid fa-credit-card"></i> <a href="/envios">Medios de pago</a></p>
+                </section>
+            </div>
+            <section id="descripcionProd">
+               
+                <h3 class="margin-top"> Descripción </h3>
+                <div class="detalleProducto">
+                    <p>Azimut es un práctico distribuidor de gato y perro para agua y croquetas. En plástico con borde de goma anti deslizante, 
+                        Azimut tiene dos orificios de salida diferentes en el tanque, permitiendo el uso dual.</p>
+                    <p>
+                        El tanque transparente tiene un indicador de capacidad útil que le mantendrá en control del nivel de alimentos o agua dentro.
+                        Fácil de manejar gracias a su forma ergonómico.
+                    </p>
+                    <p>
+                        Este dispensador multifunción está disponible en varios tamaños:
+                        <ul>
+                            <li>0.6 y 1.5 litros de capacidad: el accesorio ideal para gatos, cachorros o perros pequeños.</li>
+                            <li>3 litros, adecuado para perros y gatos de tamaño mediano. </li>
+                            <li>5,5 litros ideal para perros grandes.</li>
+                        </ul>
+                    </p>
+                    <p>Viene en diferentes colores</p>
+                </div>
+                
+    
+            </section>
+        </section>
+
+        <p class="tituloProductosDestacados">PRODUCTOS DESTACADOS</p>
+        <section class="listadoArticulos">
+            <article>
+               <a href="/dispenser-azimut"><img src="/images/productos/accesorios/dispensers/comedero-azimut.png" alt="Dispenser Azimut"></a>
+                <div class="detalle">
+                    <p id="">Dispenser Automatico Azimut - 1,5 Lt</p>
+                    <p id="">$3.500</p>
+                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                </div>
+            </article>
+
+             <article>
+                <img src="/images/productos/alimentos/pedigree-pouch-adulto.png" alt="Sobre pedigree">
+                <div class="detalle">
+                    <p id="">Sobre Pedigree Adulto (raza pequeña)</p>
+                    <p id="">$550</p>
+                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                </div>
+            </article>
+            <article>
+                <img src="/images/productos/cuidado-higiene/piedras-gato/absorsol.png" alt="Piedas sanitarias absorsol">
+                <div class="detalle">
+                    <p id="">Piedras sanitarias absorsol 2kg</p>
+                    <p id="">$850</p>
+                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                </div>
+            </article>
+            <article>
+                <img src="/images/productos/accesorios/camas/cama.png" alt="camas">
+                <div class="detalle">
+                    <p id="">Moisés Pupis reversible café</p>
+                    <p id="">$17.500</p>
+                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                </div>
+            </article>
+         </section>
+       
+       <!-- include marcas -->
+       <%- include('../partials/marcas') %>
+    </main>
+
+    <!-- include footer -->
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

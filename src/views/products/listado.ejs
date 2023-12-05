@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- include head -->
+<%- include('../partials/head') %>
+    <body>
+        <!-- include header -->
+        <%- include('../partials/header') %>
+            <main>
+                <p class="rutahome">
+                    <a href="/">Home</a> / <a href="/mascostas">Mascotas</a> /
+                    <% mascotaUp = mascota.charAt(0).toUpperCase() + mascota.slice(1);  %>
+                    <% if (categoria) { %>      
+                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> /<% } else {%> <%= mascotaUp %> / <%} %>
+                                <% if (subCategoria) { %> <a href="/product/<%= mascota %>/<%= categoria %>">
+                                    <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
+                                    <%= categoriaUp %> </a>
+                                    <% } else {%>
+                                            <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
+                                            <%= categoriaUp %>
+                                        <%} %>
+                                            <% if (subCategoria) { %> / 
+                                                <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
+                                                <%= subCategoriaUp %>
+                                            <% } %>
+
+                </p>
+                <div class="listado-content">
+                    
+                    <!-- include filtros -->
+                    <%- include('../partials/filtros-productos') %>
+
+                    <section class="listadoArticulos">
+                        <article>
+                            <a href="/dispenser-azimut"><img
+                                    src="/images/productos/accesorios/dispensers/comedero-azimut.png"
+                                    alt="Dispenser Azimut"></a>
+                            <div class="detalle">
+                                <p id="">Dispenser Automatico Azimut - 1,5 Lt</p>
+                                <p id="">$3.500</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
+                            </div>
+                        </article>
+
+                        <article>
+                            <img src="/images/productos/alimentos/pedigree-pouch-adulto.png" alt="Sobre pedigree">
+                            <div class="detalle">
+                                <p id="">Sobre Pedigree Adulto (raza pequeña)</p>
+                                <p id="">$550</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
+                            </div>
+                        </article>
+                        <article>
+                            <img src="/images/productos/cuidado-higiene/piedras-gato/absorsol.png" alt="Piedas sanitarias absorsol">
+                            <div class="detalle">
+                                <p id="">Piedras sanitarias absorsol 2kg</p>
+                                <p id="">$850</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                            </div>
+                        </article>
+                        <article>
+                            <img src="/images/productos/accesorios/camas/cama.png" alt="camas">
+                            <div class="detalle">
+                                <p id="">Moisés Pupis reversible café</p>
+                                <p id="">$17.500</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
+                            </div>
+                        </article>
+                        <article>
+                            <a><img src="/images/productos/accesorios/collares/collares.png" alt="collares"></a>
+                            <div class="detalle">
+                                <p id="">Collares simples</p>
+                                <p id="">$1.500</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
+                            </div>
+                        </article>
+
+                        <article>
+                            <img src="/images/productos/accesorios/varios/pet-kit.png" alt="pet-kit">
+                            <div class="detalle">
+                                <p id="">Pet-Kit completo</p>
+                                <p id="">$6.250</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
+                            </div>
+                        </article>
+                        <article>
+                            <img src="/images/productos/cuidado-higiene/pipeta.png" alt="Pipeta">
+                            <div class="detalle">
+                                <p id="">Pipeta (perros)</p>
+                                <p id="">$3.500</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
+                            </div>
+                        </article>
+                        <article>
+                            <img src="/images/productos/accesorios/comederos/par-blanco-letras.png"
+                                alt="Par platos blancos">
+                            <div class="detalle">
+                                <p id="">Par platitos blancos</p>
+                                <p id="">$2.000</p>
+                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+                <!-- include marcas -->
+                <%- include('../partials/marcas') %>
+            </main>
+
+            <!-- include footer -->
+            <%- include('../partials/footer') %>
+    </body>
+
+</html>

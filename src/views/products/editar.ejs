@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- include head -->
+<%- include('../partials/head') %>
+<script>
+    function mostrarOpciones() {
+      var select1 = document.getElementById("categoria");
+      var opcionesDiv = document.getElementById("subCatSelect");
+      var opcionesDivPrentacion = document.getElementById("alimentoPresentacion");
+      var opcionesDivAccesorios = document.getElementById("subCatAccesorios");
+      var select2 = document.getElementById("subCat");
+      
+      opcionesDiv.style.display = (select1.value == "alimento") ? "block" : "none";
+      opcionesDivPrentacion.style.display = (select1.value == "alimento") ? "block" : "none";
+      opcionesDivAccesorios.style.display = (select1.value == "accesorios") ? "block" : "none";
+    }
+
+</script>
+  <body>
+    
+    <!-- include header -->
+    <%- include('../partials/header') %>
+    <main>
+        <p id="title-alta"> Formulario edición de producto </p>
+      
+        <section class="fichaprod">
+            <form id="form-alta-prod" method="post" action="/product">
+                <div class="elementos-form">
+                    <label for="mascota">Mascota:</label><br>
+                    <select class="margen-ancho" id="mascota" name="mascota" >
+                        <option value="perros" <% if (producto.mascota === 'perros') { %> selected <% } %>>Perros</option>
+                        <option value="gatos" <% if (producto.mascota === 'gatos') { %> selected <% } %>>Gatos</option>
+                        <option value="ambos" <% if (producto.mascota === 'ambos') { %> selected <% } %>>Ambos</option>
+                    </select><br>
+
+                </div>
+                <div class="elementos-form">
+                <label for="nombreprod">Nombre producto:</label><br>
+                <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod" value="<%= producto.nombre %>"><br>
+                </div>
+               
+                <div class="elementos-form">
+                    <label for="precio">Precio:</label><br>
+                    <input class="margen-ancho" type="number" id="precio" name="precio" value="<%= producto.precio %>"><br>
+                </div>
+                <div class="elementos-form">
+                    <label for="descuento">Descuento(%):</label><br>
+                    <input class="margen-ancho" type="text" id="descuento" name="descuento" value="<%= producto.descuento %>"><br>
+                </div>
+
+                <div class="elementos-form">
+                <label for="categoria">Categoría:</label><br>
+                    <select  class="margen-ancho" id="categoria" name="categoria" onchange="mostrarOpciones()" >
+                        <option value="default"></option>
+                        <option value="alimento" <% if (producto.categoria === 'alimento') { %> selected <% } %>>Alimentación</option>
+                        <option value="accesorios" <% if (producto.categoria === 'accesorios') { %> selected <% } %> >Accesorios</option>
+                        <option value="cuidados-higiene" <% if (producto.categoria === 'cuidados-higiene') { %> selected <% } %> >Cuidado e higiene</option>
+                        <option value="ropa" <% if (producto.categoria === 'ropa') { %> selected <% } %> >Ropa</option>
+                </select><br>
+                </div>
+
+                <div class="elementos-form" id="subCatSelect" style="display: none;">
+                 <!-- solo mostrar si se selecciona cat alimentos -->
+                <label for="subCat">Subcategoría:</label><br>
+                    <select class="margen-ancho" id="subCat" name="subCat">
+                        <option value="default"></option>
+                        <option value="alimento-seco">Alimento seco</option>
+                        <option value="latas-sobres">Latas / sobres</option>
+                        <option value="alimento-natural">Alimento natural</option> 
+                </select><br>
+            </div>
+
+            <div class="elementos-form" id="alimentoPresentacion" style="display: none;">
+                <label for="presentacion">Presentación:</label><br>
+                <select  class="margen-ancho" id="presentacion" name="presentacion">
+                    <option value="default"></option>
+                    <option value="85grs">85 Grs</option>
+                    <option value="100grs">100 Grs</option>
+                    <option value="1kg">1 Kg</option>
+                    <option value="1kg">2.5 Kg</option>
+                    <option value="1kg">3 Kg</option>
+                </select><br>
+            </div>
+                <!--fin alimentos -->
+
+                <div class="elementos-form" id="subCatAccesorios" style="display: none;">
+                <!-- solo mostrar si se selecciona accesorios -->
+                <label for="subCat">Subcategoría:</label><br>
+                    <select class="margen-ancho" id="subCat" name="subCat">
+                        <option value="default"></option>
+                        <option value="fundas">Fundas para auto</option>
+                        <option value="camas">Camas</option>
+                        <option value="correas">Correas</option>
+                        <option value="comederos">Comederos / bebederos</option>
+                        <option value="dispensers">Dispensers</option>
+                        <option value="transportadoras">Transportadoras</option>
+                </select><br>
+                <!-- fin accesorios -->
+                </div>
+
+                <div class="elementos-form">
+                <!-- las marcas serian en funcion de la categoria? -->
+                <label for="marca">Marca:</label><br>
+                    <select class="margen-ancho" id="marca" name="marca">
+                        <option value="default"></option>
+                        <option value="pedigree" <% if (producto.marca === 'pedigree') { %> selected <% } %>>Pedigree</option>
+                        <option value="royal" <% if (producto.marca === 'royal') { %> selected <% } %> >Royal Canin</option>
+                        <option value="purina" <% if (producto.marca === 'purina') { %> selected <% } %> >Purina</option>
+                        <option value="absorsol" <% if (producto.marca === 'absorsol') { %> selected <% } %> >Absorsol</option>
+                        <option value="CanCat" <% if (producto.marca === 'canCat') { %> selected <% } %> >CanCat</option>
+                        <option value="sieger" <% if (producto.marca === 'sieger') { %> selected <% } %> >Sieger</option>
+                </select><br>
+                </div>
+
+                <div class="elementos-form">
+                <label for="edadmascota">Edad mascota:</label><br>
+                    <select  class="margen-ancho" id="edadmascota" name="edadmascota" >
+                        <option value="default"></option>
+                        <option value="cachorro" <% if (producto.edadMascota === 'cachorro') { %> selected <% } %> >Cachorro</option>
+                        <option value="adulto" <% if (producto.edadMascota === 'adulto') { %> selected <% } %> >Adulto</option>
+                    </select><br>
+                </div>
+
+                <div class="elementos-form">
+                <label for="tamañomascota">Tamaño mascota:</label><br>
+                <select class="margen-ancho" id="tamañomascota" name="tamañomascota" >
+                    <option value="pequeño" <% if (producto.tamañoMascota === 'pequeño') { %> selected <% } %> >Pequeño</option>
+                    <option value="mediano" <% if (producto.tamañoMascota === 'mediano') { %> selected <% } %> >Mediano</option>
+                    <option value="grande" <% if (producto.tamañoMascota === 'grande') { %> selected <% } %> >Grande</option>
+                </select><br>
+                </div>
+                
+                <div class="elementos-form-100">
+                <div id="box-destacado" class="margen-ancho">
+                    <label for="destacado">Destacado:</label> <input type="checkbox" id="destacado" name="destacado" value="true" <% if (producto.destacado === 'si') { %> checked <% } %>>
+                </div>
+                </div>
+
+                <div class="elementos-form-100">
+                    <label for="descripcion">Descripción:</label><br>
+                    <textarea name="descripcion" id="descripcion" ><%= producto.descripcion %> </textarea><br>
+                </div>
+
+                
+               <!--QUEDA PENDIENTE PARA EL SPRINT 4
+                <div class="elementos-form-100">
+                    <label for="foto">Imagen:</label><br>
+                    <input class="margen-ancho" type="file" id="foto" name="foto" accept="image/*"><br>
+                </div> -->
+                
+                <div class="elementos-form-100">
+                    <div id="form-buttons">  
+                        <button type="submit" >GUARDAR</button>
+                        <button type="reset"> RESET</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+       
+    
+        <!-- include marcas -->
+       <%- include('../partials/marcas') %>
+    </main>
+
+    <!-- include footer -->
+    <%- include('../partials/footer') %>
+</body>
+
+</html>
