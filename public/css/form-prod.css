@@ -1,0 +1,96 @@
+.fichaprod{
+    width: 90%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+#title-alta{
+    font-size:23px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#form-buttons{
+    justify-content: space-around;
+    display: flex;
+    margin-top: 20px;
+}
+
+#form-buttons button{
+    background-color:  #6dbd9bff;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: 1px solid  #6dbd9bff;
+    font-weight: bold;
+}
+
+#form-buttons button:hover{
+    background-color:  #fbdd5bff;
+    border: 1px solid  #fbdd5bff;
+}
+
+#form-alta-prod{
+    background-color:#EEEEEE;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#form-alta-prod label{
+    font-size: 18px;
+}
+
+#form-alta-prod textarea{
+    min-height: 140px;
+    resize: vertical;
+    width: 100%;
+}
+
+.margen-ancho {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.margen-ancho:focus{
+    border: blue;
+}
+
+#box-destacado{
+    display: flex;
+}
+
+#imagenes{
+    border: 2px dotted black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+@media (min-width: 768px){
+   .fichaprod{
+        display: flex;
+        width: 80%;
+    }
+
+    .elementos-form{
+        flex-basis: 47%;
+        margin: 0 12px;
+        align-self: center;
+    }
+
+    .elementos-form-100{
+        flex-basis: 100%;
+        margin: 0 12px;
+    }
+
+    #form-alta-prod{
+        flex-basis: 100%;
+        display: flex;
+        margin: auto;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}

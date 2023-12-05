@@ -2,7 +2,7 @@
 
 const mainController = {
     homeController: (req, res) => {
-      res.render('../views/home.ejs', {
+      res.render('home', {
         title: 'Huellitasantiago'
       });
     },
@@ -12,7 +12,9 @@ const mainController = {
       });
     },
     salesController: (req, res) => {
-      // res.render(path.resolve("./views/sales.ejs"));
+      res.render('../views/sales.ejs', {
+        title: 'Sales'
+      });
     },
     mayoristasController: (req, res) => {
         res.render("../views/mayoristas.ejs", {

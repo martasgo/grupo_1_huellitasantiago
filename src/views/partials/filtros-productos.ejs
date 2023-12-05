@@ -1,0 +1,94 @@
+<section id="mobile">
+    <label for="categoryList">Categorias:</label>
+    <select id="categoryList" name="categoryList">
+        <option value="alimento">Alimentacion</option>
+        <option value="accesorios">Accesorios</option>
+        <option value="cuidado-higiene">Cuidado e Higiene</option>
+        <option value="ropa">Ropa</option>
+    </select>
+    <input type="button" value="Buscar" />
+</section>
+<section id="tablet" class="filter-sections">
+    <div id="categorias">
+        <h3>Categorias</h3>
+        <% if (categoria) { %>
+            <% if (categoria==='alimentos' ) { %>
+                <span class="txt-cat">ALIMENTACION</span>
+                <% } else if (categoria==='accesorios' ) { %>
+                    <span class="txt-cat">ACCESORIOS</span>%>
+                    <% } else if (categoria==='cuidados-higiene' ) { %>
+                        <span class="txt-cat">CUIDADO E HIGIENE</span>%>
+                        <% } else if (categoria==='ropa' ) { %>
+                            <span class="txt-cat">ROPA</span>%>
+                            <% } %>
+                                <% } else {%>
+                                    <ul>
+                                        <li><a href="/product/<%= mascota %>/alimentos">ALIMENTACION</a>
+                                        </li>
+                                        <li><a href="/product/<%= mascota %>/accesorios">ACCESORIOS</a></li>
+                                        <li><a href="/product/<%= mascota %>/cuidados-higiene">CUIDADOS E
+                                                HIGIENE</a></li>
+                                        <li><a href="/product/<%= mascota %>/ropa">ROPA</a></li>
+                                    </ul>
+                                    <% }%>
+    </div>
+    <% if (categoria==='alimentos' ) { %>
+        <div id="subCategoria">
+            <h4 id="title-subcat">Subcategorias</h4>
+            <li><a href="/product/<%= mascota %>/alimentos/alimentos-secos">Alimentos secos</a></li>
+            <li><a href="/product/<%= mascota %>/alimentos/latas-sobres">Latas y sobres</a></li>
+            <li><a href="/product/<%= mascota %>/alimentos/alimentos-naturales">Alimentos naturales</a></li>
+        </div>
+        <% } %>
+            <h3 id="filtros">FILTROS</h3>
+            <section>
+                    <div>
+                        <h4>Marcas</h4>
+                        <input type="checkbox" id="marca1" name="marca1" value="pedigree">
+                        <label for="edad1"> Pedigree</label><br>
+                        <input type="checkbox" id="marca2" name="marca2" value="royal-canin">
+                        <label for="marca2"> Royal Canin</label><br>
+                        <input type="checkbox" id="marca3" name="marca3" value="purina">
+                        <label for="marca3"> Purina</label><br>
+                        <input type="checkbox" id="marca4" name="marca4" value="sieger">
+                        <label for="marca54"> Sieger</label><br>
+                        <input type="checkbox" id="marca5" name="marca5" value="absorsol">
+                        <label for="marca6"> Absorsol</label><br>
+                        <input type="checkbox" id="marca6" name="marca6" value="canCat">
+                        <label for="marca4"> CanCat</label><br>
+                        
+                    </div>
+                        <div>
+                            <h4>Edad mascota</h4>
+                            <input type="checkbox" id="edad1" name="edad1" value="cachorro">
+                            <label for="edad1"> Cachorro</label><br>
+                            <input type="checkbox" id="edad2" name="edad2" value="adulto">
+                            <label for="edad2"> Adulto</label><br>
+                        </div>
+                        <h4>Tamaño mascota</h4>
+                        <div>
+                            <input type="checkbox" id="tamaño1" name="tamaño1" value="pequeño">
+                            <label for="tamaño1"> Pequeño</label><br>
+                            <input type="checkbox" id="tamaño2" name="tamaño2" value="mediano">
+                            <label for="tamaño2"> Mediano</label><br>
+                            <input type="checkbox" id="tamaño3" name="tamaño3" value="Grande">
+                            <label for="tamaño3"> Adulto</label><br>
+                        </div>
+                        <h4>Precio</h4>
+                        <div class="filter-precio">
+                            <span>
+                                <label for="precioDesde">Desde</label>
+                                <input type="text" id="precioDesde" name="precioDesde" value="">
+                            </span>
+                            <span>
+                                <label for="precioHasta">Hasta</label>
+                                <input type="text" id="precioHasta" name="precioHasta" value="">
+                            </span>
+                            <span id="search-precio">
+                                <button id="buscar-precio" type="submit"><i
+                                        class="fa-solid fa-caret-right"></i></button>
+                            </span>
+
+                        </div>
+            </section>
+</section>
