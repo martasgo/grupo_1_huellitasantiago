@@ -163,7 +163,7 @@ article img {
 }
 
 .verproductos input{
-  background-color: #18c1d8ff;
+  background-color: #6dbd9bff;
     padding: 10px;
     border-radius: 10px;
     border: 1px black solid;
@@ -447,6 +447,14 @@ table{
   padding-bottom: 5px;
 }
 
+#listadoFooter ul li a {
+  color: black;
+}
+
+#listadoFooter ul li a:hover {
+  color: #fbdd5bff;
+}
+
 .negrita {
   font-weight: bold;
   font-size: 18px;
@@ -691,6 +699,10 @@ button a {
 }
 
 @media (min-width: 361px) {
+  .tituloProductosDestacados {
+    font-size: 25px;
+  }
+
   .seccionesFooter {
     display: flex;
     flex-wrap: nowrap;
