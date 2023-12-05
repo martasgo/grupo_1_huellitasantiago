@@ -25,10 +25,32 @@ RETROSPECTIVA - MÉTODO STARFISH
 ## RETRO Sprint-2 
 1. Comenzar a hacer:
 
+Integrar revisiones de código en GitHub: Establezcamos sesiones de revisión de código de manera más frecuente para mejorar la calidad del código y facilitar el aprendizaje entre los miembros del equipo.
+
+
 2. Hacer más:
+
+Utilizar Jira de manera más efectiva: Aprovechemos al máximo las capacidades de Jira para gestionar las tareas, asignar responsabilidades y realizar un seguimiento más preciso del progreso del sprint.
+
+
 
 3. Continuar haciendo:
 
+Mantener sesiones de planificación efectivas (weekly): Continuemos con sesiones de planificación bien estructuradas para garantizar una comprensión clara de las tareas y prioridades del sprint.
+
+Seguir con las reuniones de revisión y retrospectiva: Mantengamos las reuniones de revisión al final del sprint para analizar lo que salió bien y lo que se puede mejorar, y ajustemos nuestro enfoque en consecuencia.
+
+Perseverar con la entrega de valor: Sigamos enfocados en la entrega de valor al cliente, asegurándonos de que cada tarea y funcionalidad implementada contribuya a los objetivos generales del proyecto.
+
+
+
 4. Hacer menos:
 
+Evitar cambios de último minuto en las rutas y controladores: Minimicemos los cambios de último minuto en la arquitectura del modelo MVC para evitar complicaciones innecesarias y mantener la estabilidad del código.
+
+
 5. Dejar de hacer:
+
+Abandonar la falta de documentación en GitHub: Dejemos de postergar la documentación en GitHub. A partir de ahora, asegurémonos de documentar cada cambio y asegurarnos de que la información esté fácilmente accesible para todos.
+
+Eliminar el trabajo no planificado: Evitemos introducir tareas no planificadas en mitad del sprint. Establezcamos una política para manejar estas situaciones de manera más controlada.
