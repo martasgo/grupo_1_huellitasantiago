@@ -1,7 +1,7 @@
 const userController = {
     loginController: (req, res) => {
       res.render('../views/users/login.ejs', {
-        title: ''
+        title: 'Login'
       });
     },
     registerController: (req, res) => {
@@ -10,8 +10,8 @@ const userController = {
       });
     },
     profileController: (req, res) => {
-        res.render('../views/users/menu-usuario.ejs', {
-            title: ''
+        res.render('../views/users/profile.ejs', {
+            title: 'Perfil de usuario'
         });
     }
   };

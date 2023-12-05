@@ -1,0 +1,34 @@
+* {
+    box-sizing: border-box;
+}
+
+.pantallaquienessomos {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.imagenfamilia img {
+    width: 300px;
+    height: 200px;
+}
+
+@media (min-width: 768px) {
+    .pantallaquienessomos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 30px;
+    }
+
+    .textoquienessomos , .imagenfamilia {
+        width: 40%;
+    }
+
+    .imagenfamilia img {
+        width: 90%;
+        height: 60%;
+    }
+}

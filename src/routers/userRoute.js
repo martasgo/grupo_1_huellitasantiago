@@ -11,6 +11,6 @@ const routesUser = {
 
 routerUsers.get(routesUser.loginRoute, userController.loginController);
 routerUsers.get(routesUser.registerRoute, userController.registerController);
-routerUsers.get(routesUser.registerRoute, userController.registerController);
+routerUsers.get(routesUser.profileRoute, userController.profileController);
 
 module.exports = routerUsers;

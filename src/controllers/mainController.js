@@ -23,9 +23,11 @@ const mainController = {
       });;        
     },
     mascotasController: (req, res) => {
-        // res.render(path.resolve("./views/mascotas.ejs"));
-    },
-  };
+      res.render('../views/mascotas.ejs', {
+        title: 'Mascotas'
+    });
+  }
+}
   
   module.exports = mainController;
   

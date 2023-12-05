@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- include head -->
+<%- include('./partials/head') %>
+<link href="/css/mascotas.css" rel="stylesheet" />
+
+<body>
+    <!-- include header -->
+    <%- include('./partials/header') %>
+       
+    <main>
+        <div class="textomascotas">
+            <p> En Huellitasantiago vas a encontrar todos los productos necesarios
+            para tus mascotas en todas las etapas y momentos de su vida. 
+            <br>
+            Tenemos una gran variedad de alimentos, accesorios, productos de
+            estética e higiene, y ropa para que los mimes al máximo.
+            </p>
+        </div>
+
+        <div class="tiposdemascotas">
+            <div class="perros">
+                <a href="/product/perros">
+                    <img src="/images/perro.jpg">
+                    <h3>Perros</h3>
+                </a>     
+            </div>
+            <div class="gatos">
+                <a href="/product/gatos">
+                    <img src="/images/gato.jpg">
+                    <h3>Gatos</h3>
+                </a>               
+            </div>
+        </div>
+
+    </main>
+
+    <!-- include footer -->
+    <%- include('./partials/footer') %>
+</body>
+
+</html>
