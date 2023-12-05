@@ -1,0 +1,64 @@
+* {
+    box-sizing: border-box;
+}
+
+.textomascotas {
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+.tiposdemascotas {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+.perros , .gatos {
+    width: 80%;
+    height: 350px;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+
+.perros img , .gatos img {
+    width: 250px;
+    height: 220px;
+    text-align: center;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 0;
+}
+
+.perros a , .gatos a {
+    text-decoration: none;
+    color: black;
+}
+
+@media (min-width: 768px) {
+    .tiposdemascotas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    }
+
+    .perros , .gatos {
+        width: 40%;
+    }
+
+    .perros img , .gatos img {
+        transition: transform 800ms ease-out;
+    }
+
+    .perros img:hover , .gatos img:hover {
+        transform: scale(1.2);
+    }
+
+    .perros a:hover , .gatos a:hover {
+        color: #18c1d8ff;
+    }
+}
