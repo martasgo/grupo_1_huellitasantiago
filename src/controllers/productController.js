@@ -1,6 +1,8 @@
 const prodController = {
     indexProductController: (req, res) => {
-   
+      res.render ('../views/mascotas.ejs', {
+        title: 'Mascotas'
+      });
     },
     detailProductController:(req, res) => {
         idProducto = parseInt(req.params.id);
@@ -40,12 +42,8 @@ const prodController = {
     },
 
     guardarProd:(req, res) => {
-      categoria = ''
-      subCategoria = '';
-      res.render('../views/products/listado.ejs', {
-          title: 'Listado productos',
-          categoria,
-          subCategoria
+      res.render ('../views/mascotas.ejs', {
+        title: 'Mascotas'
       });
     },
 
@@ -54,7 +52,6 @@ const prodController = {
       categoria = ''
       subCategoria = '';
       mascota = req.params.idMascota;
-      console.log(mascota);
       res.render('../views/products/listado.ejs', {
           title: 'Listado Productos',
           categoria,
