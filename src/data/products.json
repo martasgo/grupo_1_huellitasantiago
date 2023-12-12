@@ -1,0 +1,86 @@
+[
+    {
+        "id": 11,
+        "nombre-producto": "Pipeta Frontline Plus Perros 60kg",
+        "descripcion": "FRONTLINE® Plus, proporciona una protección continua, con doble acción, sobre pulgas adultas y sobre los estadios inmaduros (huevos y larvas) presentes en el medio ambiente. FRONTLINE® Plus también elimina las garrapatas y piojos.",
+        "precio": 8950,
+        "discount": 20,
+        "mascota": "perros",
+        "imagen": "/cuidado-higiene/pipeta.png",
+        "marca": "Frontline",
+        "edadMascota": "adulto",
+        "tamañoMascota": "grande",
+        "destacado": "si",
+        "categoria": "cuidados-higiene",
+        "subcategoria": "",
+        "presentacion": ""
+      },
+
+      {
+        "id": 12,
+        "nombre-producto": "Forte Health Antibiotico Natural",
+        "descripcion": "Antibióticos naturales para perros, apoya el alivio de la alergia del perro, multivitamínico para perros, antibióticos para perros, antibióticos para mascotas, alivio de la picazón del perro, gotas para fortalecimiento general, para todas las razas y tamaños",
+        "precio": 15200,        
+        "discount": 0,
+        "mascota": "",
+        "imagen": "/cuidado-higiene/antibiotico.png",
+        "marca": "Forte Health",
+        "edadMascota": "adulto",
+        "tamañoMascota": "mediano",
+        "destacado": "no",
+        "categoria": "cuidados-higiene",
+        "subcategoria": "",
+        "presentacion": ""
+      },
+
+      {
+        "id": 13,
+        "nombre-producto": "Absorsol Premium 1 Kg",
+        "descripcion": "Las Piedras Sanitarias Absorsol Premium, poseen máximo rendimiento con bajo mantenimiento. Su composición ecológica y reciclable, quita los olores de los excrementos, absorbe la cantidad de líquido equivalente a su peso rápidamente, y no desprende el líquido absorbido.",
+        "precio": 8564,        
+        "discount": 0,
+        "mascota": "gatos",
+        "imagen": "./cuidado-higiene/piedras-gato/absorsol.png",
+        "marca": "Absorsol",
+        "edadMascota": "cachorro",
+        "tamañoMascota": "mediano",
+        "destacado": "no",
+        "categoria": "cuidados-higiene",
+        "subcategoria": "",
+        "presentacion": ""
+      },
+
+      {
+        "id": 14,
+        "nombre-producto": "Pauldip Baño de espuma seca",
+        "descripcion": "Ideal para la higiene y belleza, especialmente para épocas de frío ya que no hace falta mojarlos. Shampoo en espuma seca, biologicamente activo para perros y gatos de todas las edades. Da brillo y suavidad. Aplicar sobre el cuerpo del animal y luego rotar firmemente hasta que la espuma desaparezca.",
+        "precio": 3570,       
+        "discount": 0,
+        "mascota": "gatos",
+        "imagen": "/cuidado-higiene/espuma-enseco.png",
+        "marca": "Pauldip",
+        "edadMascota": "adulto",
+        "tamañoMascota": "mediano",
+        "destacado": "no",
+        "categoria": "cuidados-higiene",
+        "subcategoria": "",
+        "presentacion": ""
+      },
+      
+      {
+        "id": 15,
+        "nombre-producto": "Pedigree Denstastix X 7",
+        "descripcion": "Barra de cuidado oral diario que ayuda a prevenir enfermedades de las encías y mal aliento en los perros. Gracias a su forma exclusiva y combinación de ingredientes activos, es una efectiva solución para ayudar a mantener sus dientes limpios y encías saludables de forma fácil y divertida.",
+        "precio": 1080,        
+        "discount": 0,
+        "mascota": "perros",
+        "imagen": "/cuidado-higiene/cuidado-oral.png",
+        "marca": "Pedigree",
+        "edadMascota": "cachorro",
+        "tamañoMascota": "mediano",
+        "destacado": "no",
+        "categoria": "cuidados-higiene",
+        "subcategoria": "",
+        "presentacion": ""
+      }
+]
