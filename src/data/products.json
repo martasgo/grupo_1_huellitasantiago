@@ -1,6 +1,6 @@
 [
     {
-        "id": 15,
+        "id": 16,
         "nombre-producto":"cama",
         "descripcion": "Agradable camita acolchonada",
         "precio": 15000,
@@ -19,7 +19,7 @@
     
     {
     
-        "id": 16,
+        "id": 17,
         "nombre-producto":"collar",
         "descripcion": "collar para tu gatito",
         "precio":3000,
@@ -37,7 +37,7 @@
     {
         
     
-        "id": 17,
+        "id": 18,
         "nombre-producto":"comedero bebedero",
         "descripcion": "comederos y bebederos para tus mascotas",
         "precio":6000,
@@ -55,7 +55,7 @@
     {
         
     
-        "id": 18,
+        "id": 19,
         "nombre-producto":"funda-auto",
         "descripcion": "fundita para llevar a tus perros en el vehiculo",
         "precio":13000,
@@ -74,7 +74,7 @@
     {
         
     
-        "id": 19,
+        "id": 20,
         "nombre-producto":"rascador para gato",
         "descripcion": "Excelente rascador para gatos",
         "precio":8000,
@@ -91,7 +91,7 @@
     },
     {      
     
-        "id": 20,
+        "id": 21,
         "nombre-producto":"dispenser bolsa biodegradable",
         "descripcion": "dispenser para llevar tus bolsitas cuando saques a pasear a tus mascotas",
         "precio":9000,
