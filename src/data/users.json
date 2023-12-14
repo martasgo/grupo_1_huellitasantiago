@@ -1,0 +1,47 @@
+[
+    {
+        "id": "01",
+        "nombre": "Marta",
+        "apellido": "Abutti",
+        "email": "mabutti@gmail.com",
+        "contraseña": "MabuttiDH24",
+        "categoria": "administrador",
+        "imagen": "/usuarios/avatar-martita.png"
+    },
+    {
+        "id": "02",
+        "nombre": "Soledad",
+        "apellido": "Smith",
+        "email": "fernanda.smith.ss@gmail.com",
+        "contraseña": "SsmithDH24",
+        "categoria": "cliente",
+        "imagen": "/usuarios/avatar-sole.png"
+    },
+    {
+        "id": "03",
+        "nombre": "Mario",
+        "apellido": "Pereyra",
+        "email": "mariopereyra1.mpp@gmail.com",
+        "contraseña": "MpereyraDH24",
+        "categoria": "cliente",
+        "imagen": "/usuarios/avatar-marito.png"
+    },
+    {
+        "id": "04",
+        "nombre": "Matias",
+        "apellido": "Gomez",
+        "email": "cpnmatiasgomez@gmail.com",
+        "contraseña": "MgomezDH24",
+        "categoria": "cliente",
+        "imagen": "/usuarios/avatar-mati.png"
+    },
+    {
+        "id": "05",
+        "nombre": "Gabriel",
+        "apellido": "Dominguez",
+        "email": "gabidominguez@gmail.com",
+        "contraseña": "GdominguezDH24",
+        "categoria": "cliente",
+        "imagen": "/usuarios/avatar-gabi.png"
+    }
+]
