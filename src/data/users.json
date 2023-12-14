@@ -1,6 +1,6 @@
 [
     {
-        "id": "01",
+        "id": 1,
         "nombre": "Marta",
         "apellido": "Abutti",
         "email": "mabutti@gmail.com",
@@ -9,7 +9,7 @@
         "imagen": "/usuarios/avatar-martita.png"
     },
     {
-        "id": "02",
+        "id": 2,
         "nombre": "Soledad",
         "apellido": "Smith",
         "email": "fernanda.smith.ss@gmail.com",
@@ -18,7 +18,7 @@
         "imagen": "/usuarios/avatar-sole.png"
     },
     {
-        "id": "03",
+        "id": 3,
         "nombre": "Mario",
         "apellido": "Pereyra",
         "email": "mariopereyra1.mpp@gmail.com",
@@ -27,7 +27,7 @@
         "imagen": "/usuarios/avatar-marito.png"
     },
     {
-        "id": "04",
+        "id": 4,
         "nombre": "Matias",
         "apellido": "Gomez",
         "email": "cpnmatiasgomez@gmail.com",
@@ -36,7 +36,7 @@
         "imagen": "/usuarios/avatar-mati.png"
     },
     {
-        "id": "05",
+        "id": 5,
         "nombre": "Gabriel",
         "apellido": "Dominguez",
         "email": "gabidominguez@gmail.com",
