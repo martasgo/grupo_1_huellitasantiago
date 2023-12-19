@@ -7,12 +7,12 @@
     "descuento": 0,
     "mascota": "perros",
     "imagen": "alimentos/pedigree-pouch-adulto.png",
-    "marca": "pedigree",
+    "marca": "Pedigree",
     "edadMascota": "adulto",
     "tamanioMascota": "pequeño",
     "destacado": "si",
     "categoria": "alimentos",
-    "subcategoria": "latas-sobres",
+    "subCategoria": "latas-sobres",
     "presentacion": "100 gr."
   },
   {
@@ -23,12 +23,12 @@
     "descuento": 0,
     "mascota": "gatos",
     "imagen": "alimentos/royal-canin-gato-fit.png",
-    "marca": "royal",
+    "marca": "Royal",
     "edadMascota": "adulto",
     "tamanioMascota": "mediano",
     "destacado": "no",
     "categoria": "alimentos",
-    "subcategoria": "alimento-seco",
+    "subCategoria": "alimentos-secos",
     "presentacion": "2.5 kg."
   },
   {
@@ -39,19 +39,19 @@
     "descuento": 0,
     "mascota": "perros",
     "imagen": "alimentos/nutrique-perro-adulto.png",
-    "marca": "nutrique",
+    "marca": "Nutrique",
     "edadMascota": "adulto",
     "tamanioMascota": "grande",
     "destacado": "no",
     "categoria": "alimentos",
-    "subcategoria": "alimento-seco",
+    "subCategoria": "alimentos-secos",
     "presentacion": "2.5 kg."
   },
   {
     "id": 4,
     "nombreProducto": "Bifecitos de pollo para gatos",
     "descripcion": "Alimento blando sabor pollo de alta nutrición para gatitos bebés",
-    "precio": "600",
+    "precio": 600,
     "descuento": 0,
     "mascota": "gatos",
     "imagen": "alimentos/gatitos-sobre-purina.png",
@@ -60,7 +60,7 @@
     "tamanioMascota": "pequeño",
     "destacado": "no",
     "categoria": "alimentos",
-    "subcategoria": "latas-sobres",
+    "subCategoria": "latas-sobres",
     "presentacion": "100 gr."
   },
   {
@@ -76,7 +76,7 @@
     "tamanioMascota": "pequeño",
     "destacado": "no",
     "categoria": "alimentos",
-    "subcategoria": "alimento-seco",
+    "subCategoria": "alimentos-secos",
     "presentacion": "2.5 kg."
   },
   {
@@ -97,7 +97,7 @@
   },
   {
     "id": 7,
-    "nombreProducto": "Camiseta Argentina Del Mundial",
+    "nombreProducto": "Camiseta Argentina Mundial",
     "descripcion": "Camiseta deportiva para tu perrito futbolero.",
     "precio": 6500,
     "descuento": 0,
@@ -164,7 +164,7 @@
     "nombreProducto": "Pipeta Frontline Plus Perros 60kg",
     "descripcion": "FRONTLINE® Plus, proporciona una protección continua, con doble acción, sobre pulgas adultas y sobre los estadios inmaduros (huevos y larvas) presentes en el medio ambiente. FRONTLINE® Plus también elimina las garrapatas y piojos.",
     "precio": 8950,
-    "descuento": 20,
+    "descuento": 0,
     "mascota": "perros",
     "imagen": "cuidado-higiene/pipeta.png",
     "marca": "Frontline",
@@ -172,7 +172,7 @@
     "tamanioMascota": "grande",
     "destacado": "si",
     "categoria": "cuidados-higiene",
-    "subcategoria": "",
+    "subCategoria": "",
     "presentacion": ""
   },
   {
@@ -188,7 +188,7 @@
     "tamanioMascota": "mediano",
     "destacado": "no",
     "categoria": "cuidados-higiene",
-    "subcategoria": "",
+    "subCategoria": "",
     "presentacion": ""
   },
   {
@@ -204,7 +204,7 @@
     "tamanioMascota": "mediano",
     "destacado": "no",
     "categoria": "cuidados-higiene",
-    "subcategoria": "",
+    "subCategoria": "",
     "presentacion": ""
   },
   {
@@ -214,13 +214,13 @@
     "precio": 3570,
     "descuento": 0,
     "mascota": "gatos",
-    "imagen": "cuidado-higiene/espuma-enseco.png",
+    "imagen": "cuidado-higiene/espuma-enseco.jpg",
     "marca": "Pauldip",
     "edadMascota": "adulto",
     "tamanioMascota": "mediano",
     "destacado": "no",
     "categoria": "cuidados-higiene",
-    "subcategoria": "",
+    "subCategoria": "",
     "presentacion": ""
   },
   {
@@ -236,7 +236,7 @@
     "tamanioMascota": "mediano",
     "destacado": "no",
     "categoria": "cuidados-higiene",
-    "subcategoria": "",
+    "subCategoria": "",
     "presentacion": ""
   },
   {
@@ -260,7 +260,7 @@
     "nombreProducto": "Collares",
     "descripcion": "collar para tu gatito",
     "precio": 3000,
-    "descuento": 0,
+    "descuento": 10,
     "mascota": "gatos",
     "imagen": "accesorios/collares/collares.png",
     "marca": "La Tienda",
@@ -276,7 +276,7 @@
     "nombreProducto": "Comedero bebedero",
     "descripcion": "comederos y bebederos para tus mascotas",
     "precio": 6000,
-    "descuento": 0,
+    "descuento": 10,
     "mascota": "perros-gatos",
     "imagen": "accesorios/comederos/par-blanco-letras.png",
     "marca": "Puppis",
@@ -292,7 +292,7 @@
     "nombreProducto": "Funda-auto",
     "descripcion": "fundita para llevar a tus perros en el vehiculo",
     "precio": 13000,
-    "descuento": 0,
+    "descuento": 10,
     "mascota": "perros",
     "imagen": "accesorios/varios/funda-auto.png",
     "marca": "Bacan",
@@ -316,7 +316,7 @@
     "tamanioMascota": "mediano",
     "destacado": "no",
     "categoria": "accesorios",
-    "subCategoria": "varios",
+    "subCategoria": "otros",
     "presentacion": ""
   },
   {
@@ -332,7 +332,7 @@
     "tamanioMascota": "mediano",
     "destacado": "no",
     "categoria": "accesorios",
-    "subCategoria": "varios",
+    "subCategoria": "otros",
     "presentacion": ""
   }
 ]

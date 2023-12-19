@@ -1,3 +1,15 @@
+const fs = require("fs");
+const path = require("path");
+const productsFilePath = path.join(__dirname , "../data/products.json");
+
+// Creo una función para leer el JSON de productos y devolver
+// un array de esos mismos productos
+function getProducts() {
+	return JSON.parse(fs.readFileSync(productsFilePath , "utf-8"));
+};
+
+
+
 const prodController = {
     indexProductController: (req, res) => {
       res.render ('../views/mascotas.ejs', {
@@ -19,6 +31,60 @@ const prodController = {
           title: 'Crear producto',
       });
     },
+
+    // Ruta para almacenar el producto creado
+    guardarProd:(req, res) => {
+      // Creo el array de productos usando la función getProducts
+      const products = getProducts();
+
+      // Defino la variable que recibe la imagen del formulario
+      const image = req.file ? req.file.filename : "default-image.png";
+
+      // Defino la variable que evalúa si es un producto destacado
+      const esDestacado = (req.body.destacado === "true") ? "si" : "no";
+
+      // Variable para manejar subcateoría
+      let subCatFinal = "";
+      
+      if (req.body.subCat != "") {
+        subCatFinal = req.body.subCat;
+      } else if (req.body.subCatAcc != ""){
+        subCatFinal = req.body.subCatAcc;
+      };
+
+      // Defino la variable que guarda el producto creado desde el formulario
+      const newProduct = {
+        id: products[products.length-1].id + 1,
+			  nombreProducto: req.body.nombreprod,
+        descripcion: req.body.descripcion,
+			  precio: parseInt(req.body.precio),
+			  descuento: parseInt(req.body.descuento),
+        mascota: req.body.mascota,
+        imagen: image,
+        marca: req.body.marca,
+        edadMascota: req.body.edadmascota,
+        tamanioMascota: req.body.tamaniomascota,
+        destacado: esDestacado,
+			  categoria: req.body.categoria,
+			  subCategoria: subCatFinal,
+        presentacion: req.body.presentacion
+      };
+
+      // Agrego el producto creado al array de productos
+      products.push(newProduct);
+
+      // Actualizo el JSON de productos luego de crear el producto
+      fs.writeFileSync(productsFilePath , JSON.stringify(products), {
+        flag:"w",
+        encoding:"utf-8",
+      });
+        
+
+      res.render ('../views/mascotas.ejs', {
+        title: 'Mascotas'
+      });
+    },
+
     //ruta para editar prod
     editarProdController:(req, res) => {
       idProducto = parseInt(req.params.idProd);
@@ -38,12 +104,6 @@ const prodController = {
       res.render('../views/products/editar.ejs', {
           title: 'Editar producto',
           producto
-      });
-    },
-
-    guardarProd:(req, res) => {
-      res.render ('../views/mascotas.ejs', {
-        title: 'Mascotas'
       });
     },
 
