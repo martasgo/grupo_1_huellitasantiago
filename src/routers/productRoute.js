@@ -9,6 +9,7 @@ const routesProd = {
   detailProductRoute: "/detalle/:id",
   productCrear: "/crear",
   productEditar: "/editar/:idProd",
+  productDelete: '/delete/:id',
 
   //listado productos: "/product/perros",  /product/gato/
   productsList: "/:idMascota",
@@ -24,10 +25,13 @@ routerProduct.get(routesProd.productCrear, productController.crearProdController
 routerProduct.post(routesProd.indexProductRoute, productController.guardarProd);
 
 routerProduct.get(routesProd.productEditar, productController.editarProdController);
+routerProduct.get(routesProd.productDelete, productController.eliminarController);
+
 //rutas para mascota=perro o mascota=gato
+routerProduct.get(routesProd.productsList, productController.productsListController);
 routerProduct.get(routesProd.productsListCat, productController.CategoryListController);
 routerProduct.get(routesProd.productsListSubcat, productController.subCategoryListController);
-routerProduct.get(routesProd.productsList, productController.productsListController);
+
 
 
 

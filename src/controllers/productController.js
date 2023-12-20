@@ -29,16 +29,13 @@ const prodController = {
     },
     eliminarController: (req, res) =>{
       const idProd = parseInt(req.params.id);
-      //console.log(idProd);
       newList = [];
       for (var i=0; i<=products.length-1; i++){
         idProducto = products[i].id;
-        //console.log(idProducto);
         if (idProducto !== idProd) {
           newList.push(products[i]);
         }
       }
-      //console.log(newList);
       fs.writeFileSync(productsFilePath, JSON.stringify(newList));
       res.redirect('/product');
     },
