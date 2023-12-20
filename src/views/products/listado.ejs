@@ -7,7 +7,7 @@
         <%- include('../partials/header') %>
             <main>
                 <p class="rutahome">
-                    <a href="/">Home</a> / <a href="/mascostas">Mascotas</a> /
+                    <a href="/">Home</a> / <a href="/mascotas">Mascotas</a> /
                     <% mascotaUp = mascota.charAt(0).toUpperCase() + mascota.slice(1);  %>
                     <% if (categoria) { %>      
                             <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> /<% } else {%> <%= mascotaUp %> / <%} %>
@@ -30,75 +30,29 @@
                     <%- include('../partials/filtros-productos') %>
 
                     <section class="listadoArticulos">
-                        <article>
-                            <a href="/dispenser-azimut"><img
-                                    src="/images/productos/accesorios/dispensers/comedero-azimut.png"
-                                    alt="Dispenser Azimut"></a>
-                            <div class="detalle">
-                                <p id="">Dispenser Automatico Azimut - 1,5 Lt</p>
-                                <p id="">$3.500</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
-                            </div>
-                        </article>
-
-                        <article>
-                            <img src="/images/productos/alimentos/pedigree-pouch-adulto.png" alt="Sobre pedigree">
-                            <div class="detalle">
-                                <p id="">Sobre Pedigree Adulto (raza pequeña)</p>
-                                <p id="">$550</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="/images/productos/cuidado-higiene/piedras-gato/absorsol.png" alt="Piedas sanitarias absorsol">
-                            <div class="detalle">
-                                <p id="">Piedras sanitarias absorsol 2kg</p>
-                                <p id="">$850</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="/images/productos/accesorios/camas/cama.png" alt="camas">
-                            <div class="detalle">
-                                <p id="">Moisés Pupis reversible café</p>
-                                <p id="">$17.500</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
-                            </div>
-                        </article>
-                        <article>
-                            <a><img src="/images/productos/accesorios/collares/collares.png" alt="collares"></a>
-                            <div class="detalle">
-                                <p id="">Collares simples</p>
-                                <p id="">$1.500</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
-                            </div>
-                        </article>
-
-                        <article>
-                            <img src="/images/productos/accesorios/varios/pet-kit.png" alt="pet-kit">
-                            <div class="detalle">
-                                <p id="">Pet-Kit completo</p>
-                                <p id="">$6.250</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="/images/productos/cuidado-higiene/pipeta.png" alt="Pipeta">
-                            <div class="detalle">
-                                <p id="">Pipeta (perros)</p>
-                                <p id="">$3.500</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
-                            </div>
-                        </article>
-                        <article>
-                            <img src="/images/productos/accesorios/comederos/par-blanco-letras.png"
-                                alt="Par platos blancos">
-                            <div class="detalle">
-                                <p id="">Par platitos blancos</p>
-                                <p id="">$2.000</p>
-                                <a><input type="button" value="Comprar" id="btn-comprar" /></a>
-                            </div>
-                        </article>
+                        <% if (productsMascotas.length > 0){ %>
+                            <% for (i=0; i< productsMascotas.length; i++){ %>
+                                <article>
+                                    <a href="/product/detalle/<%= productsMascotas[i].id %>"><img src="/images/productos/<%= productsMascotas[i].imagen %>" alt="Cinturon seguridad"></a>
+                                    <div class="detalle">
+                                        <p id=""><%= productsMascotas[i].nombreProducto %></p>
+                                            <% if (productsMascotas[i].descuento != 0) {
+                                                precioFinal = (productsMascotas[i].precio + ((productsMascotas[i].precio * (productsMascotas[i].descuento/100)))) %>
+                                                <div class="preciosOfertas">
+                                                    <span id="prodOff"><%= productsMascotas[i].descuento %>% OFF</span>
+                                                    <p class="precioAnt" id="">$<%= toThousand(productsMascotas[i].precio) %></p>
+                                                    <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
+                                                </div>
+                                            <% } else {%>
+                                                <p class="precioAhora" id="">$<%= toThousand(productsMascotas[i].precio) %> </p>
+                                            <% } %>
+                                        <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                                    </div>
+                                </article>    
+                            <%  } %>
+                        <%  } else { %>
+                                <p>NO HAY RESULTADOS PARA LA BUSQUEDA</p>
+                        <%  } %>
                     </section>
                 </div>
                 <!-- include marcas -->
