@@ -18,6 +18,10 @@ app.use('/', routerMain);
 app.use('/cart', routerCart);
 app.use('/user', routerUser);
 app.use('/product', routerProduct);
+app.use((req, res, next) => {
+  res.status(404).render('404-page', {title: 'Error 404'});
+  next();
+  });
 
 // levantamos servidor
 app.listen(PORT, () => {
