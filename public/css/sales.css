@@ -11,14 +11,24 @@
     flex-direction: row;
 }
 
+#prodOff{
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .precioAnt{
     text-decoration: line-through;
 }
 
 .precioAhora{
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     color: green;
+}
+
+.red {
+    color: red;
 }
 
 @media (min-width: 361px){
