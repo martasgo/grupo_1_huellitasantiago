@@ -13,87 +13,40 @@
     <main>
         <div class="categorias">
             <div>
-                <a><img class="" src="/images/categorias/accesorios.jpg" alt="Banner"></a>
+                <a href="/product/perros/accesorios"><img src="/images/categorias/accesorios.jpg" alt="Accesorios"></a>
             </div>
             <div>
-                <a><img class="" src="/images/categorias/alimentacion.jpg" alt="Banner"></a>
+                <a href="/product/perros/alimento"><img src="/images/categorias/alimentacion.jpg" alt="Alimentación"></a>
             </div>
             <div>
-                <a><img class=""src="/images/categorias/cuidado.jpg"alt="Banner"></a>
+                <a href="/product/gatos/cuidados-higiene"><img src="/images/categorias/cuidado.jpg" alt="Cuidados e higiene"></a>
             </div>
             <div>
-                <a><img class="" src="/images/categorias/ropa.jpg" alt="Banner"></a></a>
+                <a href="/product/perros/ropa"><img src="/images/categorias/ropa.jpg" alt="Ropa"></a></a>
             </div>
         </div>
         <p></p>
         <p class="tituloProductosDestacados">PRODUCTOS DESTACADOS</p>
         <section class="listadoArticulos">
-            <article>
-               <a href="/product/detalle/1"><img src="/images/productos/accesorios/dispensers/comedero-azimut.png" alt="Dispenser Azimut"></a>
-                <div class="detalle">
-                    <p id="">Dispenser Automatico Azimut - 1,5 Lt</p>
-                    <p id="">$3.500</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-
-             <article>
-                <img src="/images/productos/alimentos/pedigree-pouch-adulto.png" alt="Sobre pedigree">
-                <div class="detalle">
-                    <p id="">Sobre Pedigree Adulto (raza pequeña)</p>
-                    <p id="">$550</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-            <article>
-                <img src="/images/productos/cuidado-higiene/piedras-gato/absorsol.png" alt="Piedas sanitarias absorsol">
-                <div class="detalle">
-                    <p id="">Piedras sanitarias absorsol 2kg</p>
-                    <p id="">$850</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-            <article>
-                <img src="/images/productos/accesorios/camas/cama.png" alt="camas">
-                <div class="detalle">
-                    <p id="">Moisés Pupis reversible café</p>
-                    <p id="">$17.500</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-            <article>
-                <a><img src="/images/productos/accesorios/collares/collares.png" alt="collares"></a>
-                 <div class="detalle">
-                     <p id="">Collares simples</p>
-                     <p id="">$1.500</p>
-                     <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                 </div>
-             </article>
- 
-              <article>
-                 <img src="/images/productos/accesorios/varios/pet-kit.png" alt="pet-kit">
-                 <div class="detalle">
-                     <p id="">Pet-Kit completo</p>
-                     <p id="">$6.250</p>
-                     <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                 </div>
-             </article>
-             <article>
-                 <img src="/images/productos/cuidado-higiene/pipeta.png" alt="Pipeta">
-                 <div class="detalle">
-                     <p id="">Pipeta (perros)</p>
-                     <p id="">$3.500</p>
-                     <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                 </div>
-             </article>
-             <article>
-                 <img src="/images/productos/accesorios/comederos/par-blanco-letras.png" alt="Par platos blancos">
-                 <div class="detalle">
-                     <p id="">Par platitos blancos</p>
-                     <p id="">$2.000</p>
-                     <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                 </div>
-             </article>
+            <% for (i=0; i< productsDestacado.length; i++){ %>
+                <article>
+                    <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                    <div class="detalle">
+                        <p id=""><%= productsDestacado[i].nombreProducto %></p>
+                            <% if (productsDestacado[i].descuento != 0) {
+                                precioFinal = (productsDestacado[i].precio + ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+                                <div class="preciosOfertas">
+                                    <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
+                                    <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
+                                    <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
+                                </div>
+                            <% } else {%>
+                                <p class="precioAhora" id="">$<%= toThousand(productsDestacado[i].precio) %> </p>
+                            <% } %>
+                        <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                    </div>
+                </article>    
+            <%  } %>
         </section>
         <div class="verproductos">
             <a href="#"> <input type="button" name="productos" id="productos" value="Mostrar más productos"/> </a>

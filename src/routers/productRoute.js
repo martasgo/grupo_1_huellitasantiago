@@ -27,6 +27,7 @@ const routesProd = {
   detailProductRoute: "/detalle/:id",
   productCrear: "/crear",
   productEditar: "/editar/:id",
+  productDelete: '/delete/:id',
 
   //listado productos: "/product/perros",  /product/gato/  
   productsList: "/:idMascota",
@@ -39,19 +40,20 @@ const routesProd = {
 routerProduct.get(routesProd.indexProductRoute, productController.indexProductController);
 routerProduct.get(routesProd.detailProductRoute, productController.detailProductController);
 
-
-// rutas para obtener form para crear/editar productos
+// rutas para obtener form para crear productos
 routerProduct.get(routesProd.productCrear, productController.crearProdController);
 routerProduct.post(routesProd.indexProductRoute, productController.guardarProd); 
 
+// rutas para obtener form para editar productos
 routerProduct.get(routesProd.productEditar, productController.editarProdController); //sole get de editar
 routerProduct.put(routesProd.productEditar,  upload.single('newImage'), productController.updateProdController); //sole put de editar
 
+routerProduct.get(routesProd.productEditar, productController.editarProdController);
+routerProduct.get(routesProd.productDelete, productController.eliminarController);
+
 //rutas para mascota=perro o mascota=gato
+routerProduct.get(routesProd.productsList, productController.productsListController);
 routerProduct.get(routesProd.productsListCat, productController.CategoryListController);
 routerProduct.get(routesProd.productsListSubcat, productController.subCategoryListController);
-routerProduct.get(routesProd.productsList, productController.productsListController);
-
-
 
 module.exports = routerProduct;

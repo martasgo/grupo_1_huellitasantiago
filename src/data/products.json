@@ -276,7 +276,7 @@
         "nombreProducto": "Comedero bebedero",
         "descripcion": "comederos y bebederos para tus mascotas",
         "precio": 6000,
-        "descuento": 0,
+        "descuento": 10,
         "mascota": "perros-gatos",
         "imagen": "accesorios/comederos/par-blanco-letras.png",
         "marca": "Puppis",

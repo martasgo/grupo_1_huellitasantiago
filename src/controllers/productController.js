@@ -2,9 +2,11 @@ const fs = require('fs');
 
 const path = require('path');
 const productsFilePath = path.join(__dirname, '../data/products.json');
-const productos = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+//const productos = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
-function getProducts() {return JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));}
+function getProducts() {
+  return JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+}
 
 const toThousand = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
@@ -14,7 +16,7 @@ const prodController = {
         title: 'Mascotas'
       });
     },
-
+    //controller ruta para ver detalle producto
     detailProductController:(req, res) => {
         idProducto = parseInt(req.params.id);
         if (idProducto === 1 ){
@@ -24,30 +26,43 @@ const prodController = {
             });
         }
     },
-    //ruta para crear prod
+    //controller ruta para crear prod
     crearProdController:(req, res) => {
       res.render('../views/products/crear.ejs', {
           title: 'Crear producto',
       });
     },
-
+    //controller ruta para eliminar producto
+    eliminarController: (req, res) =>{
+      const idProd = parseInt(req.params.id);
+      const products = getProducts();
+      newList = [];
+      for (var i=0; i<=products.length-1; i++){
+        idProducto = products[i].id;
+        if (idProducto !== idProd) {
+          newList.push(products[i]);
+        }
+      }
+      fs.writeFileSync(productsFilePath, JSON.stringify(newList));
+      res.redirect('/product');
+    },
     //Controlador para editar prod -sole
     editarProdController:(req, res) => {
-      const productos =getProducts();
-      const {id} = req.params;		
-      const producto = productos.find((product)=> product.id ==id);
+      const productos = getProducts();
+      const id = parseInt(req.params.id);	
+      const producto = productos.find((product)=> product.id == id);
   
       res.render("../views/products/editar.ejs", {producto});
     },
 
-    //Guardar del crear Prod.
+    //Controlador Guardar del crear Prod.
     guardarProd:(req, res) => {
       res.render ('../views/mascotas.ejs', {
         title: 'Mascotas'
       });
     },
 
-    //Guardar del Editar -Sole
+    //Controlador Guardar del Editar -Sole
     updateProdController: (req, res) => {		
       const productos =getProducts();
       const {id} = req.params;
@@ -77,46 +92,59 @@ const prodController = {
       productos[productToEdit].subCategoria = subCatFinal;
       productos[productToEdit].presentacion = req.body.presentacion;
     
-      fs.writeFileSync(productsFilePath, JSON.stringify(productos));
-      
+      fs.writeFileSync(productsFilePath, JSON.stringify(productos));  
       res.redirect("/product");          
     },
-
-
-    //ruta /product/perros o /gatos
+    //Controlador ruta /product/perros o /gatos
     productsListController:(req, res) => {
       categoria = ''
       subCategoria = '';
       mascota = req.params.idMascota;
+      const products = getProducts();
+
+      //filtro productos de la mascota seleccionada 
+      const productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
+
       res.render('../views/products/listado.ejs', {
           title: 'Listado Productos',
           categoria,
           subCategoria,
-          mascota
+          mascota,
+          productsMascotas,
+          toThousand
       });
     },
-    // ruta para perros/categoria
+    // Controlador ruta para perros/categoria o gatos/categoria
     CategoryListController:(req, res) => {
-      categoria = (req.params.category);
+      categoria = req.params.category;
       mascota = req.params.idMascota;
-      if (req.params.subCat){
-        subCategoria = req.params.subCat
-      } else {
-        subCategoria = ''
-      }     
+      const products = getProducts();
+      subCategoria = '';
+
+      productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
+      productsMascotas = productsMascotas.filter((product) => product.categoria === categoria);
+         
       res.render('../views/products/listado.ejs', {
           title: 'Listado Productos',
           categoria,
           subCategoria,
-          mascota
+          mascota,
+          productsMascotas,
+          toThousand
       });
     },
-    //rutas para perros/categoria/subcategoria
+    //Controlador rutas para perros/categoria/subcategoria o gatos/categoria/subcategoria
     subCategoryListController:(req, res) => {
       categoria = req.params.category;
       mascota = req.params.idMascota;
+      const products = getProducts();
+
+      productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
+      productsMascotas = productsMascotas.filter((product) => product.categoria === categoria);
+
       if (req.params.subCat){
-        subCategoria = req.params.subCat
+        subCategoria = req.params.subCat;
+        productsMascotas = productsMascotas.filter((product) => product.subCategoria === subCategoria);
       } else {
         subCategoria = ''
       }     
@@ -124,7 +152,9 @@ const prodController = {
           title: 'Listado Productos',
           categoria,
           subCategoria,
-          mascota
+          mascota,
+          productsMascotas,
+          toThousand
       });
     },
    

@@ -10,55 +10,36 @@
     <main >
         <section class="contenido">
             <h1 class="center">SALES</h1>
-            <h3 class="center ">¡Tenemos accesorio en liquidación! Aprovecha 30% off</h3>
         </section>
-        <section class="listadoArticulos">
-            <article>
-               <a href="/product/1"><img src="/images/productos/accesorios/varios/cinturon-seguridad-estrella-negro.png" alt="Cinturon seguridad"></a>
-                <div class="detalle">
-                    <p id="">Cinturón de seguridad</p>
-                    <div class="preciosOfertas">
-                        <p class="precioAnt" id="">$3.700</p>
-                        <p class="precioAhora" id="">$2.590</p> 
-                    </div>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
+        <% if (productsDiscount.length > 0){ %>
+            <h3 class="contenido center">¡Tenemos accesorio en liquidación! Aprovecha 30% off</h3>
+            <div class="listado-content">
+                <section class="listadoArticulos">    
+                        <% for (i=0; i< productsDiscount.length; i++){ %>
+                            <article>
+                                <a href="/product/detalle/<%= productsDiscount[i].id %>"><img src="/images/productos/<%= productsDiscount[i].imagen %>" alt="Cinturon seguridad"></a>
+                                <div class="detalle">
+                                    <p id=""><%= productsDiscount[i].nombreProducto %></p>
+                                        <% if (productsDiscount[i].descuento != 0) {
+                                            precioFinal = (productsDiscount[i].precio + ((productsDiscount[i].precio * (productsDiscount[i].descuento/100)))) %>
+                                            <div class="preciosOfertas">
+                                                <span id="prodOff"><%= productsDiscount[i].descuento %>% OFF</span>
+                                                <p class="precioAnt" id="">$<%= toThousand(productsDiscount[i].precio) %></p>
+                                                <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
+                                            </div>
+                                        <% } else {%>
+                                            <p class="precioAhora" id="">$<%= toThousand(productsDiscount[i].precio) %> </p>
+                                        <% } %>
+                                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                                </div>
+                            </article>    
+                        <%  } %>
 
-             <article>
-                <img src="/images/productos/accesorios/varios/dispenser-bolsas-biodegradables.png" alt="Dispenser bolsas biodegradables">
-                <div class="detalle">
-                    <p id="">Dispenser con bolsas biodegradables</p>
-                    <div class="preciosOfertas">
-                        <p class="precioAnt" id="">$1.900</p>
-                        <p class="precioAhora" id="">$1.330</p> 
-                    </div>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-            <article>
-                <img src="/images/productos/accesorios/varios/rascador-gato.png" alt="Rascador">
-                <div class="detalle">
-                    <p id="">Rascador para gatos</p>
-                    <div class="preciosOfertas">
-                        <p class="precioAnt" id="">$6.250</p>
-                        <p class="precioAhora" id="">$4.375</p> 
-                    </div>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-            <article>
-                <img src="/images/productos/accesorios/varios/funda-auto.png" alt="Fundas para autos">
-                <div class="detalle">
-                    <p id="">Fundas para autos</p>
-                    <div class="preciosOfertas">
-                        <p class="precioAnt" id="">$13.750</p>
-                        <p class="precioAhora" id="">$9.625</p> 
-                    </div>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-        </section>
+                </section>
+            </div>
+        <%  } else { %>
+                    <h3 class="contenido center">No se encontraron productos en oferta</h3>
+            <%  } %>
         <p>
 
         </p>

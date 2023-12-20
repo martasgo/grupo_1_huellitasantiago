@@ -118,7 +118,7 @@ i {
 
 .categorias img{
   width: 70%;
-  border: solid;
+  border: solid 2px black;
   transition: transform 800ms ease-out;
 }
 
@@ -130,11 +130,13 @@ i {
 .listadoArticulos{
   display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-around;
     flex-wrap: wrap;
     width: 90%;
-    margin: auto;
+    /* margin: auto;*/
+    margin: 0 5%;
+    padding-top: 20px;
 }
 
 article {
@@ -732,7 +734,7 @@ button a {
   .categorias{
     flex-direction: row;
   }
-   
+  
   .marcas img{
     width: 50%;
     flex-basis: 50%;
@@ -744,7 +746,6 @@ button a {
 
   .categorias img{
     width: 90%;
-    border: solid;
     margin: 10px;
     box-sizing: border-box;
   }
