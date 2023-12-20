@@ -1,8 +1,6 @@
 const fs = require('fs');
-
 const path = require('path');
 const productsFilePath = path.join(__dirname, '../data/products.json');
-//const productos = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
 function getProducts() {
   return JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
@@ -16,7 +14,7 @@ const prodController = {
         title: 'Mascotas'
       });
     },
-    //controller ruta para ver detalle producto
+    //Controlador ruta para ver detalle producto
     detailProductController:(req, res) => {
         idProducto = parseInt(req.params.id);
         if (idProducto === 1 ){
@@ -26,13 +24,13 @@ const prodController = {
             });
         }
     },
-    //controller ruta para crear prod
+    //Controlador ruta para crear prod
     crearProdController:(req, res) => {
       res.render('../views/products/crear.ejs', {
           title: 'Crear producto',
       });
     },
-    //controller ruta para eliminar producto
+    //Controlador ruta para eliminar producto
     eliminarController: (req, res) =>{
       const idProd = parseInt(req.params.id);
       const products = getProducts();
@@ -43,8 +41,57 @@ const prodController = {
           newList.push(products[i]);
         }
       }
-      fs.writeFileSync(productsFilePath, JSON.stringify(newList));
-      res.redirect('/product');
+    },
+    //Controlador Ruta para almacenar el producto creado
+    guardarProd:(req, res) => {
+      // Creo el array de productos usando la función getProducts
+      const products = getProducts();
+
+      // Defino la variable que recibe la imagen del formulario
+      const image = req.file ? req.file.filename : "default-image.png";
+
+      // Defino la variable que evalúa si es un producto destacado
+      const esDestacado = (req.body.destacado === "true") ? "si" : "no";
+
+      // Variable para manejar subcateoría
+      let subCatFinal = "";
+      
+      if (req.body.subCat != "") {
+        subCatFinal = req.body.subCat;
+      } else if (req.body.subCatAcc != ""){
+        subCatFinal = req.body.subCatAcc;
+      };
+
+      // Defino la variable que guarda el producto creado desde el formulario
+      const newProduct = {
+        id: products[products.length-1].id + 1,
+			  nombreProducto: req.body.nombreprod,
+        descripcion: req.body.descripcion,
+			  precio: parseInt(req.body.precio),
+			  descuento: parseInt(req.body.descuento),
+        mascota: req.body.mascota,
+        imagen: image,
+        marca: req.body.marca,
+        edadMascota: req.body.edadmascota,
+        tamanioMascota: req.body.tamaniomascota,
+        destacado: esDestacado,
+			  categoria: req.body.categoria,
+			  subCategoria: subCatFinal,
+        presentacion: req.body.presentacion
+      };
+
+      // Agrego el producto creado al array de productos
+      products.push(newProduct);
+
+      // Actualizo el JSON de productos luego de crear el producto
+      fs.writeFileSync(productsFilePath , JSON.stringify(products), {
+        flag:"w",
+        encoding:"utf-8",
+      });
+        
+      res.render ('../views/mascotas.ejs', {
+        title: 'Mascotas'
+      });
     },
     //Controlador para editar prod -sole
     editarProdController:(req, res) => {
@@ -54,14 +101,6 @@ const prodController = {
   
       res.render("../views/products/editar.ejs", {producto});
     },
-
-    //Controlador Guardar del crear Prod.
-    guardarProd:(req, res) => {
-      res.render ('../views/mascotas.ejs', {
-        title: 'Mascotas'
-      });
-    },
-
     //Controlador Guardar del Editar -Sole
     updateProdController: (req, res) => {		
       const productos =getProducts();

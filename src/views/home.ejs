@@ -34,7 +34,7 @@
                     <div class="detalle">
                         <p id=""><%= productsDestacado[i].nombreProducto %></p>
                             <% if (productsDestacado[i].descuento != 0) {
-                                precioFinal = (productsDestacado[i].precio + ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+                                precioFinal = (productsDestacado[i].precio - ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
                                 <div class="preciosOfertas">
                                     <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
                                     <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
