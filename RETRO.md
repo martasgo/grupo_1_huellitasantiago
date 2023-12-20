@@ -54,3 +54,32 @@ Evitar cambios de último minuto en las rutas y controladores: Minimicemos los c
 Abandonar la falta de documentación en GitHub: Dejemos de postergar la documentación en GitHub. A partir de ahora, asegurémonos de documentar cada cambio y asegurarnos de que la información esté fácilmente accesible para todos.
 
 Eliminar el trabajo no planificado: Evitemos introducir tareas no planificadas en mitad del sprint. Establezcamos una política para manejar estas situaciones de manera más controlada.
+
+## RETRO Sprint-3 
+
+1. Comenzar a hacer:
+
+Unificar criterios para definir y manejar variables, propiedades y métodos, de manera que se pueda homogeneizar el código y reducir al mínimo la existencia de conflictos en cada merge.
+
+
+2. Hacer más:
+
+Volver a repasar el manejo de funciones, condicionales y demás conceptos vistos al inicio del cursado, cuya implementación en este sprint se vuelve nuevamente importante.
+Investigar un poco más sobre las propiedades de algunos módulos y librerías que son útiles en nuestros proyectos (express, path, multer, etc.).
+Utilizar las clases para sacarnos dudas referidas al código de nuestro proyecto grupal.
+
+
+3. Continuar haciendo:
+
+Reuniones semanales para asignar las tareas, controlar su ejecución y revisar el código para asegurar una entrega que cumpla los requisitos de aprobación.
+Comunicación fluida entre los integrantes para ofrecer y solicitar ayuda cuando sea necesario.
+
+
+4. Hacer menos:
+
+Destinar mucho tiempo a detalles no esenciales que no hacen al objetivo principal del sprint.
+
+
+5. Dejar de hacer:
+
+No plantear las dudas a tiempo para resolver lo antes posible cuestiones importantes del sprint.
