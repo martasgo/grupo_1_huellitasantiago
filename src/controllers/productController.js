@@ -1,18 +1,36 @@
+const fs = require('fs');
+const path = require('path');
+const productsFilePath = path.join(__dirname, '../data/products.json');
+
+function getProducts() {
+  return JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+}
+
+const toThousand = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
 const prodController = {
     indexProductController: (req, res) => {
       res.render ('../views/mascotas.ejs', {
         title: 'Mascotas'
       });
     },
+  
+    // controladora ruta detalle producto
     detailProductController:(req, res) => {
-        idProducto = parseInt(req.params.id);
-        if (idProducto === 1 ){
-            res.render('../views/products/detalle-producto.ejs', {
-                /* aqui se mandaria le objeto de cada articulo para hacerlo dinámico */
-                title: 'Detalle producto',
-            });
-        }
-    },
+      idProducto = parseInt(req.params.id);
+      productos = getProducts();
+      producto = productos.filter(product => product.id === idProducto);
+      const productsDestacado = productos.filter((product) => product.destacado === 'si');
+      
+          res.render('../views/products/detalle-producto.ejs', {
+              /* aqui se mandaria le objeto de cada articulo para hacerlo dinámico */
+              title: 'Detalle producto',
+              producto,
+              productsDestacado,
+              toThousand
+          });
+      
+  },
     //ruta para crear prod
     crearProdController:(req, res) => {
       res.render('../views/products/crear.ejs', {
@@ -91,7 +109,8 @@ const prodController = {
           mascota
       });
     },
-   
-};
+
+    // delete
+  };
   
 module.exports = prodController;

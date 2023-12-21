@@ -11,6 +11,12 @@
     flex-direction: row;
 }
 
+#prodOff{
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .precioAnt{
     text-decoration: line-through;
 }
@@ -19,6 +25,18 @@
     font-size: 20px;
     font-weight: bold;
     color: green;
+}
+
+.red {
+    color: red;
+}
+
+.textNegrita{
+    font-weight: bold;
+}
+
+.textDescripcion{
+    font-size: 18px;
 }
 
 @media (min-width: 361px){
