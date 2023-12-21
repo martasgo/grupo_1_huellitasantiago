@@ -41,6 +41,8 @@ const prodController = {
           newList.push(products[i]);
         }
       }
+      fs.writeFileSync(productsFilePath, JSON.stringify(newList));
+      res.redirect('/product');
     },
     //Controlador Ruta para almacenar el producto creado
     guardarProd:(req, res) => {
