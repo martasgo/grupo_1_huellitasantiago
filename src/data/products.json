@@ -241,7 +241,7 @@
     },
     {
         "id": 16,
-        "nombreProducto": "Cama",
+        "nombreProducto": "Cama alcolchadas",
         "descripcion": "Agradable camita acolchonada",
         "precio": 15000,
         "descuento": 0,
@@ -289,7 +289,7 @@
     },
     {
         "id": 19,
-        "nombreProducto": "Funda-auto",
+        "nombreProducto": "Funda para auto",
         "descripcion": "fundita para llevar a tus perros en el vehiculo",
         "precio": 13000,
         "descuento": 10,

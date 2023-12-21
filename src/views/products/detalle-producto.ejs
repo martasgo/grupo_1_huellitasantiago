@@ -6,47 +6,54 @@
     <!-- include header -->
     <%- include('../partials/header') %>
     <main>
-        <p class="rutahome"><a href="/">Home</a> / Mascotas / Perro / Accesorios / Dispenser-Azimut</p>
+        <p class="rutahome"><a href="/">Home</a> / <a href="/mascotas">Mascotas</a> / 
       
         <section class="ficha-producto">
             <div id="img-precio">
                 <section id="imgProducto">
-                    <img class="imgPrincipal" src="/images/productos/accesorios/dispensers/comedero-azimut.png" />
+                    <img class="imgPrincipal" src="/images/productos/<%= producto[0].imagen %>" />
                     <div class="fotos">
-                        <img src="/images/productos/accesorios/dispensers/comedero-azimut-agua.png" />
-                        <img src="/images/productos/accesorios/dispensers/comedero-azimut-agua-2.png" />
-                        <img src="/images/productos/accesorios/dispensers/comedero-azimut-antideslizante.png" />
+                        <img src="/images/productos/<%= producto[0].imagen %>" />
+                        <img src="/images/productos/<%= producto[0].imagen %>" />
+                        <img src="/images/productos/<%= producto[0].imagen %>" />
                     </div>
                 </section>
                 <section id="carritoProducto">
-                    <h3 class="margin-top"> Dispenser Azimut-1,5 lts </h3>
-                    <p class="sinmargin">$3.500</p>
+                    <h3 class="margin-top"><%= producto[0].nombreProducto %> </h3>
+                    <% if (producto[0].descuento != 0) {
+                        precioFinal = (producto[0].precio - ((producto[0].precio * (producto[0].descuento/100)))) %>
+                        <div class="preciosOfertas">
+                            <span id="prodOff"><%= producto[0].descuento %>% OFF</span>
+                            <p class="precioAnt" id="">$<%= toThousand(producto[0].precio) %></p>
+                            <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
+                        </div>
+                    <% } else {%>
+                        <p class="precioAhora" id="">$<%= toThousand(producto[0].precio) %> </p>
+                    <% } %>
                     <div id="comprar">
                         <div> <button class="cantidad-icono">+</button> <input type="text" value="1" class="cantidad-producto"> <button class="cantidad-icono">-</button></div>
                         <div><input type="button" class="addtocart" value="Agregar al carrito" />  </div>
                     </div>
                     <p><i class="fa-solid fa-credit-card"></i> <a href="/envios">Medios de pago</a></p>
+					
+                <div class="elementos-form-100">
+                    <div id="form-buttons">  
+                        <a href="/product/editar/<%= producto[0].id %>" class=""><button type="button" class="">EDITAR</button></a>
+                        <a href="/product/delete/<%= producto[0].id %>" class=""><button type="button" class="">ELIMINAR</button></a>
+                    </div>
+                </div>        
                 </section>
             </div>
             <section id="descripcionProd">
                
                 <h3 class="margin-top"> Descripción </h3>
                 <div class="detalleProducto">
-                    <p>Azimut es un práctico distribuidor de gato y perro para agua y croquetas. En plástico con borde de goma anti deslizante, 
-                        Azimut tiene dos orificios de salida diferentes en el tanque, permitiendo el uso dual.</p>
-                    <p>
-                        El tanque transparente tiene un indicador de capacidad útil que le mantendrá en control del nivel de alimentos o agua dentro.
-                        Fácil de manejar gracias a su forma ergonómico.
-                    </p>
-                    <p>
-                        Este dispensador multifunción está disponible en varios tamaños:
-                        <ul>
-                            <li>0.6 y 1.5 litros de capacidad: el accesorio ideal para gatos, cachorros o perros pequeños.</li>
-                            <li>3 litros, adecuado para perros y gatos de tamaño mediano. </li>
-                            <li>5,5 litros ideal para perros grandes.</li>
-                        </ul>
-                    </p>
-                    <p>Viene en diferentes colores</p>
+                    <p><span class="textNegrita">Marca:</span> <%= producto[0].marca %></p>
+                    <% edad = producto[0].edadMascota.charAt(0).toUpperCase() + producto[0].edadMascota.slice(1); 
+                    tamanio = producto[0].tamanioMascota.charAt(0).toUpperCase() + producto[0].tamanioMascota.slice(1);  %>
+                    <p><span class="textNegrita">Edad mascota:</span> <%= edad %> </p>
+                    <p><span class="textNegrita">Tamaño mascota:</span> <%= tamanio %> </p>
+                    <p class="textDescripcion"><%= producto[0].descripcion %></p>
                 </div>
                 
     
@@ -55,41 +62,29 @@
 
         <p class="tituloProductosDestacados">PRODUCTOS DESTACADOS</p>
         <section class="listadoArticulos">
-            <article>
-               <a href="/dispenser-azimut"><img src="/images/productos/accesorios/dispensers/comedero-azimut.png" alt="Dispenser Azimut"></a>
-                <div class="detalle">
-                    <p id="">Dispenser Automatico Azimut - 1,5 Lt</p>
-                    <p id="">$3.500</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-
-             <article>
-                <img src="/images/productos/alimentos/pedigree-pouch-adulto.png" alt="Sobre pedigree">
-                <div class="detalle">
-                    <p id="">Sobre Pedigree Adulto (raza pequeña)</p>
-                    <p id="">$550</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-            <article>
-                <img src="/images/productos/cuidado-higiene/piedras-gato/absorsol.png" alt="Piedas sanitarias absorsol">
-                <div class="detalle">
-                    <p id="">Piedras sanitarias absorsol 2kg</p>
-                    <p id="">$850</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-            <article>
-                <img src="/images/productos/accesorios/camas/cama.png" alt="camas">
-                <div class="detalle">
-                    <p id="">Moisés Pupis reversible café</p>
-                    <p id="">$17.500</p>
-                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
-                </div>
-            </article>
-         </section>
-       
+            <% for (i=0; i< productsDestacado.length; i++){ %>
+                <article>
+                    <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                    <div class="detalle">
+                        <p id=""><%= productsDestacado[i].nombreProducto %></p>
+                            <% if (productsDestacado[i].descuento != 0) {
+                                precioFinal = (productsDestacado[i].precio + ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+                                <div class="preciosOfertas">
+                                    <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
+                                    <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
+                                    <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
+                                </div>
+                            <% } else {%>
+                                <p class="precioAhora" id="">$<%= toThousand(productsDestacado[i].precio) %> </p>
+                            <% } %>
+                        <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                    </div>
+                </article>    
+            <%  } %>
+        </section>
+        <div class="verproductos">
+            <a href="#"> <input type="button" name="productos" id="productos" value="Mostrar más productos"/> </a>
+        </div>
        <!-- include marcas -->
        <%- include('../partials/marcas') %>
     </main>

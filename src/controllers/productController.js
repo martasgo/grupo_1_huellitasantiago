@@ -14,15 +14,22 @@ const prodController = {
         title: 'Mascotas'
       });
     },
-    //Controlador ruta para ver detalle producto
+  
+    // controlador ruta detalle producto
     detailProductController:(req, res) => {
-        idProducto = parseInt(req.params.id);
-        if (idProducto === 1 ){
-            res.render('../views/products/detalle-producto.ejs', {
-                /* aqui se mandaria le objeto de cada articulo para hacerlo dinámico */
-                title: 'Detalle producto',
-            });
-        }
+      idProducto = parseInt(req.params.id);
+      productos = getProducts();
+      producto = productos.filter(product => product.id === idProducto);
+      const productsDestacado = productos.filter((product) => product.destacado === 'si');
+      
+          res.render('../views/products/detalle-producto.ejs', {
+              /* aqui se mandaria le objeto de cada articulo para hacerlo dinámico */
+              title: 'Detalle producto',
+              producto,
+              productsDestacado,
+              toThousand
+          });
+      
     },
     //Controlador ruta para crear prod
     crearProdController:(req, res) => {
@@ -198,7 +205,8 @@ const prodController = {
           toThousand
       });
     },
-   
-};
+
+    // delete
+  };
   
 module.exports = prodController;

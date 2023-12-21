@@ -31,6 +31,14 @@
     color: red;
 }
 
+.textNegrita{
+    font-weight: bold;
+}
+
+.textDescripcion{
+    font-size: 18px;
+}
+
 @media (min-width: 361px){
 
 }
