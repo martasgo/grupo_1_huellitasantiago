@@ -9,26 +9,35 @@
 
     <main class="mainlogin">
         <p class="rutahome"><a href="/">Home</a> / login</p>
-        <form action="/login" method="POST">
-            <label for="email">Email</label> 
-            <input type="email" name="email" id="email">
-            <br>
-            <br>
-            <label for="contraseña">Contraseña</label> 
-            <input type="password" name="contraseña" id="contraseña">
-            <p class="olvidasteclave"><a href="#">¿Olvidaste tu contraseña?</a></p>
-            <br>
-            <br>
-            <button type="submit"><a href="/user/profile">INICIAR SESIÓN</a></button>
-            <br>
-            <div class="opcionrecordarme">
-                <label for="recordarme">Recordarme</label>
-                <input type="checkbox" name="recordarme">
-            </div>
-            <br>
-            <p class="notenescuenta">¿No tenés cuenta? <br>
-            <a href="/user/register"><strong>Crear cuenta</strong></a></p>
-        </form>
+
+            <form action="/user/login" method="POST">
+                <label for="email">Email</label> 
+                <input type="email" name="email" id="email">
+                <% if (typeof errors != "undefined") { %>
+                    <ul>
+                        <% for (let i=0 ; i < errors.length ; i++) { %>
+                            <li style="color:red"> <%= errors[i].msg  %> </li>
+                        <% } %>
+                    </ul>
+                <% } %>           
+                <br>
+                <br>
+                <label for="contraseña">Contraseña</label> 
+                <input type="password" name="contraseña" id="contraseña">
+                <p class="olvidasteclave"><a href="#">¿Olvidaste tu contraseña?</a></p>
+                <br>
+                <br>
+                <button type="submit">INICIAR SESIÓN</button>
+                <br>
+                <div class="opcionrecordarme">
+                    <label for="recordarme">Recordarme</label>
+                    <input type="checkbox" name="recordarme">
+                </div>
+                <br>
+                <p class="notenescuenta">¿No tenés cuenta? <br>
+                <a href="/user/register"><strong>Crear cuenta</strong></a></p>
+            </form>
+        
     </main>
 
     <!-- include footer -->
