@@ -13,17 +13,26 @@
             <form action="/user/login" method="POST">
                 <label for="email">Email</label> 
                 <input type="email" name="email" id="email">
-                <% if (typeof errors != "undefined") { %>
-                    <ul>
-                        <% for (let i=0 ; i < errors.length ; i++) { %>
-                            <li style="color:red"> <%= errors[i].msg  %> </li>
-                        <% } %>
-                    </ul>
-                <% } %>           
+
+                <% if (typeof errors != "undefined") {%>
+                    <% for (let i=0 ; i < errors.length ; i++) {%>
+                        <p style="color:red"> <%= errors[i].msg  %> </p>
+                    <% } %>
+                <% } %>
+
+                <% if (typeof errors != "undefined" && errors.email) {%>
+                    <p style="color:red"> <%= errors.email.msg  %> </p>
+                <% } %>
+
                 <br>
                 <br>
                 <label for="contraseña">Contraseña</label> 
                 <input type="password" name="contraseña" id="contraseña">
+
+                <% if (typeof errors != "undefined" && errors.contraseña) {%>
+                    <p style="color:red"> <%= errors.contraseña.msg  %> </p>
+                <% } %>
+
                 <p class="olvidasteclave"><a href="#">¿Olvidaste tu contraseña?</a></p>
                 <br>
                 <br>

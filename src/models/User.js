@@ -4,7 +4,7 @@ const path = require("path");
 // Objeto User que contiene los métodos para manipular el JSON de usuarios
 const User = {
     // Ruta hacia el JSON de usuarios
-    fileName: "../data/users.json",
+    fileName: path.join(__dirname , "../data/users.json"),
     // Conversión del JSON de usuarios a array para poder trabajarlo con JS 
     getData: function () {
         return JSON.parse(fs.readFileSync(this.fileName , "utf-8"));
@@ -22,7 +22,7 @@ const User = {
     // Método para encontrar un usuario por campo de formulario
     getByField: function(field , text) {
         let allUsers = this.findAll();
-        let userFound = allUsers.find(oneUser => oneUser.field === text);
+        let userFound = allUsers.find(oneUser => oneUser[field] === text);
         return userFound;
     },
     // Método para crear un usuario
@@ -39,6 +39,7 @@ const User = {
 	    return true;
     }
 };
+
 
 
 module.exports = User;
