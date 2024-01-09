@@ -10,10 +10,10 @@
 
     <main class="mainusuario">
         <div class="cabezausuario">
-            <img src="/images/user-solid.svg"/>
+            <img src= " <%= user.imagen %>" margin-top="15px" height="80px" width="80px">
         <div class="identidad">
-            <p class="nombre">Juan José Pérez</p>
-            <p class="correo">jjperez@gmail.com</p>
+            <p class="nombre"> <%= user.nombre + " " + user.apellido  %> </p>
+            <p class="correo"> <%= user.email  %> </p>
         </div>
         </div>
 

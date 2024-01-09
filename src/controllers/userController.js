@@ -31,8 +31,11 @@ const userController = {
             let isOkThePassword = bcrypt.compareSync(req.body.contraseña , 
               userToLogin.contraseña);
             if (isOkThePassword) {
+              req.session.userLogged = userToLogin;
               return res.render("../views/users/profile.ejs",
-              {title: "perfil de usuario"});
+              { title: "Perfil de usuario",
+                user: req.session.userLogged
+              });
             };
             return res.render ('../views/users/login.ejs' , {
               title: "Login",
@@ -61,7 +64,8 @@ const userController = {
     },
     profileController: (req, res) => {
         res.render('../views/users/profile.ejs', {
-            title: 'Perfil de usuario'
+            title: 'Perfil de usuario',
+            user: req.session.userLogged
         });
     }
   };

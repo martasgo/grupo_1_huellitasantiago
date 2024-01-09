@@ -6,7 +6,7 @@
         "email": "mabutti@gmail.com",
         "contraseña": "$2a$10$Q/N.y/cCTGDASVe7jXlfXuQXL6R/bACboukDdSjHsHyv3./BSxfAy",
         "categoria": "administrador",
-        "imagen": "/usuarios/avatar-martita.png"
+        "imagen": "/images/usuarios/avatar-martita.png"
     },
     {
         "id": 2,
@@ -15,7 +15,7 @@
         "email": "fernanda.smith.ss@gmail.com",
         "contraseña": "$2a$10$BWWIFCWKd7gxA57X1p2gK.efMlI2sfEqtDWYl6i5zbuOoIN2HY2Ei",
         "categoria": "cliente",
-        "imagen": "/usuarios/avatar-sole.png"
+        "imagen": "/images/usuarios/avatar-sole.png"
     },
     {
         "id": 3,
@@ -24,7 +24,7 @@
         "email": "mariopereyra1.mpp@gmail.com",
         "contraseña": "$2a$10$f0kwB45GE8kVdI.W6gIvqOKE.wIxSM.XsIEpdRBIajG3AX/ZWVrvu",
         "categoria": "cliente",
-        "imagen": "/usuarios/avatar-marito.png"
+        "imagen": "/images/usuarios/avatar-marito.png"
     },
     {
         "id": 4,
@@ -33,7 +33,7 @@
         "email": "cpnmatiasgomez@gmail.com",
         "contraseña": "$2a$10$jmeHLz.wcBHKov6WxHPbmORHs9tr5.Q8Dq9pfSCnoGYCY4qHZlyZC",
         "categoria": "cliente",
-        "imagen": "/usuarios/avatar-mati.png"
+        "imagen": "/images/usuarios/avatar-mati.png"
     },
     {
         "id": 5,
@@ -42,6 +42,6 @@
         "email": "gabidominguez@gmail.com",
         "contraseña": "$2a$10$UDKihaU/PuTghnDEboD1oOeIpOpJm3cSpu1YZqENJ.1l9bYQEDOve",
         "categoria": "cliente",
-        "imagen": "/usuarios/avatar-gabi.png"
+        "imagen": "/images/usuarios/avatar-gabi.png"
     }
 ]
