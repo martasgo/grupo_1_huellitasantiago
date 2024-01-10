@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const methodOverride =  require('method-override'); // Pasar poder usar los métodos PUT y DELETE
 const session = require ("express-session");
+const sessionMiddleware = require ("./middlewares/sessionMiddleware");
 
 
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(methodOverride('_method')); // Pasar poder pisar el method="POST" en el formulario por PUT y DELETE
 app.set('view engine', 'ejs');
 app.use(session({secret: "texto cualquiera", resave: false, saveUninitialized: false}));
+app.use(sessionMiddleware);
 
 
 // rutas a /

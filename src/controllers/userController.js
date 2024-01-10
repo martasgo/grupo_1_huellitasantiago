@@ -32,10 +32,7 @@ const userController = {
               userToLogin.contraseña);
             if (isOkThePassword) {
               req.session.userLogged = userToLogin;
-              return res.render("../views/users/profile.ejs",
-              { title: "Perfil de usuario",
-                user: req.session.userLogged
-              });
+              return res.redirect("/user/profile");
             };
             return res.render ('../views/users/login.ejs' , {
               title: "Login",
