@@ -4,6 +4,7 @@ const router = require("./mainRoute");
 const path = require("path");
 const multer = require("multer");
 const authMiddleware = require ("../middlewares/authMiddleware");
+const adminMiddleware = require ("../middlewares/adminMiddleware");
 
 // Multer - manejo del almacenamiento
 const storage = multer.diskStorage({
@@ -39,15 +40,15 @@ routerProduct.get(routesProd.indexProductRoute, productController.indexProductCo
 routerProduct.get(routesProd.detailProductRoute, productController.detailProductController);
 
 // rutas para obtener form para crear productos
-routerProduct.get(routesProd.productCrear, authMiddleware , productController.crearProdController);
-routerProduct.post(routesProd.indexProductRoute, authMiddleware , upload.single("foto") , productController.guardarProd);
+routerProduct.get(routesProd.productCrear, authMiddleware , adminMiddleware , productController.crearProdController);
+routerProduct.post(routesProd.indexProductRoute, authMiddleware , adminMiddleware , upload.single("foto") , productController.guardarProd);
 
 // rutas para obtener form para editar productos
-routerProduct.get(routesProd.productEditar, authMiddleware , productController.editarProdController); //sole get de editar
-routerProduct.put(routesProd.productEditar, authMiddleware ,  upload.single('newImage'), productController.updateProdController); //sole put de editar
+routerProduct.get(routesProd.productEditar, authMiddleware , adminMiddleware , productController.editarProdController); //sole get de editar
+routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware ,  upload.single('newImage'), productController.updateProdController); //sole put de editar
 
 // rutas para eliminar producto
-routerProduct.get(routesProd.productDelete, authMiddleware , productController.eliminarController);
+routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
 
 //rutas para mascota=perro o mascota=gato
 routerProduct.get(routesProd.productsList, productController.productsListController);
