@@ -3,6 +3,7 @@ const productController = require("../controllers/productController");
 const router = require("./mainRoute");
 const path = require("path");
 const multer = require("multer");
+const authMiddleware = require ("../middlewares/authMiddleware");
 
 // Multer - manejo del almacenamiento
 const storage = multer.diskStorage({
@@ -38,15 +39,15 @@ routerProduct.get(routesProd.indexProductRoute, productController.indexProductCo
 routerProduct.get(routesProd.detailProductRoute, productController.detailProductController);
 
 // rutas para obtener form para crear productos
-routerProduct.get(routesProd.productCrear, productController.crearProdController);
-routerProduct.post(routesProd.indexProductRoute, upload.single("foto") , productController.guardarProd);
+routerProduct.get(routesProd.productCrear, authMiddleware , productController.crearProdController);
+routerProduct.post(routesProd.indexProductRoute, authMiddleware , upload.single("foto") , productController.guardarProd);
 
 // rutas para obtener form para editar productos
-routerProduct.get(routesProd.productEditar, productController.editarProdController); //sole get de editar
-routerProduct.put(routesProd.productEditar,  upload.single('newImage'), productController.updateProdController); //sole put de editar
+routerProduct.get(routesProd.productEditar, authMiddleware , productController.editarProdController); //sole get de editar
+routerProduct.put(routesProd.productEditar, authMiddleware ,  upload.single('newImage'), productController.updateProdController); //sole put de editar
 
 // rutas para eliminar producto
-routerProduct.get(routesProd.productDelete, productController.eliminarController);
+routerProduct.get(routesProd.productDelete, authMiddleware , productController.eliminarController);
 
 //rutas para mascota=perro o mascota=gato
 routerProduct.get(routesProd.productsList, productController.productsListController);
