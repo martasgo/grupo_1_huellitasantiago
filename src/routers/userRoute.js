@@ -10,12 +10,14 @@ const routerUsers = Router();
 const routesUser = {
     loginRoute: "/login",
     registerRoute: "/register",
-    profileRoute: "/profile"
+    profileRoute: "/profile",
+    logoutRoute: "/logout"
 };
 
 routerUsers.get(routesUser.loginRoute, guestMiddleware , userController.loginController);
 routerUsers.get(routesUser.registerRoute, guestMiddleware , userController.registerController);
 routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profileController);
 routerUsers.post(routesUser.loginRoute , loginValidations , userController.loginProcess);
+routerUsers.get(routesUser.logoutRoute, userController.logoutController);
 
 module.exports = routerUsers;

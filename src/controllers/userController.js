@@ -67,6 +67,10 @@ const userController = {
             title: 'Perfil de usuario',
             user: req.session.userLogged
         });
+    },
+    logoutController: (req, res) => {
+      req.session.destroy();
+      return res.redirect ("/");
     }
   };
   
