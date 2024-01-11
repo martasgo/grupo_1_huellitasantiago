@@ -32,6 +32,9 @@ const userController = {
               userToLogin.contraseña);
             if (isOkThePassword) {
               req.session.userLogged = userToLogin;
+              if (req.body.recordarme) {
+                res.cookie("userEmail" , req.body.email, {maxAge: 60000 * 2})
+              };
               return res.redirect("/user/profile");
             };
             return res.render ('../views/users/login.ejs' , {
@@ -60,12 +63,14 @@ const userController = {
       });
     },
     profileController: (req, res) => {
+        const user = req.session.userLogged || {};
         res.render('../views/users/profile.ejs', {
             title: 'Perfil de usuario',
             user: req.session.userLogged
         });
     },
     logoutController: (req, res) => {
+      res.clearCookie("userEmail");
       req.session.destroy();
       return res.redirect ("/");
     }

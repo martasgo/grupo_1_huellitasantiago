@@ -5,6 +5,7 @@ const loginValidations = require ("../middlewares/loginValidations");
 const guestMiddleware = require ("../middlewares/guestMiddleware");
 const authMiddleware = require ("../middlewares/authMiddleware");
 
+
 const routerUsers = Router();
 
 const routesUser = {
@@ -13,6 +14,7 @@ const routesUser = {
     profileRoute: "/profile",
     logoutRoute: "/logout"
 };
+
 
 routerUsers.get(routesUser.loginRoute, guestMiddleware , userController.loginController);
 routerUsers.get(routesUser.registerRoute, guestMiddleware , userController.registerController);

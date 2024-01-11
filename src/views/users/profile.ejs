@@ -10,10 +10,10 @@
 
     <main class="mainusuario">
         <div class="cabezausuario">
-            <img src= " <%= user.imagen %>" margin-top="15px" height="80px" width="80px">
+            <img src= " <%= user && user.imagen %>" margin-top="15px" height="80px" width="80px">
         <div class="identidad">
-            <p class="nombre"> <%= user.nombre + " " + user.apellido  %> </p>
-            <p class="correo"> <%= user.email  %> </p>
+            <p class="nombre"> <%= user && user.nombre + " " + user && user.apellido  %> </p>
+            <p class="correo"> <%= user && user.email  %> </p>
             <% if (locals.adminError) { %>
                 <p style="color: red"> NO TIENES PERMISOS DE ADMINISTRADOR </p>
             <% } %>
