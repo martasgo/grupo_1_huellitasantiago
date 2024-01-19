@@ -17,6 +17,10 @@ body {
   margin: 0px;
 }
 
+.error {
+  color: red;
+}
+
 header,
 footer {
   padding: 10px;
@@ -535,9 +539,21 @@ table{
   padding-bottom: 5px;
 }
 
-.perfil .opciones , .actividad .historial , .configuracion .config {
+.perfil .opciones , .actividad .historial , .configuracion .config, .sesiones {
   border-bottom: 1px lightgray solid;
+  color: black;
 }
+
+
+.perfil a, .opciones a, .actividad .historial a, .configuracion a, .config a, .sesiones a, .sesion a{
+  color: black;
+}
+
+.perfil a:hover, .opciones a:hover, .actividad a:hover, .historial a:hover , .configuracion a:hover, .config a:hover, .sesiones a:hover{
+  color: #18c1d8ff;
+  text-decoration: underline;
+}
+
 
 .mainusuario i {
   color: #6dbd9bff;
