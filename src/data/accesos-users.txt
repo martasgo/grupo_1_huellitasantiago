@@ -1,0 +1,26 @@
+// Probando método de hasheo de contraseñas
+//"email": "mabutti@gmail.com",
+// console.log(userController.passwordHash("MabuttiDH24"));
+
+//"email": "fernanda.smith.ss@gmail.com",
+// console.log(userController.passwordHash("SsmithDH24"));
+
+// "email": "mariopereyra1.mpp@gmail.com",
+// console.log(userController.passwordHash("MpereyraDH24"));
+
+//"email": "cpnmatiasgomez@gmail.com",
+// console.log(userController.passwordHash("MgomezDH24"));
+
+//"email": "gabidominguez@gmail.com",
+// console.log(userController.passwordHash("GdominguezDH24"));
+
+//"email": "chinodechina@gmail.com",
+// console.log(userController.passwordHash("ChinoDH24"));
+
+
+// Probando compare sync
+// console.log(bcrypt.compareSync("MabuttiDH24" , "$2a$10$Q/N.y/cCTGDASVe7jXlfXuQXL6R/bACboukDdSjHsHyv3./BSxfAy"));
+// console.log(bcrypt.compareSync("SsmithDH24" , "$2a$10$BWWIFCWKd7gxA57X1p2gK.efMlI2sfEqtDWYl6i5zbuOoIN2HY2Ei"));
+// console.log(bcrypt.compareSync("MpereyraDH24" , "$2a$10$f0kwB45GE8kVdI.W6gIvqOKE.wIxSM.XsIEpdRBIajG3AX/ZWVrvu"));
+// console.log(bcrypt.compareSync("MgomezDH24" , "$2a$10$jmeHLz.wcBHKov6WxHPbmORHs9tr5.Q8Dq9pfSCnoGYCY4qHZlyZC"));
+// console.log(bcrypt.compareSync("GdominguezDH24" , "$2a$10$UDKihaU/PuTghnDEboD1oOeIpOpJm3cSpu1YZqENJ.1l9bYQEDOve"));

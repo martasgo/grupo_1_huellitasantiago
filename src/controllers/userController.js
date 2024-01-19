@@ -2,7 +2,6 @@ const { validationResult } = require ("express-validator");
 const User = require ("../models/User");
 let bcrypt = require ("bcryptjs");
 
-
 const userController = {
     loginController: (req, res) => {
       res.render('../views/users/login.ejs', {
@@ -64,9 +63,7 @@ const userController = {
     },
      //Controlador Ruta para almacenar el nuevo usuario
     addRegisterController:(req, res) => {
-      console.log('body que viene')
-      console.log(req.body);
-      const resultValidation = validationResult(req);
+      let resultValidation = validationResult(req);
 
       if ( resultValidation.errors.length > 0){
         res.render('../views/users/register.ejs', {
@@ -74,8 +71,8 @@ const userController = {
           errors: resultValidation.mapped(),
           oldData: req.body
         });
-      }
-      
+      } else {
+      console.log('sigue');
       let userInDB = User.getByField("email" , req.body.email );
 
       if (userInDB) {
@@ -119,21 +116,21 @@ const userController = {
       return res.render ('../views/users/login.ejs' , {
         title:'Login',
       });
-      
+    }
     },
     profileController: (req, res) => {
-        //const user = req.session.userLogged || {};
-        // if (user.categoria === 'cliente') {
-        res.render('../views/users/profileAdmin.ejs', {
-            title: 'Perfil de Cliente',
-           // user: req.session.userLogged
-        });
-        /* } else {
+        const user = req.session.userLogged || {};
+        if (user.categoria === 'cliente') {
+          res.render('../views/users/profile.ejs', {
+              title: 'Perfil de Cliente',
+              user: req.session.userLogged
+          });
+        } else {
             res.render('../views/users/profileAdmin.ejs', {
             title: 'Perfil de Administrador',
-           // user: req.session.userLogged
+            user: req.session.userLogged
         });
-        }*/
+        }
     },
     logoutController: (req, res) => {
       res.clearCookie("userEmail");
@@ -168,26 +165,4 @@ const userController = {
     }
   };
   
-// Probando método de hasheo de contraseñas
-
-// console.log(userController.passwordHash("MabuttiDH24"));
-
-// console.log(userController.passwordHash("SsmithDH24"));
-
-// console.log(userController.passwordHash("MpereyraDH24"));
-
-// console.log(userController.passwordHash("MgomezDH24"));
-
-// console.log(userController.passwordHash("GdominguezDH24"));
-
-// console.log(userController.passwordHash("ChinoDH24"));
-
-
-// Probando compare sync
-// console.log(bcrypt.compareSync("MabuttiDH24" , "$2a$10$Q/N.y/cCTGDASVe7jXlfXuQXL6R/bACboukDdSjHsHyv3./BSxfAy"));
-// console.log(bcrypt.compareSync("SsmithDH24" , "$2a$10$BWWIFCWKd7gxA57X1p2gK.efMlI2sfEqtDWYl6i5zbuOoIN2HY2Ei"));
-// console.log(bcrypt.compareSync("MpereyraDH24" , "$2a$10$f0kwB45GE8kVdI.W6gIvqOKE.wIxSM.XsIEpdRBIajG3AX/ZWVrvu"));
-// console.log(bcrypt.compareSync("MgomezDH24" , "$2a$10$jmeHLz.wcBHKov6WxHPbmORHs9tr5.Q8Dq9pfSCnoGYCY4qHZlyZC"));
-// console.log(bcrypt.compareSync("GdominguezDH24" , "$2a$10$UDKihaU/PuTghnDEboD1oOeIpOpJm3cSpu1YZqENJ.1l9bYQEDOve"));
-
   module.exports = userController;

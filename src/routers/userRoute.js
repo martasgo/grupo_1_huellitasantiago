@@ -35,17 +35,18 @@ const routesUser = {
 };
 
 routerUsers.get(routesUser.loginRoute, guestMiddleware , userController.loginController);
-routerUsers.get(routesUser.registerRoute, guestMiddleware , userController.registerController);
-routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profileController);
 routerUsers.post(routesUser.loginRoute , loginValidations , userController.loginProcess);
+
+routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profileController);
+
 routerUsers.get(routesUser.logoutRoute, userController.logoutController);
 routerUsers.get(routesUser.deleteRoute, userController.deleteController);
 routerUsers.delete(routesUser.deleteRoute, userController.destroyController);
 
 // get-post form registración
-routerUsers.get(routesUser.registerRoute, userController.registerController);
+routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.registerController);
 routerUsers.post(routesUser.registerRoute, registerValidations, upload.single("foto"), userController.addRegisterController);
-
-routerUsers.get(routesUser.listUsersRoute, adminMiddleware, userController.listUsersController);
+ 
+routerUsers.get(routesUser.listUsersRoute, authMiddleware, adminMiddleware, userController.listUsersController);
 
 module.exports = routerUsers;
