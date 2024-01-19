@@ -73,6 +73,25 @@ const userController = {
       res.clearCookie("userEmail");
       req.session.destroy();
       return res.redirect ("/");
+    },
+    deleteController: (req, res) => {
+      const user = req.session.userLogged || {};
+      res.render('../views/users/delete.ejs',{
+        title: 'Borrar usuario',
+        user
+      })
+    },
+    destroyController: (req, res) => {
+      const user = req.session.userLogged || {};
+      if (user.categoria === "cliente"){
+        User.delete(user.id);
+        res.clearCookie("userEmail");
+        req.session.destroy();
+        res.redirect("/");
+      } else {
+        User.delete(req.params.id);
+        res.redirect("/user/profile");
+      }
     }
   };
   
@@ -88,6 +107,8 @@ const userController = {
 
 // console.log(userController.passwordHash("GdominguezDH24"));
 
+// console.log(userController.passwordHash("ChinoDH24"));
+
 
 // Probando compare sync
 // console.log(bcrypt.compareSync("MabuttiDH24" , "$2a$10$Q/N.y/cCTGDASVe7jXlfXuQXL6R/bACboukDdSjHsHyv3./BSxfAy"));
@@ -95,5 +116,6 @@ const userController = {
 // console.log(bcrypt.compareSync("MpereyraDH24" , "$2a$10$f0kwB45GE8kVdI.W6gIvqOKE.wIxSM.XsIEpdRBIajG3AX/ZWVrvu"));
 // console.log(bcrypt.compareSync("MgomezDH24" , "$2a$10$jmeHLz.wcBHKov6WxHPbmORHs9tr5.Q8Dq9pfSCnoGYCY4qHZlyZC"));
 // console.log(bcrypt.compareSync("GdominguezDH24" , "$2a$10$UDKihaU/PuTghnDEboD1oOeIpOpJm3cSpu1YZqENJ.1l9bYQEDOve"));
+// console.log(bcrypt.compareSync("ChinoDH24" , "$2a$10$4Ko0.BNbLTMdtTUfF0wISuZA516yDO.hOt5AFrRJqIYHkBj2MGfEW"));
 
   module.exports = userController;

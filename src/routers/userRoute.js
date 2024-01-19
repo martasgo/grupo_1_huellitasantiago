@@ -12,7 +12,8 @@ const routesUser = {
     loginRoute: "/login",
     registerRoute: "/register",
     profileRoute: "/profile",
-    logoutRoute: "/logout"
+    logoutRoute: "/logout",
+    deleteRoute: "/delete/:id"
 };
 
 
@@ -21,5 +22,7 @@ routerUsers.get(routesUser.registerRoute, guestMiddleware , userController.regis
 routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profileController);
 routerUsers.post(routesUser.loginRoute , loginValidations , userController.loginProcess);
 routerUsers.get(routesUser.logoutRoute, userController.logoutController);
+routerUsers.get(routesUser.deleteRoute, userController.deleteController);
+routerUsers.delete(routesUser.deleteRoute, userController.destroyController);
 
 module.exports = routerUsers;

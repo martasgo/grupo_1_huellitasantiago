@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- include head -->
+<%- include('../partials/head') %>
+
+<body>
+    <!-- include header -->
+    <%- include('../partials/header') %>
+   
+    <main>
+        <section>
+            <h2 class="center" style="color: red;"> Sr./a <%= user.nombre %> <%= user.apellido %> </h2>
+            <h2 class="center" style="color: red;"> ¿Está seguro/a de eliminar esta cuenta? </h2>
+            <br>
+            <br>
+            <form action="/user/delete/<%= user.id %>?_method=DELETE" method="POST">
+            <div id="form-buttons">  
+                <button type="submit" class="">ELIMINAR CUENTA</button>
+            </div>  
+            </form>        
+        </section>
+
+        <!-- include marcas -->
+        <%- include('../partials/marcas') %>
+    </main>
+     <!-- include footer -->
+     <%- include('../partials/footer') %>
+
+</body>
+
+</html>
