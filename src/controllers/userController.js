@@ -59,15 +59,81 @@ const userController = {
     },
     registerController: (req, res) => {
       res.render('../views/users/register.ejs', {
-        title: ''
+        title: 'Registro de usuarios'
       });
     },
-    profileController: (req, res) => {
-        const user = req.session.userLogged || {};
-        res.render('../views/users/profile.ejs', {
-            title: 'Perfil de usuario',
-            user: req.session.userLogged
+     //Controlador Ruta para almacenar el nuevo usuario
+    addRegisterController:(req, res) => {
+      console.log('body que viene')
+      console.log(req.body);
+      const resultValidation = validationResult(req);
+
+      if ( resultValidation.errors.length > 0){
+        res.render('../views/users/register.ejs', {
+          title: 'Registro de usuarios',
+          errors: resultValidation.mapped(),
+          oldData: req.body
         });
+      }
+      
+      let userInDB = User.getByField("email" , req.body.email );
+
+      if (userInDB) {
+        // No quiero hacer el registro porque ya existe, entonces quiero
+        // mandar un error
+        res.render('../views/users/register.ejs',{
+          title: 'Registro de usuarios',
+          errors: {
+            email: {
+              msg: 'Este email ya está registrado'
+            }
+          },
+          oldData: req.body
+        });
+      };
+      // Creo el array de usuarios usando la función getUsers
+      const usersList = User.getData();
+
+      // Defino la variable que recibe la imagen del formulario
+      const image = req.file ? req.file.filename : "default-image.png";
+
+      // Defino la variable que guarda el usuario creado desde el formulario
+      const newUser = {
+        id: usersList[usersList.length-1].id + 1,
+			  nombre: req.body.nombre,
+        apellido: req.body.apellido,
+			  email: req.body.email,
+        direccion: req.body.dir,
+        telefono: req.body.telefono,
+			  contraseña: bcrypt.hashSync(req.body.contrasenia , 10 ),
+        categoria: 'cliente',
+        imagen: image
+      };
+
+      // Agrego el usuario creado al array de usuarios
+      usersList.push(newUser);
+
+      // Actualizo el JSON de usuarios luego de crear el user
+      User.updateList(usersList);
+        
+      return res.render ('../views/users/login.ejs' , {
+        title:'Login',
+      });
+      
+    },
+    profileController: (req, res) => {
+        //const user = req.session.userLogged || {};
+        // if (user.categoria === 'cliente') {
+        res.render('../views/users/profileAdmin.ejs', {
+            title: 'Perfil de Cliente',
+           // user: req.session.userLogged
+        });
+        /* } else {
+            res.render('../views/users/profileAdmin.ejs', {
+            title: 'Perfil de Administrador',
+           // user: req.session.userLogged
+        });
+        }*/
     },
     logoutController: (req, res) => {
       res.clearCookie("userEmail");
@@ -92,6 +158,13 @@ const userController = {
         User.delete(req.params.id);
         res.redirect("/user/profile");
       }
+    },
+    listUsersController: (req,res) => {
+      const usersList = User.getData();
+      res.render('../views/users/usersList.ejs', {
+        title: 'Listado de usuarios',
+        usersList
+    });
     }
   };
   
@@ -116,6 +189,5 @@ const userController = {
 // console.log(bcrypt.compareSync("MpereyraDH24" , "$2a$10$f0kwB45GE8kVdI.W6gIvqOKE.wIxSM.XsIEpdRBIajG3AX/ZWVrvu"));
 // console.log(bcrypt.compareSync("MgomezDH24" , "$2a$10$jmeHLz.wcBHKov6WxHPbmORHs9tr5.Q8Dq9pfSCnoGYCY4qHZlyZC"));
 // console.log(bcrypt.compareSync("GdominguezDH24" , "$2a$10$UDKihaU/PuTghnDEboD1oOeIpOpJm3cSpu1YZqENJ.1l9bYQEDOve"));
-// console.log(bcrypt.compareSync("ChinoDH24" , "$2a$10$4Ko0.BNbLTMdtTUfF0wISuZA516yDO.hOt5AFrRJqIYHkBj2MGfEW"));
 
   module.exports = userController;
