@@ -11,31 +11,58 @@
    
     <main class="mainlogin">
         <p class="rutahome"><a href="/">Home</a> / Registro</p>
-        <form action="/register" method="POST" id="formRegistro">
-            <label for="email">Email</label> 
-            <input type="email" name="email" id="email">
-            <br>
-            <br>
-            <label for="contraseña">Contraseña</label> 
-            <input type="password" name="contraseña" id="contraseña">            
-            <br>
-            <br>
-            <label for="confirmar">Confirmar password</label> 
-            <input type="password" name="contraseña" id="contraseña">            
-            <br>
-            <br>
+        <form action="/user/register" method="POST" id="formRegistro" enctype="multipart/form-data">
             <label for="nombre">Nombre</label> 
-            <input type="name" name="name" id="name">
-            <br>
+            <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : null %>">
+            <% if (locals.errors && errors.nombre) { %>
+                <p class="error"> <%= errors.nombre.msg %></p>
+            <% } %>
             <br>
             <label for="apellido">Apellido</label> 
-            <input type="apellido" name="apellido" id="apellido">            
+            <input type="text" name="apellido" id="apellido" value="<%= locals.oldData ? oldData.apellido : null %>">
+            <% if (locals.errors && errors.apellido) { %>
+                <p class="error"> <%= errors.apellido.msg %></p>
+            <% } %>       
             <br>
-            <div class="VALIDACION">
-                <img src="/images/captcha.png" alt = "Imagen catpcha">
-            </div>
-            <br>            
-            <button type="submit"><a href="/menu-usuario">REGISTRARME</a></button>
+            <label for="email">Email</label> 
+            <input type="email" name="email" id="email" value="<%= locals.oldData ? oldData.email : null %>">
+            <% if (locals.errors && errors.email) { %>
+                <p class="error"> <%= errors.email.msg %></p>
+            <% } %> 
+            <br>
+            <label for="dir">Dirección</label> 
+            <input type="text" name="dir" id="dir" value="<%= locals.oldData ? oldData.dir : null %>">
+            <% if (locals.errors && errors.dir) { %>
+                <p class="error"> <%= errors.dir.msg %></p>
+            <% } %> 
+            <br>
+            <label for="telefono">Teléfono</label> 
+            <input type="number" name="telefono" id="telefono" value="<%= locals.oldData ? oldData.telefono : null %>"> 
+            <% if (locals.errors && errors.telefono) { %>
+                <p class="error"> <%= errors.telefono.msg %></p>
+            <% } %> 
+            <br>   
+             
+            <label for="contrasenia">Contraseña</label> 
+            <input type="password" name="contrasenia" id="contrasenia">            
+            <% if (locals.errors && errors.contrasenia) { %>
+                <p class="error"> <%= errors.contrasenia.msg %></p>
+            <% } %> 
+            <br>
+            <label for="confirmar">Confirmar contraseña</label>  
+            <input type="password" name="confirmar" id="confirmar">    
+            <% if (locals.errors && errors.confirmar) { %>
+                <p class="error"> <%= errors.confirmar.msg %></p>
+            <% } %>         
+            <br>
+            <label for="foto">Imagen</label>
+            <input class="margen-ancho" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.oldData ? oldData.foto : null %>">
+            <% if (locals.errors && errors.foto) { %>
+                <p class="error"> <%= errors.foto.msg %></p>
+            <% } %> <br>
+            <input type="text" name="categoria" id="categoria" value="Cliente" style="visibility: hidden;">    
+         
+            <button type="submit">REGISTRARME</button>
             <br>
             </form>
     </main>
