@@ -10,18 +10,35 @@
     <main>
         <section>
             <h2 class="center" style="color: red;"> Sr./a <%= user.nombre %> <%= user.apellido %> </h2>
-            <h2 class="center" style="color: red;"> ¿Está seguro/a de eliminar esta cuenta? </h2>
+            <% if(locals.user && user.categoria === "cliente") {%>
+                <h2 class="center" style="color: red;"> ¿Está seguro/a de eliminar esta cuenta? </h2>
+            <% } else {%>
+                <h2 class="center" style="color: red;"> ¿Está seguro/a de eliminar la cuenta de: <%= userToDelete.nombre %> <%= userToDelete.apellido %>? </h2>
+            <% } %>
+                
             <br>
             <br>
-            <form action="/user/delete/<%= user.id %>?_method=DELETE" method="POST">
-            <div id="form-buttons">  
-                <button type="submit" class="">ELIMINAR CUENTA</button>
-            </div>  
-            </form>        
+            <% if(locals.user && user.categoria === "cliente") {%>
+                <div id="form-buttons"> 
+                    <form action="/user/delete/<%= user.id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="">ELIMINAR CUENTA</button>
+                    </form>
+                    <a href="/user/profile" class=""><button type="button" class="">CANCELAR</button></a>
+                </div>  
+            <% } else { %>    
+                <div id="form-buttons"> 
+                    <form action="/user/delete/<%= userToDelete.id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="">ELIMINAR CUENTA</button>
+                    </form> 
+                    <a href="/user/usersList" class=""><button type="button" class="">CANCELAR</button></a>
+                </div> 
+            <% } %>   
+                   
         </section>
 
-        <!-- include marcas -->
-        <%- include('../partials/marcas') %>
+        <p></p>
+        <p></p>
+        <p></p>
     </main>
      <!-- include footer -->
      <%- include('../partials/footer') %>
