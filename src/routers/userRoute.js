@@ -45,7 +45,7 @@ routerUsers.delete(routesUser.deleteRoute, userController.destroyController);
 
 // get-post form registración
 routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.registerController);
-routerUsers.post(routesUser.registerRoute, registerValidations, upload.single("foto"), userController.addRegisterController);
+routerUsers.post(routesUser.registerRoute, upload.single("foto"), registerValidations, userController.addRegisterController);
  
 routerUsers.get(routesUser.listUsersRoute, authMiddleware, adminMiddleware, userController.listUsersController);
 
