@@ -19,6 +19,7 @@ const userController = {
     // Método para validar y procesar el login de usuarios
     loginProcess: (req, res) => {
       let errors = validationResult(req);
+            
       if (! errors.isEmpty()) {
         res.render('../views/users/login.ejs', 
           { title:'Login',  
@@ -66,57 +67,64 @@ const userController = {
       let resultValidation = validationResult(req);
 
       if ( resultValidation.errors.length > 0){
+        // como existen errores
+        // elimino la imagen que se guardó hasta tener todas las validaciones ok
+        User.deleteImagen(req.file.filename);
         res.render('../views/users/register.ejs', {
           title: 'Registro de usuarios',
           errors: resultValidation.mapped(),
           oldData: req.body
-        });
+        }); 
       } else {
-      console.log('sigue');
-      let userInDB = User.getByField("email" , req.body.email );
+        // verifico el mail no esté registrado anteriormente
+        let userInDB = User.getByField("email" , req.body.email );
 
-      if (userInDB) {
-        // No quiero hacer el registro porque ya existe, entonces quiero
-        // mandar un error
-        res.render('../views/users/register.ejs',{
-          title: 'Registro de usuarios',
-          errors: {
-            email: {
-              msg: 'Este email ya está registrado'
-            }
-          },
-          oldData: req.body
-        });
-      };
-      // Creo el array de usuarios usando la función getUsers
-      const usersList = User.getData();
+        if (userInDB) {
+          // elimino la imagen que se guardó hasta tener todas las validaciones ok
+          User.deleteImagen(req.file.filename);
+          // manda msj de error a la vista
+          res.render('../views/users/register.ejs',{
+            title: 'Registro de usuarios',
+            errors: {
+              email: {
+                msg: 'Este email ya está registrado'
+              }
+            },
+            oldData: req.body
+          });
+         
+        } else {
+          //si todas las validaciones dan OK agrego el user
+          // Creo el array de usuarios usando la función getUsers
+          const usersList = User.getData();
 
-      // Defino la variable que recibe la imagen del formulario
-      const image = req.file ? req.file.filename : "default-image.png";
+          // Defino la variable que recibe la imagen del formulario
+          const image = req.file ? req.file.filename : "default-image.png";
 
-      // Defino la variable que guarda el usuario creado desde el formulario
-      const newUser = {
-        id: usersList[usersList.length-1].id + 1,
-			  nombre: req.body.nombre,
-        apellido: req.body.apellido,
-			  email: req.body.email,
-        direccion: req.body.dir,
-        telefono: req.body.telefono,
-			  contraseña: bcrypt.hashSync(req.body.contrasenia , 10 ),
-        categoria: 'cliente',
-        imagen: image
-      };
+          // Defino la variable que guarda el usuario creado desde el formulario
+          const newUser = {
+            id: usersList[usersList.length-1].id + 1,
+            nombre: req.body.nombre,
+            apellido: req.body.apellido,
+            email: req.body.email,
+            direccion: req.body.dir,
+            telefono: req.body.telefono,
+            contraseña: bcrypt.hashSync(req.body.contrasenia , 10 ),
+            categoria: 'cliente',
+            imagen: image
+          };
 
-      // Agrego el usuario creado al array de usuarios
-      usersList.push(newUser);
+          // Agrego el usuario creado al array de usuarios
+          usersList.push(newUser);
 
-      // Actualizo el JSON de usuarios luego de crear el user
-      User.updateList(usersList);
-        
-      return res.render ('../views/users/login.ejs' , {
-        title:'Login',
-      });
-    }
+          // Actualizo el JSON de usuarios luego de crear el user
+          User.updateList(usersList);
+            
+          return res.render ('../views/users/login.ejs' , {
+            title:'Login',
+          });
+        }
+      }
     },
     profileController: (req, res) => {
         const user = req.session.userLogged || {};
@@ -139,9 +147,13 @@ const userController = {
     },
     deleteController: (req, res) => {
       const user = req.session.userLogged || {};
+      userId = parseInt(req.params.id);
+      const userToDelete = User.getByPk(userId);
+
       res.render('../views/users/delete.ejs',{
         title: 'Borrar usuario',
-        user
+        user,
+        userToDelete
       })
     },
     destroyController: (req, res) => {
@@ -152,7 +164,8 @@ const userController = {
         req.session.destroy();
         res.redirect("/");
       } else {
-        User.delete(req.params.id);
+        idToDelete = parseInt(req.params.id);
+        User.delete(idToDelete);
         res.redirect("/user/profile");
       }
     },
