@@ -39,6 +39,11 @@ const User = {
             encoding:"utf-8",
         });
 	    return true;
+    },
+    deleteImagen: function(img){
+        let directorio = path.resolve(__dirname , "../../public/images/usuarios");
+        const rutaImagen = path.join(directorio, img);
+        fs.unlinkSync(rutaImagen);
     }
 };
 
