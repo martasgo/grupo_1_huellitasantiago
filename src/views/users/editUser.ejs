@@ -10,7 +10,7 @@
    
     <main class="mainlogin">
         <p class="rutahome"><a href="/">Home</a> / Edición</p>
-        <form action="/user/editUser/<%= infoUser.id%>?_method=PUT" id="formRegistro" enctype="multipart/form-data">
+        <form action="/user/editUser/<%= infoUser.id %>?_method=PUT" method="POST" id="formRegistro" enctype="multipart/form-data">
             <label for="nombre">Nombre</label> 
             <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : infoUser.nombre%>">
             <% if (locals.errors && errors.nombre) { %>
@@ -54,14 +54,22 @@
             <% } %>         
             <br>
             <label for="foto">Imagen</label>
-            <input class="margen-ancho" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.oldData ? oldData.imagen : infoUser.imagen%>"> <!--no me trae la imagen-->
+            <img src="/images/usuarios/<%= locals.oldData ? imagen : infoUser.imagen%>" class="actualImg" alt="Imagen Actual" name="fotoAnt">
+            <input type="text" name="imageAnt" id="imageAnt" value="<%= locals.oldData ? imagen : infoUser.imagen%>" hidden>
+            <br>
+            <input class="margen-ancho" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.oldData ? oldData.imagen : infoUser.imagen%>"> 
             <% if (locals.errors && errors.foto) { %>
                 <p class="error"> <%= errors.foto.msg %></p>
             <% } %> <br>
-            
-           <!--  <div class="VALIDACION">
-                <img src="/images/captcha.png" alt = "Imagen catpcha">
-            </div> -->
+            <% if(locals.user && user.categoria === "administrador") {%>
+                <label for="categoria">Categoria:</label><br>
+                <select class="margen-ancho" id="categoria" name="categoria" >
+                    <option value="administrador" <% if (userInfo.categoria === 'administrador') { %> selected <% } %>>Administrador</option>
+                    <option value="cliente" <% if (userInfo.categoria === 'cliente') { %> selected <% } %>>cliente</option>
+                </select><br>
+            <% } else {%>
+                <input type="text" name="categoria" id="categoria" value="cliente" hidden>
+            <% } %>
             <br>            
             <button type="submit">GUARDAR CAMBIOS</button>
             <br>
