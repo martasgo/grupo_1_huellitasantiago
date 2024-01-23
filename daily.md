@@ -24,3 +24,16 @@ Hicimos definiciones sobre el proceso de desarrollo de las rutas.
 
 Además de estas reuniones que eran de 3 horas aproximadamente disponemos de un grupo de whatsapp donde nos consultamos casi todos los dias sobre cuestiones del proyecto. 
 
+## weekly 1 - sprint 5
+4-1-2024: reunión donde se analizaron las distintas tareas del sprint, se hizo una puesta en común de lo que entendíamos cada uno para aclarar cada punto, se actualizó el tablero de JIRA,
+se realizo la división de tareas correspondientes al sprint y se programó una reunión para la próxima semana a fin de ver los avances.
+
+## weekly 2 - sprint 5
+11-01-2024: validamos los avances de cada uno, vimos los inconvenientes que teníamos hasta el momento para seguir avanzando.
+
+## weekly 3 - sprint 5
+18-01-2024: realizamos merge de las ramas que estaban finalizadas, definimos los middlewares que faltarian para algunas rutas, revisamos la parte de registración y edición de usuarios.
+
+## weekly 4 - sprint 5
+23-1-2024: realizamos merge de las ramas que se habian finalizado, validamos en el main las funciones que se habian hecho merge y ajustamos los problemas detectados.
+
