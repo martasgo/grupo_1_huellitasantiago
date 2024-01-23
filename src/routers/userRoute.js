@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const userController = require("../controllers/userController");
-const registerValidations = require("../middlewares/registerValidations");
+const editValidations = require("../middlewares/editValidations");
 
 //Sole
 const path = require ('path');
@@ -36,8 +36,8 @@ routerUsers.get(routesUser.registerRoute, userController.registerController);
 
 routerUsers.get(routesUser.profileRoute, userController.profileController);
 
-//editar y guardar registro de usuario, YA Registrado!
+//editar y guardar registro de usuario, YA Registrado!-Sole
 routerUsers.get(routesUser.editRegister, userController.editController);
-routerUsers.put(routesUser.editRegister, upload.single("foto"), registerValidations, userController.updateEditController);
+routerUsers.put(routesUser.editRegister, upload.single("foto"), editValidations, userController.updateEditController);
 
 module.exports = routerUsers;
