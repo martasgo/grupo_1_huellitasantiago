@@ -13,50 +13,50 @@
         <p class="rutahome"><a href="/">Home</a> / Registro</p>
         <form action="/user/register" method="POST" id="formRegistro" enctype="multipart/form-data">
             <label for="nombre">Nombre</label> 
-            <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : null %>">
+            <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : null %>" class="<%= (locals.errors && errors.nombre) ? 'is-invalid' : null %>" >
             <% if (locals.errors && errors.nombre) { %>
                 <p class="error"> <%= errors.nombre.msg %></p>
             <% } %>
             <br>
             <label for="apellido">Apellido</label> 
-            <input type="text" name="apellido" id="apellido" value="<%= locals.oldData ? oldData.apellido : null %>">
+            <input type="text" name="apellido" id="apellido" value="<%= locals.oldData ? oldData.apellido : null %>" class="<%= (locals.errors && errors.apellido) ? 'is-invalid' : null %>">
             <% if (locals.errors && errors.apellido) { %>
                 <p class="error"> <%= errors.apellido.msg %></p>
             <% } %>       
             <br>
             <label for="email">Email</label> 
-            <input type="email" name="email" id="email" value="<%= locals.oldData ? oldData.email : null %>">
+            <input type="email" name="email" id="email" value="<%= locals.oldData ? oldData.email : null %>" class="<%= (locals.errors && errors.email) ? 'is-invalid' : null %>">
             <% if (locals.errors && errors.email) { %>
                 <p class="error"> <%= errors.email.msg %></p>
             <% } %> 
             <br>
             <label for="dir">Dirección</label> 
-            <input type="text" name="dir" id="dir" value="<%= locals.oldData ? oldData.dir : null %>">
+            <input type="text" name="dir" id="dir" value="<%= locals.oldData ? oldData.dir : null %>" class="<%= (locals.errors && errors.dir) ? 'is-invalid' : null %>">
             <% if (locals.errors && errors.dir) { %>
                 <p class="error"> <%= errors.dir.msg %></p>
             <% } %> 
             <br>
             <label for="telefono">Teléfono</label> 
-            <input type="number" name="telefono" id="telefono" value="<%= locals.oldData ? oldData.telefono : null %>"> 
+            <input type="number" name="telefono" id="telefono" value="<%= locals.oldData ? oldData.telefono : null %>" class="<%= (locals.errors && errors.telefono) ? 'is-invalid' : null %>"> 
             <% if (locals.errors && errors.telefono) { %>
                 <p class="error"> <%= errors.telefono.msg %></p>
             <% } %> 
             <br>   
              
             <label for="contrasenia">Contraseña</label> 
-            <input type="password" name="contrasenia" id="contrasenia">            
+            <input type="password" name="contrasenia" id="contrasenia" class="<%= (locals.errors && errors.contrasenia) ? 'is-invalid' : null %>">            
             <% if (locals.errors && errors.contrasenia) { %>
                 <p class="error"> <%= errors.contrasenia.msg %></p>
             <% } %> 
             <br>
             <label for="confirmar">Confirmar contraseña</label>  
-            <input type="password" name="confirmar" id="confirmar">    
+            <input type="password" name="confirmar" id="confirmar" class="<%= (locals.errors && errors.confirmar) ? 'is-invalid' : null %>">    
             <% if (locals.errors && errors.confirmar) { %>
                 <p class="error"> <%= errors.confirmar.msg %></p>
             <% } %>         
             <br>
             <label for="foto">Imagen</label>
-            <input class="margen-ancho" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.imagen ? imagen : null %>">
+            <input class="userInfo" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.imagen ? imagen : null %>" class="<%= (locals.errors && errors.foto) ? 'is-invalid' : null %>" >
             <% if (locals.errors && errors.foto) { %>
                 <p class="error"> <%= errors.foto.msg %></p>
             <% } %> <br>
