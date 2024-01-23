@@ -83,3 +83,26 @@ Destinar mucho tiempo a detalles no esenciales que no hacen al objetivo principa
 5. Dejar de hacer:
 
 No plantear las dudas a tiempo para resolver lo antes posible cuestiones importantes del sprint.
+
+## RETRO Sprint-4
+
+1. Comenzar a hacer:
+Planificar adecuadamente los cambios y complejidades previstos en el sprint para evitar soluciones temporales que puedan afectar el desarrollo del equipo.
+
+
+2. Hacer Más:
+
+Reforzar la planificación del sprint, desglosando las tareas en detalles, especialmente aquellas relacionadas con las vistas y presentaciones. Esto nos permitirá anticipar posibles complicaciones y asignar los recursos y responsables de una mejor manera.
+
+3. Hacer Menos:
+
+Reducir cambios de último minuto en las estructuras principales. Esto nos proporcionará estabilidad al código y evitaremos retrasos innecesarios.
+
+4. Dejar de Hacer:
+
+Evitar la no comunicación fluida por los canales establecidos por el equipo para garantizar una colaboración efectiva.
+
+5. Continuar Haciendo:
+
+Revisiones Regulares: Continuemos con las revisiones regulares de código y diseño para mantener un nivel de calidad aceptable y asegurarnos de que todas las partes del sistema estén bien integradas.
+
