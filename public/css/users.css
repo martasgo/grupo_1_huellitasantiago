@@ -5,3 +5,18 @@
 #form-buttons button {
     margin: 0 5px;
 }
+
+.is-invalid{
+    border: 2px solid red;
+}
+
+
+.userInfo {
+    margin-bottom: 15px;
+    background: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid black;
+}

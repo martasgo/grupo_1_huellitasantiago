@@ -593,10 +593,11 @@ table{
 
 .mainlogin input {
   width: 100%;
-  background-color: rgb(240, 240, 240) ;
   height: 40px;
   border-radius: 5px;
 }
+
+
 
 .olvidasteclave {
   text-align: center;
@@ -1099,6 +1100,6 @@ button a {
   }
 
   #formRegistro {
-    width: 40%;
+    width: 60%;
   } 
 }
