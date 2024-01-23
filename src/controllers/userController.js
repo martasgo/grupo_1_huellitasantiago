@@ -68,7 +68,9 @@ const userController = {
       if ( resultValidation.errors.length > 0){
         // como existen errores
         // elimino la imagen que se guardó hasta tener todas las validaciones ok
-        User.deleteImagen(req.file.filename);
+        if (req.file) {
+          User.deleteImagen(req.file.filename);
+        }
         res.render('../views/users/register.ejs', {
           title: 'Registro de usuarios',
           errors: resultValidation.mapped(),
@@ -80,7 +82,9 @@ const userController = {
 
         if (userInDB) {
           // elimino la imagen que se guardó hasta tener todas las validaciones ok
-          User.deleteImagen(req.file.filename);
+          if (req.file) {
+            User.deleteImagen(req.file.filename);
+          }
           // manda msj de error a la vista
           res.render('../views/users/register.ejs',{
             title: 'Registro de usuarios',
@@ -135,7 +139,7 @@ const userController = {
         } else {
             res.render('../views/users/profileAdmin.ejs', {
             title: 'Perfil de Administrador',
-            user: req.session.userLogged
+            user
         });
         }
     },
@@ -170,18 +174,19 @@ const userController = {
     },
     listUsersController: (req,res) => {
       const usersList = User.getData();
+      const user = req.session.userLogged || {};
       res.render('../views/users/usersList.ejs', {
         title: 'Listado de usuarios',
-        usersList
+        usersList,
+        user
       });
     },
     // Controlladores de edición de registro de usuario GET y PUT
     editController: (req, res)=>{
-      //res.send('llega la info');
       const user = req.session.userLogged || {};
       const idUser = parseInt(req.params.idUser);
       const infoUser = User.getByPk(idUser);
-      console.log(infoUser);
+      // console.log(infoUser);
       res.render("../views/users/editUser.ejs",{
         title: 'Edición de usuarios',
         user,
