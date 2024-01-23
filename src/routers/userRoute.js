@@ -1,16 +1,17 @@
 const { Router } = require("express");
-const userController = require("../controllers/userController");
 const {body} = require ("express-validator");
+
+const userController = require("../controllers/userController");
 const loginValidations = require ("../middlewares/loginValidations");
 const guestMiddleware = require ("../middlewares/guestMiddleware");
 const authMiddleware = require ("../middlewares/authMiddleware");
 const adminMiddleware = require("../middlewares/adminMiddleware");
-
+const editValidations = require("../middlewares/editValidations");
 const registerValidations = require("../middlewares/registerValidations");
 
-const path = require("path");
-const multer = require("multer");
 const routerUsers = Router();
+const path = require ('path');
+const multer = require ('multer');
 
 // Multer - manejo del almacenamiento
 const storage = multer.diskStorage({
@@ -28,6 +29,7 @@ const upload = multer ({ storage });
 const routesUser = {
     loginRoute: "/login",
     registerRoute: "/register",
+	editRegister: "/editUser/:idUser",
     profileRoute: "/profile",
 	listUsersRoute: "/usersList",
     logoutRoute: "/logout",
@@ -40,6 +42,7 @@ routerUsers.post(routesUser.loginRoute , loginValidations , userController.login
 routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profileController);
 
 routerUsers.get(routesUser.logoutRoute, userController.logoutController);
+
 routerUsers.get(routesUser.deleteRoute, userController.deleteController);
 routerUsers.delete(routesUser.deleteRoute, userController.destroyController);
 
@@ -48,5 +51,9 @@ routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.regist
 routerUsers.post(routesUser.registerRoute, upload.single("foto"), registerValidations, userController.addRegisterController);
  
 routerUsers.get(routesUser.listUsersRoute, authMiddleware, adminMiddleware, userController.listUsersController);
+
+//editar y guardar registro de usuario, YA Registrado!-Sole
+routerUsers.get(routesUser.editRegister, userController.editController);
+routerUsers.put(routesUser.editRegister, upload.single("foto"), editValidations, userController.updateEditController);
 
 module.exports = routerUsers;

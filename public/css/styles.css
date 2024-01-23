@@ -19,6 +19,7 @@ body {
 
 .error {
   color: red;
+  margin-top: 2px;
 }
 
 header,
