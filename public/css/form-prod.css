@@ -69,6 +69,10 @@
     padding: 5px;
 }
 
+.actualImg{
+    width: 20%;
+}
+
 @media (min-width: 768px){
    .fichaprod{
         display: flex;

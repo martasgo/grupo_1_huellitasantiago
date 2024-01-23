@@ -17,6 +17,11 @@ body {
   margin: 0px;
 }
 
+.error {
+  color: red;
+  margin-top: 2px;
+}
+
 header,
 footer {
   padding: 10px;
