@@ -9,7 +9,7 @@ function sessionMiddleware(req, res, next) {
     let userFromCookie = User.getByField("email", emailCookie);
     if (userFromCookie) {
       req.session.userLogged = userFromCookie;
-    };
+    } else {req.session.userLogged = userToLogin}
   };
   if (req.session.userLogged) {
     res.locals.isLogged = true;
