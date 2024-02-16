@@ -1,4 +1,4 @@
-const User = require ("../models/User");
+const User = require ("../model/userService");
 
 function adminMiddleware (req,res,next) {
     if (req.session.userLogged.categoria !== "administrador") {
