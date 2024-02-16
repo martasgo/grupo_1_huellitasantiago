@@ -13,3 +13,4 @@ scripts/backup-restore/data/
 tslint-html-report/
 **/*/data-backup
 **/.DS_Store
+.env
