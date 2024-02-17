@@ -1,10 +1,13 @@
 const { Router } = require("express");
+// IMPORTO EL SERVICE DE PRODUCT
+const productService = require('../model/productService');
 const productController = require("../controllers/productController");
 const router = require("./mainRoute");
 const path = require("path");
 const multer = require("multer");
 const authMiddleware = require ("../middlewares/authMiddleware");
 const adminMiddleware = require ("../middlewares/adminMiddleware");
+
 
 // Multer - manejo del almacenamiento
 const storage = multer.diskStorage({
@@ -27,12 +30,24 @@ const routesProd = {
   productCrear: "/crear",
   productEditar: "/editar/:id",
   productDelete: '/delete/:id',
+  // PRUEBO PRODUCT SERVICE
+  todos: '/todos',
+  porID: '/porid/:id',
+  unoPorNombre: '/pornombre',
+  todosPorNombre: '/todospornombre',
 
   //listado productos: "/product/perros",  /product/gato/  
   productsList: "/:idMascota",
   productsListCat: "/:idMascota/:category",
   productsListSubcat: "/:idMascota/:category/:subCat",
 };
+
+// PRUEBO RUTA PARA EL SERVICE DE PRODUCT
+routerProduct.get(routesProd.todos, productService.getAll);
+routerProduct.get(routesProd.porID, productService.getByPk);
+routerProduct.get(routesProd.unoPorNombre, productService.getOneByName);
+routerProduct.get(routesProd.todosPorNombre, productService.getAllByName);
+
 // rutas para mostrar la categoria de mascotas y de ahi ver productos
 routerProduct.get(routesProd.indexProductRoute, productController.indexProductController);
 
@@ -54,5 +69,6 @@ routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , p
 routerProduct.get(routesProd.productsList, productController.productsListController);
 routerProduct.get(routesProd.productsListCat, productController.CategoryListController);
 routerProduct.get(routesProd.productsListSubcat, productController.subCategoryListController);
+
 
 module.exports = routerProduct;
