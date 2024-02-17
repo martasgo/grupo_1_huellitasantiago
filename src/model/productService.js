@@ -58,6 +58,15 @@ const productService = {
             console.log(error);
             return res.status(500).send('Error en la solicitud');
         }
+    },
+    /* Servicio para agregar en la base un nvo producto */
+    add: async function (prod) {
+        try {
+            // const pelicula = new Pelicula(body);
+            return await db.Product.create(prod);
+        } catch (error) {
+            console.log(error);
+        }
     }
 };
 

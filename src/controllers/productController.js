@@ -8,6 +8,9 @@ function getProducts() {
 
 const toThousand = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
+//SERVICE DE PRODUCTOS
+const productService = require('../model/productService');
+
 const prodController = {
     indexProductController: (req, res) => {
       res.render ('../views/mascotas.ejs', {
@@ -33,6 +36,7 @@ const prodController = {
     },
     //Controlador ruta para crear prod
     crearProdController:(req, res) => {
+
       res.render('../views/products/crear.ejs', {
           title: 'Crear producto',
       });
@@ -52,9 +56,11 @@ const prodController = {
       res.redirect('/product');
     },
     //Controlador Ruta para almacenar el producto creado
-    guardarProd:(req, res) => {
+    guardarProd: async function (req, res) {
+      try {
       // Creo el array de productos usando la función getProducts
-      const products = getProducts();
+      // ESTO YA NO IRIA
+      //const products = getProducts(); 
 
       // Defino la variable que recibe la imagen del formulario
       const image = req.file ? req.file.filename : "default-image.png";
@@ -87,20 +93,34 @@ const prodController = {
 			  categoria: req.body.categoria,
 			  subCategoria: subCatFinal,
         presentacion: req.body.presentacion
-      };
+      };     
 
       // Agrego el producto creado al array de productos
-      products.push(newProduct);
+      //ESTO YA NO IRIA 
+      // products.push(newProduct); 
 
-      // Actualizo el JSON de productos luego de crear el producto
-      fs.writeFileSync(productsFilePath , JSON.stringify(products), {
+      // Actualizo el JSON de productos luego de crear el producto 
+      // ESTO TAMPOCO IRIA
+      /* fs.writeFileSync(productsFilePath , JSON.stringify(products), {
         flag:"w",
         encoding:"utf-8",
-      });
+      });*/
         
+      // ESTO LO PODEMOS DEJAR O AGREGAMOS COMO PONEN ELLOS UN RESPONSE QUE TE LLEVA AL LINK DEL NVO PROD.
+      
+      let productoNuevo = await productService.add(newProduct);
+      /* podemos mandar a la pagina de detalle del producto para validar la carga tambien
+      dejo ejemplo de otra opcion como probar*/
+      //res.redirect(`/movies/${req.params.id}/detail`))
+      //res.status(201).json(new CreateResponse(productoNuevo.id, `${req.protocol}://${req.get('host')}${req.originalUrl}/${productoNuevo.id}`))
       res.render ('../views/mascotas.ejs', {
         title: 'Mascotas'
       });
+
+      } catch (error) {
+        res.send(e.message).status(500);
+      }
+    
     },
     //Controlador para editar prod -sole
     editarProdController:(req, res) => {
