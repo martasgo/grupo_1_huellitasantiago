@@ -1,3 +1,13 @@
+//SERVICIOS
+const productService = require('../model/productService');
+const brandService = require('../model/brandService');
+const packageService = require('../model/packageService');
+const petAgeService = require('../model/petAgeService');
+const petService = require('../model/petService');
+const prodCategoryService = require('../model/prodCategoryService');
+const subCategoryService = require('../model/subCategoryService');
+const petSizeService = require('../model/petSizeService');
+
 const fs = require('fs');
 const path = require('path');
 const productsFilePath = path.join(__dirname, '../data/products.json');
@@ -7,9 +17,6 @@ function getProducts() {
 }
 
 const toThousand = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-//SERVICE DE PRODUCTOS
-const productService = require('../model/productService');
 
 const prodController = {
     indexProductController: (req, res) => {
@@ -36,10 +43,32 @@ const prodController = {
     },
     //Controlador ruta para crear prod
     crearProdController:(req, res) => {
-
-      res.render('../views/products/crear.ejs', {
-          title: 'Crear producto',
-      });
+      let brandList = brandService.getAll();
+      let petList = petService.getAll();
+      let petAgeList = petAgeService.getAll();
+      let petSizeList = petSizeService.getAll();
+      let categoryList = prodCategoryService.getAll();
+      let subCategoryList = subCategoryService.getAll();
+      let packageList = packageService.getAll();
+      
+      Promise.all([brandList, petList, petAgeList, petSizeList, categoryList, subCategoryList, packageList ])
+            .then(function ([brand, pet, petAge, petSize, category, subCategory, packageRes]) {
+              res.render('../views/products/crear.ejs', {
+                title: 'Crear producto',
+                brand,
+                pet,
+                petAge,
+                petSize,
+                category,
+                subCategory,
+                packageRes
+            });
+            })
+            .catch(error => {
+              console.log(error)
+              //res.send(error.message)
+              return res.status(500).send('Error en la solicitud');
+            })
     },
     //Controlador ruta para eliminar producto
     eliminarController: (req, res) =>{
@@ -56,72 +85,68 @@ const prodController = {
       res.redirect('/product');
     },
     //Controlador Ruta para almacenar el producto creado
-    guardarProd: async function (req, res) {
-      try {
-      // Creo el array de productos usando la función getProducts
-      // ESTO YA NO IRIA
-      //const products = getProducts(); 
-
+    guardarProd: (req, res) => {
       // Defino la variable que recibe la imagen del formulario
       const image = req.file ? req.file.filename : "default-image.png";
 
       // Defino la variable que evalúa si es un producto destacado
-      const esDestacado = (req.body.destacado === "true") ? "si" : "no";
+      const esDestacado = (req.body.destacado === "true") ? 1 : 0;
 
-      // Variable para manejar subcateoría
+      // Variable para manejar subcategoría
       let subCatFinal = "";
-      
-      if (req.body.subCat != "") {
-        subCatFinal = req.body.subCat;
+            if (req.body.subCat != "") {
+        subCatFinal = parseInt(req.body.subCat);
       } else if (req.body.subCatAcc != ""){
-        subCatFinal = req.body.subCatAcc;
+        subCatFinal = parseInt(req.body.subCatAcc);
+      } else {
+        subCatFinal = null
       };
+
+      // Variable para manejar si viene o no una presentacion
+      if (req.body.presentacion != "") {
+        presentacionFinal = parseInt(req.body.presentacion);
+      } else {
+        presentacionFinal = null
+      }
 
       // Defino la variable que guarda el producto creado desde el formulario
       const newProduct = {
-        id: products[products.length-1].id + 1,
-			  nombreProducto: req.body.nombreprod,
+			  nombre: req.body.nombreprod,
         descripcion: req.body.descripcion,
 			  precio: parseInt(req.body.precio),
 			  descuento: parseInt(req.body.descuento),
-        mascota: req.body.mascota,
+        id_mascota: parseInt(req.body.mascota),
         imagen: image,
-        marca: req.body.marca,
-        edadMascota: req.body.edadmascota,
-        tamanioMascota: req.body.tamaniomascota,
+        id_marca: parseInt(req.body.marca),
+        id_edad_mascota: parseInt(req.body.edadmascota),
+        id_tamanio_mascota: parseInt(req.body.tamaniomascota),
         destacado: esDestacado,
-			  categoria: req.body.categoria,
-			  subCategoria: subCatFinal,
-        presentacion: req.body.presentacion
-      };     
-
-      // Agrego el producto creado al array de productos
-      //ESTO YA NO IRIA 
-      // products.push(newProduct); 
-
-      // Actualizo el JSON de productos luego de crear el producto 
-      // ESTO TAMPOCO IRIA
-      /* fs.writeFileSync(productsFilePath , JSON.stringify(products), {
-        flag:"w",
-        encoding:"utf-8",
-      });*/
-        
-      // ESTO LO PODEMOS DEJAR O AGREGAMOS COMO PONEN ELLOS UN RESPONSE QUE TE LLEVA AL LINK DEL NVO PROD.
-      
-      let productoNuevo = await productService.add(newProduct);
+			  id_categoria: parseInt(req.body.categoria),
+			  id_sub_Categoria: subCatFinal,
+        id_presentacion: presentacionFinal,
+        stock: parseInt(req.body.stock)
+      };    
+           
       /* podemos mandar a la pagina de detalle del producto para validar la carga tambien
       dejo ejemplo de otra opcion como probar*/
       //res.redirect(`/movies/${req.params.id}/detail`))
       //res.status(201).json(new CreateResponse(productoNuevo.id, `${req.protocol}://${req.get('host')}${req.originalUrl}/${productoNuevo.id}`))
-      res.render ('../views/mascotas.ejs', {
-        title: 'Mascotas'
-      });
-
-      } catch (error) {
-        res.send(e.message).status(500);
-      }
-    
-    },
+          /* res.render ('../views/mascotas.ejs', {
+            title: 'Mascotas'
+          }); */
+        
+        productService.add(newProduct)
+        .then(() =>
+            res.render ('../views/mascotas.ejs', {
+              title: 'Mascotas',
+              status: 200
+            })
+        )
+      .catch((error) => {
+        console.log(error)
+        res.send(error.message)
+      })
+     },
     //Controlador para editar prod -sole
     editarProdController:(req, res) => {
       const productos = getProducts();
