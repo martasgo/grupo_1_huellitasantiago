@@ -10,9 +10,9 @@
       var opcionesDivAccesorios = document.getElementById("subCatAccesorios");
       var select2 = document.getElementById("subCat");
       
-      opcionesDiv.style.display = (select1.value == "alimentos") ? "block" : "none";
-      opcionesDivPrentacion.style.display = (select1.value == "alimentos") ? "block" : "none";
-      opcionesDivAccesorios.style.display = (select1.value == "accesorios") ? "block" : "none";
+      opcionesDiv.style.display = (select1.value == "1") ? "block" : "none";
+      opcionesDivPrentacion.style.display = (select1.value == "1") ? "block" : "none";
+      opcionesDivAccesorios.style.display = (select1.value == "2") ? "block" : "none";
     }
 
 </script>
@@ -22,15 +22,16 @@
     <%- include('../partials/header') %>
     <main>
         <p id="title-alta"> Formulario de alta de producto </p>
-      
+        
         <section class="fichaprod">
             <form id="form-alta-prod" method="post" enctype="multipart/form-data" action="/product">
                 <div class="elementos-form">
                     <label for="mascota">Mascota:</label><br>
-                    <select class="margen-ancho" id="mascota" name="mascota">
-                        <option value="perros">Perros</option>
-                        <option value="gatos">Gatos</option>
-                        <option value="perros-gatos">Perros-gatos</option>
+                     <select class="margen-ancho" id="mascota" name="mascota">
+                            <option value="" selected></option>
+                        <% for (i=0; i< pet.length; i++) { %>
+                            <option value="<%= pet[i].id %>"><%= pet[i].mascota %></option>
+                        <% } %>
                     </select><br>
 
                 </div>
@@ -41,7 +42,7 @@
                
                 <div class="elementos-form">
                     <label for="precio">Precio:</label><br>
-                    <input class="margen-ancho" type="number" id="precio" name="precio"><br>
+                    <input class="margen-ancho" type="number" id="precio" name="precio" step="any"><br>
                 </div>
                 <div class="elementos-form">
                     <label for="descuento">Descuento(%):</label><br>
@@ -52,34 +53,33 @@
                 <label for="categoria">Categoría:</label><br>
                     <select  class="margen-ancho" id="categoria" name="categoria" onchange="mostrarOpciones()">
                         <option value=""></option>
-                        <option value="alimentos">Alimentación</option>
-                        <option value="accesorios">Accesorios</option>
-                        <option value="cuidados-higiene">Cuidado e higiene</option>
-                        <option value="ropa">Ropa</option>
+                        <% for (i=0; i< category.length; i++) { %>
+                            <option value="<%= category[i].id %>"><%= category[i].nombre %></option>
+                        <% } %>
                 </select><br>
                 </div>
 
                 <div class="elementos-form" id="subCatSelect" style="display: none;">
                  <!-- solo mostrar si se selecciona cat alimentos -->
-                <label for="subCat">Subcategoría:</label><br>
+                <label for="subCat">Subcategoría:</label><br>           
                     <select class="margen-ancho" id="subCat" name="subCat">
                         <option value=""></option>
-                        <option value="alimentos-secos">Alimentos secos</option>
-                        <option value="latas-sobres">Latas / sobres</option>
-                        <option value="alimento-natural">Alimento natural</option> 
-                </select><br>
+                        <% for (i=0; i< subCategory.length; i++) { %>
+                            <% if (subCategory[i].id_category == 1) { %>
+                     <option value="<%= subCategory[i].id %>"><%= subCategory[i].nombre_sub_category %></option>
+                                <% } %>
+                         <% } %>
+                          
+                   </select><br>
             </div>
 
             <div class="elementos-form" id="alimentoPresentacion" style="display: none;">
                 <label for="presentacion">Presentación:</label><br>
                 <select  class="margen-ancho" id="presentacion" name="presentacion">
                     <option value=""></option>
-                    <option value="85 gr.">85 Gr</option>
-                    <option value="100 gr.">100 Gr</option>
-                    <option value="500 gr.">500 Gr</option>
-                    <option value="1 kg.">1 Kg</option>
-                    <option value="2.5 kg.">2.5 Kg</option>
-                    <option value="3 kg.">3 Kg</option>
+                    <% for (i=0; i< packageRes.length; i++) { %>
+                        <option value="<%= packageRes[i].id %>"><%= packageRes[i].cantidad %> <%= packageRes[i].unidad_medida %></option>
+                    <% } %>
                 </select><br>
             </div>
 
@@ -89,13 +89,12 @@
                 <label for="subCatAcc">Subcategoría:</label><br>
                     <select class="margen-ancho" id="subCatAcc" name="subCatAcc">
                         <option value=""></option>
-                        <option value="fundas">Fundas para auto</option>
-                        <option value="camas">Camas</option>
-                        <option value="correas">Correas</option>
-                        <option value="comederos">Comederos / bebederos</option>
-                        <option value="dispensers">Dispensers</option>
-                        <option value="transportadoras">Transportadoras</option>
-                        <option value="varios">Varios</option>
+                        <% for (i=0; i< subCategory.length; i++) { %>
+                            <% if (subCategory[i].id_category == 2) { %>
+                     <option value="<%= subCategory[i].id %>"><%= subCategory[i].nombre_sub_category %></option>
+                                <% } %>
+                         <% } %>
+
                 </select><br>
                 <!-- fin accesorios -->
                 </div>
@@ -105,24 +104,10 @@
                 <label for="marca">Marca:</label><br>
                     <select class="margen-ancho" id="marca" name="marca">
                         <option value=""></option>
-                        <option value="Pedigree">Pedigree</option>
-                        <option value="Royal">Royal Canin</option>
-                        <option value="Sieger">Sieger</option>
-                        <option value="Nutrique">Nutrique</option>
-                        <option value="Purina">Purina</option>
-                        <option value="Vitalcan">Vitalcan</option>
-                        <option value="Absorsol">Absorsol</option>
-                        <option value="Puppis">Puppis</option>
-                        <option value="Canine Couture">Canine Couture</option>
-                        <option value="Garritas">Garritas</option>
-                        <option value="Oasis">Oasis</option>
-                        <option value="Forte Health">Forte Health</option>
-                        <option value="Pauldip">Pauldip</option>
-                        <option value="La Tienda">La Tienda</option>
-                        <option value="Bacan">Bacan</option>
-                        <option value="Animal Pet">Animal Pet</option>
-                        <option value="Frontline">Frontline</option>
-                        <option value="Earth Rated">Earth Rated</option>
+                        <% for (i=0; i< brand.length; i++) { %>
+                            <option value="<%= brand[i].id %>"><%= brand[i].nombre_marca %></option>
+                        <% } %>
+
                 </select><br>
                 </div>
 
@@ -130,17 +115,19 @@
                 <label for="edadmascota">Edad mascota:</label><br>
                     <select  class="margen-ancho" id="edadmascota" name="edadmascota">
                         <option value="default"></option>
-                        <option value="cachorro">Cachorro</option>
-                        <option value="adulto">Adulto</option>
+                        <% for (i=0; i< petAge.length; i++) { %>
+                            <option value="<%= petAge[i].id %>"><%= petAge[i].edad %></option>
+                        <% } %>
                     </select><br>
                 </div>
 
                 <div class="elementos-form">
                 <label for="tamaniomascota">Tamaño mascota:</label><br>
                 <select class="margen-ancho" id="tamaniomascota" name="tamaniomascota">
-                    <option value="pequeño">Pequeño</option>
-                    <option value="mediano">Mediano</option>
-                    <option value="grande">Grande</option>
+                    <option value="" selected></option>
+                        <% for (i=0; i< petSize.length; i++) { %>
+                            <option value="<%= petSize[i].id %>"><%= petSize[i].tamanio %></option>
+                        <% } %>
                 </select><br>
                 </div>
                 
@@ -153,6 +140,11 @@
                 <div class="elementos-form-100">
                     <label for="descripcion">Descripción:</label><br>
                     <textarea name="descripcion" id="descripcion"></textarea><br>
+                </div>
+
+                <div class="elementos-form">
+                    <label for="stock">Stock:</label><br>
+                    <input class="margen-ancho" type="number" id="stock" name="stock"><br>
                 </div>
 
                 <div class="elementos-form-100">
