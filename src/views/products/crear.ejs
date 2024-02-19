@@ -2,27 +2,16 @@
 <html lang="en">
   <!-- include head -->
 <%- include('../partials/head') %>
-<script>
-    function mostrarOpciones() {
-      var select1 = document.getElementById("categoria");
-      var opcionesDiv = document.getElementById("subCatSelect");
-      var opcionesDivPrentacion = document.getElementById("alimentoPresentacion");
-      var opcionesDivAccesorios = document.getElementById("subCatAccesorios");
-      var select2 = document.getElementById("subCat");
-      
-      opcionesDiv.style.display = (select1.value == "1") ? "block" : "none";
-      opcionesDivPrentacion.style.display = (select1.value == "1") ? "block" : "none";
-      opcionesDivAccesorios.style.display = (select1.value == "2") ? "block" : "none";
-    }
-
-</script>
+<script src="/js/viewCreate.js"> </script>
   <body>
     
     <!-- include header -->
     <%- include('../partials/header') %>
     <main>
+        <p class="rutahome">
+            <a href="/user/profile">Perfil</a> / Alta producto /
+        </p>
         <p id="title-alta"> Formulario de alta de producto </p>
-        
         <section class="fichaprod">
             <form id="form-alta-prod" method="post" enctype="multipart/form-data" action="/product">
                 <div class="elementos-form">
