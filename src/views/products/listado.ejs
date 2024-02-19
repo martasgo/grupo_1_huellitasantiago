@@ -35,7 +35,7 @@
                                 <article>
                                     <a href="/product/detalle/<%= productsMascotas[i].id %>"><img src="/images/productos/<%= productsMascotas[i].imagen %>" alt=""></a>
                                     <div class="detalle">
-                                        <p id=""><%= productsMascotas[i].nombreProducto %></p>
+                                        <p id=""><%= productsMascotas[i].nombre %></p>
                                             <% if (productsMascotas[i].descuento != 0) {
                                                 precioFinal = (productsMascotas[i].precio - ((productsMascotas[i].precio * (productsMascotas[i].descuento/100)))) %>
                                                 <div class="preciosOfertas">
