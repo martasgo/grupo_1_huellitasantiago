@@ -31,7 +31,6 @@ const prodController = {
       productos = getProducts();
       producto = productos.filter(product => product.id === idProducto);
       const productsDestacado = productos.filter((product) => product.destacado === 'si');
-      
           res.render('../views/products/detalle-producto.ejs', {
               /* aqui se mandaria le objeto de cada articulo para hacerlo dinámico */
               title: 'Detalle producto',
@@ -193,38 +192,66 @@ const prodController = {
       categoria = ''
       subCategoria = '';
       mascota = req.params.idMascota;
-      const products = getProducts();
-
+      
       //filtro productos de la mascota seleccionada 
-      const productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
-
-      res.render('../views/products/listado.ejs', {
-          title: 'Listado Productos',
-          categoria,
-          subCategoria,
-          mascota,
-          productsMascotas,
-          toThousand
-      });
+      //const productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
+      petService.getByMascota(mascota)
+      .then ((mascotasLista) => {
+        let indices = []
+        for (i=0; i < mascotasLista.length; i++){
+          indices.push(mascotasLista[i].id);
+        }
+        productService.getAllByMascotas(indices)
+        .then ((productsMascotas) =>{
+           res.render('../views/products/listado.ejs', {
+            title: 'Listado Productos',
+            categoria,
+            subCategoria,
+            mascota,
+            productsMascotas,
+            toThousand
+          })  
+        })
+      } 
+      )
+      .catch((error) => {
+        console.log(error)
+        res.send(error.message)
+      })   
     },
     // Controlador ruta para perros/categoria o gatos/categoria
     CategoryListController:(req, res) => {
-      categoria = req.params.category;
+      categoria = encodeURIComponent(req.params.category);
       mascota = req.params.idMascota;
-      const products = getProducts();
       subCategoria = '';
 
-      productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
-      productsMascotas = productsMascotas.filter((product) => product.categoria === categoria);
-         
-      res.render('../views/products/listado.ejs', {
-          title: 'Listado Productos',
-          categoria,
-          subCategoria,
-          mascota,
-          productsMascotas,
-          toThousand
-      });
+      petService.getByMascota(mascota)
+      .then ((mascotasLista) => {
+        let indicesMascotas = []
+        for (i=0; i < mascotasLista.length; i++){
+          indicesMascotas.push(mascotasLista[i].id);
+        }
+        prodCategoryService.getByField(categoria)
+          .then ((categoriaResult) =>{
+            let indiceCat = categoriaResult.id;
+            productService.getAllByCategory(indicesMascotas, indiceCat)
+            .then((productsMascotas)=>{
+              res.render('../views/products/listado.ejs', {
+                title: 'Listado Productos',
+                categoria,
+                subCategoria,
+                mascota,
+                productsMascotas,
+                toThousand
+              });
+            })
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+        res.send(error.message)
+      })      
+     
     },
     //Controlador rutas para perros/categoria/subcategoria o gatos/categoria/subcategoria
     subCategoryListController:(req, res) => {
