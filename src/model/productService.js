@@ -12,15 +12,24 @@ const productService = {
         }
     },
 
-    // Service para obtener un producto por ID
-    getByPk: async (req, res) => {
+    // Service para obtener un producto por su ID con sus relaciones
+    getByPk: async (id) => {
         try {
-            let id = parseInt(req.params.id);
-            let productByPk = await db.Product.findByPk(id);
-            return res.send(productByPk)
+            return await db.Product.findByPk(id, {
+                include: 
+                [
+                "pets_sizes",
+                "pets",
+                'pets_ages',
+                'categories',
+                'sub_categories',
+                'packages_sizes',
+                'brands',
+                'shopping_carts']
+            });
+            
         } catch (error) {
             console.log(error);
-            return res.status(500).send('Error en la solicitud');
         }
     },
 
@@ -59,6 +68,21 @@ const productService = {
             return res.status(500).send('Error en la solicitud');
         }
     },
+
+    // Service para obtener todos los productos destacados
+    getDestacados: async () => {
+        try {
+            return await db.Product.findAll({
+                where: {
+                    destacado: 1
+                }
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error en la solicitud');
+        }
+    },
+
     /* Servicio para agregar en la base un nvo producto */
     add: async function (prod) {
         try {
@@ -66,6 +90,33 @@ const productService = {
             return await db.Product.create(prod);
         } catch (error) {
             console.log(error);
+        }
+    },
+
+    // Service para modificar un producto por su ID
+    updateById: async (prod, id) => {
+        try {
+            return await db.Product.update(prod,
+                {where:{
+                    id:id
+                }})
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    // Service para eliminar un producto por su ID
+    destroyById: async(id) => {
+        try {
+            const result = await db.Product.destroy({
+                where: {
+                    id: id
+                }
+            });
+            return result;
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error en la solicitud');
         }
     }
 };
