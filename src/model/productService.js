@@ -1,4 +1,5 @@
 const db = require('./database/models');
+const Op = db.Sequelize.Op;
 
 const productService = {
     // Service para obtener todos los productos
@@ -66,8 +67,57 @@ const productService = {
             return await db.Product.create(prod);
         } catch (error) {
             console.log(error);
+            return res.status(500).send('No se pudo procesar la solicitud correctamente');
         }
-    }
+    },
+    getDestacados: async function () {
+            try {
+                // const pelicula = new Pelicula(body);
+                //return await db.Product.create(prod);
+                return await db.Product.findAll({
+                    where: {
+                        destacado: 1
+                    },
+                    order: [
+                        ['nombre', 'ASC']
+                    ]
+                })
+            } catch (error) {
+                console.log(error);
+                return res.status(500).send('No se pudo procesar la solicitud correctamente');
+            }
+    },
+    getAllByMascotas: async function (listado) {
+        try {
+            return await db.Product.findAll({
+                where: {
+                    id_mascota: { [Op.or]: listado}
+                },
+                order: [
+                    ['nombre', 'ASC']
+                ]
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('No se pudo procesar la solicitud correctamente');
+        }
+    },
+    getAllByCategory: async function (idPet, idCat) {
+        try {
+            return await db.Product.findAll({
+                where: {
+                    id_mascota: { [Op.or]: idPet},
+                    id_categoria : idCat
+                },
+                order: [
+                    ['nombre', 'ASC']
+                ]
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('No se pudo procesar la solicitud correctamente');
+        }
+    },
 };
 
 module.exports = productService;
