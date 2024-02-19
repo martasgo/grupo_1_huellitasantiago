@@ -26,19 +26,16 @@ const prodController = {
     },
   
     // controlador ruta detalle producto
-    detailProductController:(req, res) => {
-      idProducto = parseInt(req.params.id);
-      productos = getProducts();
-      producto = productos.filter(product => product.id === idProducto);
-      const productsDestacado = productos.filter((product) => product.destacado === 'si');
-      
-          res.render('../views/products/detalle-producto.ejs', {
-              /* aqui se mandaria le objeto de cada articulo para hacerlo dinámico */
-              title: 'Detalle producto',
-              producto,
-              productsDestacado,
-              toThousand
-          });
+    detailProductController: async (req, res) => {
+      let idProducto = parseInt(req.params.id);
+      let productsDestacado = await productService.getDestacados();
+      let producto = await productService.getByPk(idProducto)
+      return res.render('../views/products/detalle-producto.ejs', {
+        title: 'Detalle producto',
+        producto,
+        productsDestacado,
+        toThousand
+      });
       
     },
     //Controlador ruta para crear prod
@@ -70,20 +67,7 @@ const prodController = {
               return res.status(500).send('Error en la solicitud');
             })
     },
-    //Controlador ruta para eliminar producto
-    eliminarController: (req, res) =>{
-      const idProd = parseInt(req.params.id);
-      const products = getProducts();
-      newList = [];
-      for (var i=0; i<=products.length-1; i++){
-        idProducto = products[i].id;
-        if (idProducto !== idProd) {
-          newList.push(products[i]);
-        }
-      }
-      fs.writeFileSync(productsFilePath, JSON.stringify(newList));
-      res.redirect('/product');
-    },
+    
     //Controlador Ruta para almacenar el producto creado
     guardarProd: (req, res) => {
       // Defino la variable que recibe la imagen del formulario
@@ -147,47 +131,109 @@ const prodController = {
         res.send(error.message)
       })
      },
-    //Controlador para editar prod -sole
-    editarProdController:(req, res) => {
-      const productos = getProducts();
-      const id = parseInt(req.params.id);	
-      const producto = productos.find((product)=> product.id == id);
-  
-      res.render("../views/products/editar.ejs", {producto});
+
+    //Controlador para renderizar el FORM de edición de un producto (GET)
+    editarProdController: async (req, res) => {
+      try {
+        let idProd = parseInt(req.params.id);
+        let producto = await productService.getByPk(idProd);
+        let brandList = await brandService.getAll();
+        let petList = await petService.getAll();
+        let petAgeList = await petAgeService.getAll();
+        let petSizeList = await petSizeService.getAll();
+        let categoryList = await prodCategoryService.getAll();
+        let subCategoryAlimentosList = await subCategoryService.getByCategoryId(1);
+        let subCategoryAccesoriosList = await subCategoryService.getByCategoryId(2);
+        let packageList = await packageService.getAll();
+
+        return res.render("../views/products/editar.ejs", 
+        {producto,
+        brandList,
+        petList,
+        petAgeList,
+        petSizeList,
+        categoryList,
+        subCategoryAlimentosList,
+        subCategoryAccesoriosList,
+        packageList});
+      } 
+      catch (error) {
+        console.log(error);
+        return res.status(500).send('Error en la solicitud');
+      }
     },
-    //Controlador Guardar del Editar -Sole
-    updateProdController: (req, res) => {		
-      const productos =getProducts();
-      const {id} = req.params;
 
-      let subCatFinal = "";
-      
-      if (req.body.subCat != "") {
-        subCatFinal = req.body.subCat;
-      } else if (req.body.subCatAcc != ""){
-        subCatFinal = req.body.subCatAcc;
-      };
+    //Controlador para guardar en la DB el producto editado (POST)
+    updateProdController: async (req, res) => {
+      try {
+        // Capturo el ID del producto
+        let idProd = parseInt(req.params.id);
+        
+        // Defino la variable que recibe la imagen del formulario
+        const image = req.file ? req.file.filename : "default-image.png";
 
-      const esDestacado = (req.body.destacado === "true") ? "si" : "no";
-                  
-      const productToEdit = productos.findIndex((product)=> product.id ==id);
-      productos[productToEdit].nombreProducto= req.body.nombreprod;
-      productos[productToEdit].descripcion = req.body.descripcion;
-      productos[productToEdit].precio = parseInt(req.body.precio);
-      productos[productToEdit].descuento = parseInt(req.body.descuento);
-      productos[productToEdit].mascota = req.body.mascota;
-      productos[productToEdit].imagen = req.file ? req.file.filename : productos[productToEdit].imagen;
-      productos[productToEdit].marca = req.body.marca;
-      productos[productToEdit].edadMascota = req.body.edadmascota;
-      productos[productToEdit].tamanioMascota = req.body.tamaniomascota;
-      productos[productToEdit].destacado = esDestacado;
-      productos[productToEdit].categoria = req.body.categoria;
-      productos[productToEdit].subCategoria = subCatFinal;
-      productos[productToEdit].presentacion = req.body.presentacion;
+        // Defino la variable que evalúa si es un producto destacado
+        const esDestacado = (req.body.destacado === "true") ? 1 : 0;
+
+        // Variable para manejar subcategoría
+        let subCatFinal = "";
+        if (req.body.categoria == 1) {
+          subCatFinal = parseInt(req.body.subCat);
+        } else if (req.body.categoria == 2) {
+          subCatFinal = parseInt(req.body.subCatAcc);
+        } else {
+          subCatFinal = null
+        }
+
+        // Variable para manejar si viene o no una presentacion
+        let presentacionFinal = "";
+        if (req.body.categoria == 1) {
+          presentacionFinal = parseInt(req.body.presentacion);
+        } else {
+          presentacionFinal = null
+        };
+
+        // Defino la variable que guarda el producto editado desde el formulario
+        const modifiedProduct = {
+          nombre: req.body.nombreprod,
+          descripcion: req.body.descripcion,
+          precio: parseInt(req.body.precio),
+          descuento: parseInt(req.body.descuento),
+          id_mascota: parseInt(req.body.mascota),
+          imagen: image,
+          id_marca: parseInt(req.body.marca),
+          id_edad_mascota: parseInt(req.body.edadmascota),
+          id_tamanio_mascota: parseInt(req.body.tamaniomascota),
+          destacado: esDestacado,
+          id_categoria: parseInt(req.body.categoria),
+          id_sub_categoria: subCatFinal,
+          id_presentacion: presentacionFinal,
+          stock: parseInt(req.body.stock)
+        };    
+
+        // Incorporo a la DB el producto editado y redirecciono a product
+        await productService.updateById(modifiedProduct, idProd);
+        return res.redirect('/product');
+      }
+      catch (error) {
+        console.log(error);
+        return res.status(500).send('Error en la solicitud');
+      }		 
+    },
     
-      fs.writeFileSync(productsFilePath, JSON.stringify(productos));  
-      res.redirect("/product");          
+    //Controlador para eliminar producto por su ID
+    eliminarController: async (req, res) =>{
+      let idProduct = parseInt(req.params.id);
+      try {
+          await productService.destroyById(idProduct);
+          res.redirect('/product');
+        }
+      catch (error) {
+          console.log(error);
+          res.send(error.message);
+      }
     },
+
     //Controlador ruta /product/perros o /gatos
     productsListController:(req, res) => {
       categoria = ''
@@ -251,7 +297,6 @@ const prodController = {
       });
     },
 
-    // delete
   };
   
 module.exports = prodController;
