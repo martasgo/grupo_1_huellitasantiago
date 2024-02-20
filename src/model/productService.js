@@ -6,10 +6,30 @@ const productService = {
     getAll: async (req, res) => {
         try {
             let allProducts =  await db.Product.findAll();
-            return res.send(allProducts);
+            return allProducts;
         } catch (error) {
             console.log(error);
             return res.status(500).send('Error en la solicitud');
+        }
+    },
+
+    // Service para obtener todos los productos agrupados de a 5
+    // Sirve para aplicar en paginados
+    getAllByGroup: async (page = 1) => {
+        try {
+            const pageSize = 7; // Cantidad de productos por página
+            const startIndex = (page - 1) * pageSize;
+            const endIndex = page * pageSize;
+    
+            const allProducts = await db.Product.findAll({
+                offset: startIndex,
+                limit: pageSize,
+            });
+    
+            return allProducts;
+        } catch (error) {
+            console.log(error);
+            throw new Error('Error en la solicitud');
         }
     },
 
