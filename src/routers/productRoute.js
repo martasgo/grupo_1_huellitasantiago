@@ -26,6 +26,7 @@ const routerProduct = Router();
 
 const routesProd = {
   indexProductRoute: "/",
+  list: '/list',
   detailProductRoute: "/detalle/:id",
   productCrear: "/crear",
   productEditar: "/editar/:id",
@@ -39,6 +40,9 @@ const routesProd = {
 
 // rutas para mostrar la categoria de mascotas y de ahi ver productos
 routerProduct.get(routesProd.indexProductRoute, productController.indexProductController);
+
+// ruta para obtener el listado completo de productos
+routerProduct.get(routesProd.list, authMiddleware , adminMiddleware, productController.list);
 
 // rutas para ver detalle de producto
 routerProduct.get(routesProd.detailProductRoute, productController.detailProductController);

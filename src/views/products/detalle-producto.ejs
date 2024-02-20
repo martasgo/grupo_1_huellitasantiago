@@ -35,13 +35,17 @@
                         <div><input type="button" class="addtocart" value="Agregar al carrito" />  </div>
                     </div>
                     <p><i class="fa-solid fa-credit-card"></i> <a href="/envios">Medios de pago</a></p>
-					
-                <div class="elementos-form-100">
-                    <div id="form-buttons">  
-                        <a href="/product/editar/<%= producto.id %>" class=""><button type="button" class="">EDITAR</button></a>
-                        <a href="/product/delete/<%= producto.id %>" class=""><button type="button" class="">ELIMINAR</button></a>
-                    </div>
-                </div>        
+				
+                <% if(isLogged && locals.userLogged) { %>
+                    <%if (userLogged.categoria === "administrador") { %>  
+                    <div class="elementos-form-100">
+                        <div id="form-buttons">  
+                            <a href="/product/editar/<%= producto.id %>" class=""><button type="button" class="">EDITAR</button></a>
+                            <a href="/product/delete/<%= producto.id %>" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
+                        </div>
+                    </div> 
+                    <% } %>   
+                <% } %>    
                 </section>
             </div>
             <section id="descripcionProd">
@@ -91,6 +95,8 @@
 
     <!-- include footer -->
     <%- include('../partials/footer') %>
+
+    <script src="/js/detalle-producto.js"></script>
 </body>
 
 </html>

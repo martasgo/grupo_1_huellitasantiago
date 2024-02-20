@@ -1,3 +1,7 @@
+// DB
+const db = require('../model/database/models');
+const Op = db.Sequelize.Op;
+
 //SERVICIOS
 const productService = require('../model/productService');
 const brandService = require('../model/brandService');
@@ -24,6 +28,28 @@ const prodController = {
         title: 'Mascotas'
       });
     },
+
+    // Controlador para obtener el listado total de productos, agrupados de a 7
+    list: async (req, res) => {
+      try {
+          const page = parseInt(req.query.page) || 1;
+          const allProducts = await productService.getAllByGroup(page);
+  
+          // Obtener el número total de productos para calcular el número total de páginas
+          const totalProducts = await db.Product.count();
+          const totalPages = Math.ceil(totalProducts / 7); // Uso la misma cantidad de pagesize usada en el servicio
+  
+          return res.render('../views/products/allProducts.ejs', {
+              title: 'Listado completo de productos',
+              allProducts,
+              currentPage: page,
+              totalPages,
+          });
+      } catch (error) {
+          console.log(error);
+          return res.status(500).send('Error en la solicitud');
+      }
+  },
   
     // controlador ruta detalle producto
     detailProductController: async (req, res) => {
