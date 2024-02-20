@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- include head -->
+<%- include('../partials/head') %>
+
+<body>
+    <!-- include header -->
+    <%- include('../partials/header') %>
+   
+    <main>
+        <section>
+            <h2>LISTADO COMPLETO DE PRODUCTOS</h2>   
+            
+                <% allProducts.forEach(product => { %>
+                    <div class="product">
+                        <a href="/product/detalle/<%=product.id%>"> <%= product.nombre %> </a>
+                        <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
+                    </div>  
+                <% }); %>
+
+                <!-- Paginación -->
+                <div class="pagination">
+                    <% if (currentPage > 1) { %>
+                        <a href="?page=<%= currentPage - 1 %>">Anterior</a>
+                    <% } %>
+
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <a href="?page=<%= i %>"><%= i %></a>
+                    <% } %>
+
+                    <% if (currentPage < totalPages) { %>
+                        <a href="?page=<%= currentPage + 1 %>">Siguiente</a>
+                    <% } %>
+                </div>
+
+        </section>
+
+        <!-- include marcas -->
+        <%- include('../partials/marcas') %>
+    </main>
+     <!-- include footer -->
+     <%- include('../partials/footer') %>
+
+    <script src="/js/allProducts.js"></script> 
+</body>
+
+</html>
