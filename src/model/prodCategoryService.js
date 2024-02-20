@@ -6,7 +6,7 @@ const prodCategoryService = {
             return await db.ProductCategory.findAll();
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se puedo procesar la solicitud');
+            return [];
         }
     },
     getByField: async function (categoria){
@@ -19,7 +19,7 @@ const prodCategoryService = {
             
         } catch (error) {
             console.log(error);
-            return res.status(500).send('Error en la solicitud');
+            return error;
         }
     },
 }

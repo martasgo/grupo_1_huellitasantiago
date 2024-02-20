@@ -7,7 +7,7 @@ const subCategoryService = {
             return await db.ProductSubCategory.findAll();
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se puedo procesar la solicitud');
+            throw new Error("No se pudo procesar la solicitud")
         }
     },
     // Service para obtener subcategorias según el ID de la categoría
@@ -20,9 +20,23 @@ const subCategoryService = {
             });
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se puedo procesar la solicitud');
+            throw new Error("No se pudo procesar la solicitud")
         }
     },
+    getByField: async function (datoSubCat, categoriaId){
+        try {
+            return await db.ProductSubCategory.findOne({
+                where: {
+                    nombre_sub_category: datoSubCat,
+                    id_category: categoriaId
+                }
+            });
+            
+        } catch (error) {
+            console.log(error);
+            throw new Error("No se pudo procesar la solicitud")
+        }
+    }
 }
 
 module.exports = subCategoryService;
