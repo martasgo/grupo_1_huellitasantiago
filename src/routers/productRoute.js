@@ -30,12 +30,7 @@ const routesProd = {
   productCrear: "/crear",
   productEditar: "/editar/:id",
   productDelete: '/delete/:id',
-  // PRUEBO PRODUCT SERVICE
-  todos: '/todos',
-  porID: '/porid/:id',
-  unoPorNombre: '/pornombre',
-  todosPorNombre: '/todospornombre',
-
+  
   //listado productos: "/product/perros",  /product/gato/  
   productsList: "/:idMascota",
   productsListCat: "/:idMascota/:category",
@@ -45,8 +40,6 @@ const routesProd = {
 // PRUEBO RUTA PARA EL SERVICE DE PRODUCT
 routerProduct.get(routesProd.todos, productService.getAll);
 routerProduct.get(routesProd.porID, productService.getByPk);
-routerProduct.get(routesProd.unoPorNombre, productService.getOneByName);
-routerProduct.get(routesProd.todosPorNombre, productService.getAllByName);
 
 // rutas para mostrar la categoria de mascotas y de ahi ver productos
 routerProduct.get(routesProd.indexProductRoute, productController.indexProductController);
@@ -68,7 +61,6 @@ routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , p
 //rutas para mascota=perro o mascota=gato
 routerProduct.get(routesProd.productsList, productController.productsListController);
 routerProduct.get(routesProd.productsListCat, productController.CategoryListController);
-routerProduct.get(routesProd.productsListSubcat, productController.subCategoryListController);
-
+routerProduct.get(routesProd.productsListSubcat, productController.CategoryListController);
 
 module.exports = routerProduct;
