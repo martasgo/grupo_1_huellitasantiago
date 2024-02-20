@@ -26,15 +26,11 @@ const routerProduct = Router();
 
 const routesProd = {
   indexProductRoute: "/",
+  list: '/list',
   detailProductRoute: "/detalle/:id",
   productCrear: "/crear",
   productEditar: "/editar/:id",
   productDelete: '/delete/:id',
-  // PRUEBO PRODUCT SERVICE
-  todos: '/todos',
-  porID: '/porid/:id',
-  unoPorNombre: '/pornombre',
-  todosPorNombre: '/todospornombre',
 
   //listado productos: "/product/perros",  /product/gato/  
   productsList: "/:idMascota",
@@ -42,14 +38,11 @@ const routesProd = {
   productsListSubcat: "/:idMascota/:category/:subCat",
 };
 
-// PRUEBO RUTA PARA EL SERVICE DE PRODUCT
-routerProduct.get(routesProd.todos, productService.getAll);
-routerProduct.get(routesProd.porID, productService.getByPk);
-routerProduct.get(routesProd.unoPorNombre, productService.getOneByName);
-routerProduct.get(routesProd.todosPorNombre, productService.getAllByName);
-
 // rutas para mostrar la categoria de mascotas y de ahi ver productos
 routerProduct.get(routesProd.indexProductRoute, productController.indexProductController);
+
+// ruta para obtener el listado completo de productos
+routerProduct.get(routesProd.list, authMiddleware , adminMiddleware, productController.list);
 
 // rutas para ver detalle de producto
 routerProduct.get(routesProd.detailProductRoute, productController.detailProductController);
