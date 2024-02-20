@@ -6,7 +6,7 @@ const petSizeService = {
             return await db.PetSize.findAll();
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se puedo procesar la solicitud');
+            throw new Error("No se pudo procesar la solicitud")
         }
     }
 }

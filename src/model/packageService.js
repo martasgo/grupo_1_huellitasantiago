@@ -6,7 +6,7 @@ const packageService = {
             return await db.PackageSize.findAll();
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se puedo procesar la solicitud');
+            throw new Error("No se puedo realizar la búsqueda de los tamaños")
         }
     }
 }

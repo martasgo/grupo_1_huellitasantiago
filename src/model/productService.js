@@ -35,7 +35,7 @@ const productService = {
     },
 
     // Service para obtener todos los productos destacados
-    getDestacados: async () => {
+    getDestacados: async (req, res) => {
         try {
             return await db.Product.findAll({
                 where: {
@@ -54,11 +54,10 @@ const productService = {
     /* Servicio para agregar en la base un nvo producto */
     add: async function (prod) {
         try {
-            // const pelicula = new Pelicula(body);
             return await db.Product.create(prod);
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se pudo procesar la solicitud correctamente');
+            throw new Error('No se pudo procesar la solicitud correctamente');
         }
     },
     getAllByMascotas: async function (listado) {
@@ -73,15 +72,15 @@ const productService = {
             })
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se pudo procesar la solicitud correctamente');
+            throw new Error('No se pudo procesar la solicitud correctamente');
         }
     },
-    getAllByCategory: async function (idPet, idCat) {
+    getAllByCategory: async function (idPet, idCat ) {
         try {
             return await db.Product.findAll({
                 where: {
                     id_mascota: { [Op.or]: idPet},
-                    id_categoria : idCat
+                    id_categoria : idCat,
                 },
                 order: [
                     ['nombre', 'ASC']
@@ -89,10 +88,26 @@ const productService = {
             })
         } catch (error) {
             console.log(error);
-            return res.status(500).send('No se pudo procesar la solicitud correctamente');
+            throw new Error('No se pudo procesar la solicitud correctamente');
         }
     },
-
+    getAllBySubCategory: async function (idPet, idCat, idSubCat) {
+        try {
+            return await db.Product.findAll({
+                where: {
+                    id_mascota: { [Op.or]: idPet},
+                    id_categoria : idCat,
+                    id_sub_categoria : idSubCat
+                },
+                order: [
+                    ['nombre', 'ASC']
+                ]
+            })
+        } catch (error) {
+            console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
+        }
+    },
     // Service para modificar un producto por su ID
     updateById: async (prod, id) => {
         try {
@@ -102,6 +117,7 @@ const productService = {
                 }})
         } catch (error) {
             console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
         }
     },
 
@@ -116,7 +132,7 @@ const productService = {
             return result;
         } catch (error) {
             console.log(error);
-            return res.status(500).send('Error en la solicitud');
+            throw new Error('No se pudo procesar la solicitud correctamente');
         }
     }
 };
