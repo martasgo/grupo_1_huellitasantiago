@@ -239,91 +239,140 @@ const prodController = {
       categoria = ''
       subCategoria = '';
       mascota = req.params.idMascota;
-      
-      //filtro productos de la mascota seleccionada 
-      //const productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
-      petService.getByMascota(mascota)
-      .then ((mascotasLista) => {
-        let indices = []
-        for (i=0; i < mascotasLista.length; i++){
-          indices.push(mascotasLista[i].id);
-        }
-        productService.getAllByMascotas(indices)
-        .then ((productsMascotas) =>{
-           res.render('../views/products/listado.ejs', {
-            title: 'Listado Productos',
-            categoria,
-            subCategoria,
-            mascota,
-            productsMascotas,
-            toThousand
-          })  
-        })
-      } 
-      )
-      .catch((error) => {
-        console.log(error)
-        res.send(error.message)
-      })   
+
+      // servicios para armar el filtro de productos que se muestra en la vista listado.ejs
+      let brandList =  brandService.getAll();
+      let petList =  petService.getAll();
+      let petAgeList =  petAgeService.getAll();
+      let petSizeList =  petSizeService.getAll();
+      let categoryList =  prodCategoryService.getAll();
+      let subCategList = subCategoryService.getAll();
+
+      Promise.all([brandList, petList, petAgeList,petSizeList,categoryList, subCategList ])
+            .then(function ([brand, pet, petAge, pestSize, categorias, subCat]) {
+              //filtro productos de la mascota seleccionada 
+              //const productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
+              petService.getByMascota(mascota)
+              .then ((mascotasLista) => {
+                let indices = []
+                for (i=0; i < mascotasLista.length; i++){
+                  indices.push(mascotasLista[i].id);
+                }
+                productService.getAllByMascotas(indices)
+                .then ((productsMascotas) =>{
+                  res.render('../views/products/listado.ejs', {
+                    title: 'Listado Productos',
+                    categoria,
+                    subCategoria,
+                    mascota,
+                    productsMascotas,
+                    //listados para armar los filtros en la vista listado.ejs que incluye un partial
+                    //filtros-productos.ejs
+                    brand,
+                    pet, 
+                    petAge, 
+                    pestSize, 
+                    categorias, 
+                    subCat
+                  })  
+                })
+              } 
+              )
+              .catch((error) => {
+                console.log(error)
+                res.status(500).send('No se pudo procesar la solicitud correctamente - '+ error.message);
+              })  
+            })
     },
     // Controlador ruta para perros/categoria o gatos/categoria
     CategoryListController:(req, res) => {
-      categoria = encodeURIComponent(req.params.category);
       mascota = req.params.idMascota;
-      subCategoria = '';
+      categoria = req.params.category.replace(/-/g, ' ');
+            
+      if (req.params.subCat){
+        subCategoria = req.params.subCat.replace(/-/g, ' ');
+      } else {
+        subCategoria = null
+      }  
 
-      petService.getByMascota(mascota)
-      .then ((mascotasLista) => {
-        let indicesMascotas = []
-        for (i=0; i < mascotasLista.length; i++){
-          indicesMascotas.push(mascotasLista[i].id);
-        }
-        prodCategoryService.getByField(categoria)
-          .then ((categoriaResult) =>{
-            let indiceCat = categoriaResult.id;
-            productService.getAllByCategory(indicesMascotas, indiceCat)
-            .then((productsMascotas)=>{
-              res.render('../views/products/listado.ejs', {
-                title: 'Listado Productos',
-                categoria,
-                subCategoria,
-                mascota,
-                productsMascotas,
-                toThousand
-              });
-            })
-        })
-      })
+      // servicios para armar el filtro de productos que se muestra en la vista listado.ejs
+      let brandList =  brandService.getAll();
+      let petList =  petService.getAll();
+      let petAgeList =  petAgeService.getAll();
+      let petSizeList =  petSizeService.getAll();
+      let categoryList =  prodCategoryService.getAll();
+      let subCategList = subCategoryService.getAll();
+      
+      Promise.all([brandList, petList, petAgeList,petSizeList,categoryList, subCategList ])
+            .then(function ([brand, pet, petAge, pestSize, categorias, subCat]) {
+              //busco el id de mascotas
+              petService.getByMascota(mascota)
+              .then ((mascotasLista) => {
+                let indicesMascotas = []
+                for (i=0; i < mascotasLista.length; i++){
+                  indicesMascotas.push(mascotasLista[i].id);
+                }
+                //busco el id de categoria
+                prodCategoryService.getByField(categoria)
+                  .then ((categoriaResult) =>{
+                    let indiceCat = categoriaResult.id;
+                    if (req.params.subCat){
+                        // SI VIENE CATEGORIA
+                        //busco el id de la subcategoria + id de la categoria
+                        subCategoryService.getByField(subCategoria, indiceCat)
+                        .then((resultSubCat) =>{
+                            let indiceSubCat = resultSubCat.id
+                            productService.getAllBySubCategory(indicesMascotas, indiceCat, indiceSubCat)
+                            .then((productsMascotas)=>{
+                              res.render('../views/products/listado.ejs', {
+                                title: 'Listado Productos',
+                                categoria,
+                                subCategoria,
+                                mascota,
+                                productsMascotas,
+                                //listados para armar los filtros en la vista listado.ejs que incluye un partial
+                                //filtros-productos.ejs
+                                brand,
+                                pet, 
+                                petAge, 
+                                pestSize, 
+                                categorias, 
+                                subCat,
+                              // toThousand
+                              }); 
+                            })
+                        })
+                    } else {
+                      //SI NO VIENE SUB-CATEGORIA
+                      productService.getAllByCategory(indicesMascotas, indiceCat)
+                        .then((productsMascotas)=>{
+                          res.render('../views/products/listado.ejs', {
+                              title: 'Listado Productos',
+                              categoria,
+                              subCategoria,
+                              mascota,
+                              productsMascotas,
+                              //listados para armar los filtros en la vista listado.ejs que incluye un partial
+                              //filtros-productos.ejs
+                              brand,
+                              pet, 
+                              petAge, 
+                              pestSize, 
+                              categorias, 
+                              subCat,
+                            // toThousand
+                          }); 
+                        })
+                    } 
+                  })
+                })
+              })
       .catch((error) => {
         console.log(error)
         res.send(error.message)
       })      
-     
-    },
-    //Controlador rutas para perros/categoria/subcategoria o gatos/categoria/subcategoria
-    subCategoryListController:(req, res) => {
-      categoria = req.params.category;
-      mascota = req.params.idMascota;
-      const products = getProducts();
 
-      productsMascotas = products.filter((product) => product.mascota === mascota || product.mascota === 'perros-gatos' );
-      productsMascotas = productsMascotas.filter((product) => product.categoria === categoria);
-
-      if (req.params.subCat){
-        subCategoria = req.params.subCat;
-        productsMascotas = productsMascotas.filter((product) => product.subCategoria === subCategoria);
-      } else {
-        subCategoria = ''
-      }     
-      res.render('../views/products/listado.ejs', {
-          title: 'Listado Productos',
-          categoria,
-          subCategoria,
-          mascota,
-          productsMascotas,
-          toThousand
-      });
-    },
+    }
 
   };
   
