@@ -1,5 +1,7 @@
 const db = require('./database/models');
 const Op = db.Sequelize.Op;
+const fs = require("fs");
+const path = require("path");
 
 const productService = {
     // Service para obtener todos los productos
@@ -154,6 +156,13 @@ const productService = {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
         }
+    },
+
+    // Service para borrar imagen en caso de creacion de producto con errores
+    deleteImagen: function(img){
+        let directorio = path.resolve(__dirname , "../../public/images/productos");
+        const rutaImagen = path.join(directorio, img);
+        fs.unlinkSync(rutaImagen);
     }
 };
 
