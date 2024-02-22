@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- include head -->
+<%- include('./partials/head') %>
+
+<body>
+    <!-- include header -->
+    <%- include('./partials/header') %>
+    <section>    
+    </section>
+    <main>
+        
+        <p></p>
+        <p class="tituloProductosDestacados">RESULTADOS BUSQUEDA</p>
+        <section class="listadoArticulos">
+            <% if (productsDestacado.length > 0 ){%>
+                <% for (i=0; i< productsDestacado.length; i++){ %>
+                    <article>
+                        <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                        <div class="detalle">
+                            <p id=""><%= productsDestacado[i].nombre %></p>
+                                <% if (productsDestacado[i].descuento != 0) {
+                                    precioFinal = (productsDestacado[i].precio - ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+                                    <div class="preciosOfertas">
+                                        <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
+                                        <p class="precioAnt" id="">$<%= (productsDestacado[i].precio) %></p>
+                                        <p class="precioAhora" id="">$<%= (precioFinal) %> </p> 
+                                    </div>
+                                <% } else {%>
+                                    <p class="precioAhora" id="">$<%= (productsDestacado[i].precio) %> </p>
+                                <% } %>
+                            <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                        </div>
+                    </article>    
+                <%  } %>
+            <%  } else {%>
+                <p>NO HAY RESULTADOS PARA LA BUSQUEDA</p> 
+            <%  } %>  
+        </section>
+       
+
+        <!-- include marcas -->
+        <%- include('./partials/marcas') %>
+    </main>
+     <!-- include footer -->
+     <%- include('./partials/footer') %>
+
+</body>
+
+</html>
