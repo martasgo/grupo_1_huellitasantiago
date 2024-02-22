@@ -11,18 +11,19 @@
         </div>
     </div>
     <div class="searchbox">
-        <form action="/" method="get">
-            <input type="text" id="" placeholder="Buscar producto, marcas"> <i id="busqueda"
-                class="fa-solid fa-magnifying-glass"></i>
+        <form action="/search" method="post">
+            <input type="text" id="buscarProd" name="buscarProd" placeholder="Buscar producto"><button type="submit" class="search-button"><i id="busqueda"
+                class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </div>
 
     <div class="header-tablet">
         <a href="/">  <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"></a>
         <div class="searchboxTablet">
-            <form action="/" method="get">
-                <input type="text" id="" placeholder="Buscar producto, marcas"> <i id="busqueda"
-                    class="fa-solid fa-magnifying-glass"></i>
+            <form action="/search" method="post">
+                <input type="text" id="buscarProd" name="buscarProd" placeholder="Buscar producto"> <button type="submit" class="search-button"><i id="busqueda"
+                    class="fa-solid fa-magnifying-glass"></i></button>
+
             </form>
         </div>
         <div class="box-header-right">
