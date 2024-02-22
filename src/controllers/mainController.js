@@ -1,35 +1,28 @@
 const fs = require('fs');
 const path = require('path');
+const productService = require('../model/productService');
 
-const productsFilePath = path.join(__dirname, '../data/products.json');
-const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-
-const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
+ 
 const mainController = {
-    homeController: (req, res) => {
-      //filtro productos que esta como destacados
-      const productsDestacado = products.filter((product) => product.destacado === 'si');
+    homeController: async (req, res) => {      
+      let productsDestacado = await productService.getDestacados();
       res.render('home', {
         title: 'Huellitasantiago',
-        productsDestacado,
-        toThousand
+        productsDestacado,        
       });
     },
+      salesController: async (req, res) => {        
+        const productsDiscount = await productService.getDescuento() ;
+        res.render('../views/sales.ejs', {
+          title: 'Sales',
+          productsDiscount,         
+        });
+      },    
     aboutController: (req, res) => {
       res.render('../views/quienes-somos.ejs', {
         title: 'AboutUs'
       });
-    },
-    salesController: (req, res) => {
-      //filtro productos que tiene descuento
-      const productsDiscount = products.filter((product) => product.descuento > 0);
-      res.render('../views/sales.ejs', {
-        title: 'Sales',
-        productsDiscount,
-        toThousand
-      });
-    },
+    }, 
     mayoristasController: (req, res) => {
         res.render("../views/mayoristas.ejs", {
           title:'Mayoristas'
@@ -44,8 +37,15 @@ const mainController = {
       res.render('../views/mascotas.ejs', {
         title: 'Mascotas'
     });
+  },
+  searchController: async (req, res) => {
+    let word = req.body.buscarProd;
+    let productsDestacado= await productService.getByKeyWord(word);     
+      res.render('../views/busqueda.ejs', {
+      title: 'Busqueda', 
+      productsDestacado    
+  });  
   }
 }
-  
   module.exports = mainController;
   
