@@ -12,6 +12,13 @@ const prodCategoryService = require('../model/prodCategoryService');
 const subCategoryService = require('../model/subCategoryService');
 const petSizeService = require('../model/petSizeService');
 
+// Express validator para aplicar validaciones en formularios
+const { validationResult } = require ("express-validator");
+
+function toThousand(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const fs = require('fs');
 const path = require('path');
 
@@ -89,7 +96,44 @@ const prodController = {
     
     //Controlador Ruta para almacenar el producto creado
     guardarProd: (req, res) => {
-      // Defino la variable que recibe la imagen del formulario
+      //Validacion de errores en el formulario de creacion de producto
+      let errors = validationResult(req);  
+      if (! errors.isEmpty()) {
+        // En caso de errores, verificamos si hay una imagen subida, para
+        // eliminarla
+        if (req.file) {
+          productService.deleteImagen(req.file.filename);
+        }
+        let brandList = brandService.getAll();
+        let petList = petService.getAll();
+        let petAgeList = petAgeService.getAll();
+        let petSizeList = petSizeService.getAll();
+        let categoryList = prodCategoryService.getAll();
+        let subCategoryList = subCategoryService.getAll();
+        let packageList = packageService.getAll();
+        
+        Promise.all([brandList, petList, petAgeList, petSizeList, categoryList, subCategoryList, packageList ])
+              .then(function ([brand, pet, petAge, petSize, category, subCategory, packageRes]) {
+                res.render('../views/products/crear.ejs', {
+                  title: 'Crear producto',
+                  brand,
+                  pet,
+                  petAge,
+                  petSize,
+                  category,
+                  subCategory,
+                  packageRes,
+                  errors: errors.mapped(),
+                  old: req.body
+              });
+              })
+              .catch(error => {
+                console.log(error)
+                return res.status(500).send('Error en la solicitud');
+              })
+  
+      } else {
+        // Defino la variable que recibe la imagen del formulario
       const image = req.file ? req.file.filename : "default-image.png";
 
       // Defino la variable que evalúa si es un producto destacado
@@ -149,7 +193,9 @@ const prodController = {
         console.log(error)
         res.send(error.message)
       })
-     },
+     }
+    },
+      
 
     //Controlador para renderizar el FORM de edición de un producto (GET)
     editarProdController: async (req, res) => {
@@ -184,61 +230,108 @@ const prodController = {
 
     //Controlador para guardar en la DB el producto editado (POST)
     updateProdController: async (req, res) => {
-      try {
-        // Capturo el ID del producto
-        let idProd = parseInt(req.params.id);
-        
-        // Defino la variable que recibe la imagen del formulario
-        const image = req.file ? req.file.filename : "default-image.png";
-
-        // Defino la variable que evalúa si es un producto destacado
-        const esDestacado = (req.body.destacado === "true") ? 1 : 0;
-
-        // Variable para manejar subcategoría
-        let subCatFinal = "";
-        if (req.body.categoria == 1) {
-          subCatFinal = parseInt(req.body.subCat);
-        } else if (req.body.categoria == 2) {
-          subCatFinal = parseInt(req.body.subCatAcc);
-        } else {
-          subCatFinal = null
-        }
-
-        // Variable para manejar si viene o no una presentacion
-        let presentacionFinal = "";
-        if (req.body.categoria == 1) {
-          presentacionFinal = parseInt(req.body.presentacion);
-        } else {
-          presentacionFinal = null
+      //Validacion de errores en el formulario de creacion de producto
+      let errors = validationResult(req);  
+      if (! errors.isEmpty()) {
+        // En caso de errores, verificamos si hay una imagen subida, para
+        // eliminarla
+        if (req.file) {
+          productService.deleteImagen(req.file.filename);
         };
+        let idProd = parseInt(req.params.id);
+        let producto = await productService.getByPk(idProd);
+        let brandList = await brandService.getAll();
+        let petList = await petService.getAll();
+        let petAgeList = await petAgeService.getAll();
+        let petSizeList = await petSizeService.getAll();
+        let categoryList = await prodCategoryService.getAll();
+        let subCategoryAlimentosList = await subCategoryService.getByCategoryId(1);
+        let subCategoryAccesoriosList = await subCategoryService.getByCategoryId(2);
+        let packageList = await packageService.getAll();
 
-        // Defino la variable que guarda el producto editado desde el formulario
-        const modifiedProduct = {
-          nombre: req.body.nombreprod,
-          descripcion: req.body.descripcion,
-          precio: parseInt(req.body.precio),
-          descuento: parseInt(req.body.descuento),
-          id_mascota: parseInt(req.body.mascota),
-          imagen: image,
-          id_marca: parseInt(req.body.marca),
-          id_edad_mascota: parseInt(req.body.edadmascota),
-          id_tamanio_mascota: parseInt(req.body.tamaniomascota),
-          destacado: esDestacado,
-          id_categoria: parseInt(req.body.categoria),
-          id_sub_categoria: subCatFinal,
-          id_presentacion: presentacionFinal,
-          stock: parseInt(req.body.stock)
-        };    
+        res.render("../views/products/editar.ejs", 
+        {producto,
+        brandList,
+        petList,
+        petAgeList,
+        petSizeList,
+        categoryList,
+        subCategoryAlimentosList,
+        subCategoryAccesoriosList,
+        packageList,
+        errors: errors.mapped(),
+        old: req.body});
 
-        // Incorporo a la DB el producto editado y redirecciono a product
-        await productService.updateById(modifiedProduct, idProd);
-        return res.redirect('/product');
+      } else {
+        try {
+          // Capturo el ID del producto
+          let idProd = parseInt(req.params.id);
+          
+          // Defino la variable que recibe la imagen del formulario
+          const image = req.file ? req.file.filename : "default-image.png";
+  
+          // Defino la variable que evalúa si es un producto destacado
+          const esDestacado = (req.body.destacado === "true") ? 1 : 0;
+  
+          // Variable para manejar subcategoría
+          let subCatFinal = "";
+          if (parseInt(req.body.categoria) == 1) {
+            if (req.body.subCat == "") {
+              subCatFinal = null
+            } else {
+              subCatFinal = parseInt(req.body.subCat);
+            }
+          } else if (parseInt(req.body.categoria) == 2) {
+            if (req.body.subCatAcc == "") {
+              subCatFinal = null
+            } else {
+              subCatFinal = parseInt(req.body.subCatAcc);
+            }
+          } else {
+            subCatFinal = null
+          }
+  
+          // Variable para manejar si viene o no una presentacion
+          let presentacionFinal = "";
+          if (parseInt(req.body.categoria) == 1) {
+            if (req.body.presentacion == "") {
+              presentacionFinal = null
+            } else {
+              presentacionFinal = req.body.presentacion;
+            }
+          } else {
+            presentacionFinal = null
+          };
+  
+          // Defino la variable que guarda el producto editado desde el formulario
+          const modifiedProduct = {
+            nombre: req.body.nombreprod,
+            descripcion: req.body.descripcion,
+            precio: parseInt(req.body.precio),
+            descuento: parseInt(req.body.descuento),
+            id_mascota: parseInt(req.body.mascota),
+            imagen: image,
+            id_marca: parseInt(req.body.marca),
+            id_edad_mascota: parseInt(req.body.edadmascota),
+            id_tamanio_mascota: parseInt(req.body.tamaniomascota),
+            destacado: esDestacado,
+            id_categoria: parseInt(req.body.categoria),
+            id_sub_categoria: subCatFinal,
+            id_presentacion: presentacionFinal,
+            stock: parseInt(req.body.stock)
+          };    
+  
+          // Incorporo a la DB el producto editado y redirecciono a product
+          await productService.updateById(modifiedProduct, idProd);
+          return res.redirect('/product');
+        }
+        catch (error) {
+          console.log(error);
+          return res.status(500).send('Error en la solicitud');
+        }		 
       }
-      catch (error) {
-        console.log(error);
-        return res.status(500).send('Error en la solicitud');
-      }		 
     },
+      
     
     //Controlador para eliminar producto por su ID
     eliminarController: async (req, res) =>{
