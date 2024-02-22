@@ -7,6 +7,7 @@ const path = require("path");
 const multer = require("multer");
 const authMiddleware = require ("../middlewares/authMiddleware");
 const adminMiddleware = require ("../middlewares/adminMiddleware");
+const productValidations = require ("../middlewares/productValidations");
 
 
 // Multer - manejo del almacenamiento
@@ -49,11 +50,11 @@ routerProduct.get(routesProd.detailProductRoute, productController.detailProduct
 
 // rutas para obtener form para crear productos
 routerProduct.get(routesProd.productCrear, authMiddleware , adminMiddleware , productController.crearProdController);
-routerProduct.post(routesProd.indexProductRoute, authMiddleware , adminMiddleware , upload.single("foto") , productController.guardarProd);
+routerProduct.post(routesProd.productCrear, authMiddleware , adminMiddleware , upload.single("foto") , productValidations, productController.guardarProd);
 
 // rutas para obtener form para editar productos
 routerProduct.get(routesProd.productEditar, authMiddleware , adminMiddleware , productController.editarProdController); //sole get de editar
-routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware ,  upload.single('newImage'), productController.updateProdController); //sole put de editar
+routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware ,  upload.single('newImage'), productValidations, productController.updateProdController); //sole put de editar
 
 // rutas para eliminar producto
 routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
