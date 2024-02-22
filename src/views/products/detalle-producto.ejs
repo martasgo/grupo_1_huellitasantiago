@@ -71,8 +71,8 @@
                     <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
                     <div class="detalle">
                         <p id=""><%= productsDestacado[i].nombre %></p>
-                            <% if (productsDestacado[i].descuento != 0) {
-                                precioFinal = (productsDestacado[i].precio + ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+                            <% if (productsDestacado[i].descuento != 0) { %>
+                               <% precioFinal = (productsDestacado[i].precio - ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
                                 <div class="preciosOfertas">
                                     <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
                                     <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
