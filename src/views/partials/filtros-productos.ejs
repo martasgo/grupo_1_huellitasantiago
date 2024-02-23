@@ -1,13 +1,16 @@
+<script src="/js/filtros-productos.js"> </script>
 <section id="mobile">
-    <label for="categoryList">Categorias:</label>
-    <select id="categoryList" name="categoryList">
-        <option value="" ></option>
-        <% for (i=0; i< categorias.length; i++){ %>
-            <% valorLink = categorias[i].nombre.replace(/\s+/g, '-') %>
-            <option value=<%= valorLink %>> <%=  categorias[i].nombre  %></option>            
-        <% } %>    
-    </select>
-    <input type="button" value="Buscar" />
+    <form action="" method="get" id="searchProdMobile">
+        <label for="categoryList">Categorias:</label>
+        <select id="categoryList" name="categoryList">
+            <option value="" ></option>
+            <% for (i=0; i< categorias.length; i++){ %>
+                <% valorLink = categorias[i].nombre.replace(/\s+/g, '-') %>
+                <option value="/product/<%= mascota %>/<%= valorLink %>"> <%=  categorias[i].nombre  %></option>            
+            <% } %>    
+        </select>
+        <button type="submit" value="Buscar">Buscars</button>
+    </form>
 </section>
 <section id="tablet" class="filter-sections">
     <div id="categorias">
