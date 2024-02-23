@@ -108,6 +108,14 @@ i {
   color: #fbdd5bff;
 }
 
+.search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0px;
+}
+
 /* CLaSES MAIN */
 
 .categorias{
