@@ -22,10 +22,6 @@ function toThousand(number) {
 const fs = require('fs');
 const path = require('path');
 
-function toThousand(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
 const prodController = {
     indexProductController: (req, res) => {
       res.render ('../views/mascotas.ejs', {
@@ -197,7 +193,6 @@ const prodController = {
      }
     },
       
-
     //Controlador para renderizar el FORM de edición de un producto (GET)
     editarProdController: async (req, res) => {
       try {
@@ -332,7 +327,6 @@ const prodController = {
         }		 
       }
     },
-      
     
     //Controlador para eliminar producto por su ID
     eliminarController: async (req, res) =>{
@@ -484,9 +478,7 @@ const prodController = {
         console.log(error)
         res.send(error.message)
       })      
-
     }
-
   };
   
 module.exports = prodController;
