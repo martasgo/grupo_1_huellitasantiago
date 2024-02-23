@@ -9,19 +9,24 @@
                 <p class="rutahome">
                     <a href="/">Home</a> / <a href="/mascotas">Mascotas</a> /
                     <% mascotaUp = mascota.charAt(0).toUpperCase() + mascota.slice(1);  %>
+                    <% //mascotaUp = mascota %>
                     <% if (categoria) { %>      
-                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> /<% } else {%> <%= mascotaUp %> / <%} %>
-                                <% if (subCategoria) { %> <a href="/product/<%= mascota %>/<%= categoria %>">
+                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> /<% 
+                        } else {%> 
+                            <%= mascotaUp %> 
+                            / 
+                        <%} %>
+                    <% if (subCategoria) { %> <a href="/product/<%= mascota %>/<%= categoria %>">
                                     <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
                                     <%= categoriaUp %> </a>
-                                    <% } else {%>
-                                            <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
-                                            <%= categoriaUp %>
-                                        <%} %>
-                                            <% if (subCategoria) { %> / 
-                                                <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
-                                                <%= subCategoriaUp %>
-                                            <% } %>
+                    <% } else {%>
+                        <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
+                        <%= categoriaUp %>
+                    <%} %>
+                    <% if (subCategoria) { %> / 
+                        <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
+                        <%= subCategoriaUp %>
+                    <% } %>
 
                 </p>
                 <div class="listado-content">
@@ -37,11 +42,11 @@
                                     <div class="detalle">
                                         <p id=""><%= productsMascotas[i].nombre %></p>
                                             <% if (productsMascotas[i].descuento != 0) {
-                                                precioFinal = (productsMascotas[i].precio - ((productsMascotas[i].precio * (productsMascotas[i].descuento/100)))) %>
+                                                precioFinal =  toThousand(productsMascotas[i].precio - ((productsMascotas[i].precio * (productsMascotas[i].descuento/100)))) %>
                                                 <div class="preciosOfertas">
                                                     <span id="prodOff"><%= productsMascotas[i].descuento %>% OFF</span>
-                                                    <p class="precioAnt" id="">$<%= (productsMascotas[i].precio) %></p>
-                                                    <p class="precioAhora" id="">$<%= (precioFinal) %> </p> 
+                                                    <p class="precioAnt" id="">$<%=  toThousand(productsMascotas[i].precio) %></p>
+                                                    <p class="precioAhora" id="">$<%=  toThousand(precioFinal) %> </p> 
                                                 </div>
                                             <% } else {%>
                                                 <p class="precioAhora" id="">$<%= (productsMascotas[i].precio) %> </p>
