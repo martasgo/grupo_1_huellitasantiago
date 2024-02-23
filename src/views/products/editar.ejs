@@ -2,22 +2,7 @@
 <html lang="en">
   <!-- include head -->
 <%- include('../partials/head', {title: 'Editando producto: ' + producto.id})%>
-
-<script>
-    function mostrarOpciones() {
-      var select1 = document.getElementById("categoria");
-      var opcionesDiv = document.getElementById("subCatSelect");
-      var opcionesDivPrentacion = document.getElementById("alimentoPresentacion");
-      var opcionesDivAccesorios = document.getElementById("subCatAccesorios");
-      var select2 = document.getElementById("subCat");
-      
-      opcionesDiv.style.display = (select1.value == 1) ? "block" : "none";
-      opcionesDivPrentacion.style.display = (select1.value == 1) ? "block" : "none";
-      opcionesDivAccesorios.style.display = (select1.value == 2) ? "block" : "none";
-    }
-
-</script>
-
+<script src="/js/viewEdit.js"> </script>
   <body>
     
     <!-- include header -->
@@ -34,65 +19,86 @@
                             <option value=" <%= pet.id %> " <% if (producto.id_mascota === pet.id) { %> selected <% } %>><%= pet.mascota %></option>
                         <% }) %>
                     </select><br>
+                    <% if (typeof errors != "undefined" && errors.mascota) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.mascota.msg  %></small>
+                    <% } %>
 
                 </div>
                 <div class="elementos-form">
                 <label for="nombreprod">Nombre producto:</label><br>
-                <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod" value="<%= producto.nombre%>"><br>
+                <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod" value="<%= locals.old && locals.old.nombreprod ? old.nombreprod : producto.nombre %>"><br>
+                <% if (typeof errors != "undefined" && errors.nombreprod) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.nombreprod.msg  %></small>
+                <% } %>
                 </div>
                
                 <div class="elementos-form">
                     <label for="precio">Precio ($ ARS):</label><br>
-                    <input class="margen-ancho" type="number" id="precio" name="precio" step="any" value="<%= producto.precio %>"><br>
+                    <input class="margen-ancho" type="number" id="precio" name="precio" step="any" value="<%= locals.old && locals.old.precio ? old.precio : producto.precio %>"><br>
+                    <% if (typeof errors != "undefined" && errors.precio) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.precio.msg  %></small>
+                    <% } %>
                 </div>
                 <div class="elementos-form">
                     <label for="descuento">Descuento(%):</label><br>
-                    <input class="margen-ancho" type="text" id="descuento" name="descuento" value="<%= producto.descuento %>"><br>
+                    <input class="margen-ancho" type="text" id="descuento" name="descuento" value="<%= locals.old && locals.old.descuento ? old.descuento : producto.descuento %>"><br>
                 </div>
 
                 <div class="elementos-form">
-                <label for="categoria">Categoría:</label><br>
-                    <select  class="margen-ancho" id="categoria" name="categoria" onchange="mostrarOpciones()">
+                    <label for="categoria">Categoría:</label><br>
+                        <select  class="margen-ancho" id="categoria" name="categoria">
                         <% categoryList.forEach (category => { %>
                             <option value=" <%= category.id %> " <% if (producto.id_categoria === category.id) { %> selected <% } %>><%= category.nombre %></option>
                         <% }) %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.categoria) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.categoria.msg  %></small>
+                <% } %>
                 </div>
 
     
-                <div class="elementos-form" id="subCatSelect" onchange="mostrarOpciones()" <% if (producto.id_categoria !== 1) { %> style="display: none;"<% } %>>
-                 <!-- solo mostrar si se selecciona subCat alimentos -->
-                <label for="subCat">Subcategorías de alimentos:</label><br>
-                    <select class="margen-ancho" id="subCat" name="subCat">
+                <div class="elementos-form" id="subCatSelect">
+                    <!-- solo mostrar si se selecciona cat alimentos -->
+                   <label for="subCat">Subcategoría:</label><br>           
+                       <select class="margen-ancho" id="subCat" name="subCat">
                         <option value=""></option>
                         <% subCategoryAlimentosList.forEach (subCategory => { %>
                             <option value=" <%= subCategory.id %> " <% if (producto.id_sub_categoria === subCategory.id) { %> selected <% } %>><%= subCategory.nombre_sub_category %></option>
                         <% }) %>
                     </select><br>
+                    <% if (typeof errors != "undefined" && errors.subCat) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.subCat.msg  %></small>
+                    <% } %>
                 </div>
                 
                 
 
-            <div class="elementos-form" id="alimentoPresentacion" <% if (producto.id_categoria !== 1) { %> style="display: none;"<% } %>>
-                <label for="presentacion">Presentación:</label><br>
-                <select  class="margen-ancho" id="presentacion" name="presentacion">
+                <div class="elementos-form" id="alimentoPresentacion">
+                    <label for="presentacion">Presentación:</label><br>
+                    <select  class="margen-ancho" id="presentacion" name="presentacion">
                     <option value=""></option>
                     <% packageList.forEach (package => { %>
                         <option value="<%= package.id %>" <% if (producto.id_presentacion === package.id) { %> selected <% } %>><%= package.cantidad + ' ' + package.unidad_medida %></option>
                     <% }) %>                    
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.presentacion) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.presentacion.msg  %></small>
+                <% } %>
             </div>
                 <!--fin alimentos -->
             
-                <div class="elementos-form" id="subCatAccesorios" onchange="mostrarOpciones()" <% if (producto.id_categoria !== 2) { %> style="display: none;"<% } %>>
-                <!-- solo mostrar si se selecciona accesorios- subCategorias accesorios -->
-                <label for="subCatAcc">Subcategorías de accesorios:</label><br>
-                    <select class="margen-ancho" id="subCatAcc" name="subCatAcc">
+                <div class="elementos-form" id="subCatAccesorios">
+                    <!-- solo mostrar si se selecciona accesorios -->
+                    <label for="subCatAcc">Subcategoría:</label><br>
+                        <select class="margen-ancho" id="subCatAcc" name="subCatAcc">
                         <option value=""></option>
                         <% subCategoryAccesoriosList.forEach (subCategory => { %>
                             <option value=" <%= subCategory.id %> " <% if (producto.id_sub_categoria === subCategory.id) { %> selected <% } %>><%= subCategory.nombre_sub_category %></option>
                         <% }) %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.subCatAcc) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.subCatAcc.msg  %></small>
+                <% } %>
                 <!-- fin accesorios -->
                 </div>
             
@@ -105,6 +111,9 @@
                             <option value=" <%= brand.id %> " <% if (producto.id_marca === brand.id) { %> selected <% } %>><%= brand.nombre_marca %></option>
                         <% }) %>  
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.marca) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.marca.msg  %></small>
+                <% } %>
                 </div>
 
                 <div class="elementos-form">
@@ -115,6 +124,9 @@
                             <option value=" <%= petAge.id %> " <% if (producto.id_edad_mascota === petAge.id) { %> selected <% } %>><%= petAge.edad %></option>
                         <% }) %> 
                     </select><br>
+                    <% if (typeof errors != "undefined" && errors.edadmascota) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.edadmascota.msg  %></small>
+                    <% } %>
                 </div>
 
                 <div class="elementos-form">
@@ -125,6 +137,9 @@
                         <option value=" <%= petSize.id %> " <% if (producto.id_tamanio_mascota === petSize.id) { %> selected <% } %>><%= petSize.tamanio %></option>
                     <% }) %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.tamaniomascota) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.tamaniomascota.msg  %></small>
+                <% } %>
                 </div>
                 
                 <div class="elementos-form-100">
@@ -135,7 +150,13 @@
 
                 <div class="elementos-form-100">
                     <label for="descripcion">Descripción:</label><br>
-                    <textarea name="descripcion" id="descripcion" ><%= producto.descripcion %> </textarea><br>
+                    <input class="margen-ancho" name="descripcion" id="descripcion" value="<%= locals.old && locals.old.descripcion ? old.descripcion : producto.descripcion %>"> </input><br>
+                    <% if (typeof errors != "undefined" && errors.descripcion) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.descripcion.msg  %></small>
+                    <% } %>
+                </div>
+
+                <div>
                     <label for="newImage" class="form-label">Imagen:</label> <!--SPRINT 4-->
 						<br>
 						<img src="/images/productos/<%= producto.imagen%>" class="actualImg" alt="Imagen Actual" name="newImage">
@@ -146,12 +167,15 @@
                 
                 <div class="elementos-form">
                     <label for="stock">Stock:</label><br>
-                    <input class="margen-ancho" type="number" id="stock" name="stock" value="<%= producto.stock %>"><br>
+                    <input class="margen-ancho" type="number" id="stock" name="stock" value="<%= locals.old && locals.old.stock ? old.stock : producto.stock %>"><br>
+                    <% if (typeof errors != "undefined" && errors.stock) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.stock.msg  %></small>
+                    <% } %>
                 </div>
                
                 <div class="elementos-form-100">
                     <div id="form-buttons">  
-                        <button type="submit" >GUARDAR</button>
+                        <button type="submit">GUARDAR</button>
                         <a href="/product"><button type="button">CANCELAR</button></a>
                         
                     </div>
