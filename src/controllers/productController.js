@@ -15,6 +15,10 @@ const petSizeService = require('../model/petSizeService');
 const fs = require('fs');
 const path = require('path');
 
+function toThousand(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const prodController = {
     indexProductController: (req, res) => {
       res.render ('../views/mascotas.ejs', {
@@ -82,7 +86,6 @@ const prodController = {
             })
             .catch(error => {
               console.log(error)
-              //res.send(error.message)
               return res.status(500).send('Error en la solicitud');
             })
     },
@@ -139,12 +142,10 @@ const prodController = {
           }); */
         
         productService.add(newProduct)
-        .then(() =>
-            res.render ('../views/mascotas.ejs', {
-              title: 'Mascotas',
-              status: 200
-            })
-        )
+        .then((prodAdded) => {
+          let idProd = prodAdded.id
+          res.redirect(`/product/detalle/${idProd}`)
+        })
       .catch((error) => {
         console.log(error)
         res.send(error.message)
@@ -336,7 +337,7 @@ const prodController = {
                   .then ((categoriaResult) =>{
                     let indiceCat = categoriaResult.id;
                     if (req.params.subCat){
-                        // SI VIENE CATEGORIA
+                        // SI VIENE subCATEGORIA
                         //busco el id de la subcategoria + id de la categoria
                         subCategoryService.getByField(subCategoria, indiceCat)
                         .then((resultSubCat) =>{
@@ -357,7 +358,7 @@ const prodController = {
                                 pestSize, 
                                 categorias, 
                                 subCat,
-                              // toThousand
+                                toThousand
                               }); 
                             })
                         })
@@ -379,7 +380,7 @@ const prodController = {
                               pestSize, 
                               categorias, 
                               subCat,
-                            // toThousand
+                              toThousand
                           }); 
                         })
                     } 
