@@ -2,7 +2,7 @@ module.exports = (sequelize, dataTypes) => {
     let alias = "User";
     let cols = {    
       id: {
-        type: dataTypes.INTERGER,
+        type: dataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
@@ -36,7 +36,7 @@ module.exports = (sequelize, dataTypes) => {
         allowNull: false,
       },    
       id_categoria: {
-        type: dataTypes.INTERGER,
+        type: dataTypes.INTEGER,
         allowNull: false,
       },
     };

@@ -2,7 +2,7 @@ module.exports = (sequelize, dataTypes) => {
     let alias = "UserCategory";
     let cols = {    
       id: {
-        type: dataTypes.INTERGER,
+        type: dataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
@@ -17,14 +17,13 @@ module.exports = (sequelize, dataTypes) => {
       timestamps: false,    
       tablename: 'users_categories'
     };
-    const Usercategory = sequelize.define(alias, cols, config);
+    const UserCategory = sequelize.define(alias, cols, config);
   
-    Usercategory.associate = function (models) {
-      Usercategory.hasMany(models.User, {
+    UserCategory.associate = function (models) {
+      UserCategory.hasMany(models.User, {
         as: "users", 
         foreignKey: "id_categoria",
       });
-  
-      return Usercategory;
     };
+    return UserCategory;
   };
