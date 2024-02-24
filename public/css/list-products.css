@@ -7,6 +7,26 @@
     padding: 10px
 }
 
+.botones{
+    margin: 10px;
+    background-color: #6dbd9bff;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px black solid;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#searchButtons{
+    display: flex;
+    flex-direction: column;
+}
+
+.botones:hover{
+    background-color: #fbdd5bff;
+}
+ 
+
 @media (min-width: 361px){
 
 }
