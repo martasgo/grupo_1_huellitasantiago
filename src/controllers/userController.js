@@ -185,7 +185,6 @@ const userController = {
       const user = req.session.userLogged || {};
       const idUser = parseInt(req.params.idUser);
       const infoUser = await userService.getByPk(idUser);
-      // console.log(infoUser);
       res.render("../views/users/editUser.ejs", {
         title: "Edición de usuarios",
         user,
@@ -206,7 +205,6 @@ const userController = {
       const infoUser = await userService.getByPk(idUser);
       const imagen = req.body.imageAnt;
       if (resultValidation.errors.length > 0) {
-        console.log("entra");
         // si hay nueva imagen la borro hasta tener todo ok
         if (req.file) {
           await userService.deleteImagen(req.file.filename);
@@ -254,7 +252,6 @@ const userController = {
               imagen: req.file ? req.file.filename : infoUser.imagen,
               id_categoria: req.body.categoria,
             };
-            console.log(editUser);
             const newU = await userService.updateList(editUser, idUser);
             res.redirect("/user/profile/");
           }
@@ -272,7 +269,6 @@ const userController = {
             imagen: req.file ? req.file.filename : infoUser.imagen,
             id_categoria: req.body.categoria,
           };
-          console.log(editUser);
           const newU = await userService.updateList(editUser, idUser);
           res.redirect("/user/profile/");        
       }
@@ -302,7 +298,6 @@ const userController = {
     try {
       const user = req.session.userLogged || {};
       const idToDelete = parseInt(req.params.id);
-      console.log(idToDelete);
       if (user && user.id_categoria === 2 && user.id === idToDelete) {
         await userService.delete(user.id);
         res.clearCookie("userEmail");
