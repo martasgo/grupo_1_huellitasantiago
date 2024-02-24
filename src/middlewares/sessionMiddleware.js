@@ -1,11 +1,11 @@
-const User = require ("../model/userService");
-function sessionMiddleware(req, res, next) {
+const userService = require("../model/userService");
+async function sessionMiddleware(req, res, next) {
   
   res.locals.isLogged= false;
 
   let emailCookie = req.cookies && req.cookies.userEmail;
   if (emailCookie) {
-    let userFromCookie = User.getByField("email", emailCookie);
+    let userFromCookie = await userService.getByField(emailCookie);
     if (userFromCookie) {
       req.session.userLogged = userFromCookie;
     } else {req.session.userLogged = userToLogin}
