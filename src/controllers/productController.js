@@ -327,7 +327,67 @@ const prodController = {
         }		 
       }
     },
-    
+    //filtros procesamiento
+    filtersApplied: async (req, res) => {
+      console.log (req.body)
+      console.log('valores')
+      console.log(mascota)
+      
+      
+      idCategory ='';
+      idSubCategory ='';
+      if (req.params.idMascota) {
+        console.log('llega')
+         mascota = req.params.idMascota
+         idPetList = await petService.getByMascota(mascota);
+         console.log(idPetList);
+         indices = idPetList.map(({ id }) => id);
+      }
+      
+      if (req.params.idCat) {
+         categoria = req.params.idCat.replace(/-/g, ' ');
+         idCategory = await prodCategoryService.getByField(categoria);
+         console.log(idCategory)
+      }
+      
+      if (req.params.idSubCat) {
+         subCategoria = req.params.idSubCat.replace(/-/g, ' ')
+         id = idCategory.id;
+         console.log('el id de la cat')
+         console.log(id)
+         idSubCategory = await subCategoryService.getByField(subCategoria, idCategory.id)
+         console.log(idSubCategory)
+      }
+      
+      let brand = await brandService.getAll();
+      let petAge = await petAgeService.getAll();
+      let pestSize = await petSizeService.getAll();
+      let categorias = await prodCategoryService.getAll();
+      let subCat = await subCategoryService.getAll();
+
+      productService.getAllByFileters(req.body, indices, idCategory, idSubCategory)
+      .then((productsMascotas)=>{
+         res.render('../views/products/listado.ejs', {
+          title: 'Listado Productos',
+          productsMascotas,
+          mascota, 
+          categoria, 
+          subCategoria,
+          //listados para armar los filtros en la vista listado.ejs que incluye un partial
+          //filtros-productos.ejs
+          brand,
+          petAge, 
+          pestSize, 
+          categorias, 
+          subCat,
+          toThousand
+        }) 
+      })
+      .catch((error) => {
+        console.log(error)
+        res.status(500).send('No se pudo procesar la solicitud correctamente - '+ error.message);
+      })  
+    },
     //Controlador para eliminar producto por su ID
     eliminarController: async (req, res) =>{
       let idProduct = parseInt(req.params.id);
@@ -380,7 +440,8 @@ const prodController = {
                     petAge, 
                     pestSize, 
                     categorias, 
-                    subCat
+                    subCat,
+                    toThousand
                   })  
                 })
               } 
