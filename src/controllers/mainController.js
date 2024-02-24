@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const productService = require('../model/productService');
+function toThousand(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
  
 const mainController = {
@@ -8,14 +11,16 @@ const mainController = {
       let productsDestacado = await productService.getDestacados();
       res.render('home', {
         title: 'Huellitasantiago',
-        productsDestacado,        
+        productsDestacado,
+        toThousand        
       });
     },
       salesController: async (req, res) => {        
         const productsDiscount = await productService.getDescuento() ;
         res.render('../views/sales.ejs', {
           title: 'Sales',
-          productsDiscount,         
+          productsDiscount,
+          toThousand         
         });
       },    
     aboutController: (req, res) => {
@@ -43,7 +48,8 @@ const mainController = {
     let productsDestacado= await productService.getByKeyWord(word);     
       res.render('../views/busqueda.ejs', {
       title: 'Busqueda', 
-      productsDestacado    
+      productsDestacado,
+      toThousand    
   });  
   }
 }
