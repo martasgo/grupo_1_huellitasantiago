@@ -10,4 +10,5 @@ window.onload = function(){
         // Completar el action del formulario con el valor seleccionado
         formulario.action = valorSelect;
     });
+    
 }
