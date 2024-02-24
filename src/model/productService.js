@@ -2,6 +2,7 @@ const db = require('./database/models');
 const Op = db.Sequelize.Op;
 const fs = require("fs");
 const path = require("path");
+const prodCategoryService = require('./prodCategoryService');
 
 const productService = {
     // Service para obtener todos los productos
@@ -163,6 +164,67 @@ const productService = {
         let directorio = path.resolve(__dirname , "../../public/images/productos");
         const rutaImagen = path.join(directorio, img);
         fs.unlinkSync(rutaImagen);
+    },
+    getAllByFileters: async function(filtros, valorMascota, valorCat, valorSubCat){
+        let query = {
+            where: {}
+          };
+          console.log('datos mascotas y cat');
+          console.log(valorMascota)
+          console.log(valorCat)
+          console.log(valorSubCat)
+        if (valorMascota){
+            query.where.id_mascota = {[Op.or]: valorMascota } 
+        }
+
+        if (valorCat){
+            query.where.id_categoria = valorCat.id 
+        }
+
+        if (valorSubCat){
+            query.where.id_sub_categoria = valorSubCat.id 
+        }
+        
+        if (filtros.marca) {
+            if (filtros.marca.length > 1){ 
+                query.where.id_marca = {[Op.or]: filtros.marca } 
+            } else {
+                query.where.id_marca = filtros.marca 
+            } 
+        }
+        if (filtros.edad) {
+            if (filtros.edad.length > 1){ 
+                query.where.id_edad_mascota = {[Op.or]: filtros.edad } 
+            }else{
+                query.where.id_edad_mascota = filtros.edad
+            }
+        }
+        if (filtros.tamanio){
+            if (filtros.tamanio.length > 1){ 
+                query.where.id_tamanio_mascota = {[Op.or]: filtros.tamanio } 
+            } else {
+                query.where.id_tamanio_mascota = filtros.tamanio
+            }
+        } 
+        if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
+            query.where.precio = {
+                [Op.gte]: parseInt(filtros.precioDesde),
+                [Op.lte]: parseInt(filtros.precioHasta)
+            } 
+        } else if (filtros.precioDesde !== ''){
+            {query.where.precio = { [Op.gte]: parseInt(filtros.precioDesde) } }
+        }else if (filtros.precioHasta !== ''){
+            query.where.precio = {[Op.lte]: parseInt(filtros.precioHasta) }
+        }
+
+        try {   
+            console.log(query)
+            return await db.Product.findAll(query);
+            
+        } catch (error) {
+            console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
+        }
     }
 };
 
