@@ -25,9 +25,7 @@ const registerValidations = [
         let file = req.file;
         let acceptExt = ['.jpg', '.png'];
 
-        if (!file){
-            throw new Error('Debe seleccionar una imagen');
-        } else {
+        if (file){    
             let fileExt = path.extname(file.originalname);
             if (!acceptExt.includes(fileExt)){
                 throw new Error(`Las extensiones permitidas para las imagenes son ${acceptExt.join(', ')}`);

@@ -56,7 +56,7 @@
             <% } %>         
             <br>
             <label for="foto">Imagen</label>
-            <input class="userInfo" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.imagen ? imagen : null %>" class="<%= (locals.errors && errors.foto) ? 'is-invalid' : null %>" >
+            <input class="userInfo" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.oldData ? oldData.imagen : null %>" class="<%= (locals.errors && errors.foto) ? 'is-invalid' : null %>">            
             <% if (locals.errors && errors.foto) { %>
                 <p class="error"> <%= errors.foto.msg %></p>
             <% } %> <br>

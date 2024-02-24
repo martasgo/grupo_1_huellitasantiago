@@ -10,7 +10,7 @@
    
     <main class="mainlogin">
         <p class="rutahome"><a href="/user/profile">Perfil</a> / Edición</p>
-        <form action="/user/editUser/<%= infoUser.id %>?_method=PUT" method="POST" id="formRegistro" enctype="multipart/form-data">
+        <form action="/user/editUser/<%= infoUser.id %>?_method=PUT" method="POST" id="formRegistro" class="editUser"enctype="multipart/form-data">
             <label for="nombre">Nombre</label> 
             <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : infoUser.nombre%>" class="<%= (locals.errors && errors.nombre) ? 'is-invalid' : null %>">
             <% if (locals.errors && errors.nombre) { %>
@@ -61,14 +61,14 @@
             <% if (locals.errors && errors.foto) { %>
                 <p class="error"> <%= errors.foto.msg %></p>
             <% } %> <br>
-            <% if(locals.user && user.categoria === "administrador") {%>
+            <% if(locals.user && user.id_categoria === 1) {%>
                 <label for="categoria">Categoria:</label>
                 <select class="userInfo" id="categoria" name="categoria">
-                    <option value="administrador" <% if (infoUser.categoria === 'administrador') { %> selected <% } %>>Administrador</option>
-                    <option value="cliente" <% if (infoUser.categoria === 'cliente') { %> selected <% } %>>Cliente</option>
+                    <option value=1 <% if (infoUser.id_categoria === 1) { %> selected <% } %>>Administrador</option>
+                    <option value=2 <% if (infoUser.id_categoria === 2) { %> selected <% } %>>Cliente</option>
                 </select><br>
             <% } else {%>
-                <input type="text" name="categoria" id="categoria" value="cliente" hidden>
+                <input type="text" name="categoria" id="categoria" value=<%=infoUser.id_categoria %> hidden>
             <% } %>
             <br>            
             <button type="submit">GUARDAR CAMBIOS</button>
