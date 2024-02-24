@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- include head -->
+
 <%- include('../partials/head') %>
     <body>
         <!-- include header -->
@@ -9,12 +10,10 @@
                 <p class="rutahome">
                     <a href="/">Home</a> / <a href="/mascotas">Mascotas</a> /
                     <% mascotaUp = mascota.charAt(0).toUpperCase() + mascota.slice(1);  %>
-                    <% //mascotaUp = mascota %>
                     <% if (categoria) { %>      
-                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> /<% 
-                        } else {%> 
-                            <%= mascotaUp %> 
-                            / 
+                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> / 
+                            <%} else {%> 
+                            <%= mascotaUp %> / 
                         <%} %>
                     <% if (subCategoria) { %> <a href="/product/<%= mascota %>/<%= categoria %>">
                                     <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
@@ -27,7 +26,6 @@
                         <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
                         <%= subCategoriaUp %>
                     <% } %>
-
                 </p>
                 <div class="listado-content">
                     
