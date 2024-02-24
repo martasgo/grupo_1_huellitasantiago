@@ -32,6 +32,7 @@ const routesProd = {
   productCrear: "/crear",
   productEditar: "/editar/:id",
   productDelete: '/delete/:id',
+  productFilters: "/filtros/:idMascota/:idCat?/:idSubCat?",
 
   //listado productos: "/product/perros",  /product/gato/  
   productsList: "/:idMascota",
@@ -58,6 +59,9 @@ routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware ,  
 
 // rutas para eliminar producto
 routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
+
+//filtros 
+routerProduct.post(routesProd.productFilters, productController.filtersApplied);
 
 //rutas para mascota=perro o mascota=gato
 routerProduct.get(routesProd.productsList, productController.productsListController);
