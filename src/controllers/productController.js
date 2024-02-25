@@ -331,9 +331,8 @@ const prodController = {
     filtersApplied: async (req, res) => {
       console.log (req.body)
       console.log('valores')
-      console.log(mascota)
-      
-      
+      //console.log(mascota)
+            
       idCategory ='';
       idSubCategory ='';
       if (req.params.idMascota) {
@@ -367,6 +366,8 @@ const prodController = {
 
       productService.getAllByFileters(req.body, indices, idCategory, idSubCategory)
       .then((productsMascotas)=>{
+        res.location('/product');
+        console.log(res.get('location'));
          res.render('../views/products/listado.ejs', {
           title: 'Listado Productos',
           productsMascotas,
