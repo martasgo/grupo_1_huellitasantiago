@@ -151,7 +151,7 @@ const userController = {
   profileController: async (req, res) => {
     try {
       const user = req.session.userLogged || {};
-      if (user && user.id_categoria === 2) {
+      if (user && user.id_categoria == 2) {
         res.render("../views/users/profile.ejs", {
           title: "Perfil de cliente",
           user,
@@ -239,7 +239,7 @@ const userController = {
               user,
               imagen,
             });
-          }else{
+          } else {
             const editUser = {
               nombre: req.body.nombre,
               apellido: req.body.apellido,
@@ -250,10 +250,22 @@ const userController = {
                 ? bcrypt.hashSync(req.body.contrasenia, 10)
                 : infoUser.contrasenia,
               imagen: req.file ? req.file.filename : infoUser.imagen,
-              id_categoria: req.body.categoria,
+              id_categoria:
+                req.session.userLogged.id_categoria == 1
+                  ? req.body.categoria
+                  : 2,
             };
             const newU = await userService.updateList(editUser, idUser);
-            res.redirect("/user/profile/");
+            // Actualiza la variable de sesión con los nuevos datos del usuario
+            if (req.session.userLogged.id_categoria == 2) {
+              req.session.userLogged = {
+                ...req.session.userLogged, // Mantiene los datos antiguos
+                ...editUser, // Agrega los nuevos datos
+              };
+              // Guarda la variable de sesión actualizada
+              req.session.save();
+            }
+            res.redirect("/user/profile");
           }
         } else {
           //Cuando el usuario exite, se edita la información y se guarda.
@@ -267,12 +279,21 @@ const userController = {
               ? bcrypt.hashSync(req.body.contrasenia, 10)
               : infoUser.contrasenia,
             imagen: req.file ? req.file.filename : infoUser.imagen,
-            id_categoria: req.body.categoria,
+            id_categoria: user.id_categoria == 1 ? req.body.categoria : 2,
           };
           const newU = await userService.updateList(editUser, idUser);
-          res.redirect("/user/profile/");        
+          // Actualiza la variable de sesión con los nuevos datos del usuario
+          if (user.id_categoria == 2) {
+            req.session.userLogged = {
+              ...req.session.userLogged, // Mantiene los datos antiguos
+              ...editUser, // Agrega los nuevos datos
+            };
+            // Guarda la variable de sesión actualizada
+            req.session.save();
+          }
+          res.redirect("/user/profile");
+        }
       }
-    }
     } catch (error) {
       res.send(error);
     }
