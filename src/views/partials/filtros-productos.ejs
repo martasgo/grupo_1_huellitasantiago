@@ -57,14 +57,18 @@
         </div>
     <% } %>
             <h3 id="filtros">FILTROS</h3>
+            <section id="filterList">
+
+            </section>
+            <a href="/product/<%= mascota %>"><button type="" id="btnlimpiar" class="btnlimpiar">Limpiar filtros</button></a>
             <section>
                 <form action="/product/filtros/<% if (mascota){ %><%=mascota%><%} %><% if (categoria){ %>/<%=categoria.replace(/\s+/g, '-')%><%} %><% if (subCategoria){%>/<%=subCategoria.replace(/\s+/g, '-')%> <%} %>" method="post">
                     <div>
                         <h4>Marcas</h4>
                         <% for (i=0; i< brand.length; i++){ %>
                             <% valorLink = brand[i].nombre_marca.replace(/\s+/g, '-') %>
-                            <input type="checkbox" id="marca" name="marca" value="<%= brand[i].id  %>">
-                            <label for="marca<%i%>"> <%=  brand[i].nombre_marca  %></label><br>
+                            <input type="checkbox" id="marca:<%= brand[i].nombre_marca  %>" class="marca-checkbox" name="marca" value="<%= brand[i].id %>">
+                             <%=  brand[i].nombre_marca  %><br>
                             
                         <% } %> 
                     </div>
@@ -72,7 +76,7 @@
                             <h4>Edad mascota</h4>
                             <% for (i=0; i< petAge.length; i++){ %>
                                 <% valorLink = petAge[i].edad.replace(/\s+/g, '-') %>
-                                <input type="checkbox" id="edad" name="edad" value="<%= petAge[i].id %>">
+                                <input type="checkbox" id="edad:<%= petAge[i].edad %>" class="edad-checkbox" name="edad" value="<%= petAge[i].id %>">
                                 <label for="edad"><%= petAge[i].edad %></label>
                                 <br>      
                             <% } %> 
@@ -81,7 +85,7 @@
                         <div>
                             <% for (i=0; i< pestSize.length; i++){ %>
                                 <% valorLink = pestSize[i].tamanio.replace(/\s+/g, '-') %>
-                                    <input type="checkbox" id="tamanio" name="tamanio" value="<%= pestSize[i].id %>">
+                                    <input type="checkbox" id="tamaño:<%= pestSize[i].tamanio %>" class="size-checkbox" name="tamanio" value="<%= pestSize[i].id %>">
                                     <label for="tamanio"><%= pestSize[i].tamanio %></label>
                                 <br>      
                             <% } %> 
@@ -90,21 +94,17 @@
                         <div class="filter-precio">
                             <span>
                                 <label for="precioDesde">Desde</label>
-                                <input type="text" id="precioDesde" name="precioDesde" value="">
+                                <input type="number" id="precioDesde" name="precioDesde" value="">
                             </span>
                             <span>
                                 <label for="precioHasta">Hasta</label>
-                                <input type="text" id="precioHasta" name="precioHasta" value="">
-                            </span>
-                            <span id="search-precio">
-                                <button id="buscar-precio" type="submit"><i
-                                        class="fa-solid fa-caret-right"></i></button>
+                                <input type="number" id="precioHasta" name="precioHasta" value="">
                             </span>
 
                         </div>
                         <div id="searchButtons">
-                            <button type="submit" class="botones">Filtrar</button>
-                            <button type="reset" class="botones">Limpiar filtros</button>
+                            <button type="submit" id="btnfiltrar" class="botones">Filtrar</button>
+                            
                         </div>
                 </form>      
             </section>
