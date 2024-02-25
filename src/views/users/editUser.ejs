@@ -42,13 +42,13 @@
             <% } %> 
             <br>        
             <label for="contrasenia">Contraseña</label> 
-            <input type="password" name="contrasenia" id="contrasenia" class="<%= (locals.errors && errors.contrasenia) ? 'is-invalid' : null %>">            
+            <input type="password" placeholder="Ingresar contraseña si desea cambiarla" name="contrasenia" id="contrasenia" class="<%= (locals.errors && errors.contrasenia) ? 'is-invalid' : null %>">            
             <% if (locals.errors && errors.contrasenia) { %>
                 <p class="error"> <%= errors.contrasenia.msg %></p>
             <% } %> 
             <br>
             <label for="confirmar">Confirmar contraseña</label> 
-            <input type="password" name="confirmar" id="confirmar" class="<%= (locals.errors && errors.confirmar) ? 'is-invalid' : null %>">    
+            <input type="password" placeholder="Confirmar si cambió su contraseña" name="confirmar" id="confirmar" class="<%= (locals.errors && errors.confirmar) ? 'is-invalid' : null %>">    
             <% if (locals.errors && errors.confirmar) { %>
                 <p class="error"> <%= errors.confirmar.msg %></p>
             <% } %>         
