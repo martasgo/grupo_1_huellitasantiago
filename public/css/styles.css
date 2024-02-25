@@ -116,6 +116,10 @@ i {
   padding: 0px;
 }
 
+.subrayado{
+  text-decoration: underline;
+}
+
 /* CLaSES MAIN */
 
 .categorias{

@@ -15,6 +15,22 @@
     border: 1px black solid;
     font-size: 14px;
     font-weight: bold;
+    width: 100%;
+}
+
+.btnlimpiar:hover{
+    background-color: lightgrey;
+}
+
+.btnlimpiar{
+    background-color: #fbdd5bff;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px black solid;
+    font-size: 13px;
+    font-weight: bold;
+    width: 60%;
+    margin-top: 7px;
 }
 
 #searchButtons{
@@ -100,7 +116,7 @@
     #filtros{
         background-color: #fbdd5bff;
         text-align: center;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     #search-precio{
