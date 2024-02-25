@@ -49,14 +49,17 @@
                 </section>
             </div>
             <section id="descripcionProd">
-               
-                <h3 class="margin-top"> Descripción </h3>
                 <div class="detalleProducto">
+                    <h3 class="margin-top subrayado"> Detalles del producto </h3>
+                    <p><span class="textNegrita">Producto para:</span> <%= producto.pets.mascota%></p>
+                    <p><span class="textNegrita">Categoria:</span> <%= producto.categories.nombre%></p>
+                    <p><span class="textNegrita">Sub-Categoria:</span> <% if (producto.sub_categories) { %> <%= producto.sub_categories.nombre_sub_category %> <% } else {%> <%= 'No posee' %> <% }%></p>
                     <p><span class="textNegrita">Marca:</span> <%= producto.brands.nombre_marca %></p>
                     <% edad = producto.pets_ages.edad.charAt(0).toUpperCase() + producto.pets_ages.edad.slice(1); 
                     tamanio = producto.pets_sizes.tamanio.charAt(0).toUpperCase() + producto.pets_sizes.tamanio.slice(1);  %>
                     <p><span class="textNegrita">Edad mascota:</span> <%= edad %> </p>
                     <p><span class="textNegrita">Tamaño mascota:</span> <%= tamanio %> </p>
+                    <h3 class="margin-top subrayado"> Descripción </h3>
                     <p class="textDescripcion"><%= producto.descripcion %></p>
                 </div>
                 
