@@ -108,21 +108,19 @@ Revisiones Regulares: Continuemos con las revisiones regulares de código y dise
 ## RETRO Sprint-5
 1. Comenzar a hacer: 
 Observar materiales de los profesores de la otra comisión para así poder unificar criterios en el desarrollo del sprint.
-
-Aprender a realizar de una mejor manera las divisiones de tareas en el JIRA, panificando adecuadamente el sprint.
+Aprender a realizar de una mejor manera las divisiones de tareas en el jira.-
 
 2. Hacer Más:
 Leer material adicional para poder mejorar en cada tarea que se deba realizar en el sprint.-
+Realizar consultas a los profes para evitar duplicidad de tareas.
 
 3. Hacer Menos:
-Focalizar en temas que aún no nos pidieron en el sprint.
-
-Cambios de último minuto en las estructuras principales. Esto nos proporcionará estabilidad al código y evitaremos retrasos innecesarios.
+Focalizar en temas que nos pidieron en el sprint, y luego de que funcione ver si podemos implementar nuevas funcionalidades.
+Reducir cambios de último minuto en las estructuras principales. Esto nos proporcionará estabilidad al código y evitaremos retrasos innecesarios.
 
 4. Dejar de Hacer:
 No plantear las dudas o consultas a último momento, como así también las tareas asignadas a cada miembro del grupo.
-
-Evitar la falta de pruebas exhaustivas de los modelos antes de la implementación en el código. Esto puede llevarnos a errores difíciles de detectar y corregir más adelante en el código.
+Implementaciones extensas en el código que dificulte la detección de errores y corrección de los mismos.
 
 5. Continuar Haciendo:
-Continuar con las revisiones semanales y las interconsultas entre los miembros del grupo a los fines de continuar con el flujo correcto del trabajo del sprint como así también seguir con la coordinación de horarios para las reuniones tendientes a la supervisión de los trabajos.
+Continuar con las revisiones semanales y las interconsultas entre los miembros del grupo a los fines de continuar con el correcto fluido del trabajo del sprint como así también seguir con la coordinación de horarios para las reuniones tendientes a la supervisión de los trabajos.
