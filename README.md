@@ -1,3 +1,10 @@
+A efectos de ejecutar correctamente este proyecto,
+es necesario agregar un archivo .env con las siguientes variables de accesso
+a la base de datos:
+DB_USER
+DB_PASS
+DB_NAME
+
 # grupo_1_huellitasantiago
 Repositorio referido al proyecto integrador market place de productos para mascotas, huellitasantiago
 
