@@ -8,6 +8,9 @@
     <%- include('../partials/header') %>
    
     <main>
+        <p class="rutahome">
+            <a href="/user/profile">Perfil</a> / Listado completo de productos
+        </p>
         <section>
             <h2>LISTADO COMPLETO DE PRODUCTOS</h2>   
             
@@ -19,19 +22,7 @@
                 <% }); %>
 
                 <!-- Paginación -->
-                <div class="pagination">
-                    <% if (currentPage > 1) { %>
-                        <a href="?page=<%= currentPage - 1 %>">Anterior</a>
-                    <% } %>
-
-                    <% for (let i = 1; i <= totalPages; i++) { %>
-                        <a href="?page=<%= i %>"><%= i %></a>
-                    <% } %>
-
-                    <% if (currentPage < totalPages) { %>
-                        <a href="?page=<%= currentPage + 1 %>">Siguiente</a>
-                    <% } %>
-                </div>
+                <%- include('../partials/paginacion') %>
 
         </section>
 
