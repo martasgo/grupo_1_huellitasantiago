@@ -83,7 +83,7 @@ const userController = {
     try {
       const usersList = await userService.getData();
       const user = req.session.userLogged || {};
-      if (user && user.id_categoria === 1) {
+      if (user && user.id_categoria == 1) {
         res.render("../views/users/usersList.ejs", {
           title: "Listado de usuarios",
           usersList,
@@ -134,9 +134,9 @@ const userController = {
             telefono: req.body.telefono,
             contrasenia: bcrypt.hashSync(req.body.contrasenia, 10),
             id_categoria: 2,
-            imagen: req.file ? req.file.filename : "usuario-default.png",
+            imagen: req.file ? req.file.filename : "usuario-default.jpg",
           };
-          await userService.addUser(newUser);
+          await userService.addUser(newUser);          
           res.render("../views/users/login.ejs", {
             title: "Login",
           });
@@ -250,14 +250,11 @@ const userController = {
                 ? bcrypt.hashSync(req.body.contrasenia, 10)
                 : infoUser.contrasenia,
               imagen: req.file ? req.file.filename : infoUser.imagen,
-              id_categoria:
-                req.session.userLogged.id_categoria == 1
-                  ? req.body.categoria
-                  : 2,
+              id_categoria: req.body.categoria
             };
             const newU = await userService.updateList(editUser, idUser);
             // Actualiza la variable de sesión con los nuevos datos del usuario
-            if (req.session.userLogged.id_categoria == 2) {
+            if (req.session.userLogged.id == infoUser.id) {
               req.session.userLogged = {
                 ...req.session.userLogged, // Mantiene los datos antiguos
                 ...editUser, // Agrega los nuevos datos
@@ -279,11 +276,11 @@ const userController = {
               ? bcrypt.hashSync(req.body.contrasenia, 10)
               : infoUser.contrasenia,
             imagen: req.file ? req.file.filename : infoUser.imagen,
-            id_categoria: user.id_categoria == 1 ? req.body.categoria : 2,
+            id_categoria: req.body.categoria
           };
           const newU = await userService.updateList(editUser, idUser);
           // Actualiza la variable de sesión con los nuevos datos del usuario
-          if (user.id_categoria == 2) {
+          if (req.session.userLogged.id == infoUser.id) {
             req.session.userLogged = {
               ...req.session.userLogged, // Mantiene los datos antiguos
               ...editUser, // Agrega los nuevos datos
