@@ -12,7 +12,6 @@ const editValidations = [
     body("categoria").notEmpty().withMessage("El campo categoria no puede quedar vacío"),
     body("contrasenia").custom((value, {req})=>{
         let valorContrasenia = req.body.contrasenia;
-        console.log(valorContrasenia)
         if(valorContrasenia){          
             body("contrasenia").isLength({ min: 8 }).withMessage("La contraseña debe tener 8 caracteres mínimo")
          }
@@ -20,9 +19,7 @@ const editValidations = [
         }),
     body("confirmar").custom((value, {req})=>{
         let valorContrasenia = req.body.contrasenia;
-        console.log(valorContrasenia)
         let valorConfirmar = req.body.confirmar;
-        console.log(valorConfirmar)
         if (valorContrasenia !== valorConfirmar){
             throw new Error('Las contraseñas no coinciden, verifique por favor.');
         }
