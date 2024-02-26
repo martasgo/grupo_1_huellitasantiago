@@ -47,19 +47,21 @@ window.onload = function(){
 
     // EVENTO AL HACER CLICK EN FILTRAR
     filtrar.addEventListener('click', function(e){
-        if(precioDesde.value > precioHasta.value) {
-            e.preventDefault()
-            alert('El valor del precio en el campo Desde debe ser menor al valor del campo Hasta')
-        }
-        if(precioHasta.value < precioDesde.value) {
-            e.preventDefault()
-            alert('El valor del precio en el campo Hasta debe ser mayor al valor del campo Desde')
+        if (precioDesde.value !== '' && precioHasta.value !== ''){
+            if(precioDesde.value > precioHasta.value) {
+                e.preventDefault()
+                alert('El valor del precio en el campo Desde debe ser menor al valor del campo Hasta')
+            }
+            if(precioHasta.value < precioDesde.value) {
+                e.preventDefault()
+                alert('El valor del precio en el campo Hasta debe ser mayor al valor del campo Desde')
+            }
         }
     })
 
     precioDesde.addEventListener('change', function() {
         if (precioDesde.value!=='') {
-            localStorage.setItem(precioDesde.id, 'true');
+            localStorage.setItem(precioDesde.id, precioDesde.value);
             const descripcion = 'Desde:' + precioDesde.value;
             sectionFilters.textContent =  sectionFilters.textContent + descripcion+', ';
         } else {
@@ -69,16 +71,17 @@ window.onload = function(){
         }
     });
     // Verificar si el si se habia cargado un valor de precio antes
-    if (localStorage.getItem(precioDesde.id) === 'true') {
-        const descripcion = 'Desde:' + precioDesde.value;
+    if (localStorage.getItem(precioDesde.id)) {
+        const descripcion = 'Desde:' + localStorage.getItem(precioDesde.id);
         sectionFilters.textContent =  sectionFilters.textContent + descripcion+', ';
+        precioDesde.value = localStorage.getItem(precioDesde.id);
     }  
 
 
     precioHasta.addEventListener('change', function() {
         if (precioHasta.value!=='') {
-            localStorage.setItem(precioHasta.id, 'true');
-            const descripcion = 'Hasta:' + precioHasta.value;
+            localStorage.setItem(precioHasta.id, precioHasta.value);
+            const descripcion = 'Hasta:' + localStorage.getItem(precioHasta.id);
             sectionFilters.textContent =  sectionFilters.textContent + descripcion+', ';
         } else {
             // Limpiar la descripción cuando el checkbox está deseleccionado
@@ -87,9 +90,10 @@ window.onload = function(){
         }
     });
     // Verificar si el si se habia cargado un valor de precio antes
-    if (localStorage.getItem(precioHasta.id) === 'true') {
-        const descripcion = 'Desde:' + precioHasta.value;
+    if (localStorage.getItem(precioHasta.id)) {
+        const descripcion = 'Desde:' + localStorage.getItem(precioHasta.id);
         sectionFilters.textContent =  sectionFilters.textContent + descripcion+', ';
+        precioHasta.value = localStorage.getItem(precioHasta.id);
     }  
 
     // escucha a cada checkbox de marca
