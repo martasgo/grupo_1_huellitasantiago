@@ -16,11 +16,11 @@ const productService = {
         }
     },
 
-    // Service para obtener todos los productos agrupados de a 5
+    // Service para obtener todos los productos agrupados de a "totalItems"(cantidad) productos
     // Sirve para aplicar en paginados
-    getAllByGroup: async (page = 1) => {
+    getAllByGroup: async (page = 1, totalItems) => {
         try {
-            const pageSize = 7; // Cantidad de productos por página
+            const pageSize = totalItems; // Cantidad de productos por página
             const startIndex = (page - 1) * pageSize;
             const endIndex = page * pageSize;
     
