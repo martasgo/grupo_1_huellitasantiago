@@ -34,10 +34,8 @@ const routesProd = {
   productDelete: '/delete/:id',
   productFilters: "/filtros/:idMascota/:idCat?/:idSubCat?",
 
-  //listado productos: "/product/perros",  /product/gato/  
-  productsList: "/:idMascota",
-  productsListCat: "/:idMascota/:category",
-  productsListSubcat: "/:idMascota/:category/:subCat",
+  //listado productos: "/product/perros",  /product/perro/alimento, product/perro/alimento/latas  
+  productsList: "/:idMascota/:category?/:subCat?",
 };
 
 // rutas para mostrar la categoria de mascotas y de ahi ver productos
@@ -64,9 +62,6 @@ routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , p
 routerProduct.post(routesProd.productFilters, productController.filtersApplied);
 
 //rutas para mascota=perro o mascota=gato
-routerProduct.get(routesProd.productsList, productController.productsListController);
-routerProduct.get(routesProd.productsListCat, productController.CategoryListController);
-routerProduct.get(routesProd.productsListSubcat, productController.CategoryListController);
-//routerProduct.get(routesProd.productsListSubcat, productController.subCategoryListController);
+routerProduct.get(routesProd.productsList, productController.CategoryListController);
 
 module.exports = routerProduct;
