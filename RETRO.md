@@ -89,7 +89,6 @@ No plantear las dudas a tiempo para resolver lo antes posible cuestiones importa
 1. Comenzar a hacer:
 Planificar adecuadamente los cambios y complejidades previstos en el sprint para evitar soluciones temporales que puedan afectar el desarrollo del equipo.
 
-
 2. Hacer Más:
 
 Reforzar la planificación del sprint, desglosando las tareas en detalles, especialmente aquellas relacionadas con las vistas y presentaciones. Esto nos permitirá anticipar posibles complicaciones y asignar los recursos y responsables de una mejor manera.
@@ -106,3 +105,24 @@ Evitar la no comunicación fluida por los canales establecidos por el equipo par
 
 Revisiones Regulares: Continuemos con las revisiones regulares de código y diseño para mantener un nivel de calidad aceptable y asegurarnos de que todas las partes del sistema estén bien integradas.
 
+## RETRO Sprint-5
+1. Comenzar a hacer: 
+Observar materiales de los profesores de la otra comisión para así poder unificar criterios en el desarrollo del sprint.
+
+Aprender a realizar de una mejor manera las divisiones de tareas en el JIRA, panificando adecuadamente el sprint.
+
+2. Hacer Más:
+Leer material adicional para poder mejorar en cada tarea que se deba realizar en el sprint.-
+
+3. Hacer Menos:
+Focalizar en temas que aún no nos pidieron en el sprint.
+
+Cambios de último minuto en las estructuras principales. Esto nos proporcionará estabilidad al código y evitaremos retrasos innecesarios.
+
+4. Dejar de Hacer:
+No plantear las dudas o consultas a último momento, como así también las tareas asignadas a cada miembro del grupo.
+
+Evitar la falta de pruebas exhaustivas de los modelos antes de la implementación en el código. Esto puede llevarnos a errores difíciles de detectar y corregir más adelante en el código.
+
+5. Continuar Haciendo:
+Continuar con las revisiones semanales y las interconsultas entre los miembros del grupo a los fines de continuar con el flujo correcto del trabajo del sprint como así también seguir con la coordinación de horarios para las reuniones tendientes a la supervisión de los trabajos.
