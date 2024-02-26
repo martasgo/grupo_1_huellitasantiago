@@ -67,8 +67,8 @@
                         <h4>Marcas</h4>
                         <% for (i=0; i< brand.length; i++){ %>
                             <% valorLink = brand[i].nombre_marca.replace(/\s+/g, '-') %>
-                            <input type="checkbox" id="marca:<%= brand[i].nombre_marca  %>" class="marca-checkbox" name="marca" value="<%= brand[i].id %>">
-                             <%=  brand[i].nombre_marca  %><br>
+                            <input type="checkbox" id="marca:<%= brand[i].nombre_marca %>" class="marca-checkbox" name="marca" value="<%= brand[i].id %>">
+                            <label for="marca"><%=  brand[i].nombre_marca  %></label><br>
                             
                         <% } %> 
                     </div>
