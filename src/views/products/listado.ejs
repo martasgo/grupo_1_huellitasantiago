@@ -10,22 +10,31 @@
                 <p class="rutahome">
                     <a href="/">Home</a> / <a href="/mascotas">Mascotas</a> /
                     <% mascotaUp = mascota.charAt(0).toUpperCase() + mascota.slice(1);  %>
-                    <% if (categoria) { %>      
-                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> / 
-                            <%} else {%> 
-                            <%= mascotaUp %> / 
-                        <%} %>
-                    <% if (subCategoria) { %> <a href="/product/<%= mascota %>/<%= categoria %>">
-                                    <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
-                                    <%= categoriaUp %> </a>
-                    <% } else {%>
-                        <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
-                        <%= categoriaUp %>
-                    <%} %>
-                    <% if (subCategoria) { %> / 
-                        <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
-                        <%= subCategoriaUp %>
-                    <% } %>
+                    <% if (categoria) { %>
+                        <% if (subCategoria) { %>
+                            <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
+                            <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
+                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <a href="/product/<%= mascota %>/<%= categoriaUp%>"> <%= categoriaUp %></a> / <%= subCategoriaUp %> 
+                        <% } else { %> 
+                            <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
+                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <%= categoriaUp %> 
+                        <% } %>
+                    <%}else {%>
+                        <%= mascotaUp %>
+                    <%}%>
+                    <% //if (subCategoria) { %>
+                        <% //subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
+                        <% //categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
+                        <!-- <a href="/product/<%= //mascota %>/<%= //categoriaUp %>"> <%=// categoriaUp %> </a> /<%= //subCategoriaUp %>  -->
+                    <% //} %>
+                      <%// else  {%>
+                        <% //categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
+                        <%= //categoriaUp %>
+                    <%//} %> 
+                    <% //if (subCategoria) { %> / 
+                        <% //subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
+                        <%= //subCategoriaUp %>
+                    <% //} %>
                 </p>
                 <div class="listado-content">
                     
