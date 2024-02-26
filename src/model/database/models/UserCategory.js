@@ -1,14 +1,14 @@
-module.exports = (sequelize, dataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     let alias = "UserCategory";
     let cols = {    
       id: {
-        type: dataTypes.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },    
       mascota: {
-        type: dataTypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     };

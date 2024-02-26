@@ -1,126 +1,111 @@
+<script src="/js/filtros-productos.js"> </script>
 <section id="mobile">
-    <label for="categoryList">Categorias:</label>
-    <select id="categoryList" name="categoryList">
-        <option value="alimento">Alimentacion</option>
-        <option value="accesorios">Accesorios</option>
-        <option value="cuidados-higiene">Cuidados e Higiene</option>
-        <option value="ropa">Ropa</option>
-    </select>
-    <input type="button" value="Buscar" />
+    <form action="" method="get" id="searchProdMobile">
+        <label for="categoryList">Categorias:</label>
+        <select id="categoryList" name="categoryList">
+            <option value="" ></option>
+            <% for (i=0; i< categorias.length; i++){ %>
+                <% valorLink = categorias[i].nombre.replace(/\s+/g, '-') %>
+                <option value="/product/<%= mascota %>/<%= valorLink %>"> <%=  categorias[i].nombre  %></option>            
+            <% } %>    
+        </select>
+        <button type="submit" value="Buscar">Buscars</button>
+    </form>
 </section>
 <section id="tablet" class="filter-sections">
     <div id="categorias">
         <h3>Categorias</h3>
         <% if (categoria) { %>
-            <% if (categoria==='alimentos' ) { %>
-                <span class="txt-cat">ALIMENTACION</span>
-                <% } else if (categoria==='accesorios' ) { %>
-                    <span class="txt-cat">ACCESORIOS</span>%>
-                    <% } else if (categoria==='cuidados-higiene' ) { %>
-                        <span class="txt-cat">CUIDADO E HIGIENE</span>%>
-                        <% } else if (categoria==='ropa' ) { %>
-                            <span class="txt-cat">ROPA</span>%>
-                            <% } %>
-                                <% } else {%>
-                                    <ul>
-                                        <li><a href="/product/<%= mascota %>/alimentos">ALIMENTACION</a>
-                                        </li>
-                                        <li><a href="/product/<%= mascota %>/accesorios">ACCESORIOS</a></li>
-                                        <li><a href="/product/<%= mascota %>/cuidados-higiene">CUIDADOS E
-                                                HIGIENE</a></li>
-                                        <li><a href="/product/<%= mascota %>/ropa">ROPA</a></li>
-                                    </ul>
-                                    <% }%>
+            <% if (categoria==='Alimentos' ) { %>
+                <span class="txt-cat">ALIMENTOS</span>
+            <% } else if (categoria==='Accesorios' ) { %>
+                <span class="txt-cat">ACCESORIOS</span>%>
+            <% } else if (categoria==='Cuidado e Higiene' ) { %>
+                <span class="txt-cat">CUIDADO E HIGIENE</span>%>
+            <% } else if (categoria==='Ropa' ) { %>
+                <span class="txt-cat">ROPA</span>%>
+            <% } %>
+        <% } else {%>
+            <ul>
+                <% for (i=0; i< categorias.length; i++){ %>
+                <% valorLink = categorias[i].nombre.replace(/\s+/g, '-') %>
+                    <li><a href="/product/<%= mascota %>/<%= valorLink %>"><%=  categorias[i].nombre  %></a> </li>          
+                <% } %>
+            </ul>
+        <% }%>
     </div>
-    <% if (categoria==='alimentos' ) { %>
+    <% if (categoria==='Alimentos') { %>
         <div id="subCategoria">
             <h4 id="title-subcat">Subcategorias</h4>
-            <li><a href="/product/<%= mascota %>/alimentos/alimentos-secos">Alimentos secos</a></li>
-            <li><a href="/product/<%= mascota %>/alimentos/latas-sobres">Latas y sobres</a></li>
-            <li><a href="/product/<%= mascota %>/alimentos/alimentos-naturales">Alimentos naturales</a></li>
+            <% for (i=0; i< subCat.length; i++) { %>
+                <% if (subCat[i].id_category == 1) { %>
+                    <%  valor = subCat[i].nombre_sub_category.replace(/\s+/g, '-') %>
+                        <li><a href="/product/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
+                    <% } %>
+             <% } %>
         </div>
     <% } %>
-    <% if (categoria==='accesorios' ) { %>
+    <% if (categoria==='Accesorios' ) { %>
         <div id="subCategoria">
             <h4 id="title-subcat">Subcategorias</h4>
-            <li><a href="/product/<%= mascota %>/accesorios/camas">Camas</a></li>
-            <li><a href="/product/<%= mascota %>/accesorios/correas">Correas</a></li>
-            <li><a href="/product/<%= mascota %>/accesorios/comederos-bebederos">Comederos / bebederos</a></li>
-            <li><a href="/product/<%= mascota %>/accesorios/dispnesers">Dispensers</a></li>
-            <li><a href="/product/<%= mascota %>/accesorios/transportadoras">Transportadoras</a></li>
-            <li><a href="/product/<%= mascota %>/accesorios/varios">Varios</a></li>
+            <% for (i=0; i< subCat.length; i++) { %>
+                <% if (subCat[i].id_category == 2) { %>
+                    <%  valor = subCat[i].nombre_sub_category.replace(/\s+/g, '-') %>
+                        <li><a href="/product/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
+                    <% } %>
+             <% } %>
         </div>
     <% } %>
             <h3 id="filtros">FILTROS</h3>
+            <section id="filterList">
+
+            </section>
+            <a href="/product/<%= mascota %>"><button type="" id="btnlimpiar" class="btnlimpiar">Limpiar filtros</button></a>
             <section>
+                <form action="/product/filtros/<% if (mascota){ %><%=mascota%><%} %><% if (categoria){ %>/<%=categoria.replace(/\s+/g, '-')%><%} %><% if (subCategoria){%>/<%=subCategoria.replace(/\s+/g, '-')%> <%} %>" method="post">
                     <div>
                         <h4>Marcas</h4>
-                        <input type="checkbox" id="marca1" name="marca1" value="Pedigree">
-                        <label for="marca1"> Pedigree</label><br>
-                        <input type="checkbox" id="marca2" name="marca2" value="Royal">
-                        <label for="marca2"> Royal</label><br>
-                        <input type="checkbox" id="marca3" name="marca3" value="Purina">
-                        <label for="marca3"> Purina</label><br>
-                        <input type="checkbox" id="marca4" name="marca4" value="Nutrique">
-                        <label for="marca4"> Nutrique</label><br>
-                        <input type="checkbox" id="marca5" name="marca5" value="Absorsol">
-                        <label for="marca5"> Absorsol</label><br>
-                        <input type="checkbox" id="marca6" name="marca6" value="Vitalcan">
-                        <label for="marca6"> Vitalcan</label><br>
-                        <input type="checkbox" id="marca7" name="marca7" value="Puppis">
-                        <label for="marca7"> Puppis</label><br>
-                        <input type="checkbox" id="marca8" name="marca8" value="Canine Couture">
-                        <label for="marca8"> PupCanine Coutureis</label><br>
-                        <input type="checkbox" id="marca9" name="marca9" value="Garritas">
-                        <label for="marca9"> Garritas</label><br>
-                        <input type="checkbox" id="marca10" name="marca10" value="Oasis">
-                        <label for="marca10">Oasis</label><br>
-                        <input type="checkbox" id="marca11" name="marca11" value="Frontline">
-                        <label for="marca11"> Vitalcan</label><br>
-                        <input type="checkbox" id="marca12" name="marca12" value="Forte Health">
-                        <label for="marca12"> Forte Health</label><br>
-                        <input type="checkbox" id="marca13" name="marca12" value="Pauldip">
-                        <label for="marca13">Pauldip</label><br>
-                        <input type="checkbox" id="marca14" name="marca12" value="La Tienda">
-                        <label for="marca14"> La Tienda</label><br>
-                        <input type="checkbox" id="marca15" name="marca12" value="Bacan">
-                        <label for="marca15">Bacan</label><br>
-                        <input type="checkbox" id="marca16" name="marca12" value="Animal Pet">
-                        <label for="marca16">Animal Pet</label><br>
-
+                        <% for (i=0; i< brand.length; i++){ %>
+                            <% valorLink = brand[i].nombre_marca.replace(/\s+/g, '-') %>
+                            <input type="checkbox" id="marca:<%= brand[i].nombre_marca %>" class="marca-checkbox" name="marca" value="<%= brand[i].id %>">
+                            <label for="marca"><%=  brand[i].nombre_marca  %></label><br>
+                            
+                        <% } %> 
                     </div>
                         <div>
                             <h4>Edad mascota</h4>
-                            <a href="/product/<%= mascota %>/?edad=cachorro"><input type="checkbox" id="edad1" name="edad1" value="cachorro"></a>
-                                <label for="edad1"> Cachorro</label>
-                            <br>
-                            <input type="checkbox" id="edad2" name="edad2" value="adulto">
-                            <label for="edad2"> Adulto</label><br>
+                            <% for (i=0; i< petAge.length; i++){ %>
+                                <% valorLink = petAge[i].edad.replace(/\s+/g, '-') %>
+                                <input type="checkbox" id="edad:<%= petAge[i].edad %>" class="edad-checkbox" name="edad" value="<%= petAge[i].id %>">
+                                <label for="edad"><%= petAge[i].edad %></label>
+                                <br>      
+                            <% } %> 
                         </div>
                         <h4>Tamaño mascota</h4>
                         <div>
-                            <input type="checkbox" id="tamaño1" name="tamaño1" value="pequeño">
-                            <label for="tamaño1"> Pequeño</label><br>
-                            <input type="checkbox" id="tamaño2" name="tamaño2" value="mediano">
-                            <label for="tamaño2"> Mediano</label><br>
-                            <input type="checkbox" id="tamaño3" name="tamaño3" value="Grande">
-                            <label for="tamaño3"> Adulto</label><br>
+                            <% for (i=0; i< pestSize.length; i++){ %>
+                                <% valorLink = pestSize[i].tamanio.replace(/\s+/g, '-') %>
+                                    <input type="checkbox" id="tamaño:<%= pestSize[i].tamanio %>" class="size-checkbox" name="tamanio" value="<%= pestSize[i].id %>">
+                                    <label for="tamanio"><%= pestSize[i].tamanio %></label>
+                                <br>      
+                            <% } %> 
                         </div>
                         <h4>Precio</h4>
                         <div class="filter-precio">
                             <span>
                                 <label for="precioDesde">Desde</label>
-                                <input type="text" id="precioDesde" name="precioDesde" value="">
+                                <input type="number" id="precioDesde" name="precioDesde" value="">
                             </span>
                             <span>
                                 <label for="precioHasta">Hasta</label>
-                                <input type="text" id="precioHasta" name="precioHasta" value="">
-                            </span>
-                            <span id="search-precio">
-                                <button id="buscar-precio" type="submit"><i
-                                        class="fa-solid fa-caret-right"></i></button>
+                                <input type="number" id="precioHasta" name="precioHasta" value="">
                             </span>
 
                         </div>
+                        <div id="searchButtons">
+                            <button type="submit" id="btnfiltrar" class="botones">Filtrar</button>
+                            
+                        </div>
+                </form>      
             </section>
 </section>

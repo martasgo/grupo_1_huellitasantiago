@@ -37,11 +37,11 @@
                                 precioFinal = (productsDestacado[i].precio - ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
                                 <div class="preciosOfertas">
                                     <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
-                                    <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
-                                    <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
+                                    <p class="precioAnt" id="">$<%= productsDestacado[i].precio %></p>
+                                    <p class="precioAhora" id="">$<%= precioFinal %> </p> 
                                 </div>
                             <% } else {%>
-                                <p class="precioAhora" id="">$<%= toThousand(productsDestacado[i].precio) %> </p>
+                                <p class="precioAhora" id="">$<%= productsDestacado[i].precio %> </p>
                             <% } %>
                         <a><input type="button" value="Comprar" id="btn-comprar"/></a>
                     </div>

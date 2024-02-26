@@ -2,20 +2,7 @@
 <html lang="en">
   <!-- include head -->
 <%- include('../partials/head', {title: 'Editando producto: ' + producto.id})%>
-<script>
-    function mostrarOpciones() {
-      var select1 = document.getElementById("categoria");
-      var opcionesDiv = document.getElementById("subCatSelect");
-      var opcionesDivPrentacion = document.getElementById("alimentoPresentacion");
-      var opcionesDivAccesorios = document.getElementById("subCatAccesorios");
-      var select2 = document.getElementById("subCat");
-      
-      opcionesDiv.style.display = (select1.value == "alimentos") ? "block" : "none";
-      opcionesDivPrentacion.style.display = (select1.value == "alimentos") ? "block" : "none";
-      opcionesDivAccesorios.style.display = (select1.value == "accesorios") ? "block" : "none";
-    }
-
-</script>
+<script src="/js/viewEdit.js"> </script>
   <body>
     
     <!-- include header -->
@@ -28,143 +15,167 @@
                 <div class="elementos-form">
                     <label for="mascota">Mascota:</label><br>
                     <select class="margen-ancho" id="mascota" name="mascota" >
-                        <option value="perros" <% if (producto.mascota === 'perros') { %> selected <% } %>>Perros</option>
-                        <option value="gatos" <% if (producto.mascota === 'gatos') { %> selected <% } %>>Gatos</option>
-                        <option value="perros-gatos" <% if (producto.mascota === 'perros-gatos') { %> selected <% } %>>Perros y Gatos</option>
+                        <% petList.forEach (pet => { %>
+                            <option value=" <%= pet.id %> " <% if (producto.id_mascota === pet.id) { %> selected <% } %>><%= pet.mascota %></option>
+                        <% }) %>
                     </select><br>
+                    <% if (typeof errors != "undefined" && errors.mascota) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.mascota.msg  %></small>
+                    <% } %>
 
                 </div>
                 <div class="elementos-form">
                 <label for="nombreprod">Nombre producto:</label><br>
-                <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod" value="<%= producto.nombreProducto%>"><br>
+                <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod" value="<%= locals.old && locals.old.nombreprod ? old.nombreprod : producto.nombre %>"><br>
+                <% if (typeof errors != "undefined" && errors.nombreprod) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.nombreprod.msg  %></small>
+                <% } %>
                 </div>
                
                 <div class="elementos-form">
-                    <label for="precio">Precio:</label><br>
-                    <input class="margen-ancho" type="number" id="precio" name="precio" value="<%= producto.precio %>"><br>
+                    <label for="precio">Precio ($ ARS):</label><br>
+                    <input class="margen-ancho" type="number" id="precio" name="precio" step="any" value="<%= locals.old && locals.old.precio ? old.precio : producto.precio %>"><br>
+                    <% if (typeof errors != "undefined" && errors.precio) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.precio.msg  %></small>
+                    <% } %>
                 </div>
                 <div class="elementos-form">
                     <label for="descuento">Descuento(%):</label><br>
-                    <input class="margen-ancho" type="text" id="descuento" name="descuento" value="<%= producto.descuento %>"><br>
+                    <input class="margen-ancho" type="text" id="descuento" name="descuento" value="<%= locals.old && locals.old.descuento ? old.descuento : producto.descuento %>"><br>
                 </div>
 
                 <div class="elementos-form">
-                <label for="categoria">Categoría:</label><br>
-                    <select  class="margen-ancho" id="categoria" name="categoria" onchange="mostrarOpciones()">
-                        <option value=""></option>
-                        <option value="alimentos" <% if (producto.categoria === 'alimentos') { %> selected <% } %>>Alimentación</option>
-                        <option value="accesorios" <% if (producto.categoria === 'accesorios') { %> selected <% } %> >Accesorios</option>
-                        <option value="cuidados-higiene" <% if (producto.categoria === 'cuidados-higiene') { %> selected <% } %> >Cuidado e higiene</option>
-                        <option value="ropa" <% if (producto.categoria === 'ropa') { %> selected <% } %> >Ropa</option>
+                    <label for="categoria">Categoría:</label><br>
+                        <select  class="margen-ancho" id="categoria" name="categoria">
+                        <% categoryList.forEach (category => { %>
+                            <option value=" <%= category.id %> " <% if (producto.id_categoria === category.id) { %> selected <% } %>><%= category.nombre %></option>
+                        <% }) %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.categoria) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.categoria.msg  %></small>
+                <% } %>
                 </div>
 
-                <div class="elementos-form" id="subCatSelect" <% if (producto.categoria !== 'alimentos') { %> style="display: none;"<% } %>>
-                 <!-- solo mostrar si se selecciona subCat alimentos -->
-                <label for="subCat">Subcategorías de alimentos:</label><br>
-                    <select class="margen-ancho" id="subCat" name="subCat" onchange="mostrarOpciones()" >
+    
+                <div class="elementos-form" id="subCatSelect">
+                    <!-- solo mostrar si se selecciona cat alimentos -->
+                   <label for="subCat">Subcategoría:</label><br>           
+                       <select class="margen-ancho" id="subCat" name="subCat">
                         <option value=""></option>
-                        <option value="alimentos-secos" <% if (producto.subCategoria === 'alimentos-secos') { %> selected <% } %>>Alimentos secos</option>
-                        <option value="latas-sobres" <% if (producto.subCategoria === 'latas-sobres') { %> selected <% } %>>Latas / sobres</option>
-                        <option value="alimento-natural" <% if (producto.subCategoria === 'alimento-natural') { %> selected <% } %>>Alimento natural</option> 
-                </select><br>
-            </div>
+                        <% subCategoryAlimentosList.forEach (subCategory => { %>
+                            <option value=" <%= subCategory.id %> " <% if (producto.id_sub_categoria === subCategory.id) { %> selected <% } %>><%= subCategory.nombre_sub_category %></option>
+                        <% }) %>
+                    </select><br>
+                    <% if (typeof errors != "undefined" && errors.subCat) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.subCat.msg  %></small>
+                    <% } %>
+                </div>
+                
+                
 
-            <div class="elementos-form" id="alimentoPresentacion" <% if (producto.categoria !== 'alimentos') { %> style="display: none;"<% } %>>
-                <label for="presentacion">Presentación:</label><br>
-                <select  class="margen-ancho" id="presentacion" name="presentacion">
+                <div class="elementos-form" id="alimentoPresentacion">
+                    <label for="presentacion">Presentación:</label><br>
+                    <select  class="margen-ancho" id="presentacion" name="presentacion">
                     <option value=""></option>
-                    <option value="85 gr." <% if (producto.presentacion === '85 gr.') { %> selected <% } %>>85 gr</option>
-                    <option value="100 gr." <% if (producto.presentacion === '100 gr.') { %> selected <% } %>>100 gr</option>
-                    <option value="500 gr." <% if (producto.presentacion === '500 gr.') { %> selected <% } %>>500 gr</option>
-                    <option value="1 kg." <% if (producto.presentacion === '1 kg.') { %> selected <% } %>>1 Kg</option>
-                    <option value="2.5 kg." <% if (producto.presentacion === '2.5 kg.') { %> selected <% } %>>2.5 Kg</option>
-                    <option value="3 kg." <% if (producto.presentacion === '3 kg.') { %> selected <% } %>>3 Kg</option>                      
+                    <% packageList.forEach (package => { %>
+                        <option value="<%= package.id %>" <% if (producto.id_presentacion === package.id) { %> selected <% } %>><%= package.cantidad + ' ' + package.unidad_medida %></option>
+                    <% }) %>                    
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.presentacion) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.presentacion.msg  %></small>
+                <% } %>
             </div>
                 <!--fin alimentos -->
-
-                <div class="elementos-form" id="subCatAccesorios" <% if (producto.categoria !== 'accesorios') { %> style="display: none;"<% } %>>
-                <!-- solo mostrar si se selecciona accesorios- subCategorias accesorios -->
-                <label for="subCatAcc">Subcategorías de accesorios:</label><br>
-                    <select class="margen-ancho" id="subCatAcc" name="subCatAcc" onchange="mostrarOpciones()">
+            
+                <div class="elementos-form" id="subCatAccesorios">
+                    <!-- solo mostrar si se selecciona accesorios -->
+                    <label for="subCatAcc">Subcategoría:</label><br>
+                        <select class="margen-ancho" id="subCatAcc" name="subCatAcc">
                         <option value=""></option>
-                        <option value="fundas-auto" <% if (producto.subCategoria === 'fundas-auto') { %> selected <% } %>>Fundas para auto</option>
-                        <option value="camas" <% if (producto.subCategoria === 'camas') { %> selected <% } %>>Camas</option>
-                        <option value="correas" <% if (producto.subCategoria === 'correas') { %> selected <% } %>>Correas</option>
-                        <option value="comederos-bebederos" <% if (producto.subCategoria === 'comederos-bebederos') { %> selected <% } %>>Comederos / bebederos</option>
-                        <option value="dispensers" <% if (producto.subCategoria === 'dispensers') { %> selected <% } %>>Dispensers</option>
-                        <option value="transportadoras" <% if (producto.subCategoria === 'transportadoras') { %> selected <% } %>>Transportadoras</option>
-                        <option value="varios" <% if (producto.subCategoria === 'varios') { %> selected <% } %>>Varios</option>
+                        <% subCategoryAccesoriosList.forEach (subCategory => { %>
+                            <option value=" <%= subCategory.id %> " <% if (producto.id_sub_categoria === subCategory.id) { %> selected <% } %>><%= subCategory.nombre_sub_category %></option>
+                        <% }) %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.subCatAcc) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.subCatAcc.msg  %></small>
+                <% } %>
                 <!-- fin accesorios -->
                 </div>
+            
 
                 <div class="elementos-form">
                 <!-- las marcas serian en funcion de la categoria? --> <!--Sole agregar marcas-->
                 <label for="marca">Marca:</label><br>
                     <select class="margen-ancho" id="marca" name="marca">
-                        <option value=""></option>
-                        <option value="Pedigree" <% if (producto.marca === 'Pedigree') { %> selected <% } %>>Pedigree</option>
-                        <option value="Royal" <% if (producto.marca === 'Royal') { %> selected <% } %> >Royal Canin</option>
-                        <option value="Purina" <% if (producto.marca === 'Purina') { %> selected <% } %> >Purina</option>
-                        <option value="Nutrique" <% if (producto.marca === 'Nutrique') { %> selected <% } %> >Nutrique</option>
-                        <option value="Absorsol" <% if (producto.marca === 'Absorsol') { %> selected <% } %> >Absorsol</option>
-                        <option value="Vitalcan" <% if (producto.marca === 'Vitalcan') { %> selected <% } %> >Vitalcan</option>
-                        <option value="Puppis" <% if (producto.marca === 'Puppis') { %> selected <% } %> >Puppis</option>
-                        <option value="Canine Couture" <% if (producto.marca === 'Canine Couture') { %> selected <% } %> >Canine Couture</option>
-                        <option value="Garritas" <% if (producto.marca === 'Garritas') { %> selected <% } %> >Garritas</option>
-                        <option value="Oasis" <% if (producto.marca === 'Oasis') { %> selected <% } %> >Oasis</option>
-                        <option value="Vitalcan" <% if (producto.marca === 'Vitalcan') { %> selected <% } %> >Vitalcan</option>
-                        <option value="Forte Health" <% if (producto.marca === 'Forte Health') { %> selected <% } %> >Forte Health</option>
-                        <option value="Pauldip" <% if (producto.marca === 'Pauldip') { %> selected <% } %> >Pauldip</option>
-                        <option value="La Tienda" <% if (producto.marca === 'La Tienda') { %> selected <% } %> >La Tienda</option>
-                        <option value="Bacan" <% if (producto.marca === 'Bacan') { %> selected <% } %> >Bacan</option>
-                        <option value="Animal Pet" <% if (producto.marca === 'Animal Pet') { %> selected <% } %> >Animal Pet</option>
-                        <option value="Frontline" <% if (producto.marca === 'Frontline') { %> selected <% } %> >Frontline</option>
-                        <option value="Earth Rated" <% if (producto.marca === 'Earth Rated') { %> selected <% } %> >Earth Rated</option>
+                        <% brandList.forEach (brand => { %>
+                            <option value=" <%= brand.id %> " <% if (producto.id_marca === brand.id) { %> selected <% } %>><%= brand.nombre_marca %></option>
+                        <% }) %>  
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.marca) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.marca.msg  %></small>
+                <% } %>
                 </div>
 
                 <div class="elementos-form">
                 <label for="edadmascota">Edad mascota:</label><br>
                     <select  class="margen-ancho" id="edadmascota" name="edadmascota" >
-                        <option value=""></option>
-                        <option value="cachorro" <% if (producto.edadMascota === 'cachorro') { %> selected <% } %> >Cachorro</option>
-                        <option value="adulto" <% if (producto.edadMascota === 'adulto') { %> selected <% } %> >Adulto</option>
+                        <!-- <option value=""></option> -->
+                        <% petAgeList.forEach (petAge => { %>
+                            <option value=" <%= petAge.id %> " <% if (producto.id_edad_mascota === petAge.id) { %> selected <% } %>><%= petAge.edad %></option>
+                        <% }) %> 
                     </select><br>
+                    <% if (typeof errors != "undefined" && errors.edadmascota) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.edadmascota.msg  %></small>
+                    <% } %>
                 </div>
 
                 <div class="elementos-form">
                 <label for="tamaniomascota">Tamaño mascota:</label><br>
                 <select class="margen-ancho" id="tamaniomascota" name="tamaniomascota" >
-                    <option value=""></option>
-                    <option value="pequeño" <% if (producto.tamanioMascota === 'pequeño') { %> selected <% } %> >Pequeño</option>
-                    <option value="mediano" <% if (producto.tamanioMascota === 'mediano') { %> selected <% } %> >Mediano</option>
-                    <option value="grande" <% if (producto.tamanioMascota === 'grande') { %> selected <% } %> >Grande</option>
+                    <!-- <option value=""></option> -->
+                    <% petSizeList.forEach (petSize => { %>
+                        <option value=" <%= petSize.id %> " <% if (producto.id_tamanio_mascota === petSize.id) { %> selected <% } %>><%= petSize.tamanio %></option>
+                    <% }) %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.tamaniomascota) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.tamaniomascota.msg  %></small>
+                <% } %>
                 </div>
                 
                 <div class="elementos-form-100">
                 <div id="box-destacado" class="margen-ancho">
-                    <label for="destacado">Destacado:</label> <input type="checkbox" id="destacado" name="destacado" value="true" <% if (producto.destacado === 'si') { %> checked <% } %>>
+                    <label for="destacado">Destacado:</label> <input type="checkbox" id="destacado" name="destacado" value="true" <% if (producto.destacado === 1) { %> checked <% } %>>
                 </div>
                 </div>
 
                 <div class="elementos-form-100">
                     <label for="descripcion">Descripción:</label><br>
-                    <textarea name="descripcion" id="descripcion" ><%= producto.descripcion %> </textarea><br>
+                    <input class="margen-ancho" name="descripcion" id="descripcion" value="<%= locals.old && locals.old.descripcion ? old.descripcion : producto.descripcion %>"> </input><br>
+                    <% if (typeof errors != "undefined" && errors.descripcion) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.descripcion.msg  %></small>
+                    <% } %>
+                </div>
+
+                <div>
                     <label for="newImage" class="form-label">Imagen:</label> <!--SPRINT 4-->
 						<br>
 						<img src="/images/productos/<%= producto.imagen%>" class="actualImg" alt="Imagen Actual" name="newImage">
 						<br>
               			<input type="file" class="form-upload" name="newImage" accept="image/*"/>
 						
-                </div>           
+                </div>
+                
+                <div class="elementos-form">
+                    <label for="stock">Stock:</label><br>
+                    <input class="margen-ancho" type="number" id="stock" name="stock" value="<%= locals.old && locals.old.stock ? old.stock : producto.stock %>"><br>
+                    <% if (typeof errors != "undefined" && errors.stock) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.stock.msg  %></small>
+                    <% } %>
+                </div>
                
                 <div class="elementos-form-100">
                     <div id="form-buttons">  
-                        <button type="submit" >GUARDAR</button>
+                        <button type="submit">GUARDAR</button>
                         <a href="/product"><button type="button">CANCELAR</button></a>
                         
                     </div>

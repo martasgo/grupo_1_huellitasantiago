@@ -2,101 +2,109 @@
 <html lang="en">
   <!-- include head -->
 <%- include('../partials/head') %>
-<script>
-    function mostrarOpciones() {
-      var select1 = document.getElementById("categoria");
-      var opcionesDiv = document.getElementById("subCatSelect");
-      var opcionesDivPrentacion = document.getElementById("alimentoPresentacion");
-      var opcionesDivAccesorios = document.getElementById("subCatAccesorios");
-      var select2 = document.getElementById("subCat");
-      
-      opcionesDiv.style.display = (select1.value == "alimentos") ? "block" : "none";
-      opcionesDivPrentacion.style.display = (select1.value == "alimentos") ? "block" : "none";
-      opcionesDivAccesorios.style.display = (select1.value == "accesorios") ? "block" : "none";
-    }
-
-</script>
+<script src="/js/viewCreate.js"> </script>
   <body>
     
     <!-- include header -->
     <%- include('../partials/header') %>
     <main>
+        <p class="rutahome">
+            <a href="/user/profile">Perfil</a> / Alta producto /
+        </p>
         <p id="title-alta"> Formulario de alta de producto </p>
-      
         <section class="fichaprod">
-            <form id="form-alta-prod" method="post" enctype="multipart/form-data" action="/product">
+            <form id="form-alta-prod" method="post" enctype="multipart/form-data" action="/product/crear">
                 <div class="elementos-form">
                     <label for="mascota">Mascota:</label><br>
                     <select class="margen-ancho" id="mascota" name="mascota">
-                        <option value="perros">Perros</option>
-                        <option value="gatos">Gatos</option>
-                        <option value="perros-gatos">Perros-gatos</option>
+                        <option value="" selected></option>
+                        <% for (let i = 0; i < pet.length; i++) { %>
+                            <option value="<%= pet[i].id %>" <%= locals.old && locals.old.mascota == pet[i].id ? 'selected' : '' %>><%= pet[i].mascota %></option>
+                        <% } %>
                     </select><br>
-
+                    <% if (typeof errors != "undefined" && errors.mascota) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.mascota.msg  %></small>
+                    <% } %>
                 </div>
                 <div class="elementos-form">
                 <label for="nombreprod">Nombre producto:</label><br>
-                <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod"><br>
+                <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod" value="<%= locals.old ? old.nombreprod : null %>"><br>
+                <% if (typeof errors != "undefined" && errors.nombreprod) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.nombreprod.msg  %></small>
+                <% } %>
                 </div>
                
                 <div class="elementos-form">
                     <label for="precio">Precio:</label><br>
-                    <input class="margen-ancho" type="number" id="precio" name="precio"><br>
+                    <input class="margen-ancho" type="number" id="precio" name="precio" step="any" value="<%= locals.old ? old.precio : null %>"><br>
+                    <% if (typeof errors != "undefined" && errors.precio) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.precio.msg  %></small>
+                    <% } %>
                 </div>
                 <div class="elementos-form">
                     <label for="descuento">Descuento(%):</label><br>
-                    <input class="margen-ancho" type="number" id="descuento" name="descuento"><br>
+                    <input class="margen-ancho" type="number" id="descuento" name="descuento" value="<%= locals.old ? old.descuento : null %>"><br>
                 </div>
 
                 <div class="elementos-form">
                 <label for="categoria">Categoría:</label><br>
-                    <select  class="margen-ancho" id="categoria" name="categoria" onchange="mostrarOpciones()">
+                    <select  class="margen-ancho" id="categoria" name="categoria">
                         <option value=""></option>
-                        <option value="alimentos">Alimentación</option>
-                        <option value="accesorios">Accesorios</option>
-                        <option value="cuidados-higiene">Cuidado e higiene</option>
-                        <option value="ropa">Ropa</option>
+                        <% for (let i = 0; i < category.length; i++) { %>
+                            <option value="<%= category[i].id %>" <%= locals.old && locals.old.categoria == category[i].id ? 'selected' : '' %>><%= category[i].nombre %></option>
+                        <% } %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.categoria) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.categoria.msg  %></small>
+                <% } %>
                 </div>
 
-                <div class="elementos-form" id="subCatSelect" style="display: none;">
+            <div class="elementos-form" id="subCatSelect">
                  <!-- solo mostrar si se selecciona cat alimentos -->
-                <label for="subCat">Subcategoría:</label><br>
+                <label for="subCat">Subcategoría:</label><br>           
                     <select class="margen-ancho" id="subCat" name="subCat">
                         <option value=""></option>
-                        <option value="alimentos-secos">Alimentos secos</option>
-                        <option value="latas-sobres">Latas / sobres</option>
-                        <option value="alimento-natural">Alimento natural</option> 
-                </select><br>
+                        <% for (i=0; i< subCategory.length; i++) { %>
+                            <% if (subCategory[i].id_category == 1) { %>
+                     <option value="<%= subCategory[i].id %>" <%= locals.old && locals.old.subCat == subCategory[i].id ? 'selected' : '' %>><%= subCategory[i].nombre_sub_category %></option>
+                                <% } %>
+                         <% } %>
+                          
+                    </select><br>
+                   <% if (typeof errors != "undefined" && errors.subCat) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.subCat.msg  %></small>
+                <% } %>
             </div>
 
-            <div class="elementos-form" id="alimentoPresentacion" style="display: none;">
+            <div class="elementos-form" id="alimentoPresentacion">
                 <label for="presentacion">Presentación:</label><br>
                 <select  class="margen-ancho" id="presentacion" name="presentacion">
                     <option value=""></option>
-                    <option value="85 gr.">85 Gr</option>
-                    <option value="100 gr.">100 Gr</option>
-                    <option value="500 gr.">500 Gr</option>
-                    <option value="1 kg.">1 Kg</option>
-                    <option value="2.5 kg.">2.5 Kg</option>
-                    <option value="3 kg.">3 Kg</option>
+                    <% for (i=0; i< packageRes.length; i++) { %>
+                        <option value="<%= packageRes[i].id %>" <%= locals.old && locals.old.presentacion == packageRes[i].id ? 'selected' : '' %>><%= packageRes[i].cantidad %> <%= packageRes[i].unidad_medida %></option>
+                    <% } %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.presentacion) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.presentacion.msg  %></small>
+                <% } %>
             </div>
 
                 <!--fin alimentos -->
-                <div class="elementos-form" id="subCatAccesorios" style="display: none;">
+                <div class="elementos-form" id="subCatAccesorios">
                 <!-- solo mostrar si se selecciona accesorios -->
                 <label for="subCatAcc">Subcategoría:</label><br>
                     <select class="margen-ancho" id="subCatAcc" name="subCatAcc">
                         <option value=""></option>
-                        <option value="fundas">Fundas para auto</option>
-                        <option value="camas">Camas</option>
-                        <option value="correas">Correas</option>
-                        <option value="comederos">Comederos / bebederos</option>
-                        <option value="dispensers">Dispensers</option>
-                        <option value="transportadoras">Transportadoras</option>
-                        <option value="varios">Varios</option>
+                        <% for (i=0; i< subCategory.length; i++) { %>
+                            <% if (subCategory[i].id_category == 2) { %>
+                     <option value="<%= subCategory[i].id %>" <%= locals.old && locals.old.subCatAcc == subCategory[i].id ? 'selected' : '' %>><%= subCategory[i].nombre_sub_category %></option>
+                                <% } %>
+                         <% } %>
+
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.subCatAcc) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.subCatAcc.msg  %></small>
+                <% } %>
                 <!-- fin accesorios -->
                 </div>
 
@@ -105,43 +113,40 @@
                 <label for="marca">Marca:</label><br>
                     <select class="margen-ancho" id="marca" name="marca">
                         <option value=""></option>
-                        <option value="Pedigree">Pedigree</option>
-                        <option value="Royal">Royal Canin</option>
-                        <option value="Sieger">Sieger</option>
-                        <option value="Nutrique">Nutrique</option>
-                        <option value="Purina">Purina</option>
-                        <option value="Vitalcan">Vitalcan</option>
-                        <option value="Absorsol">Absorsol</option>
-                        <option value="Puppis">Puppis</option>
-                        <option value="Canine Couture">Canine Couture</option>
-                        <option value="Garritas">Garritas</option>
-                        <option value="Oasis">Oasis</option>
-                        <option value="Forte Health">Forte Health</option>
-                        <option value="Pauldip">Pauldip</option>
-                        <option value="La Tienda">La Tienda</option>
-                        <option value="Bacan">Bacan</option>
-                        <option value="Animal Pet">Animal Pet</option>
-                        <option value="Frontline">Frontline</option>
-                        <option value="Earth Rated">Earth Rated</option>
+                        <% for (let i = 0; i < brand.length; i++) { %>
+                            <option value="<%= brand[i].id %>" <%= locals.old && locals.old.marca == brand[i].id ? 'selected' : '' %>><%= brand[i].nombre_marca %></option>
+                        <% } %>
+
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.marca) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.marca.msg  %></small>
+                <% } %>
                 </div>
 
                 <div class="elementos-form">
                 <label for="edadmascota">Edad mascota:</label><br>
                     <select  class="margen-ancho" id="edadmascota" name="edadmascota">
-                        <option value="default"></option>
-                        <option value="cachorro">Cachorro</option>
-                        <option value="adulto">Adulto</option>
+                        <option value=""></option>
+                        <% for (let i = 0; i < petAge.length; i++) { %>
+                            <option value="<%= petAge[i].id %>" <%= locals.old && locals.old.edadmascota == petAge[i].id ? 'selected' : '' %>><%= petAge[i].edad %></option>
+                        <% } %>
                     </select><br>
+                    <% if (typeof errors != "undefined" && errors.edadmascota) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.edadmascota.msg  %></small>
+                    <% } %>
                 </div>
 
                 <div class="elementos-form">
                 <label for="tamaniomascota">Tamaño mascota:</label><br>
                 <select class="margen-ancho" id="tamaniomascota" name="tamaniomascota">
-                    <option value="pequeño">Pequeño</option>
-                    <option value="mediano">Mediano</option>
-                    <option value="grande">Grande</option>
+                    <option value="" selected></option>
+                        <% for (let i = 0; i < petSize.length; i++) { %>
+                            <option value="<%= petSize[i].id %>" <%= locals.old && locals.old.tamaniomascota == petSize[i].id ? 'selected' : '' %>><%= petSize[i].tamanio %></option>
+                        <% } %>
                 </select><br>
+                <% if (typeof errors != "undefined" && errors.tamaniomascota) {%>
+                    <small style="color: red; font-weight: bold;"><%= errors.tamaniomascota.msg  %></small>
+                <% } %>
                 </div>
                 
                 <div class="elementos-form-100">
@@ -152,7 +157,18 @@
 
                 <div class="elementos-form-100">
                     <label for="descripcion">Descripción:</label><br>
-                    <textarea name="descripcion" id="descripcion"></textarea><br>
+                    <input class="margen-ancho" type="text" name="descripcion" id="descripcion" value="<%= locals.old ? old.descripcion : null %>"></input><br>
+                    <% if (typeof errors != "undefined" && errors.descripcion) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.descripcion.msg  %></small>
+                    <% } %>
+                </div>
+
+                <div class="elementos-form">
+                    <label for="stock">Stock:</label><br>
+                    <input class="margen-ancho" type="number" id="stock" name="stock" value="<%= locals.old ? old.stock : null %>"><br>
+                    <% if (typeof errors != "undefined" && errors.stock) {%>
+                        <small style="color: red; font-weight: bold;"><%= errors.stock.msg  %></small>
+                    <% } %>
                 </div>
 
                 <div class="elementos-form-100">
@@ -162,7 +178,7 @@
                 
                 <div class="elementos-form-100">
                     <div id="form-buttons">  
-                        <button type="submit" >GUARDAR</button>
+                        <button type="submit" id="botonguardar">GUARDAR</button>
                         <button type="reset"> BORRAR</button>
                     </div>
                 </div>

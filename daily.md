@@ -37,3 +37,34 @@ se realizo la división de tareas correspondientes al sprint y se programó una 
 ## weekly 4 - sprint 5
 23-1-2024: realizamos merge de las ramas que se habian finalizado, validamos en el main las funciones que se habian hecho merge y ajustamos los problemas detectados.
 
+## weekly 1 - sprint 6
+01/02/24: reunión en la que analizamos los distintos puntos del sprint en profundidad para entender que se debía  hacer y como lo ibamos a organizar, identificando las tareas criticas que bloquean el avance del resto. Se armó una proyección inicial en el JIRA. 
+
+## weekly 2 - sprint 6
+06/02/24: Estuvimos trabajando en la definicion del diagrama entidad relación, validando bien los campos de las tablas en función de los json con los que estuvimos trabajando y las especificaciones del sprint actual. Se definio tambien el script para crear la base de datos.
+
+## weekly 2 - sprint 6
+08/02/24: Trabajamos en el script para poblar la base de datos y realizamos la distribucion de tareas correspondientes a implementar el sequelized cada uno en una rama para crear los 
+modelos de las tablas que se les habia asignado.
+
+## weekly 3 - sprint 6
+15/02/24: configuramos sequelized en el proyecto, definimos unos modelos e hicimos pruebas de conexión con la base para validar dichas configuraciones. Validamos los modelos realizados hasta el momento, efectuamos correcciones y mergeamos algunas ramas. 
+
+## weekly 3 - sprint 6
+16/02/23: realizamos el merge de ramas con los modelos que le toco desarrollar a cada uno formalizando la primera parte del sequelize.
+Actualizamos el JIRA con los tareas finalizadas, organizamos y distribuimos las tareas correspondientes al CRUD de productos y usuarios.
+
+## weekly 4 - sprint 6
+20-02-24: realizamos revision de los avances de cada uno respecto de las tareas asignadas y resolvimos los inconvenientes que se habian presentado en cada caso. 
+
+## weekly 4 - sprint 6
+22-02-24: revisión de los cambios que incluian pasar a un service lo que se consumia desde la home usando el mainController. 
+
+## weekly 4 - sprint 6
+23-02 : resolución de problemas al realizar el refactor del manejo de usuarios utilizando el service.  
+
+## weekly 4 - sprint 6
+24-02: hicimos merge de los cambios que tienen que ver con el controlador del main, habilitacion del campo search y cambios en el controlador de user (CRUD). 
+
+## weekly 5 - sprint 6
+26-02: hicimos merge de la rama que tiene los cambios referidos al manejo de productos (CRUD) para finalizar el sprint y actualizamos JIRA.

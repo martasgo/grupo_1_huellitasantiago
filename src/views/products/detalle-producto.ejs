@@ -11,49 +11,56 @@
         <section class="ficha-producto">
             <div id="img-precio">
                 <section id="imgProducto">
-                    <img class="imgPrincipal" src="/images/productos/<%= producto[0].imagen %>" />
+                    <img class="imgPrincipal" src="/images/productos/<%= producto.imagen %>" />
                     <div class="fotos">
-                        <img src="/images/productos/<%= producto[0].imagen %>" />
-                        <img src="/images/productos/<%= producto[0].imagen %>" />
-                        <img src="/images/productos/<%= producto[0].imagen %>" />
+                        <img src="/images/productos/<%= producto.imagen %>" />
+                        <img src="/images/productos/<%= producto.imagen %>" />
+                        <img src="/images/productos/<%= producto.imagen %>" />
                     </div>
                 </section>
                 <section id="carritoProducto">
-                    <h3 class="margin-top"><%= producto[0].nombreProducto %> </h3>
-                    <% if (producto[0].descuento != 0) {
-                        precioFinal = (producto[0].precio - ((producto[0].precio * (producto[0].descuento/100)))) %>
+                    <h3 class="margin-top"><%= producto.nombre %> </h3>
+                    <% if (producto.descuento != 0) {
+                        precioFinal = (producto.precio - ((producto.precio * (producto.descuento/100)))) %>
                         <div class="preciosOfertas">
-                            <span id="prodOff"><%= producto[0].descuento %>% OFF</span>
-                            <p class="precioAnt" id="">$<%= toThousand(producto[0].precio) %></p>
+                            <span id="prodOff"><%= producto.descuento %>% OFF</span>
+                            <p class="precioAnt" id="">$<%= toThousand(producto.precio) %></p>
                             <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
                         </div>
                     <% } else {%>
-                        <p class="precioAhora" id="">$<%= toThousand(producto[0].precio) %> </p>
+                        <p class="precioAhora" id="">$<%= toThousand(producto.precio) %> </p>
                     <% } %>
                     <div id="comprar">
                         <div> <button class="cantidad-icono">+</button> <input type="text" value="1" class="cantidad-producto"> <button class="cantidad-icono">-</button></div>
                         <div><input type="button" class="addtocart" value="Agregar al carrito" />  </div>
                     </div>
                     <p><i class="fa-solid fa-credit-card"></i> <a href="/envios">Medios de pago</a></p>
-					
-                <div class="elementos-form-100">
-                    <div id="form-buttons">  
-                        <a href="/product/editar/<%= producto[0].id %>" class=""><button type="button" class="">EDITAR</button></a>
-                        <a href="/product/delete/<%= producto[0].id %>" class=""><button type="button" class="">ELIMINAR</button></a>
-                    </div>
-                </div>        
+				
+                <% if(isLogged && locals.userLogged) { %>
+                    <%if (userLogged.categoria === "administrador") { %>  
+                    <div class="elementos-form-100">
+                        <div id="form-buttons">  
+                            <a href="/product/editar/<%= producto.id %>" class=""><button type="button" class="">EDITAR</button></a>
+                            <a href="/product/delete/<%= producto.id %>" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
+                        </div>
+                    </div> 
+                    <% } %>   
+                <% } %>    
                 </section>
             </div>
             <section id="descripcionProd">
-               
-                <h3 class="margin-top"> Descripción </h3>
                 <div class="detalleProducto">
-                    <p><span class="textNegrita">Marca:</span> <%= producto[0].marca %></p>
-                    <% edad = producto[0].edadMascota.charAt(0).toUpperCase() + producto[0].edadMascota.slice(1); 
-                    tamanio = producto[0].tamanioMascota.charAt(0).toUpperCase() + producto[0].tamanioMascota.slice(1);  %>
+                    <h3 class="margin-top subrayado"> Detalles del producto </h3>
+                    <p><span class="textNegrita">Producto para:</span> <%= producto.pets.mascota%></p>
+                    <p><span class="textNegrita">Categoria:</span> <%= producto.categories.nombre%></p>
+                    <p><span class="textNegrita">Sub-Categoria:</span> <% if (producto.sub_categories) { %> <%= producto.sub_categories.nombre_sub_category %> <% } else {%> <%= 'No posee' %> <% }%></p>
+                    <p><span class="textNegrita">Marca:</span> <%= producto.brands.nombre_marca %></p>
+                    <% edad = producto.pets_ages.edad.charAt(0).toUpperCase() + producto.pets_ages.edad.slice(1); 
+                    tamanio = producto.pets_sizes.tamanio.charAt(0).toUpperCase() + producto.pets_sizes.tamanio.slice(1);  %>
                     <p><span class="textNegrita">Edad mascota:</span> <%= edad %> </p>
                     <p><span class="textNegrita">Tamaño mascota:</span> <%= tamanio %> </p>
-                    <p class="textDescripcion"><%= producto[0].descripcion %></p>
+                    <h3 class="margin-top subrayado"> Descripción </h3>
+                    <p class="textDescripcion"><%= producto.descripcion %></p>
                 </div>
                 
     
@@ -66,9 +73,9 @@
                 <article>
                     <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
                     <div class="detalle">
-                        <p id=""><%= productsDestacado[i].nombreProducto %></p>
-                            <% if (productsDestacado[i].descuento != 0) {
-                                precioFinal = (productsDestacado[i].precio + ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+                        <p id=""><%= productsDestacado[i].nombre %></p>
+                            <% if (productsDestacado[i].descuento != 0) { %>
+                               <% precioFinal = (productsDestacado[i].precio - ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
                                 <div class="preciosOfertas">
                                     <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
                                     <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
@@ -91,6 +98,8 @@
 
     <!-- include footer -->
     <%- include('../partials/footer') %>
+
+    <script src="/js/detalle-producto.js"></script>
 </body>
 
 </html>

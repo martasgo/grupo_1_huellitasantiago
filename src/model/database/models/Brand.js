@@ -1,4 +1,4 @@
-module.exports = (sequelize, dataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     let alias = 'Brand';
     let cols = {    
         id: {
@@ -8,7 +8,7 @@ module.exports = (sequelize, dataTypes) => {
             allowNull: false
         },       
         nombre_marca: {
-            type: dataTypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         }
     };

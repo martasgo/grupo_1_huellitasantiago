@@ -7,6 +7,42 @@
     padding: 10px
 }
 
+.botones{
+    margin: 10px;
+    background-color: #6dbd9bff;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px black solid;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.btnlimpiar:hover{
+    background-color: lightgrey;
+}
+
+.btnlimpiar{
+    background-color: #fbdd5bff;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px black solid;
+    font-size: 13px;
+    font-weight: bold;
+    width: 60%;
+    margin-top: 7px;
+}
+
+#searchButtons{
+    display: flex;
+    flex-direction: column;
+}
+
+.botones:hover{
+    background-color: #fbdd5bff;
+}
+ 
+
 @media (min-width: 361px){
 
 }
@@ -80,7 +116,7 @@
     #filtros{
         background-color: #fbdd5bff;
         text-align: center;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     #search-precio{

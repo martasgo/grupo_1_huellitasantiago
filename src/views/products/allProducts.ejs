@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- include head -->
+<%- include('../partials/head') %>
+
+<body>
+    <!-- include header -->
+    <%- include('../partials/header') %>
+   
+    <main>
+        <p class="rutahome">
+            <a href="/user/profile">Perfil</a> / Listado completo de productos
+        </p>
+        <section>
+            <h2>LISTADO COMPLETO DE PRODUCTOS</h2>   
+            
+                <% allProducts.forEach(product => { %>
+                    <div class="product">
+                        <a href="/product/detalle/<%=product.id%>"> <%= product.nombre %> </a>
+                        <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
+                    </div>  
+                <% }); %>
+
+                <!-- Paginación -->
+                <%- include('../partials/paginacion') %>
+
+        </section>
+
+        <!-- include marcas -->
+        <%- include('../partials/marcas') %>
+    </main>
+     <!-- include footer -->
+     <%- include('../partials/footer') %>
+
+    <script src="/js/allProducts.js"></script> 
+</body>
+
+</html>

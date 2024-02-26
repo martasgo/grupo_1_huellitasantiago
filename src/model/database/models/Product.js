@@ -1,68 +1,68 @@
-module.exports = (sequelize, dataTypes) => {
+module.exports = (sequelize, DataTypes) => {
 
     let alias = 'Product';
 
     let cols = {
         id: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
         },
         nombre: {
-            type: dataTypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         },
         descripcion: {
-            type: dataTypes.TEXT,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         precio: {
-            type: dataTypes.DECIMAL(7,2),
+            type: DataTypes.DECIMAL(7,2),
             allowNull: false
         },
         descuento: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: true
         },
         id_mascota: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         imagen: {
-            type: dataTypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         },
         id_marca: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         id_edad_mascota: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         id_tamanio_mascota: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         destacado: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         id_categoria: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         id_sub_categoria: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: true
         },
         id_presentacion: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: true
         },
         stock: {
-            type: dataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         }
     };
