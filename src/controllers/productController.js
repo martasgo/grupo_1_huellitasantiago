@@ -33,11 +33,11 @@ const prodController = {
     list: async (req, res) => {
       try {
           const page = parseInt(req.query.page) || 1;
-          const allProducts = await productService.getAllByGroup(page);
+          const allProducts = await productService.getAllByGroup(page, 5);
   
           // Obtener el número total de productos para calcular el número total de páginas
           const totalProducts = await db.Product.count();
-          const totalPages = Math.ceil(totalProducts / 7); // Uso la misma cantidad de pagesize usada en el servicio
+          const totalPages = Math.ceil(totalProducts / 5); // Uso la misma cantidad de pagesize usada en el servicio
   
           return res.render('../views/products/allProducts.ejs', {
               title: 'Listado completo de productos',
