@@ -37,7 +37,7 @@
                     <p><i class="fa-solid fa-credit-card"></i> <a href="/envios">Medios de pago</a></p>
 				
                 <% if(isLogged && locals.userLogged) { %>
-                    <%if (userLogged.categoria === "administrador") { %>  
+                    <%if (userLogged.id_categoria === 1) { %>  
                     <div class="elementos-form-100">
                         <div id="form-buttons">  
                             <a href="/product/editar/<%= producto.id %>" class=""><button type="button" class="">EDITAR</button></a>
