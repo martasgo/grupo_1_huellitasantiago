@@ -169,10 +169,7 @@ const productService = {
         let query = {
             where: {}
           };
-          console.log('datos mascotas y cat');
-          console.log(valorMascota)
-          console.log(valorCat)
-          console.log(valorSubCat)
+          
         if (valorMascota){
             query.where.id_mascota = {[Op.or]: valorMascota } 
         }
@@ -186,21 +183,21 @@ const productService = {
         }
         
         if (filtros.marca) {
-            if (filtros.marca.length > 1){ 
+            if (Array.isArray(filtros.marca)){ 
                 query.where.id_marca = {[Op.or]: filtros.marca } 
             } else {
                 query.where.id_marca = filtros.marca 
             } 
         }
         if (filtros.edad) {
-            if (filtros.edad.length > 1){ 
+            if (Array.isArray(filtros.edad)){ 
                 query.where.id_edad_mascota = {[Op.or]: filtros.edad } 
             }else{
                 query.where.id_edad_mascota = filtros.edad
             }
         }
         if (filtros.tamanio){
-            if (filtros.tamanio.length > 1){ 
+            if (Array.isArray(filtros.tamanio)){ 
                 query.where.id_tamanio_mascota = {[Op.or]: filtros.tamanio } 
             } else {
                 query.where.id_tamanio_mascota = filtros.tamanio
@@ -208,6 +205,7 @@ const productService = {
         } 
         if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
             query.where.precio = {
+                //sequelize.literal('precio > (precio - (precio * (descuento / 100)))'), // Calculamos el precio con descuento
                 [Op.gte]: parseInt(filtros.precioDesde),
                 [Op.lte]: parseInt(filtros.precioHasta)
             } 
