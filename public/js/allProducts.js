@@ -3,7 +3,7 @@
 let main = document.querySelector('main');
 let section = document.querySelector('section');
 let divProduct = document.querySelectorAll('div.product');
-let aElements = document.querySelectorAll('a');
+let aElements = document.querySelectorAll('.pagination a');
 
 // Modificación de los estilos del main
 main.style.textAlign = 'center';
