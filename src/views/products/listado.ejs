@@ -3,6 +3,7 @@
 <!-- include head -->
 
 <%- include('../partials/head') %>
+
     <body>
         <!-- include header -->
         <%- include('../partials/header') %>
@@ -14,10 +15,10 @@
                         <% if (subCategoria) { %>
                             <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
                             <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
-                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <a href="/product/<%= mascota %>/<%= categoriaUp%>"> <%= categoriaUp %></a> / <%= subCategoriaUp %> 
+                            <a id="categoryItem" href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <a id="subCategoryItem" href="/product/<%= mascota %>/<%= categoriaUp%>"> <%= categoriaUp %></a> / <%= subCategoriaUp %> 
                         <% } else { %> 
                             <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
-                            <a href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <%= categoriaUp %> 
+                            <a id="categoryItem" href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <%= categoriaUp %> 
                         <% } %>
                     <%}else {%>
                         <%= mascotaUp %>
