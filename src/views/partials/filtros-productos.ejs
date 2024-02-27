@@ -29,7 +29,7 @@
             <ul>
                 <% for (i=0; i< categorias.length; i++){ %>
                 <% valorLink = categorias[i].nombre.replace(/\s+/g, '-') %>
-                    <li><a href="/product/<%= mascota %>/<%= valorLink %>"><%=  categorias[i].nombre  %></a> </li>          
+                    <li id="categoryItem"><a href="/product/<%= mascota %>/<%= valorLink %>"><%=  categorias[i].nombre  %></a> </li>          
                 <% } %>
             </ul>
         <% }%>
@@ -40,7 +40,7 @@
             <% for (i=0; i< subCat.length; i++) { %>
                 <% if (subCat[i].id_category == 1) { %>
                     <%  valor = subCat[i].nombre_sub_category.replace(/\s+/g, '-') %>
-                        <li><a href="/product/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
+                        <li id="subCategoryItem"><a href="/product/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
                     <% } %>
              <% } %>
         </div>
