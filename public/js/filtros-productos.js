@@ -1,17 +1,10 @@
 window.onload = function(){
     const formulario = document.getElementById('searchProdMobile');
     const select = document.getElementById('categoryList');
+    const allCategories = document.querySelectorAll('#categoryItem');
+    const allSubCategories = document.querySelectorAll('#subCategoryItem');
 
-    // Escuchar cambios en el select
-    select.addEventListener('change', () => {
-        // Obtener el valor seleccionado del select
-        const valorSelect = select.value;
-
-        // Completar el action del formulario con el valor seleccionado
-        formulario.action = valorSelect;
-    });
-
-    // referencio todos los checkbox
+   // referencio todos los checkbox
     const checkboxes = document.querySelectorAll('.marca-checkbox');
     const edadboxes = document.querySelectorAll('.edad-checkbox');
     const sizeboxes = document.querySelectorAll('.size-checkbox');
@@ -23,6 +16,61 @@ window.onload = function(){
     let precioHasta = document.querySelector('#precioHasta');
     let limpiar = document.querySelector('#btnlimpiar');
     let filtrar = document.querySelector('#btnfiltrar');
+
+     // Escuchar cambios en el select
+     select.addEventListener('change', () => {
+        // Obtener el valor seleccionado del select
+        const valorSelect = select.value;
+
+        // Completar el action del formulario con el valor seleccionado
+        formulario.action = valorSelect;
+    });
+
+    //evento para categorias
+    allCategories.forEach(cat => {
+        cat.addEventListener('click', function() {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                localStorage.removeItem(checkbox.id);
+            })
+            edadboxes.forEach(age => {
+                age.checked = false;
+                localStorage.removeItem(age.id);
+            })
+            sizeboxes.forEach(size => {
+                size.checked = false;
+                localStorage.removeItem(size.id);
+            })
+            precioDesde.value='',
+            localStorage.removeItem(precioDesde.id);
+            precioHasta.value=''
+            localStorage.removeItem(precioHasta.id);
+            sectionFilters.textContent = '';
+        })
+    });
+
+    //evento para subCategorias
+    allSubCategories.forEach(subcat => {
+        subcat.addEventListener('click', function() {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                localStorage.removeItem(checkbox.id);
+            })
+            edadboxes.forEach(age => {
+                age.checked = false;
+                localStorage.removeItem(age.id);
+            })
+            sizeboxes.forEach(size => {
+                size.checked = false;
+                localStorage.removeItem(size.id);
+            })
+            precioDesde.value='',
+            localStorage.removeItem(precioDesde.id);
+            precioHasta.value=''
+            localStorage.removeItem(precioHasta.id);
+            sectionFilters.textContent = '';
+        })
+    });
 
     //LIMPIAR FILTROS
     limpiar.addEventListener('click', function(e){
@@ -40,7 +88,7 @@ window.onload = function(){
         })
         precioDesde.value='',
         localStorage.removeItem(precioDesde.id);
-        precioDesde.value=''
+        precioHasta.value=''
         localStorage.removeItem(precioHasta.id);
         sectionFilters.textContent = '';
     })
@@ -48,13 +96,12 @@ window.onload = function(){
     // EVENTO AL HACER CLICK EN FILTRAR
     filtrar.addEventListener('click', function(e){
         if (precioDesde.value !== '' && precioHasta.value !== ''){
-            if(precioDesde.value > precioHasta.value) {
+            if(parseInt(precioDesde.value) > parserInt(precioHasta.value)) {
                 e.preventDefault()
-                alert('El valor del precio en el campo Desde debe ser menor al valor del campo Hasta')
-            }
-            if(precioHasta.value < precioDesde.value) {
-                e.preventDefault()
-                alert('El valor del precio en el campo Hasta debe ser mayor al valor del campo Desde')
+                alert('El valor del precio en el campo Desde debe ser menor al valor del campo Hasta'),
+                localStorage.removeItem(precioDesde.id);
+                precioDesde.value = '';
+                window.location.reload();
             }
         }
     })
@@ -91,7 +138,7 @@ window.onload = function(){
     });
     // Verificar si el si se habia cargado un valor de precio antes
     if (localStorage.getItem(precioHasta.id)) {
-        const descripcion = 'Desde:' + localStorage.getItem(precioHasta.id);
+        const descripcion = 'Hasta:' + localStorage.getItem(precioHasta.id);
         sectionFilters.textContent =  sectionFilters.textContent + descripcion+', ';
         precioHasta.value = localStorage.getItem(precioHasta.id);
     }  
