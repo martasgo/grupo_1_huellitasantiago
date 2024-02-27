@@ -227,15 +227,15 @@ const prodController = {
     //Controlador para guardar en la DB el producto editado (POST)
     updateProdController: async (req, res) => {
       //Validacion de errores en el formulario de creacion de producto
-      let errors = validationResult(req);  
+      let errors = validationResult(req);
+      let idProd = parseInt(req.params.id);
+      let producto = await productService.getByPk(idProd); 
       if (! errors.isEmpty()) {
         // En caso de errores, verificamos si hay una imagen subida, para
         // eliminarla
         if (req.file) {
           productService.deleteImagen(req.file.filename);
         };
-        let idProd = parseInt(req.params.id);
-        let producto = await productService.getByPk(idProd);
         let brandList = await brandService.getAll();
         let petList = await petService.getAll();
         let petAgeList = await petAgeService.getAll();
@@ -264,7 +264,7 @@ const prodController = {
           let idProd = parseInt(req.params.id);
           
           // Defino la variable que recibe la imagen del formulario
-          const image = req.file ? req.file.filename : "default-image.png";
+          const image = req.file ? req.file.filename : producto.imagen;
   
           // Defino la variable que evalúa si es un producto destacado
           const esDestacado = (req.body.destacado === "true") ? 1 : 0;
@@ -319,7 +319,7 @@ const prodController = {
   
           // Incorporo a la DB el producto editado y redirecciono a product
           await productService.updateById(modifiedProduct, idProd);
-          return res.redirect('/product');
+          return res.redirect('/user/profile');
         }
         catch (error) {
           console.log(error);
@@ -328,34 +328,24 @@ const prodController = {
       }
     },
     //filtros procesamiento
-    filtersApplied: async (req, res) => {
-      console.log (req.body)
-      console.log('valores')
-      //console.log(mascota)
-            
+    filtersApplied: async (req, res) => {       
       idCategory ='';
       idSubCategory ='';
       if (req.params.idMascota) {
-        console.log('llega')
          mascota = req.params.idMascota
-         idPetList = await petService.getByMascota(mascota);
-         console.log(idPetList);
+         idPetList = await petService.getByMascota(mascota)
          indices = idPetList.map(({ id }) => id);
       }
       
       if (req.params.idCat) {
          categoria = req.params.idCat.replace(/-/g, ' ');
          idCategory = await prodCategoryService.getByField(categoria);
-         console.log(idCategory)
       }
       
       if (req.params.idSubCat) {
          subCategoria = req.params.idSubCat.replace(/-/g, ' ')
          id = idCategory.id;
-         console.log('el id de la cat')
-         console.log(id)
          idSubCategory = await subCategoryService.getByField(subCategoria, idCategory.id)
-         console.log(idSubCategory)
       }
       
       let brand = await brandService.getAll();
@@ -366,8 +356,6 @@ const prodController = {
 
       productService.getAllByFileters(req.body, indices, idCategory, idSubCategory)
       .then((productsMascotas)=>{
-        res.location('/product');
-        console.log(res.get('location'));
          res.render('../views/products/listado.ejs', {
           title: 'Listado Productos',
           productsMascotas,
@@ -394,7 +382,7 @@ const prodController = {
       let idProduct = parseInt(req.params.id);
       try {
           await productService.destroyById(idProduct);
-          res.redirect('/product');
+          return res.redirect('/user/profile');
         }
       catch (error) {
           console.log(error);
