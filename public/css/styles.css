@@ -428,6 +428,10 @@ table{
 #carritoProducto a{
   color: black;
 }
+.msjError{
+  color: red; 
+  font-weight: bold
+}
 /* fin */
 
 /* CLASES FOOTER*/
