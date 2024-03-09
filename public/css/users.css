@@ -6,6 +6,10 @@
     margin: 0 5px;
 }
 
+.is-valid{
+    border: 1px solid black;
+    }
+
 .is-invalid{
     border: 2px solid red;
 }

@@ -2,6 +2,7 @@
 <html lang="en">
 <!-- include head -->
 <%- include("../partials/head.ejs") %>
+<script src="/js/loginUser.js"></script>
 
 <body>
     <!-- include header -->
@@ -10,34 +11,36 @@
     <main class="mainlogin">
         <p class="rutahome"><a href="/">Home</a> / login</p>
 
-            <form action="/user/login" method="POST">
+            <form id="formulario-login" action="/user/login" method="POST">
 
                 <% if (locals.authError) {%>
-                    <p style="color:red"> 
+                    <p class="msjError"> 
                         Para acceder a la página solicitada primero debes loguearte 
                     </p>
                 <% } %>
 
                 <label for="email">Email</label> 
-                <input type="email" name="email" id="email">
-
-                <% if (typeof errors != "undefined") {%>
-                    <% for (let i=0 ; i < errors.length ; i++) {%>
-                        <p style="color:red"> <%= errors[i].msg  %> </p>
-                    <% } %>
-                <% } %>
+                <input type="email" name="email" id="email" value="<%= locals.old ? old.email : null %>">
+                <small id="error-email" class="msjError"></small>
+                
 
                 <% if (typeof errors != "undefined" && errors.email) {%>
-                    <p style="color:red"> <%= errors.email.msg  %> </p>
+                    <p class="msjError"> <%= errors.email.msg  %> </p>
                 <% } %>
 
                 <br>
                 <br>
                 <label for="contraseña">Contraseña</label> 
                 <input type="password" name="contraseña" id="contraseña">
+                <small id="error-contraseña" class="msjError"></small>
+
+                <% if (typeof errors != "undefined" && errors.contraseña) {%>
+                    
+                    <p><%=errors.contraseña.msg  %></p>
+                <% } %>
 
                 <% if (typeof errors != "undefined" && errors.contrasenia) {%>
-                    <p style="color:red"> <%= errors.contrasenia.msg  %> </p>
+                    <p class="msjError"> <%= errors.contrasenia.msg  %> </p>
                 <% } %>
 
                 <p class="olvidasteclave"><a href="#">¿Olvidaste tu contraseña?</a></p>
@@ -60,6 +63,7 @@
 
     <!-- include footer -->
     <%- include('../partials/footer') %>
+    
 </body>
 
 </html>
