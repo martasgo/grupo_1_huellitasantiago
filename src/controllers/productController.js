@@ -172,15 +172,7 @@ const prodController = {
         id_presentacion: presentacionFinal,
         stock: parseInt(req.body.stock)
       };    
-           
-      /* podemos mandar a la pagina de detalle del producto para validar la carga tambien
-      dejo ejemplo de otra opcion como probar*/
-      //res.redirect(`/movies/${req.params.id}/detail`))
-      //res.status(201).json(new CreateResponse(productoNuevo.id, `${req.protocol}://${req.get('host')}${req.originalUrl}/${productoNuevo.id}`))
-          /* res.render ('../views/mascotas.ejs', {
-            title: 'Mascotas'
-          }); */
-        
+            
         productService.add(newProduct)
         .then((prodAdded) => {
           let idProd = prodAdded.id
