@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- include head -->
+<%- include("../partials/head.ejs") %>
+
+<body>
+    <!-- include header -->
+    <%- include('../partials/header') %>
+
+    <h2>Compras de <%= user.nombre %> <%= user.apellido %></h2>
+
+    <% comprasUser.forEach(compra => { %>
+        <div class="comprasUser">
+            <p><strong>Fecha de compra: </strong><%= compra.fecha %></p>
+            <p><strong>Cantidad de productos: </strong><%= compra.cantidad_productos %></p>
+            <p><strong>Monto total de la compra: </strong>$ <%= compra.monto_total %></p>
+            <p><strong>Detalle de productos</strong></p>
+            <% orderedProducts.forEach(product => { %>
+                <% if (compra.id == product.id_shopping_cart) { %>
+                    <div class="detalleProductoCompra">
+                        <p>Nombre: <%= product.nombre %></p>
+                        <p>Precio: <%= product.precio %></p>
+                        <p>Cantidad: <%= product.cantidad %></p>
+                        <p>Descuento: <%= product.descuento %></p>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+    <% }); %>
+
+    <!-- include footer -->
+    <%- include('../partials/footer') %>
+</body>
+
+</html>
