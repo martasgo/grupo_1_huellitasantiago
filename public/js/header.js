@@ -140,7 +140,7 @@ window.addEventListener('load', () => {
     function totalCarrito (products) {
         return products.reduce(
             (acum, product) => {
-                return (acum += Number(product.precio) * Number(product.cantidad))
+                return (acum += (Number(product.precio * (1 - (product.descuento/100))) * Number(product.cantidad)))
         }, 0)
     };
 
@@ -167,8 +167,9 @@ window.addEventListener('load', () => {
                             <td><img src="images/productos/${product.imagen}" style="width: 70px; height: 70px;"/></td>
                             <td colspan='3'>${product.nombre}</td>
                             <td>$ ${product.precio}</td>
+                            <td>${product.descuento} %</td>
                             <td>${item.cantidad}</td>
-                            <td>$ ${parseFloat(product.precio * item.cantidad, 2).toFixed(2)}</td>
+                            <td>$ ${parseFloat((product.precio * (1 - (product.descuento/100))) * item.cantidad, 2).toFixed(2)}</td>
                             <td><button class="sumarencarrito" data-id="${product.id}"><i class="fa-solid fa-plus"></i></button> <button class="restarencarrito" data-id="${product.id}"><i class="fa-solid fa-minus"></i></button> <button class="eliminardelcarrito" data-id="${product.id}"><i class="fa-solid fa-trash-can"></i></button></td>
                         </tr>
                         `;
@@ -282,17 +283,16 @@ window.addEventListener('load', () => {
             const row = sumarButton.closest('tr');
     
             if (row) {
-                const cantidadElement = row.querySelector('td:nth-child(4)');
+                const cantidadElement = row.querySelector('td:nth-child(5)');
                 const product = products.find(product => product.id_product == productId);
                 if (parseInt(cantidadElement.innerText) < parseInt(product.stock)) {
                     // Incrementa la cantidad en la fila
                     cantidadElement.innerText = parseInt(cantidadElement.innerText) + 1;
         
                     // Actualiza el total de esa fila
-                    const totalElement = row.querySelector('td:nth-child(5)');
-                    // const product = products.find(product => product.id_product == productId);
+                    const totalElement = row.querySelector('td:nth-child(6)');
                     product.cantidad = Number(product.cantidad) + 1;
-                    totalElement.innerText = `$ ${parseFloat(Number(product.precio) * Number(product.cantidad), 2).toFixed(2)}`;
+                    totalElement.innerText = `$ ${parseFloat(Number(product.precio * (1 - (product.descuento/100))) * Number(product.cantidad), 2).toFixed(2)}`;
         
                     // Actualiza el subtotal final
                     document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
@@ -336,7 +336,7 @@ window.addEventListener('load', () => {
 
             if (row) {
                 // Obtén la cantidad actual en la fila
-                const cantidadElement = row.querySelector('td:nth-child(4)');
+                const cantidadElement = row.querySelector('td:nth-child(5)');
                 let cantidadActual = parseInt(cantidadElement.innerText);
 
                 // Verifica si la cantidad es mayor a 1 antes de restar
@@ -346,10 +346,10 @@ window.addEventListener('load', () => {
                     cantidadElement.innerText = cantidadActual;
 
                     // Actualiza el total de esa fila
-                    const totalElement = row.querySelector('td:nth-child(5)');
+                    const totalElement = row.querySelector('td:nth-child(6)');
                     const product = products.find(product => product.id_product == productId);
                     product.cantidad = Number(product.cantidad) - 1;
-                    totalElement.innerText = `$ ${parseFloat(Number(product.precio) * Number(product.cantidad), 2).toFixed(2)}`;
+                    totalElement.innerText = `$ ${parseFloat(Number(product.precio * (1 - (product.descuento/100))) * Number(product.cantidad), 2).toFixed(2)}`;
 
                     // Actualiza el subtotal final
                     document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
