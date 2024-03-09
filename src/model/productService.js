@@ -256,7 +256,20 @@ const productService = {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
         }
-    }
+    },
+
+    // Service para actualizar el stock de un producto luego de una compra
+    stockUpdate: async (nuevoStock, productId) => {
+        try {
+            return await db.Product.update(
+                {stock: nuevoStock},
+                {where:{id: productId}}
+            )
+        } catch (error) {
+            console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
+        }
+    },
 };
 
 module.exports = productService;
