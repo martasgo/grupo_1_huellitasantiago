@@ -31,9 +31,12 @@
                         <p class="precioAhora" id="">$<%= toThousand(producto.precio) %> </p>
                     <% } %>
                     <div id="comprar">
-                        <div> <button class="cantidad-icono">+</button> <input type="text" value="1" class="cantidad-producto"> <button class="cantidad-icono">-</button></div>
-                        <div><input type="button" class="addtocart" value="Agregar al carrito" />  </div>
-                    </div>
+                        <div> <button class="cantidad-icono" id="botonsumar">+</button> <input type="number" value="" class="cantidad-producto" id="cantidadproducto" name="cantidadproducto" placeholder='0'> <button class="cantidad-icono" id="botonrestar">-</button></div>
+                        <div>
+                            <button class="addtocart" data-id="<%= producto.id%>">
+                                Agregar al carrito
+                            </button>
+                        </div>
                     <p><i class="fa-solid fa-credit-card"></i> <a href="/envios">Medios de pago</a></p>
 				
                 <% if(isLogged && locals.userLogged) { %>
