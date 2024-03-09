@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         descuento: {
             type: DataTypes.INTEGER,
             allowNull: true,
+        },
+        nombre: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     }
     let config = {
