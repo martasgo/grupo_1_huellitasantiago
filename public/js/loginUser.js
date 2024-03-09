@@ -31,6 +31,8 @@ window.addEventListener("load", function () {
     if (passwordInput.value == "") {
       document.querySelector("#error-contraseña").innerText =
         "El campo contraseña no puede quedar vacio";
+    } else {
+      document.querySelector("#error-contraseña").innerText = ""
     }
   });
 });

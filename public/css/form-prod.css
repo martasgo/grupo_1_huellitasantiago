@@ -2,6 +2,7 @@
     width: 90%;
     margin: auto;
     margin-bottom: 30px;
+    flex-direction: column;
 }
 
 #title-alta{
@@ -31,7 +32,7 @@
 
 #form-alta-prod{
     background-color:#EEEEEE;
-    padding: 20px;
+    padding: 5px 20px 20px 20px;
     border-radius: 10px;
 }
 
@@ -46,7 +47,6 @@
 }
 
 .margen-ancho {
-    margin-bottom: 15px;
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -60,6 +60,7 @@
 
 #box-destacado{
     display: flex;
+    margin: 15px 0px;
 }
 
 #imagenes{
@@ -71,6 +72,23 @@
 
 .actualImg{
     width: 20%;
+}
+
+#form-alta-prod .elementos-form{
+  margin-top: 20px;
+}
+
+.alert-warning{
+    color: red;
+    font-size: 13px;
+}
+
+.is-invalid{
+    border: 2px solid red;
+}
+
+.is-valid{
+    border: 2px solid black;
 }
 
 @media (min-width: 768px){
