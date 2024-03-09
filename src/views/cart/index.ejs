@@ -17,8 +17,9 @@
               <th scope="col">IMAGEN</th>
               <th scope="col" colspan="3">PRODUCTO</th>
               <th scope="col">PRECIO</th>
+              <th scope="col">DESCUENTO</th>
               <th scope="col">CANTIDAD</th>
-              <th scope="col">TOTAL</th>
+              <th scope="col">TOTAL CON DESCUENTO</th>
               <th scope="col">ACCIONES</th>
             </tr>
           </tbody>
@@ -40,14 +41,8 @@
              </div>
 
             <div class="resumen-compra">      
-                <div class="descuento">        
-                  <input type="text" name="cod-descuento" id="cod-descuento" placeholder="código de descuento"/>
-                  <a href="#"><input type="button" name="aplicar-cod" id="aplicar-cod" value="APLICAR"/></a> 
-                </div>
                 <div class="detalle-compra">
-                  <p>SUBTOTAL (sin envío): $ <span id="subtotalfinal"></span></p>
-                  <p id="cupondescuento">DESCUENTO: </p>                  
-                  <p id="totalfinal">TOTAL (sin envío): </p>
+                  <p>TOTAL SIN ENVÍO: $ <span id="subtotalfinal"></span></p>
                 </div>
                 <div class="center"><!--Botones Inicio compra-->
                   <button type="button" id="inicio-compra">Iniciar Compra</button>
