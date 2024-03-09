@@ -31,6 +31,7 @@ const routesUser = {
     registerRoute: "/register",
 	editRegister: "/editUser/:idUser",
     profileRoute: "/profile",
+	comprasRoute: "/compras/:id",
 	listUsersRoute: "/usersList",
     logoutRoute: "/logout",
     deleteRoute: "/delete/:id"
@@ -42,6 +43,8 @@ routerUsers.post(routesUser.loginRoute , loginValidations , userController.login
 routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profileController);
 
 routerUsers.get(routesUser.logoutRoute, userController.logoutController);
+
+routerUsers.get(routesUser.comprasRoute, authMiddleware, userController.compras);
 
 routerUsers.get(routesUser.deleteRoute,authMiddleware, userController.deleteController);
 routerUsers.delete(routesUser.deleteRoute,authMiddleware, userController.destroyController);
