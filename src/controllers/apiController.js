@@ -51,6 +51,20 @@ const apiController = {
 
             /* COMPRUEBO CON UN JSON LA INFORMACIÓN QUE VIENE POR POST */
             res.json({ success: true, message: 'Compra realizada con éxito', orderFromUser, orderForDB });
+
+            /* ACTUALIZAMOS EL STOCK DE LOS PRODUCTOS COMPRADOS */
+            const updateStockPromises = [];
+
+            for (const product of productsList) {
+                let prodId = product.id_product;
+                let cantidad = product.cantidad;
+                let productToUpdate = await productService.getByPk(prodId);
+                let oldStock = productToUpdate.stock;
+                let newStock = parseInt(oldStock) - parseInt(cantidad);
+                updateStockPromises.push(productService.stockUpdate(newStock, prodId));
+            };
+            
+            await Promise.all(updateStockPromises);
             
         } catch (error) {
             console.error(error);
