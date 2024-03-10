@@ -243,7 +243,8 @@ article img {
 .detalle-producto{
   justify-content: space-between;    
   flex-direction: column;
-  display: flex;
+  /*display: flex;*/
+  display: none;
 }
 
 p#nombre-producto{
