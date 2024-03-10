@@ -42,8 +42,7 @@ const apiController = {
                     id_product: product.id_product,
                     precio: product.precio,
                     cantidad: product.cantidad,
-                    descuento: product.descuento,
-                    nombre: product.nombre
+                    descuento: product.descuento
                 };
 
                 return cartProductService.create(orderDetail)
