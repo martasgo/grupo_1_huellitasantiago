@@ -16,7 +16,8 @@ const cartProductService = {
             return await db.CartProduct.findAll({
                 where: {
                     id_shopping_cart: cartID
-                }
+                },
+                include: ["product"]
             });
         } catch (error) {
             console.log(error);
