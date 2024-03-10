@@ -151,7 +151,6 @@ i {
     justify-content: space-around;
     flex-wrap: wrap;
     width: 90%;
-    /* margin: auto;*/
     margin: 0 5%;
     padding-top: 20px;
 }
@@ -429,6 +428,12 @@ table{
 #carritoProducto a{
   color: black;
 }
+
+.msjError{
+  color: red; 
+  font-weight: bold
+}
+
 /* fin */
 
 /* CLASES FOOTER*/

@@ -30,7 +30,9 @@ const userController = {
       if (!errors.isEmpty()) {
         res.render("../views/users/login.ejs", {
           title: "Login",
-          errors: errors.array(),
+          /* errors: errors.array(), */
+          errors:errors.mapped(),
+          old:req.body
         });
       } else {
         let userToLogin = await userService.getByField(req.body.email);
@@ -48,15 +50,18 @@ const userController = {
           }
           return res.render("../views/users/login.ejs", {
             title: "Login",
+            old:req.body,
             errors: {
               contrasenia: {
                 msg: "Credenciales inválidas",
+                
               },
             },
           });
         }
         return res.render("../views/users/login.ejs", {
           title: "Login",
+          old:req.body,
           errors: {
             email: {
               msg: "Este email no se encuentra registrado",
