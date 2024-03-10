@@ -33,6 +33,7 @@ const routesUser = {
     profileRoute: "/profile",
 	comprasRoute: "/compras/:id",
 	listUsersRoute: "/usersList",
+	salesAdminRoute: "/salesList",
     logoutRoute: "/logout",
     deleteRoute: "/delete/:id"
 };
@@ -54,6 +55,8 @@ routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.regist
 routerUsers.post(routesUser.registerRoute, upload.single("foto"), registerValidations, userController.addRegisterController);
  
 routerUsers.get(routesUser.listUsersRoute, authMiddleware, adminMiddleware, userController.listUsersController);
+
+routerUsers.get(routesUser.salesAdminRoute, authMiddleware, adminMiddleware, userController.salesListController);
 
 //editar y guardar registro de usuario, YA Registrado!-Sole
 routerUsers.get(routesUser.editRegister,authMiddleware, userController.editController);
