@@ -1,7 +1,21 @@
 const db = require('./database/models');
 const Op = db.Sequelize.Op;
+const sequelize = require("sequelize");
 
 const shoppingCartService = {
+    getAll:async function () {
+        try {
+            return await db.ShoppingCart.findAll({
+                include: ["cartProduct", "users"],
+                order: [
+                    ['fecha', 'DESC']
+                ]
+            });
+        } catch (error) {
+            console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
+        }
+    },
     // Método para agregar en la DB una orden de compra de un usuario
     create: async function (orderForDB) {
         try {
@@ -13,10 +27,8 @@ const shoppingCartService = {
     },
     getByPk: async function (id) {
         try {
-            return await db.ShoppingCart.findByPk({
-                where: {
-                    id: id
-                }
+            return await db.ShoppingCart.findByPk(id,{
+                include: ["cartProduct"]
             });
         } catch (error) {
             console.log(error);
@@ -28,9 +40,11 @@ const shoppingCartService = {
             return await db.ShoppingCart.findAll({
                 where: {
                     id_cliente: userId
-                }
-            },{
-                include: ["cartProduct"]
+                },
+                include: ["cartProduct"],
+                order: [
+                    ['fecha', 'DESC']
+                ]
             });
         } catch (error) {
             console.log(error);
