@@ -43,7 +43,7 @@
                             <% } else {%>
                                 <p class="precioAhora" id="">$<%= productsDestacado[i].precio %> </p>
                             <% } %>
-                        <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                        <a href="/product/detalle/<%= productsDestacado[i].id %>"><input type="button" value="Comprar" id="btn-comprar"/></a>
                     </div>
                 </article>    
             <%  } %>
