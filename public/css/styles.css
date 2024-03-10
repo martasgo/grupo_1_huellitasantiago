@@ -501,34 +501,6 @@ table{
   text-align: center;
 }
 
-/* CSS CART */
-
-.detalle-total {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  flex-direction: column;
-  padding: 20px 20px;
-}
-
-.comprasUser {
-  margin: 15px;
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: gainsboro;
-}
-
-.detalleProductoCompra {
-  width: 30%;
-  margin: 15px;
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: #fbdd5bff;
-}
-  
-/* FIN CSS CART*/
 /* Estilos para el main menu usuario mobile */
 
 .cabezausuario {
@@ -575,11 +547,12 @@ table{
 }
 
 
-.perfil a, .opciones a, .actividad .historial a, .configuracion a, .config a, .sesiones a, .sesion a{
+.perfil a, .opciones a, .actividad .historial a, .configuracion a, .config a, .sesiones a, .sesion a, .product a{
   color: black;
+  text-decoration: none;
 }
 
-.perfil a:hover, .opciones a:hover, .actividad a:hover, .historial a:hover , .configuracion a:hover, .config a:hover, .sesiones a:hover{
+.perfil a:hover, .product a:hover, .opciones a:hover, .actividad a:hover, .historial a:hover , .configuracion a:hover, .config a:hover, .sesiones a:hover{
   color: #18c1d8ff;
   text-decoration: underline;
 }
