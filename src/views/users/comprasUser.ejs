@@ -3,34 +3,58 @@
 
 <!-- include head -->
 <%- include("../partials/head.ejs") %>
+    <script src="/js/cartView.js"> </script>
 
-<body>
-    <!-- include header -->
-    <%- include('../partials/header') %>
+    <body>
+        <!-- include header -->
+        <%- include('../partials/header') %>
+            <main>
+                <p class="rutahome">
+                    <a href="/user/profile">Perfil</a> / Compras de <%= user.nombre %>
+                    <%= user.apellido %> /
+                </p>
+                <section class="compra-user">
+                    <% comprasUser.forEach(compra=> { %>
+                        <div class="comprasUser">
+                            <ul>
+                                <li>
+                                    <strong>Fecha de compra: </strong>
+                                    <%= compra.fecha.toLocaleDateString() %>
+                                        <%= compra.fecha.toLocaleTimeString() %>
+                                            <strong>- # productos: </strong> <%= compra.cantidad_productos %>
+                                            <strong> - Monto: </strong>$ <%= compra.monto_total %>
+                                            <button id="detalle" data-compra-id="<%= compra.id %>" class="detalle-prod">
+                                                <strong>Detalle de productos</strong>
+                                            </button>
+                                                <div class="detalleProductoCompra" id="detalle-<%= compra.id %>">
+                                                    <ul>
+                                                        <% orderedProducts.forEach(product=> { %>
+                                                            <% if (compra.id==product.id_shopping_cart) { %>
+                                                                <li> <label class="txt-detalle">Producto:</label>
+                                                                    <%= product.product.nombre %> - <label
+                                                                            class="txt-detalle">Cantidad:</label>
+                                                                    <%= product.cantidad %> - <label
+                                                                                class="txt-detalle">Precio:</label>
+                                                                    <%= product.precio %>
+                                                                                - <label
+                                                                                    class="txt-detalle">Descuento:</label>
+                                                                    <%= product.descuento %>
+                                                                </li>
+                                                            <% } %>
+                                                        <% }) %>
+                                                    </ul>
+                                                </div>
 
-    <h2>Compras de <%= user.nombre %> <%= user.apellido %></h2>
+                                </li>
+                            </ul>
+                        </div>
 
-    <% comprasUser.forEach(compra => { %>
-        <div class="comprasUser">
-            <p><strong>Fecha de compra: </strong><%= compra.fecha %></p>
-            <p><strong>Cantidad de productos: </strong><%= compra.cantidad_productos %></p>
-            <p><strong>Monto total de la compra: </strong>$ <%= compra.monto_total %></p>
-            <p><strong>Detalle de productos</strong></p>
-            <% orderedProducts.forEach(product => { %>
-                <% if (compra.id == product.id_shopping_cart) { %>
-                    <div class="detalleProductoCompra">
-                        <p>Nombre: <%= product.nombre %></p>
-                        <p>Precio: <%= product.precio %></p>
-                        <p>Cantidad: <%= product.cantidad %></p>
-                        <p>Descuento: <%= product.descuento %></p>
-                    </div>
-                <% } %>
-            <% }) %>
-        </div>
-    <% }); %>
+                        <% }); %>
+                </section>
+            </main>
 
-    <!-- include footer -->
-    <%- include('../partials/footer') %>
-</body>
+            <!-- include footer -->
+            <%- include('../partials/footer') %>
+    </body>
 
 </html>

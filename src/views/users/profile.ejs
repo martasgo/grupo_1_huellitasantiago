@@ -23,10 +23,8 @@
         <div class="actividad">
             <p><strong>Actividad</strong></p>
             <br>
-            <p class="opciones"><i class="fa-solid fa-heart"></i> Favoritos</p>
             <p class="opciones"><i class="fa-solid fa-money-check-dollar"></i> Medios de pago</p>
-            <a href="/user/compras/<%= user.id %>"><p class="historial"><i class="fa-solid fa-basket-shopping"></i> Últimas compras realizadas</p></a>
-            <p class="historial"><i class="fa-solid fa-star"></i> Productos más comprados</p>
+            <p class="historial"><i class="fa-solid fa-basket-shopping"></i> <a href="/user/compras/<%= user.id %>">Ver compras</a></p>
         </div>
         <div class="configuracion">
             <p><strong>Configuración</strong></p>
