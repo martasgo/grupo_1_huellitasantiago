@@ -68,3 +68,16 @@ Actualizamos el JIRA con los tareas finalizadas, organizamos y distribuimos las 
 
 ## weekly 5 - sprint 6
 26-02: hicimos merge de la rama que tiene los cambios referidos al manejo de productos (CRUD) para finalizar el sprint y actualizamos JIRA.
+
+
+## weekly 1 - sprint 7
+28-2-24: confeccionamos el JIRA con las tareas correspondientes al sprint 7, analizamos cada punto especficiando que estaba y que faltaba en el sistema finalmente distribuimos las tareas.
+
+## weekly 1 - sprint 7
+1-3-24: configuracion de git con develop y definición de la nueva forma de trabajo con github y las ramas. Estuvimos revisando un problema referido a la validación custom de la registración de usuarios y el resto de las tareas asignadas. 
+
+## weekly 2 - sprint 7
+5-3: revisamos los avances de cada uno y resolvimos unos inconvenientes. 
+
+## weekly 2 - sprint 7
+8-3: revisión de todos, hicimos merge de algunas ramas y resolvimos problemas que tenian algunos con la validacion del front.
