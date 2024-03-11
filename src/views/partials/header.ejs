@@ -40,7 +40,8 @@
         <div class="box-header-right">
             <div class="carritoHeader">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <a href="/cart">Compra (1)</a>
+                <a href="/cart" class="cantidadcarrito">Carrito: </a>
+                <a class="vaciarcarrito" href=""><strong>Vaciar carrito</strong></a>
             </div>
                 
             <% if(!isLogged) { %>
@@ -54,6 +55,7 @@
                     <a href="/user/logout"> Logout </a>
                 </div>
                 <p>Bienvenido/a <%=userLogged.nombre + " " + userLogged.apellido%> </p>
+                <input type="hidden" value="<%= userLogged.id %>" id="userId">
             <% } %>
                 
             

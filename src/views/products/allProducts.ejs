@@ -3,36 +3,36 @@
 <!-- include head -->
 <%- include('../partials/head') %>
 
-<body>
-    <!-- include header -->
-    <%- include('../partials/header') %>
-   
-    <main>
-        <p class="rutahome">
-            <a href="/user/profile">Perfil</a> / Listado completo de productos
-        </p>
-        <section>
-            <h2>LISTADO COMPLETO DE PRODUCTOS</h2>   
-            
-                <% allProducts.forEach(product => { %>
-                    <div class="product">
-                        <a href="/product/detalle/<%=product.id%>"> <%= product.nombre %> </a>
-                        <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
-                    </div>  
-                <% }); %>
+<script src="/js/allProducts.js"></script>
+    <body>
+        <!-- include header -->
+        <%- include('../partials/header') %>
+            <main>
+                <p class="rutahome">
+                    <a href="/user/profile">Perfil</a> / Listado de productos /
+                </p>
+                <section>
 
-                <!-- Paginación -->
-                <%- include('../partials/paginacion') %>
+                    <% allProducts.forEach(product=> { %>
+                        <div class="product">
+                            <a href="/product/detalle/<%=product.id%>">
+                                <%= product.nombre %>
+                            </a>
+                            <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
+                        </div>
+                        <% }); %>
 
-        </section>
+                            <!-- Paginación -->
+                            <%- include('../partials/paginacion') %>
 
-        <!-- include marcas -->
-        <%- include('../partials/marcas') %>
-    </main>
-     <!-- include footer -->
-     <%- include('../partials/footer') %>
+                </section>
 
-    <script src="/js/allProducts.js"></script> 
-</body>
+                <!-- include marcas -->
+                <%- include('../partials/marcas') %>
+            </main>
+            <!-- include footer -->
+            <%- include('../partials/footer') %>
+
+    </body>
 
 </html>

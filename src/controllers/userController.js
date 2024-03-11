@@ -1,5 +1,7 @@
 const { validationResult } = require("express-validator");
 const userService = require("../model/userService");
+const shoppingCartService = require ('../model/shoppingCartService');
+const cartProductService = require ('../model/cartProductService');
 let bcrypt = require("bcryptjs");
 
 const userController = {
@@ -101,6 +103,33 @@ const userController = {
     }
   },
 
+  //Controlador ruta listar ventas para admin
+  salesListController: async (req, res) => {
+    try {
+      let user = req.session.userLogged || {};
+      let ventas = await shoppingCartService.getAll();
+      console.log(ventas)
+      let orderedProducts = [];
+  
+      for (const venta of ventas) {
+        let productosEnVenta = await cartProductService.getByCartId(venta.id);
+        productosEnVenta.forEach(products => {
+          orderedProducts.push(products)
+        })
+      }; 
+      res.render("../views/users/ventas.ejs", {
+        title: "Listado de ventas",
+        user,
+        ventas,
+        orderedProducts
+      });      
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error en el servidor");
+    }
+  },
+
   //Controlador Ruta para almacenar el nuevo
   addRegisterController: async (req, res) => {
     try {
@@ -170,6 +199,31 @@ const userController = {
     } catch (error) {
       console.log(error.message);
       res.send("Error inesperado").status(500);
+    }
+  },
+
+  compras: async (req, res) => {
+    try {
+      let user = req.session.userLogged || {};
+      let comprasUser = await shoppingCartService.getByUser(user.id);
+      let orderedProducts = [];
+  
+      for (const compra of comprasUser) {
+        let productosEnCompra = await cartProductService.getByCartId(compra.id);
+        productosEnCompra.forEach(products => {
+          orderedProducts.push(products)
+        })
+      };
+      res.render("../views/users/comprasUser.ejs", {
+        title: "Mis Compras",
+        user,
+        comprasUser,
+        orderedProducts
+      });      
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error en el servidor");
     }
   },
 

@@ -12,27 +12,17 @@
         
         <div style="overflow-x:auto;">
         <table><!--Tabla Cart desde 361px-->
-          
+          <tbody class="detallecarrito">
             <tr>
-              <th scope="col" colspan="2">PRODUCTO</th>
+              <th scope="col">IMAGEN</th>
+              <th scope="col" colspan="3">PRODUCTO</th>
               <th scope="col">PRECIO</th>
-              <th scope="col" colspan="3">CANTIDAD</th>
-              <th scope="col"colspan="2">TOTAL</th>
+              <th scope="col">DESCUENTO</th>
+              <th scope="col">CANTIDAD</th>
+              <th scope="col">TOTAL CON DESCUENTO</th>
+              <th scope="col">ACCIONES</th>
             </tr>
-          
-          
-            <tr>
-              <td id="row-img"><img src="/images/productos/accesorios/dispensers/comedero-azimut.png" alt="dispenser-azimut"/></td>
-              <td>Dispenser Azimut 1,5 lts.</td>
-              <td>$3.500</td>
-              <td><i class="fa-solid fa-minus cant-icono"></td>
-              <td><p id="descripcion">1</p></td>
-              <td><i class="fa-solid fa-plus cant-icono"></i></td>
-              <td>$3.500</td>
-              <td><i class="fa-regular fa-trash-can"></i></td>
-            </tr>
-          
-
+          </tbody>
         </table><!--Fin Tabla Cart desde 361px-->
       </div>
 
@@ -51,24 +41,14 @@
              </div>
 
             <div class="resumen-compra">      
-                <div class="descuento">        
-                  <input type="text" name="cod-descuento" id="cod-descuento" placeholder="código de descuento"/>
-                  <a href="#"><input type="button" name="aplicar-cod" id="aplicar-cod" value="APLICAR"/></a> 
-                </div>
                 <div class="detalle-compra">
-                  <p id="">SUBTOTAL (sin envío): <span>$ 3.500</span></p>
-                  <p id="">DESCUENTO: <span>$ 0.00</span></p>                  
-                  <p id="">TOTAL (sin envío): <span>$ 3.500</span></p>
+                  <p>TOTAL SIN ENVÍO: $ <span id="subtotalfinal"></span></p>
                 </div>
                 <div class="center"><!--Botones Inicio compra-->
-                  <a href="/cart/checkout"><input
-                    type="button"
-                    name="inicio-compra"
-                    id="inicio-compra"
-                    value="INICIAR COMPRA"           
-                  /></a>      
+                  <button type="button" id="inicio-compra">Iniciar Compra</button>
+                       
                 
-                  <a href=""><input
+                  <a href="/product"><input
                     type="button"
                     name="seguir-compra"
                     id="seguir-compra" 

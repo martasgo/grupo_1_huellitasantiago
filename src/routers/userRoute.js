@@ -31,7 +31,9 @@ const routesUser = {
     registerRoute: "/register",
 	editRegister: "/editUser/:idUser",
     profileRoute: "/profile",
+	comprasRoute: "/compras/:id",
 	listUsersRoute: "/usersList",
+	salesAdminRoute: "/salesList",
     logoutRoute: "/logout",
     deleteRoute: "/delete/:id"
 };
@@ -43,6 +45,8 @@ routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profile
 
 routerUsers.get(routesUser.logoutRoute, userController.logoutController);
 
+routerUsers.get(routesUser.comprasRoute, authMiddleware, userController.compras);
+
 routerUsers.get(routesUser.deleteRoute,authMiddleware, userController.deleteController);
 routerUsers.delete(routesUser.deleteRoute,authMiddleware, userController.destroyController);
 
@@ -51,6 +55,8 @@ routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.regist
 routerUsers.post(routesUser.registerRoute, upload.single("foto"), registerValidations, userController.addRegisterController);
  
 routerUsers.get(routesUser.listUsersRoute, authMiddleware, adminMiddleware, userController.listUsersController);
+
+routerUsers.get(routesUser.salesAdminRoute, authMiddleware, adminMiddleware, userController.salesListController);
 
 //editar y guardar registro de usuario, YA Registrado!-Sole
 routerUsers.get(routesUser.editRegister,authMiddleware, userController.editController);
