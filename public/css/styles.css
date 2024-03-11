@@ -676,7 +676,7 @@ button a {
   text-decoration: underline;
 }
 
-#formRegistro {
+#formRegistro, #formEdicion {
   background-color: #EEEEEE;
   padding: 20px 30px;
   width: 80%;
@@ -1116,7 +1116,7 @@ button a {
     width: 460px;
   }
 
-  #formRegistro {
+  #formRegistro, #formEdicion {
     width: 60%;
   } 
 }
