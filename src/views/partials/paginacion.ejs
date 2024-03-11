@@ -4,7 +4,7 @@
     <% } %>
 
     <% for (let i = 1; i <= totalPages; i++) { %>
-        <a href="?page=<%= i %>"><%= i %></a>
+        <a href="?page=<%= i %>" id="currentpage"><%= i %></a>
     <% } %>
 
     <% if (currentPage < totalPages) { %>
