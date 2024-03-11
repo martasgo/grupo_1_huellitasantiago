@@ -2,7 +2,7 @@
 <html lang="en">
   <!-- include head -->
 <%- include('../partials/head', {title: 'Editando producto: ' + producto.id})%>
-<script src="/js/viewEdit.js"> </script>
+<script src="/js/productValidations.js"> </script>
   <body>
     
     <!-- include header -->
@@ -11,6 +11,11 @@
         <p id="title-alta"> Formulario edición de producto </p>
       
         <section class="fichaprod">
+            <section class="errores-front">
+                <ul>
+    
+                </ul>
+            </section>
             <form id="form-alta-prod" method="post" action="/product/editar/<%=producto.id%>?_method=PUT" enctype="multipart/form-data">
                 <div class="elementos-form">
                     <label for="mascota">Mascota:</label><br>
@@ -20,28 +25,35 @@
                         <% }) %>
                     </select><br>
                     <% if (typeof errors != "undefined" && errors.mascota) {%>
-                        <small style="color: red; font-weight: bold;"><%= errors.mascota.msg  %></small>
-                    <% } %>
+                        <small id="msjErrorMascota" class="msjError"><%= errors.mascota.msg  %></small>
+                    <% } else {%>
+                        <small id="msjErrorMascota" class="msjError"></small>
+                     <% } %>
 
                 </div>
                 <div class="elementos-form">
                 <label for="nombreprod">Nombre producto:</label><br>
                 <input class="margen-ancho" type="text" id="nombreprod" name="nombreprod" value="<%= locals.old && locals.old.nombreprod ? old.nombreprod : producto.nombre %>"><br>
                 <% if (typeof errors != "undefined" && errors.nombreprod) {%>
-                    <small style="color: red; font-weight: bold;"><%= errors.nombreprod.msg  %></small>
-                <% } %>
+                    <small  id="msjErrorNombre" class="msjError"><%= errors.nombreprod.msg  %></small>
+                <% } else {%>
+                    <small id="msjErrorNombre" class="msjError"></small>
+                 <% } %>
                 </div>
                
                 <div class="elementos-form">
                     <label for="precio">Precio ($ ARS):</label><br>
                     <input class="margen-ancho" type="number" id="precio" name="precio" step="any" value="<%= locals.old && locals.old.precio ? old.precio : producto.precio %>"><br>
                     <% if (typeof errors != "undefined" && errors.precio) {%>
-                        <small style="color: red; font-weight: bold;"><%= errors.precio.msg  %></small>
-                    <% } %>
+                        <small id="msjErrorPrecio" class="msjError"><%= errors.precio.msg  %></small>
+                    <% } else {%>
+                        <small id="msjErrorPrecio" class="msjError"></small>
+                     <% } %> 
                 </div>
                 <div class="elementos-form">
                     <label for="descuento">Descuento(%):</label><br>
                     <input class="margen-ancho" type="text" id="descuento" name="descuento" value="<%= locals.old && locals.old.descuento ? old.descuento : producto.descuento %>"><br>
+                    <small id="msjErrorDesc" class="msjError"></small>
                 </div>
 
                 <div class="elementos-form">
@@ -52,11 +64,12 @@
                         <% }) %>
                 </select><br>
                 <% if (typeof errors != "undefined" && errors.categoria) {%>
-                    <small style="color: red; font-weight: bold;"><%= errors.categoria.msg  %></small>
-                <% } %>
+                    <small id="msjErrorCat" class="msjError"><%= errors.categoria.msg  %></small>
+                <% } else {%>
+                    <small id="msjErrorCat" class="msjError"></small>
+                 <% } %> 
                 </div>
 
-    
                 <div class="elementos-form" id="subCatSelect">
                     <!-- solo mostrar si se selecciona cat alimentos -->
                    <label for="subCat">Subcategoría:</label><br>           
@@ -67,11 +80,11 @@
                         <% }) %>
                     </select><br>
                     <% if (typeof errors != "undefined" && errors.subCat) {%>
-                        <small style="color: red; font-weight: bold;"><%= errors.subCat.msg  %></small>
-                    <% } %>
+                        <small id="msjErrorSubCat" class="msjError"><%= errors.subCat.msg  %></small>
+                    <% }else {%>
+                        <small id="msjErrorSubCat" class="msjError"></small>
+                     <% } %> 
                 </div>
-                
-                
 
                 <div class="elementos-form" id="alimentoPresentacion">
                     <label for="presentacion">Presentación:</label><br>
@@ -82,8 +95,10 @@
                     <% }) %>                    
                 </select><br>
                 <% if (typeof errors != "undefined" && errors.presentacion) {%>
-                    <small style="color: red; font-weight: bold;"><%= errors.presentacion.msg  %></small>
-                <% } %>
+                    <small id="msjErrorPackage" class="msjError"><%= errors.presentacion.msg  %></small>
+                <% } else {%>
+                    <small id="msjErrorPackage" class="msjError"></small>
+                 <% } %>
             </div>
                 <!--fin alimentos -->
             
@@ -97,8 +112,10 @@
                         <% }) %>
                 </select><br>
                 <% if (typeof errors != "undefined" && errors.subCatAcc) {%>
-                    <small style="color: red; font-weight: bold;"><%= errors.subCatAcc.msg  %></small>
-                <% } %>
+                    <small id="msjErrorSubCatAcc" class="msjError"><%= errors.subCatAcc.msg  %></small>
+                <% } else {%>
+                    <small id="msjErrorSubCatAcc" class="msjError"></small>
+                 <% } %>
                 <!-- fin accesorios -->
                 </div>
             
@@ -112,8 +129,10 @@
                         <% }) %>  
                 </select><br>
                 <% if (typeof errors != "undefined" && errors.marca) {%>
-                    <small style="color: red; font-weight: bold;"><%= errors.marca.msg  %></small>
-                <% } %>
+                    <small id="msjErrorMarca" class="msjError"><%= errors.marca.msg  %></small>
+                <% } else {%>
+                    <small id="msjErrorMarca" class="msjError"></small>
+                 <% } %>
                 </div>
 
                 <div class="elementos-form">
@@ -125,8 +144,10 @@
                         <% }) %> 
                     </select><br>
                     <% if (typeof errors != "undefined" && errors.edadmascota) {%>
-                        <small style="color: red; font-weight: bold;"><%= errors.edadmascota.msg  %></small>
-                    <% } %>
+                        <small id="msjErrorAge" class="msjError"><%= errors.edadmascota.msg  %></small>
+                    <% } else {%>
+                        <small id="msjErrorAge" class="msjError"></small>
+                     <% } %>
                 </div>
 
                 <div class="elementos-form">
@@ -138,8 +159,10 @@
                     <% }) %>
                 </select><br>
                 <% if (typeof errors != "undefined" && errors.tamaniomascota) {%>
-                    <small style="color: red; font-weight: bold;"><%= errors.tamaniomascota.msg  %></small>
-                <% } %>
+                    <small id="msjErrorSize" class="msjError"><%= errors.tamaniomascota.msg  %></small>
+                <% } else {%>
+                    <small id="msjErrorSize" class="msjError"></small>
+                 <% } %>
                 </div>
                 
                 <div class="elementos-form-100">
@@ -152,8 +175,10 @@
                     <label for="descripcion">Descripción:</label><br>
                     <input class="margen-ancho" name="descripcion" id="descripcion" value="<%= locals.old && locals.old.descripcion ? old.descripcion : producto.descripcion %>"> </input><br>
                     <% if (typeof errors != "undefined" && errors.descripcion) {%>
-                        <small style="color: red; font-weight: bold;"><%= errors.descripcion.msg  %></small>
-                    <% } %>
+                        <small id="msjErrorDesc" class="msjError"><%= errors.descripcion.msg  %></small>
+                    <% } else {%>
+                        <small id="msjErrorDesc" class="msjError"></small>
+                     <% } %>
                 </div>
 
                 <div>
@@ -161,7 +186,12 @@
 						<br>
 						<img src="/images/productos/<%= producto.imagen%>" class="actualImg" alt="Imagen Actual" name="newImage">
 						<br>
-              			<input type="file" class="form-upload" name="newImage" accept="image/*"/>
+              			<input type="file" class="form-upload" name="foto" accept="image/*"/>
+                        <% if (typeof errors != "undefined" && errors.foto) {%>
+                            <small id="msjErrorImg" class="msjError"><%= errors.foto.msg  %></small>
+                        <% } else {%>
+                            <small id="msjErrorImg" class="msjError"></small>
+                         <% } %>
 						
                 </div>
                 
@@ -169,13 +199,15 @@
                     <label for="stock">Stock:</label><br>
                     <input class="margen-ancho" type="number" id="stock" name="stock" value="<%= locals.old && locals.old.stock ? old.stock : producto.stock %>"><br>
                     <% if (typeof errors != "undefined" && errors.stock) {%>
-                        <small style="color: red; font-weight: bold;"><%= errors.stock.msg  %></small>
-                    <% } %>
+                        <small id="msjErrorStock" class="msjError"><%= errors.stock.msg  %></small>
+                    <% } else {%>
+                        <small id="msjErrorStock" class="msjError"></small>
+                     <% } %>
                 </div>
                
                 <div class="elementos-form-100">
                     <div id="form-buttons">  
-                        <button type="submit">GUARDAR</button>
+                        <button type="submit" id="botonguardar" name="botonguardar">GUARDAR</button>
                         <a href="/product"><button type="button">CANCELAR</button></a>
                         
                     </div>

@@ -10,6 +10,7 @@
     border: 1px solid black;
 }
 
+
 .is-invalid{
     border: 2px solid red;
 }
@@ -29,7 +30,9 @@
     display: none
 }
 
-.userInfo {    
+   
+.userInfo {
+    margin-bottom: 15px;
     background: white;
     width: 100%;
     padding: 10px;
