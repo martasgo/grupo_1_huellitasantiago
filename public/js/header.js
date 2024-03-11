@@ -77,7 +77,7 @@ window.addEventListener('load', () => {
         .then((product) => {
             // Todas las operaciones relacionadas con productCart dentro de este bloque
             let productCart = product;
-            console.log(productCart);
+           
 
             // Capturamos los elementos a utilizar
             let inputCantidad = document.querySelector('#cantidadproducto');
@@ -108,7 +108,6 @@ window.addEventListener('load', () => {
 
             botonAgregarAlCarrito.addEventListener('click', (event) => {
                 event.preventDefault();
-                console.log(inputCantidad.value)
 
                 // Verificar si inputCantidad.value es un string vacío
                 if (inputCantidad.value == '') {
@@ -220,7 +219,6 @@ window.addEventListener('load', () => {
             })
             .then((result)=>result.json())
             .then((data) => {
-                console.log(data);
                 vaciarCarrito();
                 let userID = document.querySelector('#userId').value;
                 location.href = `/user/compras/${userID}`
