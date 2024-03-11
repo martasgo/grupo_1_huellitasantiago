@@ -20,9 +20,6 @@ window.addEventListener('load', () => {
         aElements[x].addEventListener('mouseover', () => {
             aElements[x].style.color = '#18c1d8ff'
         });
-        aElements[x].addEventListener('click', () => {
-            aElements[x].style.color = '#18c1d8ff'
-        });
         aElements[x].addEventListener('mouseleave', () => {
             aElements[x].style.color = 'black'
         });
@@ -30,22 +27,22 @@ window.addEventListener('load', () => {
 
     
     // MÉTODO PARA OBTENER EL INDICE DE LA PÁGINA QUE VIENE EN URL
-        // Obtenemos la URL actual
-        let url = window.location.href;
+    // Obtenemos la URL actual
+    let url = window.location.href;
 
-        // Encontramos la posición del último signo igual en la URL
-        let lastIndex = url.lastIndexOf('=');
+    // Encontramos la posición del último signo igual en la URL
+    let lastIndex = url.lastIndexOf('=');
 
-        // Obtenemos el índice de la página luego del signo igual
-        let pageNumber = url.substring(lastIndex + 1);
+    // Obtenemos el índice de la página luego del signo igual
+    let pageNumber = url.substring(lastIndex + 1);
 
-        currentPages.forEach(currentPage => {
-            if (currentPage.innerText == pageNumber) {
-                currentPage.style.color = '#18c1d8ff';
-                currentPage.addEventListener('mouseleave', () => {
-                    currentPage.style.color = '#18c1d8ff'
-                })
-            }
-        })
+    currentPages.forEach(currentPage => {
+        if (currentPage.innerText == pageNumber) {
+            currentPage.style.color = '#18c1d8ff';
+            currentPage.addEventListener('mouseleave', () => {
+                currentPage.style.color = '#18c1d8ff'
+            })
+        }
+    })
 
 })
