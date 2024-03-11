@@ -124,3 +124,23 @@ Implementaciones extensas en el código que dificulte la detección de errores y
 
 5. Continuar Haciendo:
 Continuar con las revisiones semanales y las interconsultas entre los miembros del grupo a los fines de continuar con el correcto fluido del trabajo del sprint como así también seguir con la coordinación de horarios para las reuniones tendientes a la supervisión de los trabajos.
+
+## RETRO Sprint-6
+1. Comenzar a hacer: 
+
+Establecer un proceso formal de retroalimentación entre compañeros para promover el aprendizaje y el crecimiento grupal en el proyecto.-
+
+2. Hacer Más:
+
+Realizar pruebas de integración más frecuentes para identificar problemas de forma temprana.
+
+3. Hacer Menos:
+Minimizar el tiempo dedicado a tareas  que no agregan valor al proyecto
+
+4. Dejar de Hacer:
+No plantear las dudas o consultas a último momento, como así también las tareas asignadas a cada miembro del grupo.
+Implementaciones extensas en el código que dificulte la detección de errores y corrección de los mismos.
+
+5. Continuar Haciendo:
+Continuar con las revisiones semanales y las interconsultas entre los miembros del grupo a los fines de continuar con el correcto fluido del trabajo del sprint como así también seguir con la coordinación de horarios para las reuniones tendientes a la supervisión de los trabajos.
+Seguir con la implementacion de la rama develop para tener un mejor control sobre los avances de cada miembro y de ese modo realizar las pruebas necesarias dentro del proyecto sin afectar a la rama main.
