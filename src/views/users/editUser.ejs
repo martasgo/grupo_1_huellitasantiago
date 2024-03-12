@@ -2,7 +2,7 @@
 
 <!-- include head -->
 <%- include('../partials/head') %>
-
+<script src="/js/edit-user.js"> </script>
 
 <body>
     <!-- include header -->
@@ -10,54 +10,71 @@
    
     <main class="mainlogin">
         <p class="rutahome"><a href="/user/profile">Perfil</a> / Edición</p>
-        <form action="/user/editUser/<%= infoUser.id %>?_method=PUT" method="POST" id="formRegistro" class="editUser"enctype="multipart/form-data">
+        <form action="/user/editUser/<%= infoUser.id %>?_method=PUT" method="POST" id="formEdicion" class="editUser" enctype="multipart/form-data">
             <label for="nombre">Nombre</label> 
-            <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : infoUser.nombre%>" class="<%= (locals.errors && errors.nombre) ? 'is-invalid' : null %>">
+            <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : infoUser.nombre%>" 
+            class="<%= (locals.errors && errors.nombre) ? 'is-invalid' : null %>">
+            <span id="ayuda" class="ayuda">El nombre no puede quedar vacío, debe contener al menos 2 caracteres</span>
+            <span id="errorFront" class="errorFront">El nombre no puede quedar vacío, debe contener al menos 2 caracteres</span>
             <% if (locals.errors && errors.nombre) { %>
                 <p class="error"> <%= errors.nombre.msg %></p>
             <% } %>
             <br>
             <label for="apellido">Apellido</label> 
             <input type="text" name="apellido" id="apellido" value="<%= locals.oldData ? oldData.apellido : infoUser.apellido %>" class="<%= (locals.errors && errors.apellido) ? 'is-invalid' : null %>">
+            <span id="ayuda" class="ayuda">El apellido no puede quedar vacío, debe contener al menos 2 caracteres</span>
+            <span id="errorFront" class="errorFront">El apellido no puede quedar vacío, debe contener al menos 2 caracteres</span>
             <% if (locals.errors && errors.apellido) { %>
                 <p class="error"> <%= errors.apellido.msg %></p>
             <% } %>       
             <br>
             <label for="email">Email</label> 
             <input type="email" name="email" id="email" value="<%= locals.oldData ? oldData.email : infoUser.email %>" class="<%= (locals.errors && errors.email) ? 'is-invalid' : null %>">
+            <span id="ayuda" class="ayuda">El email no puede quedar vacío y debe ser válido</span>
+            <span id="errorFront" class="errorFront">El email no puede quedar vacío y debe ser válido</span>
             <% if (locals.errors && errors.email) { %>
                 <p class="error"> <%= errors.email.msg %></p>
             <% } %> 
             <br>
             <label for="dir">Dirección</label> 
             <input type="text" name="dir" id="dir" value="<%= locals.oldData ? oldData.dir : infoUser.direccion %>" class="<%= (locals.errors && errors.dir) ? 'is-invalid' : null %>">
+            <span id="ayuda" class="ayuda">La dirección no puede quedar vacía</span>
+            <span id="errorFront" class="errorFront">La dirección no puede quedar vacía</span>
             <% if (locals.errors && errors.dir) { %>
                 <p class="error"> <%= errors.dir.msg %></p>
             <% } %> 
             <br>
             <label for="telefono">Teléfono</label> 
-            <input type="number" name="telefono" id="telefono" value="<%= locals.oldData ? oldData.telefono : infoUser.telefono %>" class="<%= (locals.errors && errors.telefono) ? 'is-invalid' : null %>"> 
+            <input type="number" name="telefono" id="telefono" value="<%= locals.oldData ? oldData.telefono : infoUser.telefono %>" class="<%= (locals.errors && errors.telefono) ? 'is-invalid' : null %>">
+            <span id="ayuda" class="ayuda">El número de teléfono no puede quedar vacío</span>
+            <span id="errorFront" class="errorFront">El número de teléfono no puede quedar vacío</span>
             <% if (locals.errors && errors.telefono) { %>
                 <p class="error"> <%= errors.telefono.msg %></p>
             <% } %> 
             <br>        
             <label for="contrasenia">Contraseña</label> 
-            <input type="password" placeholder="Ingresar contraseña si desea cambiarla" name="contrasenia" id="contrasenia" class="<%= (locals.errors && errors.contrasenia) ? 'is-invalid' : null %>">            
+            <input type="password" placeholder="Ingresar contraseña si desea cambiarla" name="contrasenia" id="contrasenia" class="<%= (locals.errors && errors.contrasenia) ? 'is-invalid' : null %>">
+            <span id="ayuda" class="ayuda">La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial</span>
+            <span id="errorFront" class="errorFront">La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial</span>           
             <% if (locals.errors && errors.contrasenia) { %>
                 <p class="error"> <%= errors.contrasenia.msg %></p>
             <% } %> 
             <br>
             <label for="confirmar">Confirmar contraseña</label> 
-            <input type="password" placeholder="Confirmar si cambió su contraseña" name="confirmar" id="confirmar" class="<%= (locals.errors && errors.confirmar) ? 'is-invalid' : null %>">    
+            <input type="password" placeholder="Confirmar si cambió su contraseña" name="confirmar" id="confirmar" class="<%= (locals.errors && errors.confirmar) ? 'is-invalid' : null %>" disabled>
+            <span id="ayuda" class="ayuda">Las contraseñas no coinciden, verifique por favor</span>
+            <span id="errorFront" class="errorFront">Las contraseñas no coinciden, verifique por favor</span> 
             <% if (locals.errors && errors.confirmar) { %>
                 <p class="error"> <%= errors.confirmar.msg %></p>
             <% } %>         
             <br>
             <label for="foto">Imagen</label>
             <img src="/images/usuarios/<%= locals.oldData ? imagen : infoUser.imagen%>" class="actualImg" alt="Imagen Actual" name="fotoAnt">
-            <input type="text" name="imageAnt" id="imageAnt" value="<%= locals.oldData ? imagen : infoUser.imagen%>" hidden>
+            <input type="text" name="imageAnt" id="imageAnt" value="<%= locals.oldData ? imagen : infoUser.imagen%>" hidden>            
             <br>
-            <input class="userInfo" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.oldData ? oldData.imagen : infoUser.imagen%>" class="<%= (locals.errors && errors.foto) ? 'is-invalid' : null %>"> 
+            <input class="userInfo" type="file" id="foto" name="foto" accept="image/*" value="<%= locals.oldData ? oldData.imagen : infoUser.imagen%>" class="<%= (locals.errors && errors.foto) ? 'is-invalid' : null %>">
+            <span id="ayuda" class="ayuda">Las extensiones permitidas para las imagenes son jpg, png, jpeg, gif</span>
+            <span id="errorFront" class="errorFront">Las extensiones permitidas para las imagenes son jpg, png, jpeg, gif</span>
             <% if (locals.errors && errors.foto) { %>
                 <p class="error"> <%= errors.foto.msg %></p>
             <% } %> <br>
@@ -72,8 +89,7 @@
             <% } %>
             <br>            
             <button type="submit">GUARDAR CAMBIOS</button>
-            <br>
-
+            <br>            
             </form>
     </main>
 

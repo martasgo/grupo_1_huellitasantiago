@@ -27,11 +27,13 @@ let routerMain = require("./routers/mainRoute");
 let routerCart = require("./routers/cartRoute");
 let routerUser = require("./routers/userRoute");
 let routerProduct = require("./routers/productRoute");
+let routerApi = require("./routers/apiRoute");
 
 app.use('/', routerMain);
 app.use('/cart', routerCart);
 app.use('/user', routerUser);
 app.use('/product', routerProduct);
+app.use('/api', routerApi);
 app.use((req, res, next) => {
   res.status(404).render('404-page', {title: 'Error 404'});
   next();

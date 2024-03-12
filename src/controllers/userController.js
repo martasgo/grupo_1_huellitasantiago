@@ -1,5 +1,7 @@
 const { validationResult } = require("express-validator");
 const userService = require("../model/userService");
+const shoppingCartService = require ('../model/shoppingCartService');
+const cartProductService = require ('../model/cartProductService');
 let bcrypt = require("bcryptjs");
 
 const userController = {
@@ -28,7 +30,9 @@ const userController = {
       if (!errors.isEmpty()) {
         res.render("../views/users/login.ejs", {
           title: "Login",
-          errors: errors.array(),
+          /* errors: errors.array(), */
+          errors:errors.mapped(),
+          old:req.body
         });
       } else {
         let userToLogin = await userService.getByField(req.body.email);
@@ -46,15 +50,18 @@ const userController = {
           }
           return res.render("../views/users/login.ejs", {
             title: "Login",
+            old:req.body,
             errors: {
               contrasenia: {
                 msg: "Credenciales inválidas",
+                
               },
             },
           });
         }
         return res.render("../views/users/login.ejs", {
           title: "Login",
+          old:req.body,
           errors: {
             email: {
               msg: "Este email no se encuentra registrado",
@@ -93,6 +100,33 @@ const userController = {
     } catch (error) {
       console.log(error.message);
       res.send("Error inesperado").status(500);
+    }
+  },
+
+  //Controlador ruta listar ventas para admin
+  salesListController: async (req, res) => {
+    try {
+      let user = req.session.userLogged || {};
+      let ventas = await shoppingCartService.getAll();
+      console.log(ventas)
+      let orderedProducts = [];
+  
+      for (const venta of ventas) {
+        let productosEnVenta = await cartProductService.getByCartId(venta.id);
+        productosEnVenta.forEach(products => {
+          orderedProducts.push(products)
+        })
+      }; 
+      res.render("../views/users/ventas.ejs", {
+        title: "Listado de ventas",
+        user,
+        ventas,
+        orderedProducts
+      });      
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error en el servidor");
     }
   },
 
@@ -165,6 +199,31 @@ const userController = {
     } catch (error) {
       console.log(error.message);
       res.send("Error inesperado").status(500);
+    }
+  },
+
+  compras: async (req, res) => {
+    try {
+      let user = req.session.userLogged || {};
+      let comprasUser = await shoppingCartService.getByUser(user.id);
+      let orderedProducts = [];
+  
+      for (const compra of comprasUser) {
+        let productosEnCompra = await cartProductService.getByCartId(compra.id);
+        productosEnCompra.forEach(products => {
+          orderedProducts.push(products)
+        })
+      };
+      res.render("../views/users/comprasUser.ejs", {
+        title: "Mis Compras",
+        user,
+        comprasUser,
+        orderedProducts
+      });      
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error en el servidor");
     }
   },
 

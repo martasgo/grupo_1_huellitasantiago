@@ -151,7 +151,6 @@ i {
     justify-content: space-around;
     flex-wrap: wrap;
     width: 90%;
-    /* margin: auto;*/
     margin: 0 5%;
     padding-top: 20px;
 }
@@ -243,7 +242,8 @@ article img {
 .detalle-producto{
   justify-content: space-between;    
   flex-direction: column;
-  display: flex;
+  /*display: flex;*/
+  display: none;
 }
 
 p#nombre-producto{
@@ -428,6 +428,12 @@ table{
 #carritoProducto a{
   color: black;
 }
+
+.msjError{
+  color: red; 
+  font-weight: bold
+}
+
 /* fin */
 
 /* CLASES FOOTER*/
@@ -501,17 +507,6 @@ table{
   text-align: center;
 }
 
-/* CSS CART */
-
-.detalle-total {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  flex-direction: column;
-  padding: 20px 20px;
-}
-  
-/* FIN CSS CART*/
 /* Estilos para el main menu usuario mobile */
 
 .cabezausuario {
@@ -558,11 +553,12 @@ table{
 }
 
 
-.perfil a, .opciones a, .actividad .historial a, .configuracion a, .config a, .sesiones a, .sesion a{
+.perfil a, .opciones a, .actividad .historial a, .configuracion a, .config a, .sesiones a, .sesion a, .product a{
   color: black;
+  text-decoration: none;
 }
 
-.perfil a:hover, .opciones a:hover, .actividad a:hover, .historial a:hover , .configuracion a:hover, .config a:hover, .sesiones a:hover{
+.perfil a:hover, .product a:hover, .opciones a:hover, .actividad a:hover, .historial a:hover , .configuracion a:hover, .config a:hover, .sesiones a:hover{
   color: #18c1d8ff;
   text-decoration: underline;
 }
@@ -671,7 +667,7 @@ button a {
   text-decoration: underline;
 }
 
-#formRegistro {
+#formRegistro, #formEdicion {
   background-color: #EEEEEE;
   padding: 20px 30px;
   width: 80%;
@@ -1111,7 +1107,7 @@ button a {
     width: 460px;
   }
 
-  #formRegistro {
+  #formRegistro, #formEdicion {
     width: 60%;
   } 
 }

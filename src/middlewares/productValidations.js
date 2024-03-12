@@ -5,7 +5,7 @@ const productValidations = [
     body("mascota").notEmpty().withMessage("Debes seleccionar una opción de mascota"),
     body("nombreprod")
         .notEmpty().withMessage("El campo nombre no puede quedar vacío").bail()
-        .isLength({max: 40}).withMessage("El nombre no puede tener más de 40 caracteres"),
+        .isLength({ min: 5, max: 40 }).withMessage("El nombre debe tener al menos 5 caracteres y no más de 40 caracteres"),
     body("precio")
         .notEmpty().withMessage("El campo precio no puede quedar vacío").bail()
         .custom(value => {
@@ -33,10 +33,24 @@ const productValidations = [
     body("marca").notEmpty().withMessage("Debes seleccionar una marca"),
     body("edadmascota").notEmpty().withMessage("Debes seleccionar una edad de mascota"),
     body("tamaniomascota").notEmpty().withMessage("Debes seleccionar un tamaño de mascota"),
-    body("descripcion").notEmpty().withMessage("El campo descripción no puede quedar vacío"),
+    body("descripcion")
+        .notEmpty().withMessage("El campo descripción no puede quedar vacío").bail()
+        .isLength({ min: 20 }).withMessage("La descripción debe tener al menos 20 caracteres"),
     body("stock")
         .notEmpty().withMessage("El campo stock no puede quedar vacío").bail()
-        .isInt().withMessage("El stock debe ser un número entero")
+        .isInt().withMessage("El stock debe ser un número entero"),
+    body("foto").custom((value, {req})=>{
+        let file = req.file;
+        let acceptExt = ['.jpg', '.png', '.jpeg', '.gif'];
+
+        if (file){    
+            let fileExt = path.extname(file.originalname);
+            if (!acceptExt.includes(fileExt)){
+                throw new Error(`Las extensiones permitidas para las imagenes son ${acceptExt.join(', ')}`);
+            }
+        }
+        return true;
+    })
 ];
 
 module.exports = productValidations ; 

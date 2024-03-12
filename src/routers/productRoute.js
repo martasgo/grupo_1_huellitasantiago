@@ -53,7 +53,7 @@ routerProduct.post(routesProd.productCrear, authMiddleware , adminMiddleware , u
 
 // rutas para obtener form para editar productos
 routerProduct.get(routesProd.productEditar, authMiddleware , adminMiddleware , productController.editarProdController); //sole get de editar
-routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware ,  upload.single('newImage'), productValidations, productController.updateProdController); //sole put de editar
+routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware ,  upload.single('foto'), productValidations, productController.updateProdController); //sole put de editar
 
 // rutas para eliminar producto
 routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
