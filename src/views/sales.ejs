@@ -30,7 +30,7 @@
                                         <% } else {%>
                                             <p class="precioAhora" id="">$<%= toThousand(productsDiscount[i].precio) %> </p>
                                         <% } %>
-                                    <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                                    <a href="/product/detalle/<%= productsDiscount[i].id %>"s><input type="button" value="Comprar" id="btn-comprar"/></a>
                                 </div>
                             </article>    
                         <%  } %>
