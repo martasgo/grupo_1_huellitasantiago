@@ -2,6 +2,7 @@
 const productService = require('../model/productService');
 const shoppingCartService = require ('../model/shoppingCartService');
 const cartProductService = require ('../model/cartProductService');
+const userService = require ('../model/userService');
 
 const apiController = {
 
@@ -69,6 +70,29 @@ const apiController = {
             console.error(error);
             res.status(500).json({ success: false, message: 'Error interno del servidor' });
         }
+    },
+
+    allUsers: async (req, res) => {
+        let allUsers = await userService.findAll();
+        let response = {
+            count: allUsers.length,
+            users: allUsers
+        }
+        return res.json(response)
+    },
+
+    userById: async (req, res) => {
+        let user = await userService.getByPk(req.params.id);
+        let response = {
+            id: user.id,
+            nombre: user.nombre,
+            apellido: user.apellido,
+            email: user.email,
+            direccion: user.direccion,
+            telefono: user.telefono,
+            imagen: user.imagen
+        }
+        return res.json(response)
     }
 };
 
