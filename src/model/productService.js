@@ -270,6 +270,19 @@ const productService = {
             throw new Error('No se pudo procesar la solicitud correctamente');
         }
     },
+
+    getByCategory: async function (idCat) {
+        try {
+            return await db.Product.findAll({
+                where: {
+                    id_categoria : idCat,
+                }
+            })
+        } catch (error) {
+            console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
+        }
+    },
 };
 
 module.exports = productService;
