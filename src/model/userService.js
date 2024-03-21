@@ -95,6 +95,39 @@ const userService = {
       throw new Error("No se pudo procesar la solicitud correctamente");
     }
   },
+
+  getAllApiUsers: async function () {
+    try {
+      let allUsers = await this.getData();
+      let response = {
+        count: allUsers.length,
+        users: allUsers
+      }
+      return response;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }, 
+
+  getApiUserByPk: async function (id) {
+    try {
+      const userFound = await db.User.findByPk(id);
+      let apiUser = {
+        id: userFound.id,
+        nombre: userFound.nombre,
+        apellido: userFound.apellido,
+        email: userFound.email,
+        direccion: userFound.direccion,
+        telefono: userFound.telefono,
+        imagen: userFound.imagen
+      }
+      return apiUser;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  },
 };
 
 
