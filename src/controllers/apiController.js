@@ -73,26 +73,23 @@ const apiController = {
     },
 
     allUsers: async (req, res) => {
-        let allUsers = await userService.findAll();
-        let response = {
-            count: allUsers.length,
-            users: allUsers
+        try {
+            let response = await userService.getAllApiUsers();
+            return res.json(response)
+        } catch (error) {
+            console.error("Error al obtener los usuarios:", error);
+            return res.json([])
         }
-        return res.json(response)
     },
 
     userById: async (req, res) => {
-        let user = await userService.getByPk(req.params.id);
-        let response = {
-            id: user.id,
-            nombre: user.nombre,
-            apellido: user.apellido,
-            email: user.email,
-            direccion: user.direccion,
-            telefono: user.telefono,
-            imagen: user.imagen
+        try {
+            let response = await userService.getApiUserByPk(req.params.id);
+            return res.json(response)
+        } catch (error) {
+            console.error("Error al obtener el usuario:", error);
+            return res.json([])
         }
-        return res.json(response)
     }
 };
 
