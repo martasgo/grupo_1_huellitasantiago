@@ -259,12 +259,25 @@ const productService = {
     },
 
     // Service para actualizar el stock de un producto luego de una compra
-    stockUpdate: async (nuevoStock, productId) => {
+    stockUpdate: async (productsList) => {
         try {
-            return await db.Product.update(
-                {stock: nuevoStock},
-                {where:{id: productId}}
-            )
+            const updateStockPromises = [];
+
+            for (const product of productsList) {
+                let prodId = product.id_product;
+                let cantidad = product.cantidad;
+                let productToUpdate = await productService.getByPk(prodId);
+                let oldStock = productToUpdate.stock;
+                let newStock = parseInt(oldStock) - parseInt(cantidad);
+                let updatedStock = await db.Product.update(
+                    {stock: newStock},
+                    {where:{id: prodId}}
+                );
+                updateStockPromises.push(updatedStock);
+            };
+            
+            await Promise.all(updateStockPromises);
+            
         } catch (error) {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
@@ -283,6 +296,52 @@ const productService = {
             throw new Error('No se pudo procesar la solicitud correctamente');
         }
     },
+
+    getAllApiProducts: async () => {
+        try {
+            let alimentosProducts = await productService.getByCategory(1);
+            let accesoriosProducts = await productService.getByCategory(2);
+            let cuidadoHigieneProducts = await productService.getByCategory(3);
+            let ropaProducts = await productService.getByCategory(4);
+            let allProducts = await productService.getAll();
+            let results = {
+                count: allProducts.length,
+                countByCategory: {
+                    Alimentos: alimentosProducts.length,
+                    Accesorios: accesoriosProducts.length,
+                    Cuidado: cuidadoHigieneProducts.length,
+                    Ropa: ropaProducts.length
+                },
+                products: allProducts
+            };
+            return results
+        } catch (error) {
+            console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
+        }
+        
+    },
+
+    getOneApiProduct: async (id) => {
+        try {
+            let product = await productService.getByPk(id);
+            // Convertir las relaciones a un array en el objeto principal
+            let productJSON = product.toJSON(); // Convierte el objeto Sequelize a JSON
+
+            // Iterar sobre las relaciones y convertirlas a arrays si son objetos
+            for (let key in productJSON) {
+                if (Array.isArray(productJSON[key])) { // Si la propiedad ya es un array, continuar
+                    continue;
+                } else if (typeof productJSON[key] === 'object' && productJSON[key] !== null) { // Si la propiedad es un objeto, convertir a array
+                    productJSON[key] = [productJSON[key]]; // Convertir el objeto a un array de un solo elemento
+                }
+            };
+            return await productJSON
+        } catch (error) {
+            console.log(error);
+            throw new Error('No se pudo procesar la solicitud correctamente');
+        }  
+    }
 };
 
 module.exports = productService;
