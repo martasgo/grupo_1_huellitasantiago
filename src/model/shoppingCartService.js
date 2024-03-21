@@ -17,8 +17,14 @@ const shoppingCartService = {
         }
     },
     // Método para agregar en la DB una orden de compra de un usuario
-    create: async function (orderForDB) {
+    create: async function (userId, order) {
         try {
+            let orderForDB = {
+                id_cliente: parseInt(userId),
+                cantidad_productos: parseInt(order.cantidad_productos),
+                monto_total: parseFloat(order.monto_total),
+                fecha: order.fecha
+            }
             return await db.ShoppingCart.create(orderForDB);
         } catch (error) {
             console.log(error);
