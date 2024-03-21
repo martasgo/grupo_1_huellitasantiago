@@ -72,7 +72,7 @@ window.addEventListener('load', () => {
     
     // FETCH CON LA API DE PRODUCTOS PARA TRAER UN PRODUCTO POR SU ID
 
-    fetch(`/api/product/${productId}`)
+    fetch(`/api/products/${productId}`)
         .then((res) => res.json())
         .then((product) => {
             // Todas las operaciones relacionadas con productCart dentro de este bloque
@@ -157,7 +157,7 @@ window.addEventListener('load', () => {
     if (localStorage.carrito) {
         let carrito = JSON.parse(localStorage.carrito);
         carrito.forEach((item, index) => {
-            fetch(`/api/product/${item.id}`)
+            fetch(`/api/products/${item.id}`)
                 .then((res) => res.json())
                 .then((product) => {
                     if (product) {
