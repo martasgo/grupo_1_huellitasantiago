@@ -303,7 +303,29 @@ const productService = {
             let accesoriosProducts = await productService.getByCategory(2);
             let cuidadoHigieneProducts = await productService.getByCategory(3);
             let ropaProducts = await productService.getByCategory(4);
-            let allProducts = await productService.getAll();
+            let allProducts = await db.Product.findAll({
+                include: ['categories']});
+            let productsList = [];
+            allProducts.forEach(product => {
+                const productWithDetail = {
+                    id: product.id,
+                    name: product.nombre,
+                    description: product.descripcion,
+                    categories: product.categories,
+                    detail: `localhost:3000/api/products/${parseInt(product.id)}`
+                };
+                productsList.push(productWithDetail);
+            });
+            // Iterar sobre las relaciones y convertirlas a arrays si son objetos
+            for (let i = 0; i < productsList.length; i++) {
+                const product = productsList[i];
+                for (let key in product) {
+                    if (typeof product[key] === 'object' && product[key] !== null && !Array.isArray(product[key])) {
+                        // Si la propiedad es un objeto y no es nulo ni un array, conviértela a un array de un solo elemento
+                        product[key] = [product[key]];
+                    }
+                }
+            }
             let results = {
                 count: allProducts.length,
                 countByCategory: {
@@ -312,7 +334,7 @@ const productService = {
                     Cuidado: cuidadoHigieneProducts.length,
                     Ropa: ropaProducts.length
                 },
-                products: allProducts
+                products: productsList
             };
             return results
         } catch (error) {
@@ -336,7 +358,32 @@ const productService = {
                     productJSON[key] = [productJSON[key]]; // Convertir el objeto a un array de un solo elemento
                 }
             };
-            return await productJSON
+            const result = {
+                id: productJSON.id,
+                nombre: productJSON.nombre,
+                descripcion: productJSON.descripcion,
+                precio: productJSON.precio,
+                descuento: productJSON.descuento,
+                mascota: productJSON.pets[0].mascota,
+                imagen: productJSON.imagen,
+                marca: productJSON.brands[0].nombre_marca,
+                edad_mascota: productJSON.pets_ages[0].edad,
+                tamanio_mascota: productJSON.pets_sizes[0].tamanio,
+                destacado: productJSON.destacado,
+                categoria: productJSON.categories[0].nombre,
+                subcategoria: productJSON.sub_categories[0].nombre_sub_category,
+                presentacion: productJSON.packages_sizes[0].cantidad + productJSON.packages_sizes[0].unidad_medida,
+                stock: productJSON.stock,
+                pets_sizes: productJSON.pets_sizes,
+                pets: productJSON.pets,
+                pets_ages: productJSON.pets_ages,
+                categories: productJSON.categories,
+                sub_categories: productJSON.sub_categories,
+                packages_sizes: productJSON.packages_sizes,
+                brands: productJSON.brands,
+                shopping_carts: productJSON.shopping_carts
+            }
+            return await result
         } catch (error) {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
