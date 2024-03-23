@@ -179,23 +179,10 @@
                     <label for="descripcion">Descripción:</label><br>
                     <input class="margen-ancho" name="descripcion" id="descripcion" value="<%= locals.old && locals.old.descripcion ? old.descripcion : producto.descripcion %>"> </input><br>
                     <% if (typeof errors != "undefined" && errors.descripcion) {%>
-                        <small id="msjErrorDesc" class="msjError"><%= errors.descripcion.msg  %></small>
+                        <small id="msjErrorDescripcion" class="msjError"><%= errors.descripcion.msg  %></small>
                     <% } else {%>
-                        <small id="msjErrorDesc" class="msjError"></small>
+                        <small id="msjErrorDescripcion" class="msjError"></small>
                      <% } %>
-                </div>
-
-                <div class="elementos-form">
-                    <label for="newImage" class="form-label">Imagen:</label> <!--SPRINT 4-->
-						<br>
-						<img src="/images/productos/<%= producto.imagen%>" class="actualImg" alt="Imagen Actual" name="newImage">
-						<br>
-              			<input type="file" class="form-upload" name="foto" accept="image/*"/>
-                        <% if (typeof errors != "undefined" && errors.foto) {%>
-                            <small id="msjErrorImg" class="msjError"><%= errors.foto.msg  %></small>
-                        <% } else {%>
-                            <small id="msjErrorImg" class="msjError"></small>
-                         <% } %>
                 </div>
 
                 <div class="elementos-form">
@@ -221,12 +208,24 @@
                     </select>
                     
                 </div>
+
+                <div class="elementos-form">
+                    <label for="newImage" class="form-label">Imagen:</label> <!--SPRINT 4-->
+						<br>
+						<img src="/images/productos/<%= producto.imagen%>" class="actualImg" alt="Imagen Actual" name="newImage">
+						<br>
+              			<input type="file" class="form-upload" name="foto" accept="image/*"/>
+                        <% if (typeof errors != "undefined" && errors.foto) {%>
+                            <small id="msjErrorImg" class="msjError"><%= errors.foto.msg  %></small>
+                        <% } else {%>
+                            <small id="msjErrorImg" class="msjError"></small>
+                         <% } %>
+                </div>
                              
                 <div class="elementos-form-100">
-                    <div id="form-buttons">  
-                        <button type="submit" id="botonguardar" name="botonguardar">GUARDAR</button>
+                    <div id="form-buttons">
                         <a href="/product/list"><button type="button">CANCELAR</button></a>
-                        
+                        <button type="submit" id="botonguardar" name="botonguardar">GUARDAR</button>
                     </div>
                 </div>
             </form>
