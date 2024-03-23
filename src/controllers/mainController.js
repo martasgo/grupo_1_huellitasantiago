@@ -11,7 +11,7 @@ const mainController = {
       let productsDestacado = await productService.getDestacados();
       res.render('home', {
         title: 'Huellitasantiago',
-        productsDestacado,
+        productsDestacado: productsDestacado,
         toThousand        
       });
     },
@@ -19,7 +19,7 @@ const mainController = {
         const productsDiscount = await productService.getDescuento() ;
         res.render('../views/sales.ejs', {
           title: 'Sales',
-          productsDiscount,
+          productsDiscount: productsDiscount,
           toThousand         
         });
       },    
@@ -47,10 +47,15 @@ const mainController = {
     let word = req.body.buscarProd;
     let productsDestacado= await productService.getByKeyWord(word);     
       res.render('../views/busqueda.ejs', {
-      title: 'Busqueda', 
-      productsDestacado,
-      toThousand    
-  });  
+        title: 'Busqueda', 
+        productsDestacado: productsDestacado,
+        toThousand    
+    });  
+  },
+  mediospagoController: (req, res) => {
+    res.render('../views/medios-pagos.ejs', {
+      title: 'Medios de pago'
+    });;
   }
 }
   module.exports = mainController;
