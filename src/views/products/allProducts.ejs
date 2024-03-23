@@ -14,7 +14,7 @@
                 <section>
 
                     <% allProducts.forEach(product=> { %>
-                        <div class="product">
+                        <div class="<%= (product.activo === 1) ? 'product' : 'product-nonActive' %>">
                             <a href="/product/detalle/<%=product.id%>">
                                 <%= product.nombre %>
                             </a>
