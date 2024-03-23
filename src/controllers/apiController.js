@@ -17,7 +17,7 @@ const apiController = {
 
     productById: async (req, res) => {
         try {
-            let productJSON = await productService.getOneApiProduct(req.params.id)
+            let productJSON = await productService.getApiProductById(req.params.id)
             return res.json(productJSON);
         } catch (error) {
             console.error("Error al obtener el producto:", error);
@@ -38,10 +38,10 @@ const apiController = {
             /* POR CADA PRODUCTO DEL ARRAY, SE CREA UN REGISTRO EN LA TABLA CART PRODUCT */
             let orderDetail = await cartProductService.create(createdOrder.id,productsList);
 
-            /* ACTUALIZAMOS EL STOCK DE LOS PRODUCTOS COMPRADOS */
+            /* ACTUALIZAR EL STOCK DE LOS PRODUCTOS COMPRADOS */
             productService.stockUpdate(productsList);
 
-            /* COMPRUEBO CON UN JSON LA INFORMACIÓN QUE VIENE POR POST */
+            /* COMPROBAR CON UN JSON LA INFORMACIÓN QUE VIENE POR POST */
             res.json({ success: true, message: 'Compra realizada con éxito', orderFromUser, createdOrder, orderDetail });
             
         } catch (error) {
