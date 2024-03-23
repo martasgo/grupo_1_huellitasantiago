@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
         return emailRegex.test(email);
       }
 
-      document.querySelector("#send").addEventListener("click", (e) => {
+    document.querySelector("#send").addEventListener("click", (e) => {
         e.preventDefault();
         if (document.querySelector("#email").value == "") {
             document.querySelector("#msjErrorEmail").innerText = "Debe ingresar un email";
@@ -15,6 +15,8 @@ window.addEventListener('load', () => {
             document.querySelector("#msjErrorEmail").innerText = "Debe ingresar un email válido";
         } else {
             alert ('Email enviado')
+            document.querySelector("#msjErrorEmail").innerText = "";
+            document.querySelector("#email").value = "";
         }
     })
 
