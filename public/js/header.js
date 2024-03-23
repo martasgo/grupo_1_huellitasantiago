@@ -195,42 +195,59 @@ window.addEventListener('load', () => {
         });
     };
 
-    // FUNCIÓN PARA MANEJAR EL PROCESO DE "INICIAR COMPRA" - FETCH POST
-    let checkoutCart = document.querySelector('#inicio-compra');
-    checkoutCart.addEventListener('click', (event) => {
-        if (localStorage.getItem('carrito')) {
-            // Obtenemos la fecha y hora actuales
-            let fechaActual = new Date();
-            // Creamos el objeto para mandar por post al método checkout del controller
-            let order = {
-                cantidad_productos: itemsTotales(products),
-                monto_total: totalCarrito(products),
-                fecha: fechaActual.toISOString(),
-                productos: products 
-            };
+    // FUNCIÓN PARA COMPLETAR EL TOTAL CON ENVÍO
+    botonAndreani = document.querySelector('#envio-andreani');
+    botonCorreoArgentino = document.querySelector('#envio-correo-arg');
+    divTotalConEnvio = document.querySelector('#conenvio');
+    botonAndreani.addEventListener('click', () => {
+        divTotalConEnvio.style.display = 'block';
+        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`
+    });
+    botonCorreoArgentino.addEventListener('click', () => {
+        divTotalConEnvio.style.display = 'block';
+        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`
+    });
 
-            // Realizamos la solicitud fetch directamente
-            fetch('/api/checkout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(order)
-            })
-            .then((result)=>result.json())
-            .then((data) => {
-                vaciarCarrito();
-                let userID = document.querySelector('#userId').value;
-                location.href = `/user/compras/${userID}`
-            })
-            .catch(error => {
-                console.error(error);
-                alert('Para iniciar la compra, primero debes loguearte');
-                location.href = '/user/login'
-            });
+    // FUNCIÓN PARA MANEJAR EL PROCESO DE "INICIAR COMPRA" - FETCH POST
+    let checkoutCart = document.querySelector('#finalizar-compra');
+    checkoutCart.addEventListener('click', (event) => {
+        if (!botonAndreani.checked && !botonCorreoArgentino.checked) {
+            alert('Debes seleccionar una opción de envío')
         } else {
-            event.preventDefault();
-            alert('No tienes productos en el carrito para iniciar una compra');
+            if (localStorage.getItem('carrito')) {
+                // Obtenemos la fecha y hora actuales
+                let fechaActual = new Date();
+                // Creamos el objeto para mandar por post al método checkout del controller
+                let order = {
+                    cantidad_productos: itemsTotales(products),
+                    monto_total: Number(document.querySelector('#totalconenvio').innerText),
+                    fecha: fechaActual.toISOString(),
+                    productos: products 
+                };
+    
+                // Realizamos la solicitud fetch directamente
+                fetch('/api/checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(order)
+                })
+                .then((result)=>result.json())
+                .then((data) => {
+                    vaciarCarrito();
+                    let userID = document.querySelector('#userId').value;
+                    location.href = `/user/compras/${userID}`
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Para iniciar la compra, primero debes loguearte');
+                    location.href = '/user/login'
+                });
+            } else {
+                event.preventDefault();
+                alert('No tienes productos en el carrito para iniciar una compra');
+            }
         }
     });
 
@@ -257,6 +274,14 @@ window.addEventListener('load', () => {
                         
                         // Actualiza el subtotal descontando el producto eliminado
                         document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+
+                        // Actualiza el total con envío descontando el producto eliminado
+                        if (botonAndreani.checked) {
+                            document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
+                        };
+                        if (botonCorreoArgentino.checked) {
+                            document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                        }
                         
                         // Actualiza el texto de la cantidad de carrito
                         cantidadCarrito.innerText = 'Carrito: ' + productosEnElCarrito();
@@ -294,6 +319,14 @@ window.addEventListener('load', () => {
         
                     // Actualiza el subtotal final
                     document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+
+                    // Actualiza el total con envío
+                    if (botonAndreani.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
+                    };
+                    if (botonCorreoArgentino.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                    }
         
                     // Actualiza la variable order
                     let order = {
@@ -351,6 +384,14 @@ window.addEventListener('load', () => {
 
                     // Actualiza el subtotal final
                     document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+
+                    // Actualiza el total con envío
+                    if (botonAndreani.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
+                    };
+                    if (botonCorreoArgentino.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                    }
 
                     // Actualiza la variable order
                     let order = {
