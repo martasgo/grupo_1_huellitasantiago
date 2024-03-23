@@ -1,6 +1,16 @@
 window.addEventListener("load", () => {
-    // Capturamos los elementos para trabajar con el form y sus campos
-  
+    // Obtenemos la URL actual
+    let url = window.location.href;
+
+    // Encontramos la posición del último signo igual en la URL
+    let lastIndex = url.lastIndexOf('=');
+    if (lastIndex){
+        let mensaje = url.substring(lastIndex + 1);
+        if (mensaje === 'procesado'){
+            alert('El producto fue procesado correctamente')
+        } 
+     } 
+   
     // Capturamos el formulario
     let form = document.querySelector("#form-alta-prod");
   
@@ -245,8 +255,8 @@ window.addEventListener("load", () => {
                 ulErrores.classList.add("alert-warning");
             }
         } else {
-            alert("El producto se guardó satisfactoriamente");
             form.submit(); // Si no hay errores, enviar el formulario
+            /* alert("El producto se guardó satisfactoriamente");*/
         }
     });
     /* FIN SUBMIT */
