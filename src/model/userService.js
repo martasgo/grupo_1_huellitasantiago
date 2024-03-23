@@ -99,9 +99,20 @@ const userService = {
   getAllApiUsers: async function () {
     try {
       let allUsers = await this.getData();
+      let apiUsers = [];
+      allUsers.forEach(user => {
+        let eachUser = {
+          id: user.id,
+          name: user.nombre,
+          apellido: user.apellido,
+          email: user.email,
+          detail: `localhost:3000/api/users/${user.id}`
+        }
+        apiUsers.push(eachUser)
+      });
       let response = {
         count: allUsers.length,
-        users: allUsers
+        users: apiUsers
       }
       return response;
     } catch (error) {
@@ -110,7 +121,7 @@ const userService = {
     }
   }, 
 
-  getApiUserByPk: async function (id) {
+  getApiUserByPk: async function (id, res) {
     try {
       const userFound = await db.User.findByPk(id);
       let apiUser = {
@@ -120,11 +131,12 @@ const userService = {
         email: userFound.email,
         direccion: userFound.direccion,
         telefono: userFound.telefono,
-        imagen: userFound.imagen
+        imagen: userFound.imagen,
+        categoria: userFound.id_categoria
       }
       return apiUser;
     } catch (error) {
-      console.log(error);
+      console.log('el error es', error);
       return [];
     }
   },
