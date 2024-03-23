@@ -1,27 +1,11 @@
 const { Router } = require("express");
 // IMPORTO EL SERVICE DE PRODUCT
-const productService = require('../model/productService');
 const productController = require("../controllers/productController");
 const router = require("./mainRoute");
-const path = require("path");
-const multer = require("multer");
 const authMiddleware = require ("../middlewares/authMiddleware");
 const adminMiddleware = require ("../middlewares/adminMiddleware");
+const upload = require("../middlewares/multerMiddleware");
 const productValidations = require ("../middlewares/productValidations");
-
-
-// Multer - manejo del almacenamiento
-const storage = multer.diskStorage({
-	destination: (req , file , cb) => {
-		cb (null , path.resolve(__dirname , "../../public/images/productos"));
-	},
-	filename: (req , file , cb) => {
-		cb (null , file.fieldname + "-" + Date.now() + path.extname(file.originalname))
-	}
-});
-
-// Instanciar multer para manejar los métodos
-const upload = multer ({ storage });
 
 const routerProduct = Router();
 
