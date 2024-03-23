@@ -344,7 +344,7 @@ const productService = {
         
     },
 
-    getOneApiProduct: async (id) => {
+    getApiProductById: async (id) => {
         try {
             let product = await productService.getByPk(id);
             // Convertir las relaciones a un array en el objeto principal
@@ -371,8 +371,8 @@ const productService = {
                 tamanio_mascota: productJSON.pets_sizes[0].tamanio,
                 destacado: productJSON.destacado,
                 categoria: productJSON.categories[0].nombre,
-                subcategoria: productJSON.sub_categories[0].nombre_sub_category,
-                presentacion: productJSON.packages_sizes[0].cantidad + productJSON.packages_sizes[0].unidad_medida,
+                subcategoria: productJSON.sub_categories !== null ? productJSON.sub_categories[0].nombre_sub_category : null,
+                presentacion: productJSON.packages_sizes !== null ? productJSON.packages_sizes[0].cantidad + ' ' + productJSON.packages_sizes[0].unidad_medida : null,
                 stock: productJSON.stock,
                 pets_sizes: productJSON.pets_sizes,
                 pets: productJSON.pets,
