@@ -189,24 +189,41 @@ window.addEventListener('load', () => {
                     
                 })
                 .then( () => {
-                    document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`
+                    document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+                    // FUNCIÓN PARA COMPLETAR EL TOTAL CON ENVÍO
+                    botonAndreani = document.querySelector('#envio-andreani');
+                    botonCorreoArgentino = document.querySelector('#envio-correo-arg');
+                    divTotalConEnvio = document.querySelector('#conenvio');
+                    if (localStorage.getItem('envioAndreani')) {
+                        botonAndreani.checked = true;
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`
+                    }
+                    else if (localStorage.getItem('envioCorreo')) {
+                        botonCorreoArgentino.checked = true;
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`
+                    } 
+                    botonAndreani.addEventListener('click', () => {
+                        localStorage.setItem('envioAndreani', botonAndreani.value);
+                        if (localStorage.getItem('envioCorreo')) {
+                            localStorage.removeItem('envioCorreo')
+                        }
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`
+                    });
+                    botonCorreoArgentino.addEventListener('click', () => {
+                        localStorage.setItem('envioCorreo', botonCorreoArgentino.value);
+                        if (localStorage.getItem('envioAndreani')) {
+                            localStorage.removeItem('envioAndreani')
+                        }
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`
+                    });
                 }
                 )
         });
-    };
-
-    // FUNCIÓN PARA COMPLETAR EL TOTAL CON ENVÍO
-    botonAndreani = document.querySelector('#envio-andreani');
-    botonCorreoArgentino = document.querySelector('#envio-correo-arg');
-    divTotalConEnvio = document.querySelector('#conenvio');
-    botonAndreani.addEventListener('click', () => {
-        divTotalConEnvio.style.display = 'block';
-        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`
-    });
-    botonCorreoArgentino.addEventListener('click', () => {
-        divTotalConEnvio.style.display = 'block';
-        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`
-    });
+    };    
 
     // FUNCIÓN PARA MANEJAR EL PROCESO DE "INICIAR COMPRA" - FETCH POST
     let checkoutCart = document.querySelector('#finalizar-compra');
@@ -220,7 +237,7 @@ window.addEventListener('load', () => {
                 // Creamos el objeto para mandar por post al método checkout del controller
                 let order = {
                     cantidad_productos: itemsTotales(products),
-                    monto_total: Number(document.querySelector('#totalconenvio').innerText),
+                    monto_total: totalCarrito(products),
                     fecha: fechaActual.toISOString(),
                     productos: products 
                 };
@@ -237,7 +254,13 @@ window.addEventListener('load', () => {
                 .then((data) => {
                     vaciarCarrito();
                     let userID = document.querySelector('#userId').value;
-                    location.href = `/user/compras/${userID}`
+                    location.href = `/user/compras/${userID}`;
+                    if (localStorage.getItem('envioAndreani')) {
+                        localStorage.removeItem('envioAndreani')
+                    }
+                    else if (localStorage.getItem('envioCorreo')) {
+                        localStorage.removeItem('envioCorreo')
+                    }
                 })
                 .catch(error => {
                     console.error(error);
