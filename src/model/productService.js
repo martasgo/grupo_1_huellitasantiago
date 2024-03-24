@@ -48,7 +48,7 @@ const productService = {
     },
     // Service para obtener todos los productos agrupados de a "totalItems"(cantidad) productos
     // Sirve para aplicar en paginados
-    getAllByGroup: async (page = 1, totalItems) => {
+    /* getAllByGroup: async (page = 1, totalItems) => {
         try {
             const pageSize = totalItems; // Cantidad de productos por página
             const startIndex = (page - 1) * pageSize;
@@ -67,18 +67,44 @@ const productService = {
             console.log(error);
             throw new Error('Error en la solicitud');
         }
-    },
+    }, */
 
     //Service para paginacion
-    getPagination: async (page) =>{
+    getPagination: async (page, allItems, itemsPerPage ) =>{
         try {
-            const allProducts = await productService.getAllByGroup(page, 5);
-  
+            //const allProducts = await productService.getAllByGroup(page, 5);
             // Obtener el número total de productos para calcular el número total de páginas
-            // TODO ver si podemos reemplazar por productService.getAll, result.length()
-            const totalProducts = await db.Product.count();
-            const totalPages = Math.ceil(totalProducts / 5); // Uso la misma cantidad de pagesize usada en el servicio
-            
+            // const totalProducts = await db.Product.count();
+            const pageSize = itemsPerPage; // Cantidad de productos por página
+            const startIndex = (page - 1) * pageSize;
+            const endIndex = page * pageSize;
+            let allProducts = [];
+
+            if (allItems === 1) {
+                // veo de traer todos los productos activos y no (eliminados logicamente)
+                allProducts = await db.Product.findAll({
+                    offset: startIndex,
+                    limit: pageSize,
+                    order: [
+                        ['nombre', 'ASC']
+                    ]
+                });
+                productTable = await db.Product.findAll();
+            } else {
+                // veo de traer solo los productos activos
+                allProducts = await db.Product.findAll({
+                    activo: 1,
+                    offset: startIndex,
+                    limit: pageSize,
+                    order: [
+                        ['nombre', 'ASC']
+                    ]
+                });
+                productTable = await productService.getAll();
+            }
+    
+            let totalProducts = productTable.length;
+            const totalPages = Math.ceil(totalProducts / itemsPerPage); // Uso la misma cantidad de pagesize usada en el servicio
             return {allProducts, totalPages};
         } catch (error) {
             console.log(error);

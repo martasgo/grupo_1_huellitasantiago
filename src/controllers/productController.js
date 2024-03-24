@@ -26,7 +26,7 @@ const prodController = {
     list: async (req, res) => {
       try {
           const page = parseInt(req.query.page) || 1;
-          const { allProducts, totalPages} = await productService.getPagination(page);
+          const { allProducts, totalPages} = await productService.getPagination(page, 1, 10);
           return res.render('../views/products/allProducts.ejs', {
               title: 'Listado completo de productos',
               allProducts: allProducts,
