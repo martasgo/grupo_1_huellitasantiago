@@ -61,8 +61,20 @@ window.addEventListener('load', () => {
         // Vacía el array de products
         products = [];
 
-        // Actualiza el subtotal descontando el producto eliminado
+        // Actualiza el subtotal sin envío
         document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+
+        // Actualiza el total con envío
+        if (localStorage.getItem('envioAndreani')) {
+            localStorage.removeItem('envioAndreani');
+            document.querySelector('#envio-andreani').checked = false;
+            document.querySelector('#conenvio').style.display = 'none'
+        }
+        else if (localStorage.getItem('envioCorreo')) {
+            localStorage.removeItem('envioCorreo');
+            document.querySelector('#envio-correo-arg').checked = false;
+            document.querySelector('#conenvio').style.display = 'none'
+        }
     };
     
     linkVaciarCarrito.addEventListener('click', (event) => {
@@ -228,10 +240,10 @@ window.addEventListener('load', () => {
     // FUNCIÓN PARA MANEJAR EL PROCESO DE "INICIAR COMPRA" - FETCH POST
     let checkoutCart = document.querySelector('#finalizar-compra');
     checkoutCart.addEventListener('click', (event) => {
-        if (!botonAndreani.checked && !botonCorreoArgentino.checked) {
-            alert('Debes seleccionar una opción de envío')
-        } else {
-            if (localStorage.getItem('carrito')) {
+        if (localStorage.getItem('carrito')) {
+            if (!document.querySelector('#envio-andreani').checked && !document.querySelector('#envio-correo-arg').checked) {
+                alert('Debes seleccionar una opción de envío')
+            } else {
                 // Obtenemos la fecha y hora actuales
                 let fechaActual = new Date();
                 // Creamos el objeto para mandar por post al método checkout del controller
@@ -267,10 +279,10 @@ window.addEventListener('load', () => {
                     alert('Para iniciar la compra, primero debes loguearte');
                     location.href = '/user/login'
                 });
-            } else {
-                event.preventDefault();
-                alert('No tienes productos en el carrito para iniciar una compra');
             }
+        } else {
+            event.preventDefault();
+            alert('No tienes productos en el carrito para iniciar una compra'); 
         }
     });
 
@@ -299,11 +311,25 @@ window.addEventListener('load', () => {
                         document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
 
                         // Actualiza el total con envío descontando el producto eliminado
-                        if (botonAndreani.checked) {
-                            document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
-                        };
-                        if (botonCorreoArgentino.checked) {
-                            document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                        if (products.length == 0) {
+                            localStorage.removeItem('carrito')
+                            if (localStorage.getItem('envioAndreani')) {
+                                localStorage.removeItem('envioAndreani');
+                                document.querySelector('#envio-andreani').checked = false;
+                                document.querySelector('#conenvio').style.display = 'none'
+                            }
+                            else if (localStorage.getItem('envioCorreo')) {
+                                localStorage.removeItem('envioCorreo');
+                                document.querySelector('#envio-correo-arg').checked = false;
+                                document.querySelector('#conenvio').style.display = 'none'
+                            }
+                        } else {
+                            if (botonAndreani.checked) {
+                                document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
+                            };
+                            if (botonCorreoArgentino.checked) {
+                                document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                            }
                         }
                         
                         // Actualiza el texto de la cantidad de carrito
