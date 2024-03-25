@@ -347,8 +347,7 @@ const productService = {
     getApiProductById: async (id) => {
         try {
             let product = await productService.getByPk(id);
-            // Convertir las relaciones a un array en el objeto principal
-            let productJSON = product.toJSON(); // Convierte el objeto Sequelize a JSON
+            let productJSON = await product.toJSON();
 
             // Iterar sobre las relaciones y convertirlas a arrays si son objetos
             for (let key in productJSON) {
