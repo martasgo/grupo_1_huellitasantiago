@@ -28,7 +28,7 @@ summary{
 
 /*Sección Envío Logos de andreani y correo argentino*/
 .imgEnvioCheckout{
-    width: 10%;
+    width: 60%;
     font-size: 12px;
 }
 
@@ -201,20 +201,14 @@ button#submit-checkout {
 }
 
 .select-envio{
+    margin: auto;
     align-items: center;
-    width: auto;
+    justify-content: space-around;
+    width: 90%;
     text-align: center;
     display: flex;
 }
 
-.select-envio label{
-    display: contents;
-}
-
-.select-envio input{
-    display: flex;
-    align-items: center;
-}
 
 
 /*Formulario checkout-Errores*/

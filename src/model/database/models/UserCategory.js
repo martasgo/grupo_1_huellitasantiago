@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },    
-      mascota: {
+      nombre: {
         type: DataTypes.STRING,
         allowNull: false,
       },
