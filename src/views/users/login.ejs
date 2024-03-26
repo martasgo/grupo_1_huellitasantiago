@@ -23,13 +23,10 @@
                 <input type="email" name="email" id="email" value="<%= locals.old ? old.email : null %>">
                 <small id="error-email" class="msjError"></small>
                 
-
                 <% if (typeof errors != "undefined" && errors.email) {%>
                     <p class="msjError"> <%= errors.email.msg  %> </p>
                 <% } %>
-
-                <br>
-                <br>
+                
                 <label for="contraseña">Contraseña</label> 
                 <input type="password" name="contraseña" id="contraseña">
                 <small id="error-contraseña" class="msjError"></small>
@@ -44,17 +41,14 @@
                 <% } %>
 
                 <p class="olvidasteclave"><a href="#">¿Olvidaste tu contraseña?</a></p>
-                <br>
-                <br>
+                
                 <div class="opcionrecordarme">
                     <label for="recordarme">Recordarme</label>
                     <input type="checkbox" name="recordarme">
                 </div>
                 <br>
-                <br>
                 <button type="submit">INICIAR SESIÓN</button>
-                <br>
-                <br>
+                
                 <p class="notenescuenta">¿No tenés cuenta? <br>
                 <a href="/user/register"><strong>Crear cuenta</strong></a></p>
             </form>
