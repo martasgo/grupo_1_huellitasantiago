@@ -7,64 +7,43 @@ const userService = require ('../model/userService');
 const apiController = {
 
     allProducts: async (req, res) => {
-        let products = await productService.getAll();
-        return res.json(products)
+        try {
+            let results = await productService.getAllApiProducts();
+            return res.json(results);
+        } catch (error) {
+            console.error("Error al obtener los productos:", error);
+            return res.json([]);
+        }
     },
 
     productById: async (req, res) => {
-        let product = await productService.getByPk(req.params.id);
-        return res.json(product)
+        try {
+            let productJSON = await productService.getApiProductById(req.params.id)
+            return res.json(productJSON);
+        } catch (error) {
+            console.error("Error al obtener el producto:", error);
+            return res.json([]);
+        }     
     },
 
     checkout: async (req, res) => {
         try {
-            /* GUARDAR EN UNA VARIABLE LA ORDEN QUE VIENE POR POST DESDE EL INDEX CARRITO */
             let orderFromUser = req.body;
-            
-            /* DE LA VARIABLE ANTERIOR, TOMAR SOLO LOS DATOS QUE SIRVAN PARA INSERTAR EL REGISTRO EN LA TABLA SHOPPING CARTS, Y GUARDARLOS EN UNA VARIABLE*/
-            let orderForDB = {
-                id_cliente: parseInt(req.session.userLogged.id),
-                cantidad_productos: parseInt(orderFromUser.cantidad_productos),
-                monto_total: parseFloat(orderFromUser.monto_total),
-                fecha: orderFromUser.fecha
-            };
 
             /* INSERTAR EL REGISTRO EN LA TABLA SHOPPING CARTS */
-            let createdOrder = await shoppingCartService.create(orderForDB);
+            let createdOrder = await shoppingCartService.create(req.session.userLogged.id, orderFromUser);
 
             /* GUARDAR EN UNA VARIABLE EL ARRAY DE PRODUCTOS QUE VIENE POR POST */
             let productsList = orderFromUser.productos;
            
             /* POR CADA PRODUCTO DEL ARRAY, SE CREA UN REGISTRO EN LA TABLA CART PRODUCT */
-            productsList.forEach (product => {
-                let orderDetail = {
-                    // el id es autoincremental
-                    id_shopping_cart: createdOrder.id,
-                    id_product: product.id_product,
-                    precio: product.precio,
-                    cantidad: product.cantidad,
-                    descuento: product.descuento
-                };
+            let orderDetail = await cartProductService.create(createdOrder.id,productsList);
 
-                return cartProductService.create(orderDetail)
-            });
+            /* ACTUALIZAR EL STOCK DE LOS PRODUCTOS COMPRADOS */
+            productService.stockUpdate(productsList);
 
-            /* COMPRUEBO CON UN JSON LA INFORMACIÓN QUE VIENE POR POST */
-            res.json({ success: true, message: 'Compra realizada con éxito', orderFromUser, orderForDB });
-
-            /* ACTUALIZAMOS EL STOCK DE LOS PRODUCTOS COMPRADOS */
-            const updateStockPromises = [];
-
-            for (const product of productsList) {
-                let prodId = product.id_product;
-                let cantidad = product.cantidad;
-                let productToUpdate = await productService.getByPk(prodId);
-                let oldStock = productToUpdate.stock;
-                let newStock = parseInt(oldStock) - parseInt(cantidad);
-                updateStockPromises.push(productService.stockUpdate(newStock, prodId));
-            };
-            
-            await Promise.all(updateStockPromises);
+            /* COMPROBAR CON UN JSON LA INFORMACIÓN QUE VIENE POR POST */
+            res.json({ success: true, message: 'Compra realizada con éxito', orderFromUser, createdOrder, orderDetail });
             
         } catch (error) {
             console.error(error);
