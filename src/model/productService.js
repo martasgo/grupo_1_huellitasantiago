@@ -528,8 +528,35 @@ const productService = {
 
         try {   
             console.log(query)
-            return await db.Product.findAll(query);
-            
+            // return await db.Product.findAll(query);
+            resultado = await db.Product.findAll(query);
+
+            // Filtrar los productos con descuento
+            let productosConDescuento = resultado.filter(producto => producto.descuento);
+
+            // Filtrar los productos sin descuento
+            let productosSinDescuento = resultado.filter(producto => !producto.descuento);
+            console.log("Productos con descuento:", productosConDescuento);
+            console.log("Productos sin descuento:", productosSinDescuento);
+
+            productosConDescuento = productosConDescuento.filter(producto => {
+                valor = (producto.precio - (producto.precio * (producto.descuento / 100)));
+                if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
+                   if (parseInt(filtros.precioDesde) < valor && valor < parseInt(filtros.precioHasta)) {
+                        productosSinDescuento.push(producto);
+                   } 
+                } else if (filtros.precioDesde !== ''){
+                    if (parseInt(filtros.precioDesde) < valor){
+                        productosSinDescuento.push(producto);
+                    }
+                }else if (filtros.precioHasta !== ''){
+                    if (valor < parseInt(filtros.precioHasta)){
+                        productosSinDescuento.push(producto);
+                    }
+                }
+            });
+            console.log("FINAL:", productosSinDescuento);
+            return productosSinDescuento;
         } catch (error) {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
