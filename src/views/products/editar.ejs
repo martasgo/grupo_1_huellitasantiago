@@ -200,10 +200,10 @@
                     <select class="margen-ancho" id="estado" name="estado">
                         <% if (locals.old) { %>
                             <option value=1 <% if (locals.old.estado == 1)  { %> selected <% } %>>Activo</option>
-                            <option value=0 <% if (locals.old.estado == 0)  { %> selected <% } %>>Eliminado</option>
+                            <option value=0 <% if (locals.old.estado == 0)  { %> selected <% } %>>Inactivo</option>
                         <% } else { %>
                             <option value=1 <% if (producto.activo == 1)  { %> selected <% } %>>Activo</option>
-                            <option value=0 <% if (producto.activo == 0)  { %> selected <% } %>>Eliminado</option>
+                            <option value=0 <% if (producto.activo == 0)  { %> selected <% } %>>Inactivo</option>
                         <% } %>
                     </select>
                     
