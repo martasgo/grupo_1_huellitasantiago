@@ -329,10 +329,10 @@ const productService = {
             let results = {
                 count: allProducts.length,
                 countByCategory: {
-                    Alimentos: alimentosProducts.length,
-                    Accesorios: accesoriosProducts.length,
-                    Cuidado: cuidadoHigieneProducts.length,
-                    Ropa: ropaProducts.length
+                    'Alimentos': alimentosProducts.length,
+                    'Accesorios': accesoriosProducts.length,
+                    'Cuidado e Higiene': cuidadoHigieneProducts.length,
+                    'Ropa': ropaProducts.length
                 },
                 products: productsList
             };
