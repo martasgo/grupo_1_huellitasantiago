@@ -5,13 +5,13 @@ const authMiddleware = require ("../middlewares/authMiddleware");
 const router = Router();
 
 const routes = {
-  allProducts: '/products',
-  productById: '/product/:id',
+  products: '/products',
+  productsById: '/products/:id',
   checkout: '/checkout'
 };
 
-router.get(routes.productById, controller.productById);
-router.get(routes.allProducts, controller.allProducts);
+router.get(routes.products, controller.allProducts)
+router.get(routes.productsById, controller.productById);
 router.post(routes.checkout, authMiddleware, controller.checkout)
 
 module.exports = router;
