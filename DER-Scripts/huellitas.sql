@@ -24,6 +24,7 @@ CREATE TABLE users (
  telefono BIGINT NULL,
  imagen VARCHAR(25) NOT NULL,
  id_categoria INT NOT NULL,
+ activo TINYINT NOT NULL,
  
  FOREIGN KEY (id_categoria) REFERENCES users_categories(id)
 );
@@ -94,6 +95,7 @@ CREATE TABLE products (
     id_sub_categoria INT NULL, 
     id_presentacion INT NULL,
     stock INT NOT NULL,
+    activo_prod TINYINT NOT NULL,
     
     FOREIGN KEY (id_mascota) REFERENCES pets(id),
     FOREIGN KEY (id_marca) REFERENCES brands(id),
