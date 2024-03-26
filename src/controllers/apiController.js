@@ -2,6 +2,7 @@
 const productService = require('../model/productService');
 const shoppingCartService = require ('../model/shoppingCartService');
 const cartProductService = require ('../model/cartProductService');
+const userService = require ('../model/userService');
 
 const apiController = {
 
@@ -47,6 +48,26 @@ const apiController = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ success: false, message: 'Error interno del servidor' });
+        }
+    },
+
+    allUsers: async (req, res) => {
+        try {
+            let response = await userService.getAllApiUsers();
+            return res.json(response)
+        } catch (error) {
+            console.error("Error al obtener los usuarios:", error);
+            return res.json([])
+        }
+    },
+
+    userById: async (req, res) => {
+        try {
+            let response = await userService.getApiUserByPk(req.params.id);
+            return res.json(response)
+        } catch (error) {
+            console.error("Error al obtener el usuario:", error);
+            return res.json([])
         }
     }
 };
