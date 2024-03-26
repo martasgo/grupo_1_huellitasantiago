@@ -10,7 +10,7 @@
         <%- include('../partials/header') %>
             <main>
                 <p class="rutahome">
-                    <a href="/user/profile">Perfil</a> / Listado de ventas /
+                    <a href="/users/<%= user.id%>/profile">Perfil</a> / Listado de ventas /
                 </p>
                 <section class="compra-user">
                     <% ventas.forEach(venta=> { %>
