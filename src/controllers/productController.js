@@ -210,7 +210,6 @@ const prodController = {
     },
 
     //Controlador para eliminar producto por su ID
-    // TODO BORRADO LOGICO
     eliminarController: async (req, res) =>{
       let idProduct = parseInt(req.params.id);
       try {
