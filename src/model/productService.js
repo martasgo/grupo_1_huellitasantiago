@@ -46,29 +46,7 @@ const productService = {
             throw new Error('Error en la solicitud para obtener los servicios:', error);
         }
     },
-    // Service para obtener todos los productos agrupados de a "totalItems"(cantidad) productos
-    // Sirve para aplicar en paginados
-    /* getAllByGroup: async (page = 1, totalItems) => {
-        try {
-            const pageSize = totalItems; // Cantidad de productos por página
-            const startIndex = (page - 1) * pageSize;
-            const endIndex = page * pageSize;
     
-            const allProducts = await db.Product.findAll({
-                offset: startIndex,
-                limit: pageSize,
-                order: [
-                    ['nombre', 'ASC']
-                ]
-            });
-    
-            return allProducts;
-        } catch (error) {
-            console.log(error);
-            throw new Error('Error en la solicitud');
-        }
-    }, */
-
     //Service para paginacion
     getPagination: async (page, allItems, itemsPerPage ) =>{
         try {
@@ -476,7 +454,10 @@ const productService = {
     // Service para aplicar los filtros que se muestran en la vista listado.ejs
     getAllByFileters: async function(filtros, valorMascota, valorCat, valorSubCat){
         let query = {
-            where: {}
+            where: {},
+            order: [
+                ['nombre', 'ASC']
+            ]
           };
         
         query.where.activo = 1;

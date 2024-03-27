@@ -170,9 +170,7 @@ const prodController = {
 
         } else {
             let resultEdit = await productService.editProdInfo(req, producto);
-            console.log(resultEdit)
-           // return res.render('')
-          return res.redirect(`/product/editar/${idProd}?mensaje=procesado`);
+            return res.redirect(`/product/editar/${idProd}?mensaje=procesado`);
         }
       } catch (error) {
         console.log(error);
