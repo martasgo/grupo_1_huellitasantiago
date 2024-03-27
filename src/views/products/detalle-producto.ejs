@@ -31,7 +31,7 @@
                         <p class="precioAhora" id="">$<%= toThousand(producto.precio) %> </p>
                     <% } %>
                     <div id="comprar">
-                        <div> <button class="cantidad-icono" id="botonsumar">+</button> <input type="number" value="" class="cantidad-producto" id="cantidadproducto" name="cantidadproducto" placeholder='0'> <button class="cantidad-icono" id="botonrestar">-</button></div>
+                        <div> <button class="cantidad-icono" id="botonsumar">+</button> <input type="number" value="" class="cantidad-producto" id="cantidadproducto" name="cantidadproducto" placeholder='0' readonly> <button class="cantidad-icono" id="botonrestar">-</button></div>
                         <div>
                             <button class="addtocart" data-id="<%= producto.id%>">
                                 Agregar al carrito
