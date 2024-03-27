@@ -150,20 +150,22 @@ function validarExtension(fotoname){
 }
 
 function validarFoto(foto){
+  let archivo = foto.files[0];  
   ocultarError(foto.nextElementSibling.nextElementSibling);  
   mostrarAyuda(foto.nextElementSibling);  
-  if (foto.value){
-    if(!validarExtension(foto.value)){
-    ocultarAyuda(foto.nextElementSibling);     
-    mostrarError(foto.nextElementSibling.nextElementSibling);
-    return false;
-    }            
-  } else {
-    ocultarError(foto.nextElementSibling.nextElementSibling);  
-    mostrarAyuda(foto.nextElementSibling);
-    return true;        
+  if (!foto){
+    return true;
   }
+  if(archivo && !validarExtension(foto.value)){  
+  ocultarAyuda(foto.nextElementSibling);     
+  mostrarError(foto.nextElementSibling.nextElementSibling);
+  return false;
+  }
+  ocultarError(foto.nextElementSibling.nextElementSibling);  
+  mostrarAyuda(foto.nextElementSibling);
+  return true;    
 }
+
 
 //VALIDACIONES CON SUBMIT
 let formRegistro = document.querySelector("#formRegistro");
@@ -180,6 +182,7 @@ formRegistro.addEventListener("submit", (event) => {
   let contraseniaValida = validarContrasenia(contrasenia);
   let confirmarValido = validarConfirmar(confirmar, contrasenia);
   let fotoValida = validarFoto(foto);
+  console.log(fotoValida)
 
   // Validaciones exitosas (true)
   if (nombreValido && apellidoValido && emailValido && direccionValida && telefonoValido && contraseniaValida && confirmarValido && fotoValida) {
