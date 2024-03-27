@@ -233,6 +233,27 @@ article img {
   border-top: double 3px grey;  
 }
 
+.enviometodos {
+  margin: auto;
+  padding: 15px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
+  width: 30%;
+  border: 1px solid rgb(172, 167, 167);
+  border-radius: 5px;
+}
+
+.pagocompra {
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid rgb(172, 167, 167);
+  border-radius: 5px;
+  width: 50%
+}
+
 #breadcrumbs{
   border-top: solid 2px gray;
   padding: 5px 20px;
@@ -304,7 +325,7 @@ p#descripcion{
   font-weight: bold;
 }
 
-#aplicar-cod, #inicio-compra, #seguir-compra{
+#aplicar-cod, #inicio-compra, #seguir-compra, #finalizar-compra{
   background-color: #6dbd9bff;
   border: 2px black solid;
   padding: 10px 25px;
@@ -317,12 +338,12 @@ p#descripcion{
   text-align: center;
 }
 
-#aplicar-cod:hover, #inicio-compra:hover, #seguir-compra:hover{
+#aplicar-cod:hover, #inicio-compra:hover, #seguir-compra:hover, #finalizar-compra:hover{
   background-color: #fbdd5bff;
 }
 
 .detalle-compra{
-  text-align: right;
+  text-align: left;
   font-weight: bold;
 }
 
@@ -978,7 +999,15 @@ button a {
   /*CSS Cart Page tablet en adelante*/
 
   .detalle-compra{
-    text-align: right;   
+    margin: auto;
+    text-align: center;  
+    border: 1px black solid;
+    border-radius: 5px; 
+    width: 20%;
+    background-color: rgb(209, 206, 206);
+  }
+  #conenvio {
+    display: none;
   }
 
   .detalle-producto{

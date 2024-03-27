@@ -44,17 +44,67 @@
             <div class="resumen-compra">      
                 <div class="detalle-compra">
                   <p>TOTAL SIN ENVÍO: $ <span id="subtotalfinal"></span></p>
-                </div>
+            </div>
+
+            <div> 
+              <div class="enviometodos">
+                <p class="title-form-checkout">Seleccione el método de envío</p>
+                <div class="select-envio">  
+                    <div>
+                      <input type="radio" name="envio" id="envio-andreani" value="5000"> <img class="imgEnvioCheckout" src="/images/andreani.png" alt="andreani">
+                      <p>$ 5000</p>
+                    </div>  
+                    <div>
+                      <input type="radio" name="envio" id="envio-correo-arg" value="3000"> <img class="imgEnvioCheckout" src="/images/correo-argentino.png" alt="correo-argentino">
+                      <p>$ 3000</p>
+                    </div>   
+                    
+                </div>  
+              </div>
+              
+
+              <div class="detalle-compra" id="conenvio">
+                <p>TOTAL CON ENVÍO: $ <span id="totalconenvio"></span></p>
+              </div>
+              
+              <div class="pagocompra">
+                <p class="title-form-checkout">Medios de pago</p>
+                <p class="">Actualmente sólo trabajamos con transferencia banciaria. Los datos para realizar la misma son:</p>
+                    <ul>
+                        <li>
+                            Nro de cuenta: XXX-0875
+                        </li>
+                        <li>
+                            Nro de CBU: 0112258547555548001
+                        </li>
+                        <li>
+                            Alias CBU: huellitas.santiago
+                        </li>
+                        <li>
+                            Titular: Soledad Smith
+                        </li>
+                        <li>
+                            Banco: Hipotecario
+                        </li>
+                        
+                        
+                    </ul>
+                <p class="">Por favor envíe el comprobante de la transferencia a este correo: info.pedidos@huellitasantiago.com</p>
+              </div>
+              
+
+            </div>
+
                 <div class="center"><!--Botones Inicio compra-->
-                  <button type="button" id="inicio-compra">Iniciar Compra</button>
-                       
-                
+
                   <a href="/product"><input
                     type="button"
                     name="seguir-compra"
                     id="seguir-compra" 
-                    value="SEGUIR COMPRANDO"
+                    value="VER MÁS PRODUCTOS"
                   /></a>
+
+                  <button type="button" id="finalizar-compra">FINALIZAR COMPRA</button>
                 </div>
         </div><!--Fin Cart-Sección completa -->
 
