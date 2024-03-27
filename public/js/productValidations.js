@@ -256,7 +256,6 @@ window.addEventListener("load", () => {
             }
         } else {
             form.submit(); // Si no hay errores, enviar el formulario
-            /* alert("El producto se guardó satisfactoriamente");*/
         }
     });
     /* FIN SUBMIT */
