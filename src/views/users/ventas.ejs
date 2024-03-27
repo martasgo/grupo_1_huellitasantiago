@@ -13,42 +13,45 @@
                     <a href="/user/profile">Perfil</a> / Listado de ventas /
                 </p>
                 <section class="compra-user">
-                    <% ventas.forEach(venta=> { %>
-                        <div class="comprasUser">
-                            <ul>
-                                <li>
-                                    <strong>Fecha de compra: </strong>
-                                    <%= venta.fecha.toLocaleDateString() %>
-                                        <%= venta.fecha.toLocaleTimeString() %>
-                                            <strong>- Cliente: </strong> <%= venta.users.nombre %> <%= venta.users.apellido %>
-                                            <strong> - Monto: </strong>$ <%= venta.monto_total %> <%= venta.total_compras %>  <%= venta.sumaTotal %>
-                                            <button id="detalle" data-compra-id="<%= venta.id %>" class="detalle-prod">
-                                                <strong>Detalle de productos</strong>
-                                            </button>
-                                                <div class="detalleProductoCompra" id="detalle-<%= venta.id %>">
-                                                    <ul>
-                                                        <% orderedProducts.forEach(product=> { %>
-                                                            <% if (venta.id==product.id_shopping_cart) { %>
-                                                                <li> <label class="txt-detalle">Producto:</label>
-                                                                    <%= product.product.nombre %> - <label
-                                                                            class="txt-detalle">Cantidad:</label>
-                                                                    <%= product.cantidad %> - <label
-                                                                                class="txt-detalle">Precio:</label>
-                                                                    <%= product.precio %>
-                                                                                - <label
-                                                                                    class="txt-detalle">Descuento:</label>
-                                                                    <%= product.descuento %>%
-                                                                </li>
-                                                            <% } %>
-                                                        <% }) %>
-                                                    </ul>
-                                                </div>
+                    <% if (ventas && ventas.length > 0) {%>
+                        <% ventas.forEach(venta=> { %>
+                            <div class="comprasUser">
+                                <ul>
+                                    <li>
+                                        <strong>Fecha de compra: </strong>
+                                        <%= venta.fecha.toLocaleDateString() %>
+                                            <%= venta.fecha.toLocaleTimeString() %>
+                                                <strong>- Cliente: </strong> <%= venta.users.nombre %> <%= venta.users.apellido %>
+                                                <strong> - Monto: </strong>$ <%= venta.monto_total %> <%= venta.total_compras %>  <%= venta.sumaTotal %>
+                                                <button id="detalle" data-compra-id="<%= venta.id %>" class="detalle-prod">
+                                                    <strong>Detalle de productos</strong>
+                                                </button>
+                                                    <div class="detalleProductoCompra" id="detalle-<%= venta.id %>">
+                                                        <ul>
+                                                            <% orderedProducts.forEach(product=> { %>
+                                                                <% if (venta.id==product.id_shopping_cart) { %>
+                                                                    <li> <label class="txt-detalle">Producto:</label>
+                                                                        <%= product.product.nombre %> - <label
+                                                                                class="txt-detalle">Cantidad:</label>
+                                                                        <%= product.cantidad %> - <label
+                                                                                    class="txt-detalle">Precio:</label>
+                                                                        <%= product.precio %>
+                                                                                    - <label
+                                                                                        class="txt-detalle">Descuento:</label>
+                                                                        <%= product.descuento %>%
+                                                                    </li>
+                                                                <% } %>
+                                                            <% }) %>
+                                                        </ul>
+                                                    </div>
 
-                                </li>
-                            </ul>
-                        </div>
-
+                                    </li>
+                                </ul>
+                            </div>
                         <% }); %>
+                    <% } else { %>
+                        <p class="negrita">*** NO HAY VENTAS REGISTRADAS HASTA EL MOMENTO ***</p>
+                    <% } %>
                 </section>
             </main>
 
