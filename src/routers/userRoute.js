@@ -33,7 +33,7 @@ routerUsers.get(routesUser.logoutRoute, userController.logoutController);
 routerUsers.get(routesUser.comprasRoute, authMiddleware, userController.compras);
 
 routerUsers.get(routesUser.deleteRoute,authMiddleware, userController.deleteController);
-routerUsers.delete(routesUser.deleteRoute,authMiddleware, userController.destroyController);
+routerUsers.delete(routesUser.deleteRoute, authMiddleware, userController.destroyController);
 
 // get-post form registración
 routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.registerController);
@@ -44,7 +44,7 @@ routerUsers.get(routesUser.listUsersRoute, authMiddleware, adminMiddleware, user
 routerUsers.get(routesUser.salesAdminRoute, authMiddleware, adminMiddleware, userController.salesListController);
 
 //editar y guardar registro de usuario, YA Registrado!-Sole
-routerUsers.get(routesUser.editRegister,authMiddleware, userController.editController);
-routerUsers.put(routesUser.editRegister, multerMiddleware.userUpload.single("foto"), editValidations, userController.updateEditController);
+routerUsers.get(routesUser.editRegister, authMiddleware, userController.editController);
+routerUsers.put(routesUser.editRegister, authMiddleware, multerMiddleware.userUpload.single("foto"), editValidations, userController.updateEditController);
 
 module.exports = routerUsers;
