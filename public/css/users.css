@@ -1,4 +1,4 @@
-
+/*Estilos para la vista userList.ejs*/
 .listadoUsuarios {
     display: flex;
     flex-direction: row;    
@@ -86,6 +86,11 @@
     font-size: 14px;
     border-radius: 5px;
     border: 1px solid black;
+}
+
+.centerDelete{
+    color: red;
+    text-align: center;
 }
 
 .ayuda {
