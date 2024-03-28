@@ -14,7 +14,7 @@
                         <h2>Usuarios Activos</h2>
                         <% if (usersList.length > 0){ %>
                             <% usersList.forEach(user => { %>
-                                <% if (user.activo === 1) { %>
+                                <% if (user.activo == true) { %>
                                     <div class="user-card">
                                         <div class="avatar">
                                             <a href="/user/detalle/<%= user.id %>"><img src="/images/usuarios/<%= user.imagen %>" alt=""></a>
@@ -43,7 +43,7 @@
                         <h2>Usuarios Inactivos</h2>
                         <% if (usersList.length > 0){ %>
                             <% usersList.forEach(user => { %>
-                                <% if (user.activo !== 1) { %>
+                                <% if (user.activo == false) { %>
                                     <div class="user-card">
                                         <div class="avatar">
                                             <a href="/user/detalle/<%= user.id %>"><img src="/images/usuarios/<%= user.imagen %>" alt=""></a>
