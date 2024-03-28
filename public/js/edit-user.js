@@ -71,10 +71,12 @@ window.addEventListener("load", () => {
   function validarNombreApellido(campo) {     
     if (campo.value.trim() === "" || campo.value.length < 2) { 
       ocultarAyuda(campo.nextElementSibling);     
-      mostrarError(campo.nextElementSibling.nextElementSibling);      
+      mostrarError(campo.nextElementSibling.nextElementSibling);
+      return false;      
     } else {
       ocultarError(campo.nextElementSibling.nextElementSibling);  
-      mostrarAyuda(campo.nextElementSibling);           
+      mostrarAyuda(campo.nextElementSibling);
+      return true;           
     }
   }
 
@@ -82,20 +84,24 @@ window.addEventListener("load", () => {
   function validarCampo(campo) {
     if (campo.value.trim() === "") {
       ocultarAyuda(campo.nextElementSibling);     
-      mostrarError(campo.nextElementSibling.nextElementSibling);      
+      mostrarError(campo.nextElementSibling.nextElementSibling);
+      return false;        
     } else {
       ocultarError(campo.nextElementSibling.nextElementSibling);  
-      mostrarAyuda(campo.nextElementSibling);           
+      mostrarAyuda(campo.nextElementSibling);
+      return true;             
     }
   }
 // Función para validar email
 function validarEmail(email) {
   if (!isValidEmail(email.value.trim())) {
     ocultarAyuda(email.nextElementSibling);     
-    mostrarError(email.nextElementSibling.nextElementSibling);      
+    mostrarError(email.nextElementSibling.nextElementSibling);
+    return false;        
   } else {
     ocultarError(email.nextElementSibling.nextElementSibling);  
-    mostrarAyuda(email.nextElementSibling);           
+    mostrarAyuda(email.nextElementSibling);
+    return true;           
   }
 }
 // Función para validar formato email
@@ -106,16 +112,24 @@ function isValidEmail(email) {
 
 // Función para validar contraseña
 function validarContrasenia(contrasenia){   
-  if (contrasenia.value && validarContraseniaFormato(contrasenia.value)) {    
-    confirmar.disabled = false;
+  if (!contrasenia.value) {    
     ocultarError(contrasenia.nextElementSibling.nextElementSibling);  
-    mostrarAyuda(contrasenia.nextElementSibling);         
-  } else {
-    ocultarAyuda(contrasenia.nextElementSibling);     
-    mostrarError(contrasenia.nextElementSibling.nextElementSibling);  
-          
-  }  
-}
+    mostrarAyuda(contrasenia.nextElementSibling);
+    return true;
+  }        
+  if (contrasenia.value && validarContraseniaFormato(contrasenia.value)) {
+    confirmar.disabled = false; 
+    ocultarError(contrasenia.nextElementSibling.nextElementSibling);  
+    mostrarAyuda(contrasenia.nextElementSibling);  
+    return true;
+  }
+  if (contrasenia.value && !validarContraseniaFormato(contrasenia.value)) {  
+      ocultarAyuda(contrasenia.nextElementSibling);     
+      mostrarError(contrasenia.nextElementSibling.nextElementSibling);  
+      return false;      
+  }      
+}  
+
 // Función para validar formato contraseña
 function validarContraseniaFormato(contrasenia){
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).{8,}$/;
@@ -125,10 +139,12 @@ function validarContraseniaFormato(contrasenia){
 function validarConfirmar(confirmar, contrasenia) {  
   if (confirmar.value === contrasenia.value) {
       ocultarError(confirmar.nextElementSibling.nextElementSibling);   
-      mostrarAyuda(confirmar.nextElementSibling);            
+      mostrarAyuda(confirmar.nextElementSibling);
+      return true;            
     }else {
       ocultarAyuda(confirmar.nextElementSibling);     
-      mostrarError(confirmar.nextElementSibling.nextElementSibling);                           
+      mostrarError(confirmar.nextElementSibling.nextElementSibling);
+      return false;                           
     }
 }
 
@@ -142,25 +158,27 @@ function validarExtension(fotoname){
 }
 
 function validarFoto(foto){
+  let archivo = foto.files[0];  
+  ocultarError(foto.nextElementSibling.nextElementSibling);  
+  mostrarAyuda(foto.nextElementSibling);  
+  if (!foto){
+    return true;
+  }
+  if(archivo && !validarExtension(foto.value)){  
+  ocultarAyuda(foto.nextElementSibling);     
+  mostrarError(foto.nextElementSibling.nextElementSibling);
+  return false;
+  }
   ocultarError(foto.nextElementSibling.nextElementSibling);  
   mostrarAyuda(foto.nextElementSibling);
-  if (foto.value){
-    if(!validarExtension(foto.value)){
-    ocultarAyuda(foto.nextElementSibling);     
-    mostrarError(foto.nextElementSibling.nextElementSibling);
-    }            
-  } else {
-    ocultarError(foto.nextElementSibling.nextElementSibling);  
-    mostrarAyuda(foto.nextElementSibling);           
-  }
+  return true;    
 }
-
 
 
 //VALIDACIONES CON SUBMIT
 let formEdicion = document.querySelector("#formEdicion"); 
 
-formRegistro.addEventListener("submit", (event) => {
+formEdicion.addEventListener("submit", (event) => {
   event.preventDefault(); // Evito que el formulario se envíe automáticamente
   
   // Llamo a las funciones de validación
@@ -174,9 +192,10 @@ formRegistro.addEventListener("submit", (event) => {
   let fotoValida = validarFoto(foto);
 
   // Validaciones exitosas (true)
+  console.log(nombreValido, apellidoValido, emailValido, direccionValida, telefonoValido, contraseniaValida, confirmarValido, fotoValida)
   if (nombreValido && apellidoValido && emailValido && direccionValida && telefonoValido && contraseniaValida && confirmarValido && fotoValida) {
       // Pasan los datos al servidor     
-      formRegistro.submit();
+      formEdicion.submit();
   } else {
       alert("Edite correctamente el formulario.");
   }
