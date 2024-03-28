@@ -156,7 +156,7 @@ const userController = {
 
   profileController: async (req, res) => {
     try {
-      const user = req.session.userLogged || {};
+      const user = req.session.userLogged || {};     
       if (user && user.id_categoria == 2) {
         res.render("../views/users/profile.ejs", {
           title: "Perfil de cliente",
@@ -252,7 +252,7 @@ const userController = {
         const userInDB = await userService.getByField(req.body.email);
         if (userInDB) {
           if (userInDB.id !== infoUser.id) {
-            //si existe el mail significa que no se puede guardar al edicion y borro la imagen que se ha subido
+            //si existe el mail significa que no se puede guardar al edición y borro la imagen que se ha subido
             if (req.file) {
               await userService.deleteImagen(req.file.filename);
             }
@@ -269,8 +269,8 @@ const userController = {
               user,
               imagen,
             });
-          } else {
-            const editUser = {
+          } else {                    
+            const editUser = {   
               nombre: req.body.nombre,
               apellido: req.body.apellido,
               email: req.body.email,
@@ -281,8 +281,10 @@ const userController = {
                 : infoUser.contrasenia,
               imagen: req.file ? req.file.filename : infoUser.imagen,
               id_categoria: req.body.categoria,
-              activo: req.body.activo,
+              activo: req.body.activo
             };
+            
+
             const newU = await userService.updateList(editUser, idUser);
             // Actualiza la variable de sesión con los nuevos datos del usuario
             if (req.session.userLogged.id == infoUser.id) {
@@ -292,8 +294,8 @@ const userController = {
               };
               // Guarda la variable de sesión actualizada
               req.session.save();
-            }
-            res.redirect("/user/profile");
+            }            
+            res.redirect("/user/profile");            
           }
         } else {
           //Cuando el usuario exite, se edita la información y se guarda.
@@ -308,7 +310,7 @@ const userController = {
               : infoUser.contrasenia,
             imagen: req.file ? req.file.filename : infoUser.imagen,
             id_categoria: req.body.categoria,
-            activo: req.body.activo,
+            activo: req.body.activo
           };
           const newU = await userService.updateList(editUser, idUser);
           // Actualiza la variable de sesión con los nuevos datos del usuario
@@ -319,9 +321,9 @@ const userController = {
             };
             // Guarda la variable de sesión actualizada
             req.session.save();
+          }          
+              res.redirect("/user/profile");            
           }
-          res.redirect("/user/profile");
-        }
       }
     } catch (error) {
       res.send(error);
@@ -348,12 +350,12 @@ const userController = {
     try {
       const user = req.session.userLogged || {};
       const idToDelete = parseInt(req.params.id);
-      if (user && user.id_categoria === 2 && user.id === idToDelete) {
+      if (user && user.id_categoria == 2 && user.id === idToDelete) {
         await userService.delete(user.id);
         res.clearCookie("userEmail");
         req.session.destroy();
         res.redirect("/");
-      } else if (user && user.id_categoria === 1) {
+      } else if (user && user.id_categoria == 1) {
         await userService.delete(idToDelete);
         res.redirect("/user/profile");
       }
