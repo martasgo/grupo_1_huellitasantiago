@@ -49,34 +49,3 @@
     display: none;
   }
   /* FIN CSS CART*/
-
-  @media (max-width: 768px) {
-
-    .cartmobile {
-      display: flex;
-      border: 1px red solid;
-      margin: 20px;
-      padding: 20px;
-      flex-direction: column;
-    }
-
-    .cartmobileproducto {
-      width: 90%;
-      margin: 10px;
-      text-align: center;
-      display: flex;
-      justify-content: space-around;
-      flex-direction: row;
-    }
-
-    .cartmobileimagen {
-      width: 20%;
-      display: flex;
-      align-items: center;
-    }
-
-    .cartmobiledetalle {
-      width: 70%;
-    }
-
-  }

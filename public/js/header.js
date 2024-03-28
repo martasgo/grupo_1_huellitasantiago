@@ -184,17 +184,6 @@ window.addEventListener('load', () => {
                             <td><button class="sumarencarrito" data-id="${product.id}"><i class="fa-solid fa-plus"></i></button> <button class="restarencarrito" data-id="${product.id}"><i class="fa-solid fa-minus"></i></button> <button class="eliminardelcarrito" data-id="${product.id}"><i class="fa-solid fa-trash-can"></i></button></td>
                         </tr>
                         `;
-                        // Cart mobile
-                        document.querySelector('.cartmobile').innerHTML += `<div class="cartmobileproducto">
-                        <div class="cartmobileimagen">
-                        <img src="images/productos/${product.imagen}" style="width: 70px; height: 70px;"/>
-                        </div>
-                        <div class="cartmobiledetalle">
-                        <div><p>${product.nombre}</p></div>
-                        <div><small>Cantidad: ${item.cantidad}</small> <small>Precio: $ ${product.precio}</small></div>
-                        <div><button class="sumarencarrito" data-id="${product.id}"><i class="fa-solid fa-plus"></i></button> <button class="restarencarrito" data-id="${product.id}"><i class="fa-solid fa-minus"></i></button> <button class="eliminardelcarrito" data-id="${product.id}"><i class="fa-solid fa-trash-can"></i></button></div>
-                        </div>
-                        </div>`
                         // Pusheamos los datos para luego hacer el create en la DB
                         products.push({
                             id_product: product.id,
