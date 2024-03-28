@@ -26,6 +26,16 @@ const apiController = {
         }     
     },
 
+    cartProduct: async (req, res) => {
+        try {
+            let product = await productService.getByPk(req.params.id)
+            return res.json(product);
+        } catch (error) {
+            console.error("Error al obtener el producto:", error);
+            return res.json([]);
+        }     
+    },
+
     checkout: async (req, res) => {
         try {
             let orderFromUser = req.body;
