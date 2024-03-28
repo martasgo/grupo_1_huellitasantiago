@@ -47,7 +47,7 @@ window.addEventListener('load', () => {
             item.remove();
         });
 
-        // Limpia el carrito en localStorage
+        // Limpia items en localStorage
         localStorage.removeItem('carrito');
 
         // Borra la variable 'order' si existe
@@ -61,9 +61,6 @@ window.addEventListener('load', () => {
         // Vacía el array de products
         products = [];
 
-        // Actualiza el subtotal sin envío
-        document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
-
         // Actualiza el total con envío
         if (localStorage.getItem('envioAndreani')) {
             localStorage.removeItem('envioAndreani');
@@ -74,12 +71,15 @@ window.addEventListener('load', () => {
             localStorage.removeItem('envioCorreo');
             document.querySelector('#envio-correo-arg').checked = false;
             document.querySelector('#conenvio').style.display = 'none'
-        }
+        };
+
+        // Actualiza el subtotal sin envío
+        document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
     };
     
     linkVaciarCarrito.addEventListener('click', (event) => {
         event.preventDefault();
-        vaciarCarrito()
+        vaciarCarrito();
     });
     
     // FETCH CON LA API DE PRODUCTOS PARA TRAER UN PRODUCTO POR SU ID
@@ -122,7 +122,7 @@ window.addEventListener('load', () => {
                 event.preventDefault();
 
                 // Verificar si inputCantidad.value es un string vacío
-                if (inputCantidad.value == '') {
+                if (inputCantidad.value == '' || inputCantidad.value == 0) {
                     alert('Por favor, selecciona una cantidad válida.');
                     return; // Detener la ejecución si la cantidad no es válida
                 };
@@ -266,7 +266,7 @@ window.addEventListener('load', () => {
                 .then((data) => {
                     vaciarCarrito();
                     let userID = document.querySelector('#userId').value;
-                    location.href = `/user/compras/${userID}`;
+                    location.href = `/users/${userID}/purchases`;
                     if (localStorage.getItem('envioAndreani')) {
                         localStorage.removeItem('envioAndreani')
                     }
@@ -277,7 +277,7 @@ window.addEventListener('load', () => {
                 .catch(error => {
                     console.error(error);
                     alert('Para iniciar la compra, primero debes loguearte');
-                    location.href = '/user/login'
+                    location.href = '/users/login'
                 });
             }
         } else {

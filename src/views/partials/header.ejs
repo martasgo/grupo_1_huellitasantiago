@@ -17,7 +17,7 @@
         <a href="/"> <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"/></a>
        
         <div id="iconos-header">
-            <a href="/user/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
+            <a href="/users/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
             <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
         </div>
     </div>
@@ -46,13 +46,13 @@
                 
             <% if(!isLogged) { %>
                 <div class="header-login-register">
-                    <a id="registerButton" href="/user/register">Registro</a>
-                    <a id="loginButton" href="/user/login">Iniciar sesión</a>
+                    <a id="registerButton" href="/users/registration">Registro</a>
+                    <a id="loginButton" href="/users/login">Iniciar sesión</a>
                 </div>
             <% } else { %>
                 <div class="header-login-register">
-                    <a href="/user/profile"> Mi perfil </a>
-                    <a href="/user/logout"> Logout </a>
+                    <a href="/users/<%= userLogged.id %>/profile"> Mi perfil </a>
+                    <a href="/users/logout"> Logout </a>
                 </div>
                 <p>Bienvenido/a <%=userLogged.nombre + " " + userLogged.apellido%> </p>
                 <input type="hidden" value="<%= userLogged.id %>" id="userId">
