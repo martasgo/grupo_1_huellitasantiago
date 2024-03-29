@@ -230,7 +230,9 @@ const userController = {
 
   informacionLegalController : async (req,res) => {
     try {
+      let user = req.session.userLogged || {};
       res.render("../views/users/informacionlegal.ejs", {
+        user:user,
         title: "Informacion Legal",
       });
     } catch (error) {
@@ -240,7 +242,9 @@ const userController = {
   },
   notificacionesController : async (req,res) => {
     try {
+      let user = req.session.userLogged || {};
       res.render("../views/users/notificaciones.ejs", {
+        user:user,
         title: "notificaciones",
       });
     } catch (error) {

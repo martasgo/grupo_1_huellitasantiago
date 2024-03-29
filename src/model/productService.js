@@ -497,7 +497,6 @@ const productService = {
         } 
         if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
             query.where.precio = {
-                //sequelize.literal('precio > (precio - (precio * (descuento / 100)))'), // Calculamos el precio con descuento
                 [Op.gte]: parseInt(filtros.precioDesde),
                 [Op.lte]: parseInt(filtros.precioHasta)
             } 
@@ -516,9 +515,7 @@ const productService = {
             let productosConDescuento = resultado.filter(producto => producto.descuento);
 
             // Filtrar los productos sin descuento
-            let productosSinDescuento = resultado.filter(producto => !producto.descuento);
-            console.log("Productos con descuento:", productosConDescuento);
-            console.log("Productos sin descuento:", productosSinDescuento);
+            let productosSinDescuento = resultado.filter(producto => !producto.descuento);           
 
             productosConDescuento = productosConDescuento.filter(producto => {
                 valor = (producto.precio - (producto.precio * (producto.descuento / 100)));
@@ -527,16 +524,15 @@ const productService = {
                         productosSinDescuento.push(producto);
                    } 
                 } else if (filtros.precioDesde !== ''){
-                    if (parseInt(filtros.precioDesde) < valor){
+                    if (parseInt(filtros.precioDesde) <= valor){
                         productosSinDescuento.push(producto);
                     }
                 }else if (filtros.precioHasta !== ''){
-                    if (valor < parseInt(filtros.precioHasta)){
+                    if (valor <= parseInt(filtros.precioHasta)){
                         productosSinDescuento.push(producto);
                     }
                 }
-            });
-            console.log("FINAL:", productosSinDescuento);
+            });            
             return productosSinDescuento;
         } catch (error) {
             console.log(error);
