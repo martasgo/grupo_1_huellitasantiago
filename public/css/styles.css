@@ -59,6 +59,7 @@ nav {
 
 #iconos-header{
   display: flex;
+  justify-content: right;
 }
 
 i {
@@ -92,8 +93,29 @@ i {
   padding: 4px;
 }
 
+.mobileheader {
+  width: 40%;
+}
+
 #iconoUser {
   margin-right: 10px;
+}
+
+.profilenamediv {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.profilewelcome {
+  font-size: 12px;
+  width: 90%;
+  margin-right: 5px;
+}
+
+.profilename {
+  font-size: 12px;
+  width: 100%;
 }
 
 .banner {
