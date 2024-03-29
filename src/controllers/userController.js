@@ -227,7 +227,7 @@ const userController = {
     }
   },
 
-  InformacionLegalController : async (req,res) => {
+  informacionLegalController : async (req,res) => {
     try {
       res.render("../views/users/informacionlegal.ejs", {
         title: "Informacion Legal",
