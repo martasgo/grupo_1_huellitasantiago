@@ -8,7 +8,9 @@ const apiController = {
 
     allProducts: async (req, res) => {
         try {
-            let results = await productService.getAllApiProducts();
+            const page = parseInt(req.query.page) || 1; // Página predeterminada: 1
+            const pageItems = parseInt(req.query.pageItems) || 10; // Cantidad de items por página predeterminado: 10
+            let results = await productService.getAllApiProducts(page, pageItems);
             return res.json(results);
         } catch (error) {
             console.error("Error al obtener los productos:", error);
@@ -63,7 +65,9 @@ const apiController = {
 
     allUsers: async (req, res) => {
         try {
-            let response = await userService.getAllApiUsers();
+            const page = parseInt(req.query.page) || 1; // Página predeterminada: 1
+            const pageUsers = parseInt(req.query.pageUsers) || 2; // Cantidad de items por página predeterminado: 8
+            let response = await userService.getAllApiUsers(page, pageUsers);
             return res.json(response)
         } catch (error) {
             console.error("Error al obtener los usuarios:", error);
