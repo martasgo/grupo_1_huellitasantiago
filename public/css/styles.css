@@ -59,6 +59,7 @@ nav {
 
 #iconos-header{
   display: flex;
+  justify-content: flex-start;
 }
 
 i {
@@ -92,8 +93,31 @@ i {
   padding: 4px;
 }
 
+.mobileheader {
+  width: 21%;
+}
+
 #iconoUser {
   margin-right: 10px;
+}
+
+.profilenamediv {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.profilewelcome {
+  font-size: 12px;
+  width: 90%;
+  margin-right: 5px;
+  margin-bottom: 0px;
+}
+
+.profilename {
+  font-size: 12px;
+  width: 100%;
+  margin-top: 0px;
 }
 
 .banner {
@@ -831,11 +855,8 @@ button a {
   }
   /*Fin CSS Cart Page*/
 
-  /* .rutahome {
-    display: none;
-  } */
-
 } 
+
 
 @media (min-width: 768px) {
   header {
@@ -916,6 +937,7 @@ button a {
     padding: 10px;
     margin-bottom: 10px;
     color: white;
+    font-size: 15px;
   }
 
   .carritoHeader a {
