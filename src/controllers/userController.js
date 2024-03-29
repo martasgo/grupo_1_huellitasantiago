@@ -227,6 +227,27 @@ const userController = {
     }
   },
 
+  InformacionLegalController : async (req,res) => {
+    try {
+      res.render("../views/users/informacionlegal.ejs", {
+        title: "Informacion Legal",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
+    }
+  },
+  notificacionesController : async (req,res) => {
+    try {
+      res.render("../views/users/notificaciones.ejs", {
+        title: "notificaciones",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
+    }
+  },
+
   logoutController: async (req, res) => {
     try {
       res.clearCookie("userEmail");
