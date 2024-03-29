@@ -1,9 +1,28 @@
-A efectos de ejecutar correctamente este proyecto,
-es necesario agregar un archivo .env con las siguientes variables de accesso
-a la base de datos:
-DB_USER
-DB_PASS
-DB_NAME
+A efectos de ejecutar correctamente este proyecto, es necesario agregar un archivo .env con las siguientes variables de acceso a la base de datos:
+    DB_USER: usuario de tu base
+    DB_PASS: password de tu base
+    DB_NAME: huellitas
+
+Una vez ejecutados los script para crear la base y poblar con datos se pueden usar estos accesos para realizar pruebas como cliente y admin. 
+- Admin
+email: mabutti@gmail.com 
+passw: MabuttiDH24
+
+- Clientes:
+email: fernanda.smith.ss@gmail.com
+passw: SsmithDH24
+
+email: mariopereyra1.mpp@gmail.com
+passw: MpereyraDH24
+
+email: cpnmatiasgomez@gmail.com
+passw: MgomezDH24
+
+email: gabidominguez@gmail.com
+passw: GdominguezDH24
+
+email: chinodechina@gmail.com
+passw: ChinoDH24
 
 # grupo_1_huellitasantiago
 Repositorio referido al proyecto integrador market place de productos para mascotas, huellitasantiago

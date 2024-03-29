@@ -44,4 +44,9 @@
   .compra-user {
     padding: 10px 30px;
   }
+
+  .btnSendMail{
+    border: 0px;
+    padding: 0px 2px;
+  }
   /* FIN CSS CART*/

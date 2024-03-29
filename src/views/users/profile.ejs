@@ -15,7 +15,7 @@
             <p class="nombre"> <%= user && user.nombre %> <%=user && user.apellido  %> </p>
             <p class="correo"> <%= user && user.email  %> </p>
             <% if (locals.adminError) { %>
-                <p style="color: red"> NO TIENES PERMISOS DE ADMINISTRADOR </p>
+                <p class="msjError"> NO TIENES PERMISOS DE ADMINISTRADOR </p>
             <% } %>
         </div>
         </div>

@@ -8,9 +8,13 @@
     <!-- include header -->
     <%- include('../partials/header') %>
     <main>
+        <p class="rutahome">
+            <a href="/users/<%= user.id %>/profile">Perfil</a> / Edición producto /
+        </p>
         <p id="title-alta"> Formulario edición de producto </p>
       
         <section class="fichaprod">
+        
             <section class="errores-front">
                 <ul>
     
@@ -175,13 +179,37 @@
                     <label for="descripcion">Descripción:</label><br>
                     <input class="margen-ancho" name="descripcion" id="descripcion" value="<%= locals.old && locals.old.descripcion ? old.descripcion : producto.descripcion %>"> </input><br>
                     <% if (typeof errors != "undefined" && errors.descripcion) {%>
-                        <small id="msjErrorDesc" class="msjError"><%= errors.descripcion.msg  %></small>
+                        <small id="msjErrorDescripcion" class="msjError"><%= errors.descripcion.msg  %></small>
                     <% } else {%>
-                        <small id="msjErrorDesc" class="msjError"></small>
+                        <small id="msjErrorDescripcion" class="msjError"></small>
                      <% } %>
                 </div>
 
-                <div>
+                <div class="elementos-form">
+                    <label for="stock">Stock:</label><br>
+                    <input class="margen-ancho" type="number" id="stock" name="stock" value="<%= locals.old && locals.old.stock ? old.stock : producto.stock %>"><br>
+                    <% if (typeof errors != "undefined" && errors.stock) {%>
+                        <small id="msjErrorStock" class="msjError"><%= errors.stock.msg  %></small>
+                    <% } else {%>
+                        <small id="msjErrorStock" class="msjError"></small>
+                     <% } %>
+                </div>
+
+                <div class="elementos-form">
+                    <label for="estado">Estado:</label><br>
+                    <select class="margen-ancho" id="estado" name="estado">
+                        <% if (locals.old) { %>
+                            <option value=1 <% if (locals.old.estado == 1)  { %> selected <% } %>>Activo</option>
+                            <option value=0 <% if (locals.old.estado == 0)  { %> selected <% } %>>Inactivo</option>
+                        <% } else { %>
+                            <option value=1 <% if (producto.activo == 1)  { %> selected <% } %>>Activo</option>
+                            <option value=0 <% if (producto.activo == 0)  { %> selected <% } %>>Inactivo</option>
+                        <% } %>
+                    </select>
+                    
+                </div>
+
+                <div class="elementos-form">
                     <label for="newImage" class="form-label">Imagen:</label> <!--SPRINT 4-->
 						<br>
 						<img src="/images/productos/<%= producto.imagen%>" class="actualImg" alt="Imagen Actual" name="newImage">
@@ -192,24 +220,12 @@
                         <% } else {%>
                             <small id="msjErrorImg" class="msjError"></small>
                          <% } %>
-						
                 </div>
-                
-                <div class="elementos-form">
-                    <label for="stock">Stock:</label><br>
-                    <input class="margen-ancho" type="number" id="stock" name="stock" value="<%= locals.old && locals.old.stock ? old.stock : producto.stock %>"><br>
-                    <% if (typeof errors != "undefined" && errors.stock) {%>
-                        <small id="msjErrorStock" class="msjError"><%= errors.stock.msg  %></small>
-                    <% } else {%>
-                        <small id="msjErrorStock" class="msjError"></small>
-                     <% } %>
-                </div>
-               
+                             
                 <div class="elementos-form-100">
-                    <div id="form-buttons">  
+                    <div id="form-buttons">
+                        <a href="/product/list"><button type="button">CANCELAR</button></a>
                         <button type="submit" id="botonguardar" name="botonguardar">GUARDAR</button>
-                        <a href="/product"><button type="button">CANCELAR</button></a>
-                        
                     </div>
                 </div>
             </form>
