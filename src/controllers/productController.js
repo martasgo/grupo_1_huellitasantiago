@@ -25,6 +25,7 @@ const prodController = {
     // Controlador para obtener el listado total de productos, agrupados de a 7
     list: async (req, res) => {
       try {
+          const user = req.session.userLogged || {};
           const page = parseInt(req.query.page) || 1;
           const { allProducts, totalPages} = await productService.getPagination(page, 1, 10);
           return res.render('../views/products/allProducts.ejs', {
@@ -32,6 +33,7 @@ const prodController = {
               allProducts: allProducts,
               currentPage: page,
               totalPages: totalPages,
+              user:user
           });
       } catch (error) {
           console.log(error);
@@ -59,6 +61,7 @@ const prodController = {
     //Controlador ruta para crear prod
     crearProdController: async (req, res) => {
       try {
+        const user = req.session.userLogged || {};
         let resultado = await productService.getAllServices();
         res.render('../views/products/crear.ejs', {
           title: 'Crear producto',
@@ -68,7 +71,8 @@ const prodController = {
           petSize: resultado.petSizeList,
           category: resultado.categoryList,
           subCategory: resultado.subCategoryList,
-          packageRes: resultado.packageList
+          packageRes: resultado.packageList,
+          user: user
         });
       } catch (error) {
         console.log(error)
@@ -81,6 +85,7 @@ const prodController = {
       try {
         //Validacion de errores en el formulario de creacion de producto
         let errors = validationResult(req);  
+        const user = req.session.userLogged || {};
         if (! errors.isEmpty()) {
           // En caso de errores, verificamos si hay una imagen subida, para
           // eliminarla
@@ -99,7 +104,8 @@ const prodController = {
             subCategory: resultado.subCategoryList,
             packageRes: resultado.packageList,
             errors: errors.mapped(),
-            old: req.body
+            old: req.body,
+            user: user
           });
         } else {
           let prodGuardado = await productService.createProdInfo(req);
@@ -119,6 +125,7 @@ const prodController = {
         let idProd = parseInt(req.params.id);
         let producto = await productService.getByPk(idProd);
         let resultado = await productService.getAllServices();
+        const user = req.session.userLogged || {};
 
         return res.render("../views/products/editar.ejs", 
         {
@@ -130,7 +137,8 @@ const prodController = {
           categoryList: resultado.categoryList,
           subCategoryAlimentosList: resultado.subCategoryAlimentosList,
           subCategoryAccesoriosList: resultado.subCategoryAccesoriosList,
-          packageList: resultado.packageList
+          packageList: resultado.packageList,
+          user: user
         });
       } 
       catch (error) {
@@ -146,6 +154,8 @@ const prodController = {
         let errors = validationResult(req);
         let idProd = parseInt(req.params.id);
         let producto = await productService.getByPk(idProd); 
+        const user = req.session.userLogged || {};
+
         if (! errors.isEmpty()) {
           // En caso de errores, verificamos si hay una imagen subida, para
           // eliminarla
@@ -165,7 +175,8 @@ const prodController = {
             subCategoryAccesoriosList: resultado.subCategoryAccesoriosList,
             packageList: resultado.packageList,
             errors: errors.mapped(),
-            old: req.body
+            old: req.body,
+            user: user
           });
 
         } else {
@@ -209,10 +220,11 @@ const prodController = {
 
     //Controlador para eliminar producto por su ID
     eliminarController: async (req, res) =>{
+      const user = req.session.userLogged || {};
       let idProduct = parseInt(req.params.id);
       try {
           await productService.destroyById(idProduct);
-          return res.redirect('/user/profile');
+          return res.redirect(`/user/${user.id}/profile`);
         }
       catch (error) {
         console.log(error)
