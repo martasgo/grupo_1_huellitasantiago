@@ -96,9 +96,14 @@ const userService = {
     }
   },
 
-  getAllApiUsers: async function () {
+  getAllApiUsers: async function (page = 1, pageUsers = 2) {
     try {
-      let allUsers = await this.getData();
+      const offset = (page - 1) * pageUsers;
+      let allUsers = await db.User.findAll({
+        limit: pageUsers,
+        offset: offset
+      });
+      const totalCount = await db.User.count();
       let apiUsers = [];
       allUsers.forEach(user => {
         let eachUser = {
@@ -110,9 +115,21 @@ const userService = {
         }
         apiUsers.push(eachUser)
       });
+      // Calcular valores para next y previous
+      const totalPages = Math.ceil(totalCount / pageUsers);
+      const nextPage = page < totalPages ? page + 1 : null;
+      const previousPage = page > 1 ? page - 1 : null;
+
+      // Construir las URLs de next y previous
+      const baseUrl = 'localhost:3000/api/users';
+      const nextUrl = nextPage ? `${baseUrl}?page=${nextPage}&pageUsers=${pageUsers}` : null;
+      const previousUrl = previousPage ? `${baseUrl}?page=${previousPage}&pageUsers=${pageUsers}` : null;
+
       let response = {
-        count: allUsers.length,
-        users: apiUsers
+        count: totalCount,
+        users: apiUsers,
+        next: nextUrl,
+        previous: previousUrl
       }
       return response;
     } catch (error) {
