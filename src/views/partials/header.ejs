@@ -16,9 +16,24 @@
           </div>
         <a href="/"> <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"/></a>
        
-        <div id="iconos-header">
-            <a href="/users/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
-            <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
+        <div class="mobileheader">
+            <% if(isLogged) {%>
+                <div id="iconos-header">
+                    <a href="/users/<%= userLogged.id %>/profile"> <i id="iconoUser" class="fa-solid fa-person"></i> </a>
+                    <a href="/cart"> <i id="iconoUser" class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="/users/logout"> <i id="iconoUser" class="fa-solid fa-right-from-bracket"></i> </a>
+                </div>
+                <div class="profilenamediv">
+                    <p class="profilewelcome">Bienvenido/a</p>
+                    <p class="profilename"><%=userLogged.nombre + " " + userLogged.apellido%></p>
+                </div>
+            <% } else {%>
+                <div id="iconos-header">
+                    <a href="/users/registration"> <i id="iconoUser" class="fa-solid fa-user-plus"></i> </a>
+                    <a href="/users/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
+                    <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+            <% } %>
         </div>
     </div>
     <div class="searchbox">
