@@ -64,6 +64,10 @@ module.exports = (sequelize, DataTypes) => {
         stock: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        activo:{
+            type: DataTypes.TINYINT,
+            allowNull: false
         }
     };
     

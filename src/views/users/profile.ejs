@@ -15,7 +15,7 @@
             <p class="nombre"> <%= user && user.nombre %> <%=user && user.apellido  %> </p>
             <p class="correo"> <%= user && user.email  %> </p>
             <% if (locals.adminError) { %>
-                <p style="color: red"> NO TIENES PERMISOS DE ADMINISTRADOR </p>
+                <p class="msjError"> NO TIENES PERMISOS DE ADMINISTRADOR </p>
             <% } %>
         </div>
         </div>
@@ -23,14 +23,14 @@
         <div class="actividad">
             <p><strong>Actividad</strong></p>
             <br>
-            <p class="opciones"><i class="fa-solid fa-money-check-dollar"></i> Medios de pago</p>
+            <p class="opciones"><i class="fa-solid fa-money-check-dollar"></i><a target="_blank" href="/mediospago">Medios de pago</a></p>            
             <p class="historial"><i class="fa-solid fa-basket-shopping"></i> <a href="/users/<%= user.id %>/purchases">Ver compras</a></p>
         </div>
         <div class="configuracion">
             <p><strong>Configuración</strong></p>
             <br>
-            <p class="config"><i class="fa-solid fa-bell"></i> Notificaciones</p>
-            <p class="config"><i class="fa-solid fa-circle-info"></i> Información legal</p>
+            <p class="config"><i class="fa-solid fa-bell"></i> <a href="/users/notificaciones">Notificaciones</a></p>
+            <p class="config"><i class="fa-solid fa-circle-info"></i> <a href="/users/informacionLegal">Informacion Legal</a></p>
         </div>
         <br>
         <div id="form-buttons">  

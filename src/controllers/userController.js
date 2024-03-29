@@ -228,6 +228,31 @@ const userController = {
     }
   },
 
+  informacionLegalController : async (req,res) => {
+    try {
+      let user = req.session.userLogged || {};
+      res.render("../views/users/informacionlegal.ejs", {
+        user:user,
+        title: "Informacion Legal",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
+    }
+  },
+  notificacionesController : async (req,res) => {
+    try {
+      let user = req.session.userLogged || {};
+      res.render("../views/users/notificaciones.ejs", {
+        user:user,
+        title: "notificaciones",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
+    }
+  },
+
   logoutController: async (req, res) => {
     try {
       res.clearCookie("userEmail");

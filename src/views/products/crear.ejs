@@ -9,9 +9,9 @@
     <%- include('../partials/header') %>
     <main>
         <p class="rutahome">
-            <a href="/user/profile">Perfil</a> / Alta producto /
+            <a href="/users/<%= user.id %>/profile">Perfil</a> / Crear producto /
         </p>
-        <p id="title-alta"> Formulario de alta de producto </p>
+        <p id="title-alta"> Formulario de creación de producto </p>
        
         <section class="fichaprod">
             <section class="errores-front">
@@ -213,8 +213,8 @@
                 
                 <div class="elementos-form-100">
                     <div id="form-buttons">  
+                        <button type="reset"> LIMPIAR</button>
                         <button type="submit" id="botonguardar" name="botonguardar">GUARDAR</button>
-                        <button type="reset"> BORRAR</button>
                     </div>
                 </div>
             </form>
