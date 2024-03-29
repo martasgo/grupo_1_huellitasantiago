@@ -39,7 +39,7 @@ let routerApi = require("./routers/apiRoute");
 app.use('/', routerMain);
 app.use('/cart', routerCart);
 app.use('/users', routerUser);
-app.use('/product', routerProduct);
+app.use('/products', routerProduct);
 app.use('/api', routerApi);
 app.use((req, res, next) => {
   res.status(404).render('404-page', {title: 'Error 404'});

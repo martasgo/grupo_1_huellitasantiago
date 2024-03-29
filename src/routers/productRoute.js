@@ -4,7 +4,6 @@ const productController = require("../controllers/productController");
 const router = require("./mainRoute");
 const authMiddleware = require ("../middlewares/authMiddleware");
 const adminMiddleware = require ("../middlewares/adminMiddleware");
-//const upload = require("../middlewares/multerMiddleware");
 const multerMiddleware = require('../middlewares/multerMiddleware');
 const productValidations = require ("../middlewares/productValidations");
 
@@ -13,11 +12,11 @@ const routerProduct = Router();
 const routesProd = {
   indexProductRoute: "/",
   list: '/list',
-  detailProductRoute: "/detalle/:id",
-  productCrear: "/crear",
-  productEditar: "/editar/:id",
-  productDelete: '/delete/:id',
-  productFilters: "/filtros/:idMascota/:idCat?/:idSubCat?",
+  detailProductRoute: "/:id/details",
+  productCrear: "/form",
+  productEditar: "/:id/edition",
+  productDelete: '/:id/deletion',
+  productFilters: "/filters/:idMascota/:idCat?/:idSubCat?",
 
   //listado productos: "/product/perros",  /product/perro/alimento, product/perro/alimento/latas  
   productsList: "/:idMascota/:category?/:subCat?",
@@ -41,7 +40,8 @@ routerProduct.get(routesProd.productEditar, authMiddleware , adminMiddleware , p
 routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware , multerMiddleware.productUpload.single("foto"), productValidations, productController.updateProdController); //sole put de editar
 
 // rutas para eliminar producto
-routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
+routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.verificaEliminarController);
+routerProduct.delete(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
 
 //filtros 
 routerProduct.post(routesProd.productFilters, productController.filtersApplied);
