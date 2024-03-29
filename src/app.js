@@ -41,6 +41,7 @@ app.use('/cart', routerCart);
 app.use('/users', routerUser);
 app.use('/products', routerProduct);
 app.use('/api', routerApi);
+
 app.use((req, res, next) => {
   res.status(404).render('404-page', {title: 'Error 404'});
   next();

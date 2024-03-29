@@ -45,6 +45,10 @@
     padding: 10px 30px;
   }
 
+  .cartmobile {
+    display: none;
+  }
+  
   .btnSendMail{
     border: 0px;
     padding: 0px 2px;
