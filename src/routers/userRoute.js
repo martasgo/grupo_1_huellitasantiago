@@ -35,7 +35,9 @@ const routesUser = {
 	listUsersRoute: "/usersList",
 	salesAdminRoute: "/salesList",
     logoutRoute: "/logout",
-    deleteRoute: "/delete/:id"
+    deleteRoute: "/delete/:id",
+	InformacionLegalRoute:"/InformacionLegal",
+	notificacionesRoute:"/notificaciones"
 };
 
 routerUsers.get(routesUser.loginRoute, guestMiddleware , userController.loginController);
@@ -49,6 +51,9 @@ routerUsers.get(routesUser.comprasRoute, authMiddleware, userController.compras)
 
 routerUsers.get(routesUser.deleteRoute,authMiddleware, userController.deleteController);
 routerUsers.delete(routesUser.deleteRoute,authMiddleware, userController.destroyController);
+
+routerUsers.get(routesUser.InformacionLegalRoute, authMiddleware ,userController.InformacionLegalController);
+routerUsers.get(routesUser.notificacionesRoute, authMiddleware ,userController.notificacionesController);
 
 // get-post form registración
 routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.registerController);
