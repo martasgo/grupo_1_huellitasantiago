@@ -15,12 +15,12 @@
 
                     <% allProducts.forEach(product=> { %>
                         <div class="<%= (product.activo === 1) ? 'product' : 'product-nonActive' %>">
-                            <a href="/product/detalle/<%=product.id%>">
+                            <a href="/products/<%=product.id%>/details">
                                 <%= product.nombre %>
                             </a>
                             <div class="actions">
-                                 <a href="/product/editar/<%= product.id %>"><i class="fa-solid fa-pen-to-square iconos"></i></a>
-                                 <a href="/product/delete/<%= product.id %>"><i class="fa-solid fa-trash iconos"></i></a>
+                                 <a href="/products/<%= product.id %>/edition"><i class="fa-solid fa-pen-to-square iconos"></i></a>
+                                 <a href="/products/<%= product.id %>/deletion"><i class="fa-solid fa-trash iconos"></i></a>
                                 <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
                             </div>
                             

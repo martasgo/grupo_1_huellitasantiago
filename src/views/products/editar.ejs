@@ -9,7 +9,7 @@
     <%- include('../partials/header') %>
     <main>
         <p class="rutahome">
-            <a href="/users/<%= user.id %>/profile">Perfil</a> / Edición producto /
+            <a href="/users/<%= user.id %>/profile">Perfil</a> / <a href="/products/list?page=1">Listado de productos</a> / Edición producto /
         </p>
         <p id="title-alta"> Formulario edición de producto </p>
       
@@ -20,7 +20,7 @@
     
                 </ul>
             </section>
-            <form id="form-alta-prod" method="post" action="/product/editar/<%=producto.id%>?_method=PUT" enctype="multipart/form-data">
+            <form id="form-alta-prod" method="post" action="/products/<%=producto.id%>/edition?_method=PUT" enctype="multipart/form-data">
                 <div class="elementos-form">
                     <label for="mascota">Mascota:</label><br>
                     <select class="margen-ancho" id="mascota" name="mascota" >
@@ -157,7 +157,6 @@
                 <div class="elementos-form">
                 <label for="tamaniomascota">Tamaño mascota:</label><br>
                 <select class="margen-ancho" id="tamaniomascota" name="tamaniomascota" >
-                    <!-- <option value=""></option> -->
                     <% petSizeList.forEach (petSize => { %>
                         <option value=" <%= petSize.id %> " <% if (producto.id_tamanio_mascota === petSize.id) { %> selected <% } %>><%= petSize.tamanio %></option>
                     <% }) %>
@@ -224,7 +223,7 @@
                              
                 <div class="elementos-form-100">
                     <div id="form-buttons">
-                        <a href="/product/list"><button type="button">CANCELAR</button></a>
+                        <a href="/products/list?page=1"><button type="button">CANCELAR</button></a>
                         <button type="submit" id="botonguardar" name="botonguardar">GUARDAR</button>
                     </div>
                 </div>

@@ -111,7 +111,7 @@ const prodController = {
           let prodGuardado = await productService.createProdInfo(req);
           if (prodGuardado) {
             let idProd = prodGuardado.id
-            res.redirect(`/product/detalle/${idProd}`)
+            res.redirect(`/products/${idProd}/details`)
           }
         }
       } catch (error) {
@@ -181,7 +181,7 @@ const prodController = {
 
         } else {
             let resultEdit = await productService.editProdInfo(req, producto);
-            return res.redirect(`/product/editar/${idProd}?mensaje=procesado`);
+            return res.redirect(`/products/${idProd}/edition?mensaje=procesado`);
         }
       } catch (error) {
         console.log(error);
@@ -218,13 +218,30 @@ const prodController = {
       }     
     },
 
+    //Verifica si va eliminar el producto
+    verificaEliminarController: async function (req, res) {
+      try {
+        const user = req.session.userLogged || {};
+        const idProdToDelete = parseInt(req.params.id);
+        const infoProd = await productService.getByPk(idProdToDelete);
+        res.render("../views/products/delete.ejs", {
+          title: "Borrar producto",
+          user,
+          infoProd,
+        });
+      } catch (error) {
+        console.log(error.message);
+        res.send("Error inesperado al eliminar producto").status(500);
+      }
+    },
+
     //Controlador para eliminar producto por su ID
     eliminarController: async (req, res) =>{
       const user = req.session.userLogged || {};
       let idProduct = parseInt(req.params.id);
       try {
           await productService.destroyById(idProduct);
-          return res.redirect(`/user/${user.id}/profile`);
+          return res.redirect(`/users/${user.id}/profile?mensaje=procesado`);
         }
       catch (error) {
         console.log(error)

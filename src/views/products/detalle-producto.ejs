@@ -36,14 +36,14 @@
                                 Agregar al carrito
                             </button>
                         </div>
-                    <p><i class="fa-solid fa-credit-card"></i> <a href="/mediospago">Medios de pago</a></p>
+                    <p><i class="fa-solid fa-credit-card"></i> <a target="_blank" href="/mediospago">Medios de pago</a></p>
 				
                 <% if(isLogged && locals.userLogged) { %>
                     <%if (userLogged.id_categoria == 1) { %>  
                     <div class="elementos-form-100">
                         <div id="form-buttons">  
-                            <a href="/product/editar/<%= producto.id %>" class=""><button type="button" class="">EDITAR</button></a>
-                            <a href="/product/delete/<%= producto.id %>" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
+                            <a href="/products/<%= producto.id %>/edition" class=""><button type="button" class="">EDITAR</button></a>
+                            <a href="/products/<%= producto.id %>/deletion" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
                         </div>
                     </div> 
                     <% } %>   
@@ -75,7 +75,7 @@
             <% if (productsDestacado.length > 0 ){%>
             <% for (i=0; i< productsDestacado.length; i++){ %>
                 <article>
-                    <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                    <a href="/products/<%= productsDestacado[i].id %>/details"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
                     <div class="detalle">
                         <p id=""><%= productsDestacado[i].nombre %></p>
                             <% if (productsDestacado[i].descuento != 0) { %>

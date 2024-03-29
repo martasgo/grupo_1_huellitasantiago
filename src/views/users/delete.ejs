@@ -9,11 +9,11 @@
    
     <main>
         <section>
-            <h2 class="center" style="color: red;"> Sr./a <%= user.nombre %> <%= user.apellido %> </h2>
+            <h2 class="center msjError" > Sr./a <%= user.nombre %> <%= user.apellido %> </h2>
             <% if(locals.user && user.categoria === 2) {%>
-                <h2 class="center" style="color: red;"> ¿Está seguro/a de eliminar esta cuenta? </h2>
+                <h2 class="center msjError" > ¿Está seguro/a de eliminar esta cuenta? </h2>
             <% } else {%>
-                <h2 class="center" style="color: red;"> ¿Está seguro/a de eliminar la cuenta de: <%= userToDelete.email %> ? </h2>
+                <h2 class="center msjError"> ¿Está seguro/a de eliminar la cuenta de: <%= userToDelete.email %> ? </h2>
             <% } %>
                 
             <br>

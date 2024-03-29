@@ -6,7 +6,7 @@
             <option value="" ></option>
             <% for (i=0; i< categorias.length; i++){ %>
                 <% valorLink = categorias[i].nombre.replace(/\s+/g, '-') %>
-                <option value="/product/<%= mascota %>/<%= valorLink %>"> <%=  categorias[i].nombre  %></option>            
+                <option value="/products/<%= mascota %>/<%= valorLink %>"> <%=  categorias[i].nombre  %></option>            
             <% } %>    
         </select>
         <button type="submit" value="Buscar">Buscars</button>
@@ -29,7 +29,7 @@
             <ul>
                 <% for (i=0; i< categorias.length; i++){ %>
                 <% valorLink = categorias[i].nombre.replace(/\s+/g, '-') %>
-                    <li id="categoryItem"><a href="/product/<%= mascota %>/<%= valorLink %>"><%=  categorias[i].nombre  %></a> </li>          
+                    <li id="categoryItem"><a href="/products/<%= mascota %>/<%= valorLink %>"><%=  categorias[i].nombre  %></a> </li>          
                 <% } %>
             </ul>
         <% }%>
@@ -40,7 +40,7 @@
             <% for (i=0; i< subCat.length; i++) { %>
                 <% if (subCat[i].id_category == 1) { %>
                     <%  valor = subCat[i].nombre_sub_category.replace(/\s+/g, '-') %>
-                        <li id="subCategoryItem"><a href="/product/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
+                        <li id="subCategoryItem"><a href="/products/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
                     <% } %>
              <% } %>
         </div>
@@ -51,7 +51,7 @@
             <% for (i=0; i< subCat.length; i++) { %>
                 <% if (subCat[i].id_category == 2) { %>
                     <%  valor = subCat[i].nombre_sub_category.replace(/\s+/g, '-') %>
-                        <li><a href="/product/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
+                        <li><a href="/products/<%= mascota %>/<%= categoria %>/<%= valor %>"><%= subCat[i].nombre_sub_category %></a></li>
                     <% } %>
              <% } %>
         </div>
@@ -60,9 +60,9 @@
             <section id="filterList">
 
             </section>
-            <a href="/product/<%= mascota %>"><button type="" id="btnlimpiar" class="btnlimpiar">Limpiar filtros</button></a>
+            <a href="/products/<%= mascota %>"><button type="" id="btnlimpiar" class="btnlimpiar">Limpiar filtros</button></a>
             <section>
-                <form action="/product/filtros/<% if (mascota){ %><%=mascota%><%} %><% if (categoria){ %>/<%=categoria.replace(/\s+/g, '-')%><%} %><% if (subCategoria){%>/<%=subCategoria.replace(/\s+/g, '-')%> <%} %>" method="post">
+                <form action="/products/filters/<% if (mascota){ %><%=mascota%><%} %><% if (categoria){ %>/<%=categoria.replace(/\s+/g, '-')%><%} %><% if (subCategoria){%>/<%=subCategoria.replace(/\s+/g, '-')%> <%} %>" method="post">
                     <div>
                         <h4>Marcas</h4>
                         <% for (i=0; i< brand.length; i++){ %>
