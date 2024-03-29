@@ -15,10 +15,10 @@
                         <% if (subCategoria) { %>
                             <% subCategoriaUp = subCategoria.charAt(0).toUpperCase() + subCategoria.slice(1);  %>
                             <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
-                            <a id="categoryItem" href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <a id="subCategoryItem" href="/product/<%= mascota %>/<%= categoriaUp%>"> <%= categoriaUp %></a> / <%= subCategoriaUp %> 
+                            <a id="categoryItem" href="/products/<%= mascota %>"> <%= mascotaUp %></a> / <a id="subCategoryItem" href="/products/<%= mascota %>/<%= categoriaUp%>"> <%= categoriaUp %></a> / <%= subCategoriaUp %> 
                         <% } else { %> 
                             <% categoriaUp = categoria.charAt(0).toUpperCase() + categoria.slice(1);  %>
-                            <a id="categoryItem" href="/product/<%= mascota %>"> <%= mascotaUp %></a> / <%= categoriaUp %> 
+                            <a id="categoryItem" href="/products/<%= mascota %>"> <%= mascotaUp %></a> / <%= categoriaUp %> 
                         <% } %>
                     <%}else {%>
                         <%= mascotaUp %>
@@ -34,7 +34,7 @@
                         <% if (productsMascotas.length > 0){ %>
                             <% for (i=0; i< productsMascotas.length; i++){ %>
                                 <article>
-                                    <a href="/product/detalle/<%= productsMascotas[i].id %>"><img src="/images/productos/<%= productsMascotas[i].imagen %>" alt=""></a>
+                                    <a href="/products/<%= productsMascotas[i].id %>/details"><img src="/images/productos/<%= productsMascotas[i].imagen %>" alt=""></a>
                                     <div class="detalle">
                                         <p id=""><%= productsMascotas[i].nombre %></p>
                                             <% if (productsMascotas[i].descuento != 0) {
@@ -47,7 +47,7 @@
                                             <% } else {%>
                                                 <p class="precioAhora" id="">$<%= (productsMascotas[i].precio) %> </p>
                                             <% } %>
-                                        <a href="/product/detalle/<%= productsMascotas[i].id %>"><input type="button" value="Comprar" id="btn-comprar"/></a>
+                                        <a href="/products/<%= productsMascotas[i].id %>/details"><input type="button" value="Ver detalle" id="btn-comprar"/></a>
                                     </div>
                                 </article>    
                             <%  } %>

@@ -26,16 +26,16 @@ const userController = {
     try {      
       const resultLogin = await userService.login(req.body);
       
-      if (resultLogin.errors) {         
+    if (resultLogin.errors) {         
           res.render("../views/users/login.ejs", {
           title: "Login",
           errors: resultLogin.errors,
           old: req.body
         });
-      } else {
+      } else { 
         req.session.userLogged = resultLogin.user;
-        res.redirect("/user/profile");
-      }
+        res.redirect(`${userToLogin.id}/profile`);
+      }       
     } catch (error) {      
       console.error("Error en el proceso de inicio de sesión:", error);
       res.render("../views/users/login.ejs", {
@@ -44,8 +44,7 @@ const userController = {
         old: req.body
       });
     }
-  },
-    
+  },    
 
   registerController: async (req, res) => {
     try {
@@ -198,6 +197,31 @@ const userController = {
     }
   },
 
+  informacionLegalController : async (req,res) => {
+    try {
+      let user = req.session.userLogged || {};
+      res.render("../views/users/informacionlegal.ejs", {
+        user:user,
+        title: "Informacion Legal",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
+    }
+  },
+  notificacionesController : async (req,res) => {
+    try {
+      let user = req.session.userLogged || {};
+      res.render("../views/users/notificaciones.ejs", {
+        user:user,
+        title: "notificaciones",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
+    }
+  },
+
   logoutController: async (req, res) => {
     try {
       res.clearCookie("userEmail");
@@ -213,7 +237,7 @@ const userController = {
   editController: async (req, res) => {
     try {
       const user = req.session.userLogged || {};
-      const idUser = parseInt(req.params.idUser);
+      const idUser = parseInt(req.params.id);
       const infoUser = await userService.getByPk(idUser);
       res.render("../views/users/editUser.ejs", {
         title: "Edición de usuarios",
@@ -231,7 +255,7 @@ const userController = {
     try {
       const resultValidation = validationResult(req);
       const user = req.session.userLogged || {};
-      const idUser = parseInt(req.params.idUser);
+      const idUser = parseInt(req.params.id);
       const infoUser = await userService.getByPk(idUser);
       const imagen = req.body.imageAnt;
       if (resultValidation.errors.length > 0) {
@@ -294,8 +318,8 @@ const userController = {
               };
               // Guarda la variable de sesión actualizada
               req.session.save();
-            }            
-            res.redirect("/user/profile");            
+            }
+            return res.redirect(`/users/${infoUser.id}/profile`);
           }
         } else {
           //Cuando el usuario exite, se edita la información y se guarda.
@@ -321,10 +345,10 @@ const userController = {
             };
             // Guarda la variable de sesión actualizada
             req.session.save();
-          }          
-              res.redirect("/user/profile");            
-          }
-      }
+          }               
+          return res.redirect(`/users/${infoUser.id}/profile`);
+        }
+      }    
     } catch (error) {
       res.send(error);
     }
@@ -357,7 +381,7 @@ const userController = {
         res.redirect("/");
       } else if (user && user.id_categoria == 1) {
         await userService.delete(idToDelete);
-        res.redirect("/user/profile");
+        res.redirect(`/users/${user.id}/profile`);
       }
     } catch (error) {
       console.log(error.message);

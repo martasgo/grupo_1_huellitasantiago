@@ -11,7 +11,7 @@
     <main class="mainlogin">
         <p class="rutahome"><a href="/">Home</a> / login</p>
 
-            <form id="formulario-login" action="/user/login" method="POST">
+            <form id="formulario-login" action="/users/login" method="POST">
 
                 <% if (locals.authError) {%>
                     <p class="msjError"> 
@@ -50,7 +50,7 @@
                 <button type="submit">INICIAR SESIÓN</button>
                 
                 <p class="notenescuenta">¿No tenés cuenta? <br>
-                <a href="/user/register"><strong>Crear cuenta</strong></a></p>
+                <a href="/users/registration"><strong>Crear cuenta</strong></a></p>
             </form>
         
     </main>

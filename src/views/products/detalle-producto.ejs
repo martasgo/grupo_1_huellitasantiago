@@ -2,6 +2,7 @@
 <html lang="en">
   <!-- include head -->
 <%- include('../partials/head') %>
+<script src="/js/detalle-producto.js"></script>
   <body>
     <!-- include header -->
     <%- include('../partials/header') %>
@@ -9,14 +10,12 @@
         <p class="rutahome"><a href="/">Home</a> / <a href="/mascotas">Mascotas</a> / 
       
         <section class="ficha-producto">
+            <% if (producto){%>
             <div id="img-precio">
                 <section id="imgProducto">
                     <img class="imgPrincipal" src="/images/productos/<%= producto.imagen %>" />
                     <div class="fotos">
-                        <img src="/images/productos/<%= producto.imagen %>" />
-                        <img src="/images/productos/<%= producto.imagen %>" />
-                        <img src="/images/productos/<%= producto.imagen %>" />
-                    </div>
+                    </div> 
                 </section>
                 <section id="carritoProducto">
                     <h3 class="margin-top"><%= producto.nombre %> </h3>
@@ -31,20 +30,20 @@
                         <p class="precioAhora" id="">$<%= toThousand(producto.precio) %> </p>
                     <% } %>
                     <div id="comprar">
-                        <div> <button class="cantidad-icono" id="botonsumar">+</button> <input type="number" value="" class="cantidad-producto" id="cantidadproducto" name="cantidadproducto" placeholder='0'> <button class="cantidad-icono" id="botonrestar">-</button></div>
+                        <div> <button class="cantidad-icono" id="botonsumar">+</button> <input type="number" value="" class="cantidad-producto" id="cantidadproducto" name="cantidadproducto" placeholder='0' readonly> <button class="cantidad-icono" id="botonrestar">-</button></div>
                         <div>
                             <button class="addtocart" data-id="<%= producto.id%>">
                                 Agregar al carrito
                             </button>
                         </div>
-                    <p><i class="fa-solid fa-credit-card"></i> <a href="/envios">Medios de pago</a></p>
+                    <p><i class="fa-solid fa-credit-card"></i> <a target="_blank" href="/mediospago">Medios de pago</a></p>
 				
                 <% if(isLogged && locals.userLogged) { %>
                     <%if (userLogged.id_categoria == 1) { %>  
                     <div class="elementos-form-100">
                         <div id="form-buttons">  
-                            <a href="/product/editar/<%= producto.id %>" class=""><button type="button" class="">EDITAR</button></a>
-                            <a href="/product/delete/<%= producto.id %>" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
+                            <a href="/products/<%= producto.id %>/edition" class=""><button type="button" class="">EDITAR</button></a>
+                            <a href="/products/<%= producto.id %>/deletion" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
                         </div>
                     </div> 
                     <% } %>   
@@ -65,16 +64,18 @@
                     <h3 class="margin-top subrayado"> Descripción </h3>
                     <p class="textDescripcion"><%= producto.descripcion %></p>
                 </div>
-                
-    
             </section>
+     <% } else {%>
+            <p class="msjError">PRODUCTO INEXISTENTE - VERIFIQUE EL PRODUCTO POR FAVOR</p> 
+      <%  } %>  
         </section>
 
         <p class="tituloProductosDestacados">PRODUCTOS DESTACADOS</p>
         <section class="listadoArticulos">
+            <% if (productsDestacado.length > 0 ){%>
             <% for (i=0; i< productsDestacado.length; i++){ %>
                 <article>
-                    <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                    <a href="/products/<%= productsDestacado[i].id %>/details"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
                     <div class="detalle">
                         <p id=""><%= productsDestacado[i].nombre %></p>
                             <% if (productsDestacado[i].descuento != 0) { %>
@@ -91,6 +92,9 @@
                     </div>
                 </article>    
             <%  } %>
+        <%   } else {%>
+            <p>NO HAY PRODUCTOS DESTACADOS POR EL MOMENTO</p> 
+        <%  } %>  
         </section>
         <div class="verproductos">
             <a href="#"> <input type="button" name="productos" id="productos" value="Mostrar más productos"/> </a>
@@ -102,7 +106,7 @@
     <!-- include footer -->
     <%- include('../partials/footer') %>
 
-    <script src="/js/detalle-producto.js"></script>
+   
 </body>
 
 </html>

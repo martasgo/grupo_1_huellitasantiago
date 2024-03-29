@@ -13,16 +13,16 @@
     <main>
         <div class="categorias">
             <div>
-                <a href="/product/perros/Accesorios"><img src="/images/categorias/accesorios.jpg" alt="Accesorios"></a>
+                <a href="/products/perros/Accesorios"><img src="/images/categorias/accesorios.jpg" alt="Accesorios"></a>
             </div>
             <div>
-                <a href="/product/perros/Alimentos"><img src="/images/categorias/alimentacion.jpg" alt="Alimentación"></a>
+                <a href="/products/perros/Alimentos"><img src="/images/categorias/alimentacion.jpg" alt="Alimentación"></a>
             </div>
             <div>
-                <a href="/product/gatos/Cuidado-e-Higiene"><img src="/images/categorias/cuidado.jpg" alt="Cuidados e higiene"></a>
+                <a href="/products/gatos/Cuidado-e-Higiene"><img src="/images/categorias/cuidado.jpg" alt="Cuidados e higiene"></a>
             </div>
             <div>
-                <a href="/product/perros/Ropa"><img src="/images/categorias/ropa.jpg" alt="Ropa"></a></a>
+                <a href="/products/perros/Ropa"><img src="/images/categorias/ropa.jpg" alt="Ropa"></a></a>
             </div>
         </div>
         <p></p>
@@ -30,7 +30,7 @@
         <section class="listadoArticulos">
             <% for (i=0; i< productsDestacado.length; i++){ %>
                 <article>
-                    <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                    <a href="/products/<%= productsDestacado[i].id %>/details"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
                     <div class="detalle">
                         <p id=""><%= productsDestacado[i].nombre %></p>
                             <% if (productsDestacado[i].descuento != 0) {
@@ -43,7 +43,7 @@
                             <% } else {%>
                                 <p class="precioAhora" id="">$<%= productsDestacado[i].precio %> </p>
                             <% } %>
-                        <a href="/product/detalle/<%= productsDestacado[i].id %>"><input type="button" value="Comprar" id="btn-comprar"/></a>
+                        <a href="/products/<%= productsDestacado[i].id %>/details"><input type="button" value="Comprar" id="btn-comprar"/></a>
                     </div>
                 </article>    
             <%  } %>

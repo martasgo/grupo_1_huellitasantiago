@@ -9,8 +9,8 @@
     <%- include('../partials/header') %>
    
     <main class="mainlogin">
-        <p class="rutahome"><a href="/user/profile">Perfil</a> / Edición</p>
-        <form action="/user/editUser/<%= infoUser.id %>?_method=PUT" method="POST" id="formEdicion" class="editUser" enctype="multipart/form-data">
+        <p class="rutahome"><a href="/users/<%= user.id %>/profile">Perfil</a> / Edición</p>
+        <form action="/users/<%= infoUser.id %>?_method=PUT" method="POST" id="formEdicion" class="editUser" enctype="multipart/form-data">
             <label for="nombre">Nombre</label> 
             <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : infoUser.nombre%>" 
             class="<%= (locals.errors && errors.nombre) ? 'is-invalid' : null %>">

@@ -10,46 +10,50 @@
         <%- include('../partials/header') %>
             <main>
                 <p class="rutahome">
-                    <a href="/user/profile">Perfil</a> / Compras de <%= user.nombre %>
+                    <a href="/users/<%= user.id %>/profile">Perfil</a> / Compras de <%= user.nombre %>
                     <%= user.apellido %> /
                 </p>
                 <section class="compra-user">
-                    <% comprasUser.forEach(compra=> { %>
-                        <div class="comprasUser">
-                            <ul>
-                                <li>
-                                    <strong>Fecha de compra: </strong>
-                                    <%= compra.fecha.toLocaleDateString() %>
-                                        <%= compra.fecha.toLocaleTimeString() %>
-                                            <strong>- # productos: </strong> <%= compra.cantidad_productos %>
-                                            <strong> - Monto: </strong>$ <%= compra.monto_total %>
-                                            <button id="detalle" data-compra-id="<%= compra.id %>" class="detalle-prod">
-                                                <strong>Detalle de productos</strong>
-                                            </button>
-                                                <div class="detalleProductoCompra" id="detalle-<%= compra.id %>">
-                                                    <ul>
-                                                        <% orderedProducts.forEach(product=> { %>
-                                                            <% if (compra.id==product.id_shopping_cart) { %>
-                                                                <li> <label class="txt-detalle">Producto:</label>
-                                                                    <%= product.product.nombre %> - <label
-                                                                            class="txt-detalle">Cantidad:</label>
-                                                                    <%= product.cantidad %> - <label
-                                                                                class="txt-detalle">Precio:</label>
-                                                                    <%= product.precio %>
-                                                                                - <label
-                                                                                    class="txt-detalle">Descuento:</label>
-                                                                    <%= product.descuento %>%
-                                                                </li>
-                                                            <% } %>
-                                                        <% }) %>
-                                                    </ul>
-                                                </div>
+                    <% if (comprasUser &&  comprasUser.length>0) { %>
+                        <% comprasUser.forEach(compra=> { %>
+                            <div class="comprasUser">
+                                <ul>
+                                    <li>
+                                        <strong>Fecha de compra: </strong>
+                                        <%= compra.fecha.toLocaleDateString() %>
+                                            <%= compra.fecha.toLocaleTimeString() %>
+                                                <strong>- # productos: </strong> <%= compra.cantidad_productos %>
+                                                <strong> - Monto: </strong>$ <%= compra.monto_total %>
+                                                <button id="detalle" data-compra-id="<%= compra.id %>" class="detalle-prod">
+                                                    <strong>Detalle de productos</strong>
+                                                </button>
+                                                    <div class="detalleProductoCompra" id="detalle-<%= compra.id %>">
+                                                        <ul>
+                                                            <% orderedProducts.forEach(product=> { %>
+                                                                <% if (compra.id==product.id_shopping_cart) { %>
+                                                                    <li> <label class="txt-detalle">Producto:</label>
+                                                                        <%= product.product.nombre %> - <label
+                                                                                class="txt-detalle">Cantidad:</label>
+                                                                        <%= product.cantidad %> - <label
+                                                                                    class="txt-detalle">Precio:</label>
+                                                                        <%= product.precio %>
+                                                                                    - <label
+                                                                                        class="txt-detalle">Descuento:</label>
+                                                                        <%= product.descuento %>%
+                                                                    </li>
+                                                                <% } %>
+                                                            <% }) %>
+                                                        </ul>
+                                                    </div>
 
-                                </li>
-                            </ul>
-                        </div>
+                                    </li>
+                                </ul>
+                            </div>
 
                         <% }); %>
+                    <% } else { %>
+                        <p class="negrita"> NO TIENE COMPRAS REGISTRADAS HASTA EL MOMENTO </p>
+                    <% } %>
                 </section>
             </main>
 

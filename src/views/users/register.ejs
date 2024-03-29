@@ -11,7 +11,7 @@
    
     <main class="mainlogin">
         <p class="rutahome"><a href="/">Home</a> / Registro</p>
-        <form action="/user/register" method="POST" id="formRegistro" enctype="multipart/form-data">
+        <form action="/users" method="POST" id="formRegistro" enctype="multipart/form-data">
             <label for="nombre">Nombre</label> 
             <input type="text" name="nombre" id="nombre" value="<%= locals.oldData ? oldData.nombre : null %>" class="<%= (locals.errors && errors.nombre) ? 'is-invalid' : null %>">
             <span id="ayuda" class="ayuda">El nombre no puede quedar vacío, debe contener al menos 2 caracteres</span>
