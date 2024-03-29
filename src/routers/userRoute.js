@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
 const upload = multer ({ storage });
 
 const routesUser = {
-	users: '/',
+    users: '/',
 	user: '/:id',
     registration: "/registration",
 	login: "/login",
@@ -37,7 +37,9 @@ const routesUser = {
 	list: "/list",
 	sales: "/sales",
     logout: "/logout",
-    deletion: "/:id/deletion"
+    deletion: "/:id/deletion",
+	informacionLegalRoute:"/informacionLegal",
+	notificacionesRoute:"/notificaciones"	
 };
 
 routerUsers.get(routesUser.registration, guestMiddleware, userController.registerController);
@@ -52,6 +54,9 @@ routerUsers.put(routesUser.user, upload.single("foto"), editValidations, userCon
 routerUsers.get(routesUser.profile, authMiddleware , userController.profileController);
 
 routerUsers.get(routesUser.logout, userController.logoutController);
+
+routerUsers.get(routesUser.informacionLegalRoute, authMiddleware ,userController.informacionLegalController);
+routerUsers.get(routesUser.notificacionesRoute, authMiddleware ,userController.notificacionesController);
 
 routerUsers.get(routesUser.purchases, authMiddleware, userController.compras);
 
