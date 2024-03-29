@@ -10,8 +10,8 @@ const routes = {
   mayoristasRoute: "/mayoristas",
   enviosRoute: "/envios",
   mascotasRoute: "/mascotas",
-  // Ruta prueba para el search
-  searchRoute: "/search"
+  searchRoute: "/search",
+  mediospago: "/mediospago"
 };
 
 router.get(routes.homeRoute, controller.homeController);
@@ -20,7 +20,7 @@ router.get(routes.salesRoute, controller.salesController);
 router.get(routes.mayoristasRoute, controller.mayoristasController);
 router.get(routes.enviosRoute, controller.enviosController);
 router.get(routes.mascotasRoute, controller.mascotasController);
-// Ruta prueba para el search
 router.post(routes.searchRoute, controller.searchController);
+router.get(routes.mediospago, controller.mediospagoController);
 
 module.exports = router;

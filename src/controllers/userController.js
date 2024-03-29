@@ -46,7 +46,8 @@ const userController = {
             if (req.body.recordarme) {
               res.cookie("userEmail", req.body.email, { maxAge: 60000 * 60 });
             }
-            return res.redirect("/user/profile");
+            // return res.redirect("/user/profile");
+            return res.redirect(`${userToLogin.id}/profile`);
           }
           return res.render("../views/users/login.ejs", {
             title: "Login",
@@ -263,7 +264,7 @@ const userController = {
   editController: async (req, res) => {
     try {
       const user = req.session.userLogged || {};
-      const idUser = parseInt(req.params.idUser);
+      const idUser = parseInt(req.params.id);
       const infoUser = await userService.getByPk(idUser);
       res.render("../views/users/editUser.ejs", {
         title: "Edición de usuarios",
@@ -281,7 +282,7 @@ const userController = {
     try {
       const resultValidation = validationResult(req);
       const user = req.session.userLogged || {};
-      const idUser = parseInt(req.params.idUser);
+      const idUser = parseInt(req.params.id);
       const infoUser = await userService.getByPk(idUser);
       const imagen = req.body.imageAnt;
       if (resultValidation.errors.length > 0) {
@@ -342,7 +343,7 @@ const userController = {
               // Guarda la variable de sesión actualizada
               req.session.save();
             }
-            res.redirect("/user/profile");
+            return res.redirect(`/users/${infoUser.id}/profile`);
           }
         } else {
           //Cuando el usuario exite, se edita la información y se guarda.
@@ -368,7 +369,7 @@ const userController = {
             // Guarda la variable de sesión actualizada
             req.session.save();
           }
-          res.redirect("/user/profile");
+          return res.redirect(`/users/${infoUser.id}/profile`);
         }
       }
     } catch (error) {
@@ -403,7 +404,7 @@ const userController = {
         res.redirect("/");
       } else if (user && user.id_categoria === 1) {
         await userService.delete(idToDelete);
-        res.redirect("/user/profile");
+        res.redirect(`/users/${user.id}/profile`);
       }
     } catch (error) {
       console.log(error.message);

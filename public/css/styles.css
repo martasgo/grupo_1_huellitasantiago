@@ -233,6 +233,27 @@ article img {
   border-top: double 3px grey;  
 }
 
+.enviometodos {
+  margin: auto;
+  padding: 15px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
+  width: 30%;
+  border: 1px solid rgb(172, 167, 167);
+  border-radius: 5px;
+}
+
+.pagocompra {
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid rgb(172, 167, 167);
+  border-radius: 5px;
+  width: 50%
+}
+
 #breadcrumbs{
   border-top: solid 2px gray;
   padding: 5px 20px;
@@ -304,7 +325,7 @@ p#descripcion{
   font-weight: bold;
 }
 
-#aplicar-cod, #inicio-compra, #seguir-compra{
+#aplicar-cod, #inicio-compra, #seguir-compra, #finalizar-compra{
   background-color: #6dbd9bff;
   border: 2px black solid;
   padding: 10px 25px;
@@ -317,12 +338,12 @@ p#descripcion{
   text-align: center;
 }
 
-#aplicar-cod:hover, #inicio-compra:hover, #seguir-compra:hover{
+#aplicar-cod:hover, #inicio-compra:hover, #seguir-compra:hover, #finalizar-compra:hover{
   background-color: #fbdd5bff;
 }
 
 .detalle-compra{
-  text-align: right;
+  text-align: left;
   font-weight: bold;
 }
 
@@ -370,7 +391,7 @@ table{
 }
 
 .imgPrincipal{
-  width: 50%;
+  width: 80%;
   display: flex;
   margin: auto;
 }
@@ -553,12 +574,12 @@ table{
 }
 
 
-.perfil a, .opciones a, .actividad .historial a, .configuracion a, .config a, .sesiones a, .sesion a, .product a{
+.perfil a, .opciones a, .actividad .historial a, .configuracion a, .config a, .sesiones a, .sesion a, .product a, .product-nonActive a{ 
   color: black;
   text-decoration: none;
 }
 
-.perfil a:hover, .product a:hover, .opciones a:hover, .actividad a:hover, .historial a:hover , .configuracion a:hover, .config a:hover, .sesiones a:hover{
+.perfil a:hover, .product a:hover, .product-nonActive a:hover, .opciones a:hover, .actividad a:hover, .historial a:hover , .configuracion a:hover, .config a:hover, .sesiones a:hover{
   color: #18c1d8ff;
   text-decoration: underline;
 }
@@ -978,7 +999,15 @@ button a {
   /*CSS Cart Page tablet en adelante*/
 
   .detalle-compra{
-    text-align: right;   
+    margin: auto;
+    text-align: center;  
+    border: 1px black solid;
+    border-radius: 5px; 
+    width: 20%;
+    background-color: rgb(209, 206, 206);
+  }
+  #conenvio {
+    display: none;
   }
 
   .detalle-producto{
@@ -1098,7 +1127,7 @@ button a {
     flex-direction: column;
     margin-top: 0px;
     padding-top: 0px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
   /* fin */
 

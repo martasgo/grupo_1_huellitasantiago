@@ -1,3 +1,4 @@
+window.addEventListener('load', () => {
 // Capturamos el button de ELIMINAR
 let deleteButton = document.querySelector('button.delete');
 let aDeleteElement = document.querySelector('a.delete');
@@ -12,3 +13,4 @@ deleteButton.addEventListener('click', (event) => {
     }
 });
 
+})

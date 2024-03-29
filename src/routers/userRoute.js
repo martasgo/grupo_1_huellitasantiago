@@ -27,44 +27,44 @@ const storage = multer.diskStorage({
 const upload = multer ({ storage });
 
 const routesUser = {
-    loginRoute: "/login",
-    registerRoute: "/register",
-	editRegister: "/editUser/:idUser",
-    profileRoute: "/profile",
-	comprasRoute: "/compras/:id",
-	listUsersRoute: "/usersList",
-	salesAdminRoute: "/salesList",
-    logoutRoute: "/logout",
-    deleteRoute: "/delete/:id",
+    users: '/',
+	user: '/:id',
+    registration: "/registration",
+	login: "/login",
+	edition: "/:id/edition",
+    profile: "/:id/profile",
+	purchases: "/:id/purchases",
+	list: "/list",
+	sales: "/sales",
+    logout: "/logout",
+    deletion: "/:id/deletion",
 	informacionLegalRoute:"/informacionLegal",
-	notificacionesRoute:"/notificaciones"
+	notificacionesRoute:"/notificaciones"	
 };
 
-routerUsers.get(routesUser.loginRoute, guestMiddleware , userController.loginController);
-routerUsers.post(routesUser.loginRoute , loginValidations , userController.loginProcess);
+routerUsers.get(routesUser.registration, guestMiddleware, userController.registerController);
+routerUsers.post(routesUser.users, upload.single("foto"), registerValidations, userController.addRegisterController);
 
-routerUsers.get(routesUser.profileRoute, authMiddleware , userController.profileController);
+routerUsers.get(routesUser.login, guestMiddleware , userController.loginController);
+routerUsers.post(routesUser.login , loginValidations , userController.loginProcess);
 
-routerUsers.get(routesUser.logoutRoute, userController.logoutController);
+routerUsers.get(routesUser.edition,authMiddleware, userController.editController);
+routerUsers.put(routesUser.user, upload.single("foto"), editValidations, userController.updateEditController);
 
-routerUsers.get(routesUser.comprasRoute, authMiddleware, userController.compras);
+routerUsers.get(routesUser.profile, authMiddleware , userController.profileController);
 
-routerUsers.get(routesUser.deleteRoute,authMiddleware, userController.deleteController);
-routerUsers.delete(routesUser.deleteRoute,authMiddleware, userController.destroyController);
+routerUsers.get(routesUser.logout, userController.logoutController);
 
 routerUsers.get(routesUser.informacionLegalRoute, authMiddleware ,userController.informacionLegalController);
 routerUsers.get(routesUser.notificacionesRoute, authMiddleware ,userController.notificacionesController);
 
-// get-post form registración
-routerUsers.get(routesUser.registerRoute, guestMiddleware, userController.registerController);
-routerUsers.post(routesUser.registerRoute, upload.single("foto"), registerValidations, userController.addRegisterController);
+routerUsers.get(routesUser.purchases, authMiddleware, userController.compras);
+
+routerUsers.get(routesUser.deletion,authMiddleware, userController.deleteController);
+routerUsers.delete(routesUser.user,authMiddleware, userController.destroyController);
  
-routerUsers.get(routesUser.listUsersRoute, authMiddleware, adminMiddleware, userController.listUsersController);
+routerUsers.get(routesUser.list, authMiddleware, adminMiddleware, userController.listUsersController);
 
-routerUsers.get(routesUser.salesAdminRoute, authMiddleware, adminMiddleware, userController.salesListController);
-
-//editar y guardar registro de usuario, YA Registrado!-Sole
-routerUsers.get(routesUser.editRegister,authMiddleware, userController.editController);
-routerUsers.put(routesUser.editRegister, upload.single("foto"), editValidations, userController.updateEditController);
+routerUsers.get(routesUser.sales, authMiddleware, adminMiddleware, userController.salesListController);
 
 module.exports = routerUsers;
