@@ -78,18 +78,27 @@
             <% if (locals.errors && errors.foto) { %>
                 <p class="error"> <%= errors.foto.msg %></p>
             <% } %> <br>
-            <% if(locals.user && user.id_categoria === 1) {%>
+            <% if(locals.user && user.id_categoria == 1) {%>
                 <label for="categoria">Categoria:</label>
                 <select class="userInfo" id="categoria" name="categoria">
                     <option value=1 <% if (infoUser.id_categoria === 1) { %> selected <% } %>>Administrador</option>
                     <option value=2 <% if (infoUser.id_categoria === 2) { %> selected <% } %>>Cliente</option>
-                </select><br>
+                </select>
             <% } else {%>
                 <input type="text" name="categoria" id="categoria" value=<%=infoUser.id_categoria %> hidden>
             <% } %>
-            <br>            
+           
+            <% if(locals.user && user.id_categoria == 1) {%><br>
+                <label for="activo">Estado de Usuario:</label>
+                <select class="userInfo" id="activo" name="activo">
+                    <option value=1 <% if (infoUser.activo == true) { %> selected <% } %>>Activo</option>
+                    <option value=0 <% if (infoUser.activo == false) { %> selected <% } %>>Inactivo</option>
+                </select><br>
+            <% } else {%>
+                <input type="text" name="activo" id="activo" value=<%=infoUser.activo %> hidden>
+            <% } %>                        
             <button type="submit">GUARDAR CAMBIOS</button>
-            <br>            
+                        
             </form>
     </main>
 

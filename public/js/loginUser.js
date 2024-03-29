@@ -17,11 +17,9 @@ window.addEventListener("load", function () {
     // Expresión regular para validar el formato del correo electrónico
     var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (regex.test(email)) {
-      console.log("Email válido: " + email);
+    if (regex.test(email)) {      
       document.querySelector("#error-email").innerText = "";
-    } else {
-      console.log("Email inválido: " + email);
+    } else {      
       document.querySelector("#error-email").innerText =
         "El email debe ser en un formato valido";
     }

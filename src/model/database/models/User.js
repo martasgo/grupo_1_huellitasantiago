@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      activo: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+      },
     };
    
     let config = {

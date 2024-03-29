@@ -475,6 +475,7 @@ table{
 }
 
 .msjError{
+  font-size: 13px;
   color: red; 
   font-weight: bold
 }
@@ -854,7 +855,6 @@ button a {
     text-align: right;
   }
   /*Fin CSS Cart Page*/
-
 } 
 
 
