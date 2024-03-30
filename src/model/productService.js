@@ -569,53 +569,6 @@ const productService = {
         }
     },
 
-    // getAllApiProducts: async () => {
-    //     try {
-    //         let alimentosProducts = await productService.getByCategory(1);
-    //         let accesoriosProducts = await productService.getByCategory(2);
-    //         let cuidadoHigieneProducts = await productService.getByCategory(3);
-    //         let ropaProducts = await productService.getByCategory(4);
-    //         let allProducts = await db.Product.findAll({
-    //             include: ['categories']});
-    //         let productsList = [];
-    //         allProducts.forEach(product => {
-    //             const productWithDetail = {
-    //                 id: product.id,
-    //                 name: product.nombre,
-    //                 description: product.descripcion,
-    //                 categories: product.categories,
-    //                 detail: `localhost:3000/api/products/${parseInt(product.id)}`
-    //             };
-    //             productsList.push(productWithDetail);
-    //         });
-    //         // Iterar sobre las relaciones y convertirlas a arrays si son objetos
-    //         for (let i = 0; i < productsList.length; i++) {
-    //             const product = productsList[i];
-    //             for (let key in product) {
-    //                 if (typeof product[key] === 'object' && product[key] !== null && !Array.isArray(product[key])) {
-    //                     // Si la propiedad es un objeto y no es nulo ni un array, conviértela a un array de un solo elemento
-    //                     product[key] = [product[key]];
-    //                 }
-    //             }
-    //         }
-    //         let results = {
-    //             count: allProducts.length,
-    //             countByCategory: {
-    //                 'Alimentos': alimentosProducts.length,
-    //                 'Accesorios': accesoriosProducts.length,
-    //                 'Cuidado e Higiene': cuidadoHigieneProducts.length,
-    //                 'Ropa': ropaProducts.length
-    //             },
-    //             products: productsList
-    //         };
-    //         return results
-    //     } catch (error) {
-    //         console.log(error);
-    //         throw new Error('No se pudo procesar la solicitud correctamente');
-    //     }
-        
-    // },
-
     getAllApiProducts: async (page = 1, pageItems = 10) => {
         try {
             const offset = (page - 1) * pageItems;

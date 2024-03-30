@@ -191,8 +191,7 @@ formEdicion.addEventListener("submit", (event) => {
   let confirmarValido = validarConfirmar(confirmar, contrasenia);
   let fotoValida = validarFoto(foto);
 
-  // Validaciones exitosas (true)
-  console.log(nombreValido, apellidoValido, emailValido, direccionValida, telefonoValido, contraseniaValida, confirmarValido, fotoValida)
+  // Validaciones exitosas (true)  
   if (nombreValido && apellidoValido && emailValido && direccionValida && telefonoValido && contraseniaValida && confirmarValido && fotoValida) {
       // Pasan los datos al servidor     
       formEdicion.submit();

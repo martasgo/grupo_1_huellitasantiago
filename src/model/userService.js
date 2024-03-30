@@ -165,21 +165,21 @@ const userService = {
   },
 
   login: async function (userData) {
-    try {
+    try {    
     const errors = validationResult(userData);
     if (!errors.isEmpty()) {
       const mappedErrors = errors.mapped();
       return { errors: mappedErrors };
     }    
-    const userToLogin = await userService.getByField(userData.email);
-    
+    const userToLogin = await userService.getByField(userData.email);    
+
     if (!userToLogin || userToLogin.activo == false) {
       console.log(errors)
-      return { errors: { email: { msg: "Este email no se encuentra registrado" } } };
-    
+      return { errors: { email: { msg: "Este email no se encuentra registrado" } } };    
     }
+    
     const isOkThePassword = bcrypt.compareSync(
-      userData.contraseña,
+      userData.contrasenia,
       userToLogin.contrasenia
     );
     if (!isOkThePassword) {
