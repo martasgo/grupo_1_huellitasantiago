@@ -190,7 +190,7 @@ const prodController = {
     },
     
     //filtros procesamiento
-    filtersApplied: async (req, res) => {  
+    filtersAppliedController: async (req, res) => {  
       try {
         let filtrosList = await productService.getFilterSelected(req);
         let resultadofiltros = await productService.getAllByFileters(req.body, filtrosList.indices, filtrosList.idCategory, filtrosList.idSubCategory)
