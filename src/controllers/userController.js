@@ -23,7 +23,7 @@ const userController = {
 
   // Método para procesar el login de usuarios
   loginProcess: async (req, res) => {
-    try {      
+    try {        
       const resultLogin = await userService.login(req.body);
       
     if (resultLogin.errors) {         
@@ -34,7 +34,7 @@ const userController = {
         });
       } else { 
         req.session.userLogged = resultLogin.user;
-        res.redirect(`${userToLogin.id}/profile`);
+        res.redirect(`${resultLogin.id}/profile`);
       }       
     } catch (error) {      
       console.error("Error en el proceso de inicio de sesión:", error);
@@ -77,8 +77,7 @@ const userController = {
   salesListController: async (req, res) => {
     try {
       const user = req.session.userLogged || {};
-      const ventas = await shoppingCartService.getAll();
-      console.log(ventas);
+      const ventas = await shoppingCartService.getAll();      
       const orderedProducts = [];
 
       for (const venta of ventas) {
@@ -179,18 +178,21 @@ const userController = {
       let comprasUser = await shoppingCartService.getByUser(user.id);
       let orderedProducts = [];
 
+      if(comprasUser){
       for (const compra of comprasUser) {
         let productosEnCompra = await cartProductService.getByCartId(compra.id);
         productosEnCompra.forEach((products) => {
           orderedProducts.push(products);
         });
       }
+      }    
       res.render("../views/users/comprasUser.ejs", {
         title: "Mis Compras",
         user,
         comprasUser,
         orderedProducts,
       });
+    
     } catch (error) {
       console.error(error);
       res.status(500).send("Error en el servidor");
@@ -271,7 +273,7 @@ const userController = {
           user,
           imagen,
         });
-      } else {
+      } else {        
         // En caso de cambiar el correo: se verifica que el mail no esté registrado
         const userInDB = await userService.getByField(req.body.email);
         if (userInDB) {
