@@ -495,7 +495,7 @@ const productService = {
                 query.where.id_tamanio_mascota = filtros.tamanio
             }
         } 
-        if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
+        /* if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
             query.where.precio = {
                 [Op.gte]: parseInt(filtros.precioDesde),
                 [Op.lte]: parseInt(filtros.precioHasta)
@@ -503,37 +503,59 @@ const productService = {
         } else if (filtros.precioDesde !== ''){
             {query.where.precio = { [Op.gte]: parseInt(filtros.precioDesde) } }
         }else if (filtros.precioHasta !== ''){
-            query.where.precio = {[Op.lte]: parseInt(filtros.precioHasta) }
-        }
+            {query.where.precio = { [Op.lte]: parseInt(filtros.precioHasta) }}
+        } */
 
         try {   
             console.log(query)
             // return await db.Product.findAll(query);
             resultado = await db.Product.findAll(query);
-
+           productosFinal = [];
+                       console.log('RESULADO:',resultado)
             // Filtrar los productos con descuento
-            let productosConDescuento = resultado.filter(producto => producto.descuento);
+            //let productosConDescuento = resultado.filter(producto => producto.descuento);
+           // console.log('CON DESC:',productosConDescuento)
 
             // Filtrar los productos sin descuento
-            let productosSinDescuento = resultado.filter(producto => !producto.descuento);           
+           // let productosSinDescuento = resultado.filter(producto => !producto.descuento);  
+          //  console.log('SIN DESC:',productosSinDescuento)        
 
-            productosConDescuento = productosConDescuento.filter(producto => {
+          if (filtros.precioDesde !== '' || filtros.precioHasta !== '' ) {
+            console.log('pasa')
+            productosFinal = resultado.filter(producto => {
                 valor = (producto.precio - (producto.precio * (producto.descuento / 100)));
+                const precioDesde = parseInt(filtros.precioDesde);
+                const precioHasta = parseInt(filtros.precioHasta);
+
                 if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
-                   if (parseInt(filtros.precioDesde) < valor && valor < parseInt(filtros.precioHasta)) {
-                        productosSinDescuento.push(producto);
+                   if (!isNaN(precioDesde) && !isNaN(precioHasta) && precioDesde <= valor && valor <= precioHasta) {
+                    // productosFinal.push(producto);
+                    return true
                    } 
                 } else if (filtros.precioDesde !== ''){
-                    if (parseInt(filtros.precioDesde) <= valor){
-                        productosSinDescuento.push(producto);
+                    if (!isNaN(precioDesde) && precioDesde <= valor){
+                        //productosFinal.push(producto);
+                        return true
                     }
                 }else if (filtros.precioHasta !== ''){
-                    if (valor <= parseInt(filtros.precioHasta)){
-                        productosSinDescuento.push(producto);
+                
+                    console.log('valor', parseInt(valor))
+                    console.log('valorhasta', parseInt(filtros.precioHasta))
+                    
+                    if (!isNaN(precioHasta) && valor <= precioHasta){
+                        console.log('pasaHasta')
+                        //productosFinal.push(producto);
+                        return true
                     }
                 }
-            });            
-            return productosSinDescuento;
+                return false
+            });     
+            console.log('FINAL:',productosFinal)       
+            return productosFinal;
+           
+          } else {
+            return resultado;
+          }
         } catch (error) {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
