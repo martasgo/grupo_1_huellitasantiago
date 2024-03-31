@@ -57,7 +57,7 @@ const mainController = {
   },
   searchController: async (req, res) => {
     try {
-      let word = req.body.buscarProd;
+      let word = req.body.buscarProd2;
       let productsDestacado= await productService.getByKeyWord(word);     
       res.render('../views/busqueda.ejs', {
         title: 'Busqueda', 
