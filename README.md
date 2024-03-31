@@ -49,7 +49,7 @@ En huellitasantiago somos conscientes de que la calidad es prioritaria cuando de
     npm start
 
 > [!IMPORTANT] 
-> A efectos de ejecutar correctamente este proyecto, es necesario agregar un archivo .env con las siguientes variables de acceso a la base de datos:
+> A efectos de ejecutar correctamente este proyecto, es necesario agregar en la carpeta raíz un archivo .env con las siguientes variables de acceso a la base de datos:
 
     DB_USER: usuario de tu base
     DB_PASS: password de tu base
