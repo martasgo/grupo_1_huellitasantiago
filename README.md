@@ -63,24 +63,21 @@ Una vez ejecutados el script de creación de la base de datos y el script para p
 **ADMINISTRADOR**
 
     email: mabutti@gmail.com 
-    password: MabuttiDH24
+    password: Mabutti$DH24
 
 **CLIENTES**
 
     email: fernanda.smith.ss@gmail.com
-    password: SsmithDH24
+    password: Ssmith$DH24
 
     email: mariopereyra1.mpp@gmail.com
-    password: MpereyraDH24
+    password: Mpereyra$DH24
 
     email: cpnmatiasgomez@gmail.com
-    password: MgomezDH24
-
-    email: gabidominguez@gmail.com
-    password: GdominguezDH24
+    password: Mgomez$DH24
 
     email: chinodechina@gmail.com
-    password: ChinoDH24
+    password: Chino$DH24
 
 <a name="sitios-de-referencia"></a>
 ## Sitios de referencia
