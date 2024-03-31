@@ -59,7 +59,7 @@ nav {
 
 #iconos-header{
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 i {
@@ -94,7 +94,7 @@ i {
 }
 
 .mobileheader {
-  width: 21%;
+  width: 25%;
 }
 
 #iconoUser {
@@ -258,24 +258,19 @@ article img {
 }
 
 .enviometodos {
-  margin: auto;
   padding: 15px;
   margin-bottom: 20px;
-  margin-top: 20px;
   text-align: center;
-  width: 30%;
   border: 1px solid rgb(172, 167, 167);
   border-radius: 5px;
 }
 
 .pagocompra {
-  margin: auto;
   margin-bottom: 20px;
   margin-top: 20px;
-  padding: 15px;
+  padding: 6px;
   border: 1px solid rgb(172, 167, 167);
   border-radius: 5px;
-  width: 50%
 }
 
 #breadcrumbs{
@@ -356,6 +351,7 @@ p#descripcion{
   border-radius: 6px;
   font-size: 15px;
   font-weight: bold;
+  margin: 5px;
 }
 
 .center{
@@ -1019,6 +1015,27 @@ button a {
   }
 
   /*CSS Cart Page tablet en adelante*/
+
+  .enviometodos {
+    margin: auto;
+    padding: 15px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+    width: 40%;
+    border: 1px solid rgb(172, 167, 167);
+    border-radius: 5px;
+  }
+
+  .pagocompra {
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid rgb(172, 167, 167);
+    border-radius: 5px;
+    width: 50%
+  }
 
   .detalle-compra{
     margin: auto;
