@@ -164,6 +164,14 @@ const userService = {
     }
   },
 
+  getLastUser: async () => {
+    let allUsers = await db.User.findAll({
+      include: ['usersCategories']
+    });
+    let lastUser = allUsers[allUsers.length - 1]
+    return lastUser
+  },
+
   login: async function (userData) {
     try {    
     const errors = validationResult(userData);

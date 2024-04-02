@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- include head -->
+  <%- include("../partials/head.ejs") %>
+  <script src="/js/forgotPassword.js"></script>
+
+  <body>
+    <!-- include header -->
+    <%- include('../partials/header') %>
+<main class="mainlogin">
+    <form id="formForgotPass" method="POST" action="/users/forgotPassword">
+        <label for="emailPass">Ingresa tu correo electrónico:</label>
+        <input type="email" id="emailPass" name="emailPass" value="<%= locals.oldData ? oldData.emailPass : null %>">
+        <small id="error-emailPass" class="msjErrorPass"></small>
+        
+        <% if (mensaje) {%>
+          <p class="msjErrorPass"> <%= mensaje  %> </p>
+      <% } %>
+      
+    </br>
+        <button type="submit">Recuperar contraseña</button>
+    </form>
+</main>
+    <!-- include footer -->
+    <%- include('../partials/footer') %>
+  </body>
+</html>

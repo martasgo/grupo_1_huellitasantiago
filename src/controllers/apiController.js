@@ -28,6 +28,26 @@ const apiController = {
         }     
     },
 
+    lastProduct: async (req, res) => {
+        try {
+            let lastProduct = await productService.getLastProduct();
+            return res.json(lastProduct);
+        } catch (error) {
+            console.error("Error al obtener el producto:", error);
+            return res.json([]);
+        }     
+    },
+
+    sales: async (req, res) => {
+        try {
+            let result = await shoppingCartService.sales()
+            return res.json(result);
+        } catch (error) {
+            console.error("Error al obtener el producto:", error);
+            return res.json([]);
+        }     
+    },
+
     cartProduct: async (req, res) => {
         try {
             let product = await productService.getByPk(req.params.id)
@@ -83,7 +103,17 @@ const apiController = {
             console.error("Error al obtener el usuario:", error);
             return res.json([])
         }
-    }
+    },
+
+    lastUser: async (req, res) => {
+        try {
+            let lastUser = await userService.getLastUser()
+            return res.json(lastUser);
+        } catch (error) {
+            console.error("Error al obtener el usuario:", error);
+            return res.json([]);
+        }     
+    },
 };
 
 module.exports = apiController;
