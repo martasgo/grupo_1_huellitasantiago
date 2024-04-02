@@ -677,6 +677,14 @@ const productService = {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
         }  
+    },
+
+    getLastProduct: async () => {
+        let allProducts = await db.Product.findAll({
+            include: ['categories']
+        });
+        let lastProduct = allProducts[allProducts.length - 1]
+        return lastProduct
     }
 };
 
