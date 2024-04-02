@@ -24,7 +24,7 @@ const userController = {
   // Método para procesar el login de usuarios
   loginProcess: async (req, res) => {
     try {        
-      const resultLogin = await userService.login(req.body);
+      const resultLogin = await userService.login(req);
       
     if (resultLogin.errors) {         
           res.render("../views/users/login.ejs", {
@@ -37,7 +37,7 @@ const userController = {
         if (req.body.recordarme) {
           res.cookie("userEmail", req.body.email, { maxAge: 60000 * 60 });
         }
-        res.redirect(`${resultLogin.id}/profile`);
+        res.redirect(`${resultLogin.user.id}/profile`);
       }       
     } catch (error) {      
       console.error("Error en el proceso de inicio de sesión:", error);
