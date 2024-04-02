@@ -34,6 +34,9 @@ const userController = {
         });
       } else { 
         req.session.userLogged = resultLogin.user;
+        if (req.body.recordarme) {
+          res.cookie("userEmail", req.body.email, { maxAge: 60000 * 60 });
+        }
         res.redirect(`${resultLogin.id}/profile`);
       }       
     } catch (error) {      

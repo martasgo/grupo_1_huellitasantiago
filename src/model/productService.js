@@ -453,106 +453,74 @@ const productService = {
 
     // Service para aplicar los filtros que se muestran en la vista listado.ejs
     getAllByFileters: async function(filtros, valorMascota, valorCat, valorSubCat){
-        let query = {
-            where: {},
-            order: [
-                ['nombre', 'ASC']
-            ]
-          };
-        
-        query.where.activo = 1;
-
-        if (valorMascota){
-            query.where.id_mascota = {[Op.or]: valorMascota } 
-        }
-
-        if (valorCat){
-            query.where.id_categoria = valorCat.id 
-        }
-
-        if (valorSubCat){
-            query.where.id_sub_categoria = valorSubCat.id 
-        }
-        
-        if (filtros.marca) {
-            if (Array.isArray(filtros.marca)){ 
-                query.where.id_marca = {[Op.or]: filtros.marca } 
-            } else {
-                query.where.id_marca = filtros.marca 
-            } 
-        }
-        if (filtros.edad) {
-            if (Array.isArray(filtros.edad)){ 
-                query.where.id_edad_mascota = {[Op.or]: filtros.edad } 
-            }else{
-                query.where.id_edad_mascota = filtros.edad
-            }
-        }
-        if (filtros.tamanio){
-            if (Array.isArray(filtros.tamanio)){ 
-                query.where.id_tamanio_mascota = {[Op.or]: filtros.tamanio } 
-            } else {
-                query.where.id_tamanio_mascota = filtros.tamanio
-            }
-        } 
-        /* if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
-            query.where.precio = {
-                [Op.gte]: parseInt(filtros.precioDesde),
-                [Op.lte]: parseInt(filtros.precioHasta)
-            } 
-        } else if (filtros.precioDesde !== ''){
-            {query.where.precio = { [Op.gte]: parseInt(filtros.precioDesde) } }
-        }else if (filtros.precioHasta !== ''){
-            {query.where.precio = { [Op.lte]: parseInt(filtros.precioHasta) }}
-        } */
-
         try {   
+            let query = {
+                where: {},
+                order: [
+                    ['nombre', 'ASC']
+                ]
+              };
+            
+            query.where.activo = 1;
+    
+            if (valorMascota){
+                query.where.id_mascota = {[Op.or]: valorMascota } 
+            }
+    
+            if (valorCat){
+                query.where.id_categoria = valorCat.id 
+            }
+    
+            if (valorSubCat){
+                query.where.id_sub_categoria = valorSubCat.id 
+            }
+            
+            if (filtros.marca) {
+                if (Array.isArray(filtros.marca)){ 
+                    query.where.id_marca = {[Op.or]: filtros.marca } 
+                } else {
+                    query.where.id_marca = filtros.marca 
+                } 
+            }
+            if (filtros.edad) {
+                if (Array.isArray(filtros.edad)){ 
+                    query.where.id_edad_mascota = {[Op.or]: filtros.edad } 
+                }else{
+                    query.where.id_edad_mascota = filtros.edad
+                }
+            }
+            if (filtros.tamanio){
+                if (Array.isArray(filtros.tamanio)){ 
+                    query.where.id_tamanio_mascota = {[Op.or]: filtros.tamanio } 
+                } else {
+                    query.where.id_tamanio_mascota = filtros.tamanio
+                }
+            } 
             console.log(query)
-            // return await db.Product.findAll(query);
             resultado = await db.Product.findAll(query);
-           productosFinal = [];
-                       console.log('RESULADO:',resultado)
-            // Filtrar los productos con descuento
-            //let productosConDescuento = resultado.filter(producto => producto.descuento);
-           // console.log('CON DESC:',productosConDescuento)
-
-            // Filtrar los productos sin descuento
-           // let productosSinDescuento = resultado.filter(producto => !producto.descuento);  
-          //  console.log('SIN DESC:',productosSinDescuento)        
-
-          if (filtros.precioDesde !== '' || filtros.precioHasta !== '' ) {
-            console.log('pasa')
-            productosFinal = resultado.filter(producto => {
+            productosFinal = [];
+            if (filtros.precioDesde !== '' || filtros.precioHasta !== '' ) {
+                productosFinal = resultado.filter(producto => {
                 valor = (producto.precio - (producto.precio * (producto.descuento / 100)));
                 const precioDesde = parseInt(filtros.precioDesde);
                 const precioHasta = parseInt(filtros.precioHasta);
 
                 if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
                    if (!isNaN(precioDesde) && !isNaN(precioHasta) && precioDesde <= valor && valor <= precioHasta) {
-                    // productosFinal.push(producto);
                     return true
                    } 
                 } else if (filtros.precioDesde !== ''){
                     if (!isNaN(precioDesde) && precioDesde <= valor){
-                        //productosFinal.push(producto);
-                        return true
+                         return true
                     }
                 }else if (filtros.precioHasta !== ''){
-                
-                    console.log('valor', parseInt(valor))
-                    console.log('valorhasta', parseInt(filtros.precioHasta))
-                    
                     if (!isNaN(precioHasta) && valor <= precioHasta){
-                        console.log('pasaHasta')
-                        //productosFinal.push(producto);
                         return true
                     }
                 }
                 return false
-            });     
-            console.log('FINAL:',productosFinal)       
-            return productosFinal;
-           
+            });      
+            return productosFinal; 
           } else {
             return resultado;
           }
@@ -709,6 +677,14 @@ const productService = {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
         }  
+    },
+
+    getLastProduct: async () => {
+        let allProducts = await db.Product.findAll({
+            include: ['categories']
+        });
+        let lastProduct = allProducts[allProducts.length - 1]
+        return lastProduct
     }
 };
 

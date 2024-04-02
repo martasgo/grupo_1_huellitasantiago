@@ -37,7 +37,7 @@ let routerProduct = require("./routers/productRoute");
 let routerApi = require("./routers/apiRoute");
 
 app.use('/', routerMain);
-app.use('/cart', routerCart);
+app.use('/carts', routerCart);
 app.use('/users', routerUser);
 app.use('/products', routerProduct);
 app.use('/api', routerApi);
