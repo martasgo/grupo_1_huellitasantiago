@@ -171,7 +171,7 @@ const userService = {
       const mappedErrors = errors.mapped();
       return { errors: mappedErrors };
     }    
-    const userToLogin = await userService.getByField(userData.email);    
+    const userToLogin = await userService.getByField(userData.body.email);    
 
     if (!userToLogin || userToLogin.activo == false) {
       console.log(errors)
@@ -179,7 +179,7 @@ const userService = {
     }
     
     const isOkThePassword = bcrypt.compareSync(
-      userData.contrasenia,
+      userData.body.contrasenia,
       userToLogin.contrasenia
     );
     if (!isOkThePassword) {
