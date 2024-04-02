@@ -9,12 +9,14 @@ const adminMiddleware = require("../middlewares/adminMiddleware");
 const multerMiddleware = require('../middlewares/multerMiddleware');
 const editValidations = require("../middlewares/editValidations");
 const registerValidations = require("../middlewares/registerValidations");
+const forgotPassValidation = require("../middlewares/forgotPassValidation");
 
 const routesUser = {
     users: '/',
 	user: '/:id',
     registration: "/registration",
 	login: "/login",
+	forgotPass: "/forgotPassword",
 	edition: "/:id/edition",
     profile: "/:id/profile",
 	purchases: "/:id/purchases",
@@ -31,6 +33,9 @@ routerUsers.post(routesUser.users, multerMiddleware.userUpload.single("foto"), r
 
 routerUsers.get(routesUser.login, guestMiddleware , userController.loginController);
 routerUsers.post(routesUser.login, loginValidations , userController.loginProcess);
+
+routerUsers.get(routesUser.forgotPass, userController.forgotPassController);
+routerUsers.post(routesUser.forgotPass, forgotPassValidation, userController.forgotPassProcess);
 
 routerUsers.get(routesUser.edition, authMiddleware, userController.editController);
 routerUsers.put(routesUser.user, multerMiddleware.userUpload.single("foto"), editValidations, userController.updateEditController);

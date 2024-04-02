@@ -44,7 +44,39 @@ const userController = {
         old: req.body
       });
     }
-  },    
+  },
+  
+  forgotPassController:(req, res) => {
+    try {
+      res.render("../views/users/olvidasteContraseña.ejs", {
+        title: "Recuperar Contraseña",
+        mensaje: ""
+      });
+    } catch (error) {
+      res.status(500).send("Error en el servidor");
+    }
+  },
+
+  forgotPassProcess:async (req, res) => {
+    try {          
+    const userForgotPass = await userService.getByField(req.body.emailPass);
+            
+    if (userForgotPass) {         
+        return res.render("../views/users/contraseñaEnviada.ejs",{
+        title: "Contraseña Enviada",        
+      });
+      } else { 
+        res.render("../views/users/olvidasteContraseña.ejs", {
+          title: "Recuperar Contraseña",
+          mensaje: "Este email no se encuentra registrado",
+          oldData: req.body
+        });
+      }       
+    } catch (error) {      
+      console.error("Error en el proceso:", error);
+      res.redirect("../views/users/olvidasteContraseña.ejs");
+    }
+  },  
 
   registerController: async (req, res) => {
     try {
