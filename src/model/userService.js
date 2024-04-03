@@ -168,8 +168,12 @@ const userService = {
     let allUsers = await db.User.findAll({
       include: ['usersCategories']
     });
-    let lastUser = allUsers[allUsers.length - 1]
-    return lastUser
+    let lastUser = allUsers[allUsers.length - 1];
+    let result = {
+      allUsers: allUsers,
+      lastUser: lastUser
+    }
+    return result
   },
 
   login: async function (userData) {
