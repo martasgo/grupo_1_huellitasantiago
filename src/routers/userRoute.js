@@ -44,7 +44,7 @@ routerUsers.get(routesUser.profile, authMiddleware , userController.profileContr
 
 routerUsers.get(routesUser.logout, userController.logoutController);
 
-routerUsers.get(routesUser.purchases, authMiddleware, userController.compras);
+routerUsers.get(routesUser.purchases, authMiddleware, userController.purchasesController);
 
 routerUsers.get(routesUser.deletion, authMiddleware, userController.deleteController);
 routerUsers.delete(routesUser.user, authMiddleware, userController.destroyController);
