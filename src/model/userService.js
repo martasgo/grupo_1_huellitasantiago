@@ -155,7 +155,8 @@ const userService = {
         direccion: userFound.direccion,
         telefono: userFound.telefono,
         imagen: userFound.imagen,
-        categoria: userFound.id_categoria
+        categoria: userFound.id_categoria,
+        activo: userFound.activo
       }
       return apiUser;
     } catch (error) {
