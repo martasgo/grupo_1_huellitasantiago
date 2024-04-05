@@ -9,104 +9,100 @@
     <main>
         <p class="rutahome"><a href="/">Home</a> / <a href="/mascotas">Mascotas</a> / 
       
-        <section class="ficha-producto">
-            <% if (producto){%>
-            <div id="img-precio">
-                <section id="imgProducto">
-                    <img class="imgPrincipal" src="/images/productos/<%= producto.imagen %>" />
-                    <div class="fotos">
-                    </div> 
-                </section>
-                <section id="carritoProducto">
-                    <h3 class="margin-top"><%= producto.nombre %> </h3>
-                    <% if (producto.descuento != 0) {
-                        precioFinal = (producto.precio - ((producto.precio * (producto.descuento/100)))) %>
-                        <div class="preciosOfertas">
-                            <span id="prodOff"><%= producto.descuento %>% OFF</span>
-                            <p class="precioAnt" id="">$<%= toThousand(producto.precio) %></p>
-                            <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
-                        </div>
-                    <% } else {%>
-                        <p class="precioAhora" id="">$<%= toThousand(producto.precio) %> </p>
-                    <% } %>
-                    <div id="comprar">
-                        <div> <button class="cantidad-icono" id="botonrestar">-</button><input type="number" value="" class="cantidad-producto" id="cantidadproducto" name="cantidadproducto" placeholder='0' readonly><button class="cantidad-icono" id="botonsumar">+</button> </div>
-                        <div>
-                            <button class="addtocart" data-id="<%= producto.id%>">
-                                Agregar al carrito
-                            </button>
-                        </div>
-                    <p><i class="fa-solid fa-credit-card"></i> <a target="_blank" href="/mediospago">Medios de pago</a></p>
-				
-                <% if(isLogged && locals.userLogged) { %>
-                    <%if (userLogged.id_categoria == 1) { %>  
-                    <div class="elementos-form-100">
-                        <div id="form-buttons">  
-                            <a href="/products/<%= producto.id %>/edition" class=""><button type="button" class="">EDITAR</button></a>
-                            <a href="/products/<%= producto.id %>/deletion" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
-                        </div>
-                    </div> 
-                    <% } %>   
-                <% } %>    
-                </section>
-            </div>
-            <section id="descripcionProd">
-                <div class="detalleProducto">
-                    <h3 class="margin-top subrayado"> Detalles del producto </h3>
-                    <p><span class="textNegrita">Producto para:</span> <%= producto.pets.mascota%></p>
-                    <p><span class="textNegrita">Categoria:</span> <%= producto.categories.nombre%></p>
-                    <p><span class="textNegrita">Sub-Categoria:</span> <% if (producto.sub_categories) { %> <%= producto.sub_categories.nombre_sub_category %> <% } else {%> <%= 'No posee' %> <% }%></p>
-                    <p><span class="textNegrita">Marca:</span> <%= producto.brands.nombre_marca %></p>
-                    <% edad = producto.pets_ages.edad.charAt(0).toUpperCase() + producto.pets_ages.edad.slice(1); 
-                    tamanio = producto.pets_sizes.tamanio.charAt(0).toUpperCase() + producto.pets_sizes.tamanio.slice(1);  %>
-                    <p><span class="textNegrita">Edad mascota:</span> <%= edad %> </p>
-                    <p><span class="textNegrita">Tamaño mascota:</span> <%= tamanio %> </p>
-                    <h3 class="margin-top subrayado"> Descripción </h3>
-                    <p class="textDescripcion"><%= producto.descripcion %></p>
-                </div>
-            </section>
-     <% } else {%>
-            <p class="msjError">PRODUCTO INEXISTENTE - VERIFIQUE EL PRODUCTO POR FAVOR</p> 
-      <%  } %>  
-        </section>
-
-        <p class="tituloProductosDestacados">PRODUCTOS DESTACADOS</p>
-        <section class="listadoArticulos">
-            <% if (productsDestacado.length > 0 ){%>
-            <% for (i=0; i< productsDestacado.length; i++){ %>
-                <article>
-                    <a href="/products/<%= productsDestacado[i].id %>/details"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
-                    <div class="detalle">
-                        <p id=""><%= productsDestacado[i].nombre %></p>
-                            <% if (productsDestacado[i].descuento != 0) { %>
-                               <% precioFinal = (productsDestacado[i].precio - ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+            <section class="ficha-producto">
+                <% if (producto){%>
+                    <div id="img-precio">
+                        <section id="imgProducto">
+                            <img class="imgPrincipal" src="/images/productos/<%= producto.imagen %>" />
+                            <div class="fotos">
+                            </div> 
+                        </section>
+                        <section id="carritoProducto">
+                            <h3 class="margin-top"><%= producto.nombre %> </h3>
+                            <% if (producto.descuento != 0) { %>
+                                <%  precioFinal = (producto.precio - ((producto.precio * (producto.descuento/100)))) %>
                                 <div class="preciosOfertas">
-                                    <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
-                                    <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
+                                    <span id="prodOff"><%= producto.descuento %>% OFF</span>
+                                    <p class="precioAnt" id="">$<%= toThousand(producto.precio) %></p>
                                     <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
                                 </div>
                             <% } else {%>
-                                <p class="precioAhora" id="">$<%= toThousand(productsDestacado[i].precio) %> </p>
+                                <p class="precioAhora" id="">$<%= toThousand(producto.precio) %> </p>
                             <% } %>
-                        <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                            <div id="comprar">
+                                <div> <button class="cantidad-icono" id="botonrestar">-</button><input type="number" value="" class="cantidad-producto" id="cantidadproducto" name="cantidadproducto" placeholder='0' readonly><button class="cantidad-icono" id="botonsumar">+</button> </div>
+                                <div>
+                                    <button class="addtocart" data-id="<%= producto.id%>">
+                                        Agregar al carrito
+                                    </button>
+                                </div>
+                                <p><i class="fa-solid fa-credit-card"></i> <a target="_blank" href="/mediospago">Medios de pago</a></p>
+                            </div>    
+                        <% if(isLogged && locals.userLogged) { %>
+                            <% if (userLogged.id_categoria == 1) { %>  
+                            <div class="elementos-form-100">
+                                <div id="form-buttons">  
+                                    <a href="/products/<%= producto.id %>/edition" class=""><button type="button" class="">EDITAR</button></a>
+                                    <a href="/products/<%= producto.id %>/deletion" class="delete"><button type="submit" class="delete">ELIMINAR</button></a>
+                                </div>
+                            </div> 
+                            <% } %>   
+                        <% } %>    
+                        </section>
                     </div>
-                </article>    
-            <%  } %>
-        <%   } else {%>
-            <p>NO HAY PRODUCTOS DESTACADOS POR EL MOMENTO</p> 
-        <%  } %>  
-        </section>
-        <div class="verproductos">
-            <a href="#"> <input type="button" name="productos" id="productos" value="Mostrar más productos"/> </a>
-        </div>
+          
+                    <section id="descripcionProd">
+                        <div class="detalleProducto">
+                            <h3 class="margin-top subrayado"> Detalles del producto </h3>
+                            <p><span class="textNegrita">Producto para:</span> <%= producto.pets.mascota%></p>
+                            <p><span class="textNegrita">Categoria:</span> <%= producto.categories.nombre%></p>
+                            <p><span class="textNegrita">Sub-Categoria:</span> <% if (producto.sub_categories) { %> <%= producto.sub_categories.nombre_sub_category %> <% } else {%> <%= 'No posee' %> <% }%></p>
+                            <p><span class="textNegrita">Marca:</span> <%= producto.brands.nombre_marca %></p>
+                            <% edad = producto.pets_ages.edad.charAt(0).toUpperCase() + producto.pets_ages.edad.slice(1); %>
+                            <% tamanio = producto.pets_sizes.tamanio.charAt(0).toUpperCase() + producto.pets_sizes.tamanio.slice(1);  %>
+                            <p><span class="textNegrita">Edad mascota:</span> <%= edad %> </p>
+                            <p><span class="textNegrita">Tamaño mascota:</span> <%= tamanio %> </p>
+                            <h3 class="margin-top subrayado"> Descripción </h3>
+                            <p class="textDescripcion"><%= producto.descripcion %></p>
+                        </div>
+                    </section>
+                <% } else {%>
+                        <p class="msjError">PRODUCTO INEXISTENTE - VERIFIQUE EL PRODUCTO POR FAVOR</p> 
+                <% } %>  
+            </section>
+    
+            <p class="tituloProductosDestacados">PRODUCTOS DESTACADOS</p>
+            <section class="listadoArticulos">
+                <% if (productsDestacado.length > 0 ){%>
+                    <% for (i=0; i< productsDestacado.length; i++){ %>
+                        <article>
+                            <a href="/products/<%= productsDestacado[i].id %>/details"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                            <div class="detalle">
+                                <p id=""><%= productsDestacado[i].nombre %></p>
+                                    <% if (productsDestacado[i].descuento != 0) { %>
+                                    <% precioFinal = (productsDestacado[i].precio - ((productsDestacado[i].precio * (productsDestacado[i].descuento/100)))) %>
+                                        <div class="preciosOfertas">
+                                            <span id="prodOff"><%= productsDestacado[i].descuento %>% OFF</span>
+                                            <p class="precioAnt" id="">$<%= toThousand(productsDestacado[i].precio) %></p>
+                                            <p class="precioAhora" id="">$<%= toThousand(precioFinal) %> </p> 
+                                        </div>
+                                    <% } else {%>
+                                        <p class="precioAhora" id="">$<%= toThousand(productsDestacado[i].precio) %> </p>
+                                    <% } %>
+                                <a href="/products/<%= productsDestacado[i].id %>/details"><input type="button" value="Ver detalle" id="btn-comprar"/></a>
+                            </div>
+                        </article>    
+                    <%  } %>
+            <%   } else {%>
+                    <p>NO HAY PRODUCTOS DESTACADOS POR EL MOMENTO</p> 
+            <%  } %>  
+            </section>
+    
        <!-- include marcas -->
        <%- include('../partials/marcas') %>
     </main>
 
     <!-- include footer -->
     <%- include('../partials/footer') %>
-
-   
 </body>
-
 </html>
