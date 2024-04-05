@@ -81,3 +81,22 @@ Actualizamos el JIRA con los tareas finalizadas, organizamos y distribuimos las 
 
 ## weekly 2 - sprint 7
 8-3: revisión de todos, hicimos merge de algunas ramas y resolvimos problemas que tenian algunos con la validacion del front.
+
+## weekly 1 - sprint 8
+14-3: definimos ciertas tareas en el Jira, analizamos los puntos a desarrollar, como se podían formalizar ciertas soluciones.
+
+## weekly 2 - sprint 8
+20-3: Revisamos el proyecto, definimos issues que teniamos y prioridades de las mismas en función de lo cual reorganizamos las tareas. 
+22-3: Revisamos los avances en función de lo definido el dia miércoles. 
+23-3: Revisamos los avances hasta el momento, analizamos como agregar la selección de los metodos de envío en el carrito y como ajustar ciertos pasos. 
+
+## weekly 3 - sprint 8
+25-3: Resolvimos cosas del backend y empezamos a configurar el dashboard react
+27-3: Hicimos merge de ramas a develop, actualizamos cosas del dashboard.
+29-3: Merge y resolusion de problemas. Reorganizamos tareas para la parte de dashboard y backend.
+
+## weekly 4 - sprint 8
+02-4: Revisamos las tareas asignadas, solucionamos errores, definimos correcciones para finalizar el dashboard. 
+04-4: Se hizo merge a main del dashboard. En la parte de backend se hizo un control final para hacer el merge a main.
+05-4: Se formalizó el merge a main del backend para realizar las pruebas completas de toda la platforma con el fin de asegurarnos los objetivos estén cumplidos. 
+ 

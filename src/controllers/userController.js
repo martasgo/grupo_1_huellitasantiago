@@ -1,7 +1,3 @@
-// DB
-const db = require("../model/database/models");
-const Op = db.Sequelize.Op;
-
 const { validationResult } = require("express-validator");
 let bcrypt = require("bcryptjs");
 
@@ -23,70 +19,70 @@ const userController = {
 
   // Método para procesar el login de usuarios
   loginProcess: async (req, res) => {
-    try {        
+    try {
       const resultLogin = await userService.login(req);
-      
-    if (resultLogin.errors) {         
-          res.render("../views/users/login.ejs", {
+
+      if (resultLogin.errors) {
+        res.render("../views/users/login.ejs", {
           title: "Login",
           errors: resultLogin.errors,
-          old: req.body
+          old: req.body,
         });
-      } else { 
+      } else {
         req.session.userLogged = resultLogin.user;
         if (req.body.recordarme) {
           res.cookie("userEmail", req.body.email, { maxAge: 60000 * 60 });
         }
         res.redirect(`${resultLogin.user.id}/profile`);
-      }       
-    } catch (error) {      
+      }
+    } catch (error) {
       console.error("Error en el proceso de inicio de sesión:", error);
       res.render("../views/users/login.ejs", {
         title: "Login",
         errors: { general: { msg: "Error al iniciar sesión" } },
-        old: req.body
+        old: req.body,
       });
     }
   },
-  
-  forgotPassController:(req, res) => {
+
+  forgotPassController: (req, res) => {
     try {
       res.render("../views/users/olvidasteContraseña.ejs", {
         title: "Recuperar Contraseña",
-        mensaje: ""
+        mensaje: "",
       });
     } catch (error) {
       res.status(500).send("Error en el servidor");
     }
   },
 
-  forgotPassProcess:async (req, res) => {
-    try {          
-    const userForgotPass = await userService.getByField(req.body.emailPass);
-            
-    if (userForgotPass) {         
-        return res.render("../views/users/contraseñaEnviada.ejs",{
-        title: "Contraseña Enviada",        
-      });
-      } else { 
+  forgotPassProcess: async (req, res) => {
+    try {
+      const userForgotPass = await userService.getByField(req.body.emailPass);
+
+      if (userForgotPass) {
+        return res.render("../views/users/contraseñaEnviada.ejs", {
+          title: "Contraseña Enviada",
+        });
+      } else {
         res.render("../views/users/olvidasteContraseña.ejs", {
           title: "Recuperar Contraseña",
           mensaje: "Este email no se encuentra registrado",
-          oldData: req.body
+          oldData: req.body,
         });
-      }       
-    } catch (error) {      
+      }
+    } catch (error) {
       console.error("Error en el proceso:", error);
       res.redirect("../views/users/olvidasteContraseña.ejs");
     }
-  },  
+  },
 
   registerController: async (req, res) => {
     try {
       res.render("../views/users/register.ejs", {
         title: "Registro de usuarios",
       });
-    } catch (error) {      
+    } catch (error) {
       res.status(500).send("Error inesperado del servido, intente más tarde");
     }
   },
@@ -112,7 +108,7 @@ const userController = {
   salesListController: async (req, res) => {
     try {
       const user = req.session.userLogged || {};
-      const ventas = await shoppingCartService.getAll();      
+      const ventas = await shoppingCartService.getAll();
       const orderedProducts = [];
 
       if(ventas){
@@ -139,12 +135,12 @@ const userController = {
   //Controlador Ruta para almacenar el nuevo usuario
   addRegisterController: async (req, res) => {
     try {
-      let resultValidation = validationResult(req);
+      const resultValidation = validationResult(req);
       if (resultValidation.errors.length > 0) {
         if (req.file) {
           await userService.deleteImagen(req.file.filename);
         }
-        res.render("../views/users/register.ejs", {
+        return res.render("../views/users/register.ejs", {
           title: "Registro de usuarios",
           errors: resultValidation.mapped(),
           oldData: {
@@ -152,47 +148,40 @@ const userController = {
             imagen: req.file ? req.file.filename : "usuario-default.jpg",
           },
         });
-      } else {
-        let userInDB = await userService.getByField(req.body.email);
-        if (userInDB && userInDB.activo == true) {
-          res.render("../views/users/register.ejs", {
-            title: "Registro de usuarios",
-            errors: {
-              email: {
-                msg: "Este email ya está registrado",
-              },
-            },
-            oldData: req.body,
-          });
-        } else {
-          // Crear el usuario solo si no existe en la base de datos
-          const newUser = {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            email: req.body.email,
-            direccion: req.body.dir,
-            telefono: req.body.telefono,
-            contrasenia: bcrypt.hashSync(req.body.contrasenia, 10),
-            id_categoria: 2,            
-            imagen: req.file ? req.file.filename : "usuario-default.jpg",
-            activo: true,
-          };
-          
-          await userService.addUser(newUser, userInDB);
-          res.render("../views/users/login.ejs", {
-            title: "Login",
-          });
-        }
       }
+      const userInDB = await userService.getByField(req.body.email);
+      if (userInDB && userInDB.activo) {
+        return res.render("../views/users/register.ejs", {
+          title: "Registro de usuarios",
+          errors: {
+            email: {
+              msg: "Este email ya está registrado",
+            },
+          },
+          oldData: req.body,
+        });
+      }
+      const body = req.body;
+      (body.contrasenia = bcrypt.hashSync(req.body.contrasenia, 10)),
+        (body.foto = req.file ? req.file.filename : "usuario-default.jpg");
+
+      if (userInDB && !userInDB.activo) {
+        await userService.updateUser(body, userInDB.id);
+      } else {
+        await userService.addUser(body);
+      }
+      return res.render("../views/users/login.ejs", {
+        title: "Login",
+      });
     } catch (error) {
-      console.log(error.message);
-      res.send("No se pudo registrar el usuario").status(500);
+      console.error("Error en el controlador de registro:", error);
+      return res.status(500).send("No se pudo registrar el usuario");
     }
   },
 
   profileController: async (req, res) => {
     try {
-      const user = req.session.userLogged || {};     
+      const user = req.session.userLogged || {};
       if (user && user.id_categoria == 2) {
         res.render("../views/users/profile.ejs", {
           title: "Perfil de cliente",
@@ -216,32 +205,33 @@ const userController = {
       let comprasUser = await shoppingCartService.getByUser(user.id);
       let orderedProducts = [];
 
-      if(comprasUser){
-      for (const compra of comprasUser) {
-        let productosEnCompra = await cartProductService.getByCartId(compra.id);
-        productosEnCompra.forEach((products) => {
-          orderedProducts.push(products);
-        });
+      if (comprasUser) {
+        for (const compra of comprasUser) {
+          let productosEnCompra = await cartProductService.getByCartId(
+            compra.id
+          );
+          productosEnCompra.forEach((products) => {
+            orderedProducts.push(products);
+          });
+        }
       }
-      }    
       res.render("../views/users/comprasUser.ejs", {
         title: "Mis Compras",
         user,
         comprasUser,
         orderedProducts,
       });
-    
     } catch (error) {
       console.error(error);
       res.status(500).send("Error en el servidor");
     }
   },
 
-  informacionLegalController : async (req,res) => {
+  informacionLegalController: async (req, res) => {
     try {
       let user = req.session.userLogged || {};
       res.render("../views/users/informacionlegal.ejs", {
-        user:user,
+        user: user,
         title: "Informacion Legal",
       });
     } catch (error) {
@@ -249,11 +239,11 @@ const userController = {
       res.send("Error inesperado").status(500);
     }
   },
-  notificacionesController : async (req,res) => {
+  notificacionesController: async (req, res) => {
     try {
       let user = req.session.userLogged || {};
       res.render("../views/users/notificaciones.ejs", {
-        user:user,
+        user: user,
         title: "notificaciones",
       });
     } catch (error) {
@@ -303,7 +293,7 @@ const userController = {
         if (req.file) {
           await userService.deleteImagen(req.file.filename);
         }
-        res.render("../views/users/editUser.ejs", {
+        return res.render("../views/users/editUser.ejs", {
           title: "Edición de usuarios",
           errors: resultValidation.mapped(),
           oldData: req.body,
@@ -311,86 +301,52 @@ const userController = {
           user,
           imagen,
         });
-      } else {        
-        // En caso de cambiar el correo: se verifica que el mail no esté registrado
-        const userInDB = await userService.getByField(req.body.email);
-        if (userInDB) {
-          if (userInDB.id !== infoUser.id) {
-            //si existe el mail significa que no se puede guardar al edición y borro la imagen que se ha subido
-            if (req.file) {
-              await userService.deleteImagen(req.file.filename);
-            }
-            // No se hace la edición del registro porque ya existe ese mail que esta editando.
-            res.render("../views/users/editUser.ejs", {
-              title: "Edición de usuarios",
-              errors: {
-                email: {
-                  msg: "Este email ya está registrado",
-                },
-              },
-              oldData: req.body,
-              infoUser,
-              user,
-              imagen,
-            });
-          } else {                    
-            const editUser = {   
-              nombre: req.body.nombre,
-              apellido: req.body.apellido,
-              email: req.body.email,
-              direccion: req.body.dir,
-              telefono: req.body.telefono,
-              contrasenia: req.body.contrasenia
-                ? bcrypt.hashSync(req.body.contrasenia, 10)
-                : infoUser.contrasenia,
-              imagen: req.file ? req.file.filename : infoUser.imagen,
-              id_categoria: req.body.categoria,
-              activo: req.body.activo
-            };
-            
-
-            const newU = await userService.updateList(editUser, idUser);
-            // Actualiza la variable de sesión con los nuevos datos del usuario
-            if (req.session.userLogged.id == infoUser.id) {
-              req.session.userLogged = {
-                ...req.session.userLogged, // Mantiene los datos antiguos
-                ...editUser, // Agrega los nuevos datos
-              };
-              // Guarda la variable de sesión actualizada
-              req.session.save();
-            }
-            return res.redirect(`/users/${infoUser.id}/profile`);
+      }
+      // En caso de cambiar el correo: se verifica que el mail no esté registrado
+      const userInDB = await userService.getByField(req.body.email);
+      if (userInDB) {
+        if (userInDB.id !== infoUser.id) {
+          //si existe el mail significa que no se puede guardar al edición y borro la imagen que se ha subido
+          if (req.file) {
+            await userService.deleteImagen(req.file.filename);
           }
-        } else {
-          //Cuando el usuario exite, se edita la información y se guarda.
-          const editUser = {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            email: req.body.email,
-            direccion: req.body.dir,
-            telefono: req.body.telefono,
-            contrasenia: req.body.contrasenia
-              ? bcrypt.hashSync(req.body.contrasenia, 10)
-              : infoUser.contrasenia,
-            imagen: req.file ? req.file.filename : infoUser.imagen,
-            id_categoria: req.body.categoria,
-            activo: req.body.activo
-          };
-          const newU = await userService.updateList(editUser, idUser);
-          // Actualiza la variable de sesión con los nuevos datos del usuario
-          if (req.session.userLogged.id == infoUser.id) {
-            req.session.userLogged = {
-              ...req.session.userLogged, // Mantiene los datos antiguos
-              ...editUser, // Agrega los nuevos datos
-            };
-            // Guarda la variable de sesión actualizada
-            req.session.save();
-          }               
-          return res.redirect(`/users/${infoUser.id}/profile`);
+          // No se hace la edición del registro porque ya existe ese mail que esta editando.
+          return res.render("../views/users/editUser.ejs", {
+            title: "Edición de usuarios",
+            errors: {
+              email: {
+                msg: "Este email ya está registrado",
+              },
+            },
+            oldData: req.body,
+            infoUser,
+            user,
+            imagen,
+          });
         }
-      }    
+      }
+      const body = req.body;      
+      if (body.contrasenia && body.confirmar) {
+        body.contrasenia = bcrypt.hashSync(req.body.contrasenia, 10);
+      } else {
+        body.contrasenia = infoUser.constrasenia;
+      }
+      body.foto = req.file ? req.file.filename : imagen;
+
+      await userService.updateList(body, idUser, infoUser);
+      // Actualiza la variable de sesión con los nuevos datos del usuario
+      if (req.session.userLogged.id == infoUser.id) {
+        req.session.userLogged = {
+          ...req.session.userLogged, // Mantiene los datos antiguos
+          ...req.body,
+          imagen: req.file ? req.file.filename : infoUser.imagen,
+        };
+        // Guarda la variable de sesión actualizada
+        req.session.save();
+      }
+      return res.redirect(`/users/${infoUser.id}/profile`);
     } catch (error) {
-      res.send(error);
+      return res.status(500).send("No se pudo editar el usuario");
     }
   },
 
