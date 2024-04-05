@@ -85,11 +85,13 @@ const shoppingCartService = {
             let allSales = await db.ShoppingCart.findAll();
             let totalSoldItems = 0;
             let totalSalesAmount = 0;
+            let totalNumberSales = allSales.length;
             allSales.forEach(sale => {
                 totalSoldItems += sale.cantidad_productos;
                 totalSalesAmount += Number(sale.monto_total)
             })
             let salesData = {
+                totalNumberSales : totalNumberSales,
                 totalItems: totalSoldItems,
                 totalSales: totalSalesAmount,
                 totalProducts: allSoldProducts,
