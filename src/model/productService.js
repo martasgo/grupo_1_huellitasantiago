@@ -598,7 +598,7 @@ const productService = {
                 const product = productsList[i];
                 for (let key in product) {
                     if (typeof product[key] === 'object' && product[key] !== null && !Array.isArray(product[key])) {
-                        // Si la propiedad es un objeto y no es nulo ni un array, conviértela a un array de un solo elemento
+                        // Si la propiedad es un objeto y no es nulo ni un array, se convierte a un array de un solo elemento
                         product[key] = [product[key]];
                     }
                 }
@@ -670,6 +670,7 @@ const productService = {
                 sub_categories: productJSON.sub_categories,
                 packages_sizes: productJSON.packages_sizes,
                 brands: productJSON.brands,
+                activo: productJSON.activo,
                 shopping_carts: productJSON.shopping_carts
             }
             return await result

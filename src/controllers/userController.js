@@ -111,12 +111,15 @@ const userController = {
       const ventas = await shoppingCartService.getAll();
       const orderedProducts = [];
 
-      for (const venta of ventas) {
-        const productosEnVenta = await cartProductService.getByCartId(venta.id);
-        productosEnVenta.forEach((products) => {
-          orderedProducts.push(products);
-        });
-      }
+      if(ventas){
+        for (const venta of ventas) {
+          const productosEnVenta = await cartProductService.getByCartId(venta.id);
+          productosEnVenta.forEach((products) => {
+            orderedProducts.push(products);
+          });
+        }
+      }  
+
       res.render("../views/users/ventas.ejs", {
         title: "Listado de ventas",
         user,
@@ -196,7 +199,7 @@ const userController = {
     }
   },
 
-  compras: async (req, res) => {
+  purchasesController: async (req, res) => {
     try {
       let user = req.session.userLogged || {};
       let comprasUser = await shoppingCartService.getByUser(user.id);
