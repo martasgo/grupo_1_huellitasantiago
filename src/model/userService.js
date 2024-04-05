@@ -44,8 +44,7 @@ const userService = {
         where: {
           email: email,
         },
-      });
-      
+      });      
     } catch (error) {
       return{errors: "Error al buscar el usuario"};
     }
@@ -75,30 +74,38 @@ const userService = {
     }
   },
 
-  updateList: async (user, id) => {
-    try {
-      return await db.User.update(user, {
+  updateList: async (body, id) => {
+    try {      
+      const editUser = new UserConstructor(body);  
+      return await db.User.update(editUser, {
         where: {
           id: id,
         },
       });
     } catch (error) {
-      throw new Error("No se pudo procesar la solicitud correctamente");
+      throw new Error("No se pudo editar el usuario correctamente");
     }
   },
 
-  addUser: async function (newUser, userInDB) {
-    try {
-      if(userInDB && userInDB.activo == false){
-        return await db.User.update(newUser, {
-          where: {
-            id: userInDB.id,
-          },
-        });
-      }
+  addUser: async function (body) {
+    try {           
+      const newUser = new UserConstructor(body);      
       return await db.User.create(newUser);
-    } catch (error) {
-      throw new Error("No se pudo procesar la solicitud correctamente");
+    } catch (error) {      
+      throw new Error("No se pudo agregar el usuario");
+    }
+  },
+  
+  updateUser: async function (body, userId) {
+    try {
+      const newUser = new UserConstructor(body);
+      return await db.User.update(newUser, {
+        where: {
+          id: userId,
+        },
+      });
+    } catch (error) {      
+      throw new Error("No se pudo actualizar el usuario");
     }
   },
 
@@ -202,6 +209,28 @@ const userService = {
     return { errors: { general: { msg: "Error en el servidor al iniciar sesión" } } };
   }
 }
+};
+
+function UserConstructor({
+  nombre,
+  apellido,
+  email,
+  dir,
+  telefono,
+  contrasenia,
+  categoria,
+  activo,
+  foto
+}){
+  this.nombre = nombre;
+  this.apellido = apellido;
+  this.email = email;
+  this.direccion = dir;
+  this.telefono = telefono;
+  this.contrasenia = contrasenia;
+  this.id_categoria = categoria;
+  this.activo = activo;
+  this.imagen = foto;
 }
 
 module.exports = userService;
