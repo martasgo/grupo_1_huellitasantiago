@@ -1,5 +1,4 @@
 const { Router } = require("express");
-// IMPORTO EL SERVICE DE PRODUCT
 const productController = require("../controllers/productController");
 const router = require("./mainRoute");
 const authMiddleware = require ("../middlewares/authMiddleware");
@@ -44,7 +43,7 @@ routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , p
 routerProduct.delete(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
 
 //filtros 
-routerProduct.post(routesProd.productFilters, productController.filtersApplied);
+routerProduct.post(routesProd.productFilters, productController.filtersAppliedController);
 
 //rutas para mascota=perro o mascota=gato
 routerProduct.get(routesProd.productsList, productController.CategoryListController);

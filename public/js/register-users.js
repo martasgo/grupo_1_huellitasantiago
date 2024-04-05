@@ -187,8 +187,7 @@ formRegistro.addEventListener("submit", (event) => {
   // Validaciones exitosas (true)
   if (nombreValido && apellidoValido && emailValido && direccionValida && telefonoValido && contraseniaValida && confirmarValido && fotoValida) {
       // Pasan los datos al servidor
-      alert("¡Bienvenido a Huellitas Santiago!");
-      formRegistro.submit();
+      formRegistro.submit();      
   } else {
       alert("Complete correctamente el formulario.");
   }

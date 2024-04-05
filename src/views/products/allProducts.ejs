@@ -20,7 +20,9 @@
                             </a>
                             <div class="actions">
                                  <a href="/products/<%= product.id %>/edition"><i class="fa-solid fa-pen-to-square iconos"></i></a>
-                                 <a href="/products/<%= product.id %>/deletion"><i class="fa-solid fa-trash iconos"></i></a>
+                                 <% if(product.activo === 1) {%>
+                                    <a href="/products/<%= product.id %>/deletion"><i class="fa-solid fa-trash iconos"></i></a>
+                                 <% } %>   
                                 <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
                             </div>
                             

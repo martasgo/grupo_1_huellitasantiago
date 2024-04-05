@@ -23,8 +23,8 @@ const userController = {
 
   // Método para procesar el login de usuarios
   loginProcess: async (req, res) => {
-    try {      
-      const resultLogin = await userService.login(req.body);
+    try {        
+      const resultLogin = await userService.login(req);
       
     if (resultLogin.errors) {         
           res.render("../views/users/login.ejs", {
@@ -34,7 +34,10 @@ const userController = {
         });
       } else { 
         req.session.userLogged = resultLogin.user;
-        res.redirect(`${userToLogin.id}/profile`);
+        if (req.body.recordarme) {
+          res.cookie("userEmail", req.body.email, { maxAge: 60000 * 60 });
+        }
+        res.redirect(`${resultLogin.user.id}/profile`);
       }       
     } catch (error) {      
       console.error("Error en el proceso de inicio de sesión:", error);
@@ -44,7 +47,39 @@ const userController = {
         old: req.body
       });
     }
-  },    
+  },
+  
+  forgotPassController:(req, res) => {
+    try {
+      res.render("../views/users/olvidasteContraseña.ejs", {
+        title: "Recuperar Contraseña",
+        mensaje: ""
+      });
+    } catch (error) {
+      res.status(500).send("Error en el servidor");
+    }
+  },
+
+  forgotPassProcess:async (req, res) => {
+    try {          
+    const userForgotPass = await userService.getByField(req.body.emailPass);
+            
+    if (userForgotPass) {         
+        return res.render("../views/users/contraseñaEnviada.ejs",{
+        title: "Contraseña Enviada",        
+      });
+      } else { 
+        res.render("../views/users/olvidasteContraseña.ejs", {
+          title: "Recuperar Contraseña",
+          mensaje: "Este email no se encuentra registrado",
+          oldData: req.body
+        });
+      }       
+    } catch (error) {      
+      console.error("Error en el proceso:", error);
+      res.redirect("../views/users/olvidasteContraseña.ejs");
+    }
+  },  
 
   registerController: async (req, res) => {
     try {
@@ -77,16 +112,18 @@ const userController = {
   salesListController: async (req, res) => {
     try {
       const user = req.session.userLogged || {};
-      const ventas = await shoppingCartService.getAll();
-      console.log(ventas);
+      const ventas = await shoppingCartService.getAll();      
       const orderedProducts = [];
 
-      for (const venta of ventas) {
-        const productosEnVenta = await cartProductService.getByCartId(venta.id);
-        productosEnVenta.forEach((products) => {
-          orderedProducts.push(products);
-        });
-      }
+      if(ventas){
+        for (const venta of ventas) {
+          const productosEnVenta = await cartProductService.getByCartId(venta.id);
+          productosEnVenta.forEach((products) => {
+            orderedProducts.push(products);
+          });
+        }
+      }  
+
       res.render("../views/users/ventas.ejs", {
         title: "Listado de ventas",
         user,
@@ -173,24 +210,27 @@ const userController = {
     }
   },
 
-  compras: async (req, res) => {
+  purchasesController: async (req, res) => {
     try {
       let user = req.session.userLogged || {};
       let comprasUser = await shoppingCartService.getByUser(user.id);
       let orderedProducts = [];
 
+      if(comprasUser){
       for (const compra of comprasUser) {
         let productosEnCompra = await cartProductService.getByCartId(compra.id);
         productosEnCompra.forEach((products) => {
           orderedProducts.push(products);
         });
       }
+      }    
       res.render("../views/users/comprasUser.ejs", {
         title: "Mis Compras",
         user,
         comprasUser,
         orderedProducts,
       });
+    
     } catch (error) {
       console.error(error);
       res.status(500).send("Error en el servidor");
@@ -271,7 +311,7 @@ const userController = {
           user,
           imagen,
         });
-      } else {
+      } else {        
         // En caso de cambiar el correo: se verifica que el mail no esté registrado
         const userInDB = await userService.getByField(req.body.email);
         if (userInDB) {

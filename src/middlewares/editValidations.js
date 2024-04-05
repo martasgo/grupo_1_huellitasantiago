@@ -31,8 +31,7 @@ const editValidations = [
   }),
   body("confirmar").custom((value, { req }) => {
     let valorContrasenia = req.body.contrasenia;
-    let valorConfirmar = req.body.confirmar;
-    console.log(valorContrasenia)
+    let valorConfirmar = req.body.confirmar;   
     if ((valorContrasenia.trim() !== "") && (valorContrasenia !== valorConfirmar)) {
       throw new Error("Las contraseñas no coinciden, verifique por favor.");
     }

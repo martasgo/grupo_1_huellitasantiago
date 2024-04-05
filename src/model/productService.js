@@ -453,87 +453,77 @@ const productService = {
 
     // Service para aplicar los filtros que se muestran en la vista listado.ejs
     getAllByFileters: async function(filtros, valorMascota, valorCat, valorSubCat){
-        let query = {
-            where: {},
-            order: [
-                ['nombre', 'ASC']
-            ]
-          };
-        
-        query.where.activo = 1;
-
-        if (valorMascota){
-            query.where.id_mascota = {[Op.or]: valorMascota } 
-        }
-
-        if (valorCat){
-            query.where.id_categoria = valorCat.id 
-        }
-
-        if (valorSubCat){
-            query.where.id_sub_categoria = valorSubCat.id 
-        }
-        
-        if (filtros.marca) {
-            if (Array.isArray(filtros.marca)){ 
-                query.where.id_marca = {[Op.or]: filtros.marca } 
-            } else {
-                query.where.id_marca = filtros.marca 
-            } 
-        }
-        if (filtros.edad) {
-            if (Array.isArray(filtros.edad)){ 
-                query.where.id_edad_mascota = {[Op.or]: filtros.edad } 
-            }else{
-                query.where.id_edad_mascota = filtros.edad
-            }
-        }
-        if (filtros.tamanio){
-            if (Array.isArray(filtros.tamanio)){ 
-                query.where.id_tamanio_mascota = {[Op.or]: filtros.tamanio } 
-            } else {
-                query.where.id_tamanio_mascota = filtros.tamanio
-            }
-        } 
-        if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
-            query.where.precio = {
-                [Op.gte]: parseInt(filtros.precioDesde),
-                [Op.lte]: parseInt(filtros.precioHasta)
-            } 
-        } else if (filtros.precioDesde !== ''){
-            {query.where.precio = { [Op.gte]: parseInt(filtros.precioDesde) } }
-        }else if (filtros.precioHasta !== ''){
-            query.where.precio = {[Op.lte]: parseInt(filtros.precioHasta) }
-        }
-
         try {   
+            let query = {
+                where: {},
+                order: [
+                    ['nombre', 'ASC']
+                ]
+              };
+            
+            query.where.activo = 1;
+    
+            if (valorMascota){
+                query.where.id_mascota = {[Op.or]: valorMascota } 
+            }
+    
+            if (valorCat){
+                query.where.id_categoria = valorCat.id 
+            }
+    
+            if (valorSubCat){
+                query.where.id_sub_categoria = valorSubCat.id 
+            }
+            
+            if (filtros.marca) {
+                if (Array.isArray(filtros.marca)){ 
+                    query.where.id_marca = {[Op.or]: filtros.marca } 
+                } else {
+                    query.where.id_marca = filtros.marca 
+                } 
+            }
+            if (filtros.edad) {
+                if (Array.isArray(filtros.edad)){ 
+                    query.where.id_edad_mascota = {[Op.or]: filtros.edad } 
+                }else{
+                    query.where.id_edad_mascota = filtros.edad
+                }
+            }
+            if (filtros.tamanio){
+                if (Array.isArray(filtros.tamanio)){ 
+                    query.where.id_tamanio_mascota = {[Op.or]: filtros.tamanio } 
+                } else {
+                    query.where.id_tamanio_mascota = filtros.tamanio
+                }
+            } 
             console.log(query)
-            // return await db.Product.findAll(query);
             resultado = await db.Product.findAll(query);
-
-            // Filtrar los productos con descuento
-            let productosConDescuento = resultado.filter(producto => producto.descuento);
-
-            // Filtrar los productos sin descuento
-            let productosSinDescuento = resultado.filter(producto => !producto.descuento);           
-
-            productosConDescuento = productosConDescuento.filter(producto => {
+            productosFinal = [];
+            if (filtros.precioDesde !== '' || filtros.precioHasta !== '' ) {
+                productosFinal = resultado.filter(producto => {
                 valor = (producto.precio - (producto.precio * (producto.descuento / 100)));
+                const precioDesde = parseInt(filtros.precioDesde);
+                const precioHasta = parseInt(filtros.precioHasta);
+
                 if (filtros.precioDesde !== '' && filtros.precioHasta !== '' ) {
-                   if (parseInt(filtros.precioDesde) < valor && valor < parseInt(filtros.precioHasta)) {
-                        productosSinDescuento.push(producto);
+                   if (!isNaN(precioDesde) && !isNaN(precioHasta) && precioDesde <= valor && valor <= precioHasta) {
+                    return true
                    } 
                 } else if (filtros.precioDesde !== ''){
-                    if (parseInt(filtros.precioDesde) <= valor){
-                        productosSinDescuento.push(producto);
+                    if (!isNaN(precioDesde) && precioDesde <= valor){
+                         return true
                     }
                 }else if (filtros.precioHasta !== ''){
-                    if (valor <= parseInt(filtros.precioHasta)){
-                        productosSinDescuento.push(producto);
+                    if (!isNaN(precioHasta) && valor <= precioHasta){
+                        return true
                     }
                 }
-            });            
-            return productosSinDescuento;
+                return false
+            });      
+            return productosFinal; 
+          } else {
+            return resultado;
+          }
         } catch (error) {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
@@ -579,53 +569,6 @@ const productService = {
         }
     },
 
-    // getAllApiProducts: async () => {
-    //     try {
-    //         let alimentosProducts = await productService.getByCategory(1);
-    //         let accesoriosProducts = await productService.getByCategory(2);
-    //         let cuidadoHigieneProducts = await productService.getByCategory(3);
-    //         let ropaProducts = await productService.getByCategory(4);
-    //         let allProducts = await db.Product.findAll({
-    //             include: ['categories']});
-    //         let productsList = [];
-    //         allProducts.forEach(product => {
-    //             const productWithDetail = {
-    //                 id: product.id,
-    //                 name: product.nombre,
-    //                 description: product.descripcion,
-    //                 categories: product.categories,
-    //                 detail: `localhost:3000/api/products/${parseInt(product.id)}`
-    //             };
-    //             productsList.push(productWithDetail);
-    //         });
-    //         // Iterar sobre las relaciones y convertirlas a arrays si son objetos
-    //         for (let i = 0; i < productsList.length; i++) {
-    //             const product = productsList[i];
-    //             for (let key in product) {
-    //                 if (typeof product[key] === 'object' && product[key] !== null && !Array.isArray(product[key])) {
-    //                     // Si la propiedad es un objeto y no es nulo ni un array, conviértela a un array de un solo elemento
-    //                     product[key] = [product[key]];
-    //                 }
-    //             }
-    //         }
-    //         let results = {
-    //             count: allProducts.length,
-    //             countByCategory: {
-    //                 'Alimentos': alimentosProducts.length,
-    //                 'Accesorios': accesoriosProducts.length,
-    //                 'Cuidado e Higiene': cuidadoHigieneProducts.length,
-    //                 'Ropa': ropaProducts.length
-    //             },
-    //             products: productsList
-    //         };
-    //         return results
-    //     } catch (error) {
-    //         console.log(error);
-    //         throw new Error('No se pudo procesar la solicitud correctamente');
-    //     }
-        
-    // },
-
     getAllApiProducts: async (page = 1, pageItems = 10) => {
         try {
             const offset = (page - 1) * pageItems;
@@ -655,7 +598,7 @@ const productService = {
                 const product = productsList[i];
                 for (let key in product) {
                     if (typeof product[key] === 'object' && product[key] !== null && !Array.isArray(product[key])) {
-                        // Si la propiedad es un objeto y no es nulo ni un array, conviértela a un array de un solo elemento
+                        // Si la propiedad es un objeto y no es nulo ni un array, se convierte a un array de un solo elemento
                         product[key] = [product[key]];
                     }
                 }
@@ -727,6 +670,7 @@ const productService = {
                 sub_categories: productJSON.sub_categories,
                 packages_sizes: productJSON.packages_sizes,
                 brands: productJSON.brands,
+                activo: productJSON.activo,
                 shopping_carts: productJSON.shopping_carts
             }
             return await result
@@ -734,6 +678,14 @@ const productService = {
             console.log(error);
             throw new Error('No se pudo procesar la solicitud correctamente');
         }  
+    },
+
+    getLastProduct: async () => {
+        let allProducts = await db.Product.findAll({
+            include: ['categories']
+        });
+        let lastProduct = allProducts[allProducts.length - 1]
+        return lastProduct
     }
 };
 

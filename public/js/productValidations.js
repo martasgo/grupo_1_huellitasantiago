@@ -30,8 +30,7 @@ window.addEventListener("load", () => {
         divSubCatAccesorios.style.display = "block";
         divSubCatAlimentos.style.display = "none";
         divPresentacion.style.display = "none";
-      } else {
-        console.log("no hay categoria aun");
+      } else {        
         divSubCatAlimentos.style.display = "none";
         divPresentacion.style.display = "none";
         divSubCatAccesorios.style.display = "none";
@@ -47,8 +46,7 @@ window.addEventListener("load", () => {
       divSubCatAccesorios.style.display = "block";
       divSubCatAlimentos.style.display = "none";
       divPresentacion.style.display = "none";
-    } else {
-      console.log("no hay categoria aun");
+    } else {      
       divSubCatAlimentos.style.display = "none";
       divPresentacion.style.display = "none";
       divSubCatAccesorios.style.display = "none";

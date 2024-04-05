@@ -155,7 +155,8 @@ const userService = {
         direccion: userFound.direccion,
         telefono: userFound.telefono,
         imagen: userFound.imagen,
-        categoria: userFound.id_categoria
+        categoria: userFound.id_categoria,
+        activo: userFound.activo
       }
       return apiUser;
     } catch (error) {
@@ -164,22 +165,34 @@ const userService = {
     }
   },
 
+  getLastUser: async () => {
+    let allUsers = await db.User.findAll({
+      include: ['usersCategories']
+    });
+    let lastUser = allUsers[allUsers.length - 1];
+    let result = {
+      allUsers: allUsers,
+      lastUser: lastUser
+    }
+    return result
+  },
+
   login: async function (userData) {
-    try {
+    try {    
     const errors = validationResult(userData);
     if (!errors.isEmpty()) {
       const mappedErrors = errors.mapped();
       return { errors: mappedErrors };
     }    
-    const userToLogin = await userService.getByField(userData.email);
-    
+    const userToLogin = await userService.getByField(userData.body.email);    
+
     if (!userToLogin || userToLogin.activo == false) {
       console.log(errors)
-      return { errors: { email: { msg: "Este email no se encuentra registrado" } } };
-    
+      return { errors: { email: { msg: "Este email no se encuentra registrado" } } };    
     }
+    
     const isOkThePassword = bcrypt.compareSync(
-      userData.contraseña,
+      userData.body.contrasenia,
       userToLogin.contrasenia
     );
     if (!isOkThePassword) {

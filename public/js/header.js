@@ -11,14 +11,20 @@ window.addEventListener('load', () => {
     }); 
     
     // MÉTODO PARA OBTENER EL ID DEL PRODUCTO QUE VIENE EN URL
-        // Obtenemos la URL actual
+        // Obtener la URL actual
         let url = window.location.href;
 
-        // Encontramos la posición de la última barra en la URL
-        let lastSlashIndex = url.lastIndexOf('/');
+        // Expresión regular para extraer el id del producto en URL
+        let match = url.match(/\/products\/(\d+)/);
 
-        // Obtenemos el ID del producto después de la última barra
-        let productId = url.substring(lastSlashIndex + 1);
+        let productId;
+
+        // Verificar si se encontró una coincidencia y obtener el número
+        if (match) {
+            productId = match[1]; // El número de ID del producto estará en el primer grupo de captura
+        } else {
+            productId = null;
+        }
 
     // FUNCIÓN PARA ACTUALIZAR EL TOTAL DE ITEMS DEL CARRITO DEL HEADER
     let cantidadCarrito = document.querySelector('.cantidadcarrito');
