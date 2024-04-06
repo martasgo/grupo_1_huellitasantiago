@@ -329,11 +329,11 @@ const userController = {
       if (body.contrasenia && body.confirmar) {
         body.contrasenia = bcrypt.hashSync(req.body.contrasenia, 10);
       } else {
-        body.contrasenia = infoUser.constrasenia;
+        body.contrasenia = infoUser.contrasenia;
       }
       body.foto = req.file ? req.file.filename : imagen;
 
-      let newUser = await userService.updateList(body, idUser, infoUser);
+      let newUser = await userService.updateList(body, idUser);
       // Actualiza la variable de sesión con los nuevos datos del usuario
       if (req.session.userLogged.id == infoUser.id) {
         req.session.userLogged = {
