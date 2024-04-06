@@ -149,30 +149,25 @@ const productService = {
     /* Servicio para gestionar los datos para el alta de un producto llamando al servicio add*/
    createProdInfo: async (req) => {
     try {
-        // Defino la variable que recibe la imagen del formulario
         const image = req.file ? req.file.filename : "default-image.png";
-
-        // Defino la variable que evalúa si es un producto destacado
         const esDestacado = (req.body.destacado === "true") ? 1 : 0;
 
         // Variable para manejar subcategoría
         let subCatFinal = "";
-        if (req.body.subCat != "") {
+        if (req.body.subCat !== "") {
             subCatFinal = parseInt(req.body.subCat);
-        } else if (req.body.subCatAcc != ""){
+        } else if (req.body.subCatAcc !== ""){
             subCatFinal = parseInt(req.body.subCatAcc);
         } else {
             subCatFinal = null
         };
 
-        // Variable para manejar si viene o no una presentacion
         if (req.body.presentacion != "") {
             presentacionFinal = parseInt(req.body.presentacion);
         } else {
             presentacionFinal = null
         }
 
-        // Defino la variable que guarda el producto creado desde el formulario
         const newProduct = {
                 nombre: req.body.nombreprod,
                 descripcion: req.body.descripcion,
@@ -185,11 +180,11 @@ const productService = {
                 id_tamanio_mascota: parseInt(req.body.tamaniomascota),
                 destacado: esDestacado,
                 id_categoria: parseInt(req.body.categoria),
-                id_sub_Categoria: subCatFinal,
+                id_sub_categoria: subCatFinal,
                 id_presentacion: presentacionFinal,
                 stock: parseInt(req.body.stock),
                 activo: 1
-        };    
+        };
         return productService.add(newProduct);
     } catch (error) {
         console.log(error);
