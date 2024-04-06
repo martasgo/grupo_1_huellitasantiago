@@ -1,6 +1,16 @@
 window.addEventListener("load", () => {
-    // Capturamos los elementos para trabajar con el form y sus campos
-  
+    // Obtenemos la URL actual
+    let url = window.location.href;
+
+    // Encontramos la posición del último signo igual en la URL
+    let lastIndex = url.lastIndexOf('=');
+    if (lastIndex){
+        let mensaje = url.substring(lastIndex + 1);
+        if (mensaje === 'procesado'){
+            alert('El producto fue procesado correctamente')
+        } 
+     } 
+   
     // Capturamos el formulario
     let form = document.querySelector("#form-alta-prod");
   
@@ -20,8 +30,7 @@ window.addEventListener("load", () => {
         divSubCatAccesorios.style.display = "block";
         divSubCatAlimentos.style.display = "none";
         divPresentacion.style.display = "none";
-      } else {
-        console.log("no hay categoria aun");
+      } else {        
         divSubCatAlimentos.style.display = "none";
         divPresentacion.style.display = "none";
         divSubCatAccesorios.style.display = "none";
@@ -37,8 +46,7 @@ window.addEventListener("load", () => {
       divSubCatAccesorios.style.display = "block";
       divSubCatAlimentos.style.display = "none";
       divPresentacion.style.display = "none";
-    } else {
-      console.log("no hay categoria aun");
+    } else {      
       divSubCatAlimentos.style.display = "none";
       divPresentacion.style.display = "none";
       divSubCatAccesorios.style.display = "none";
@@ -245,7 +253,6 @@ window.addEventListener("load", () => {
                 ulErrores.classList.add("alert-warning");
             }
         } else {
-            alert("El producto se guardó satisfactoriamente");
             form.submit(); // Si no hay errores, enviar el formulario
         }
     });

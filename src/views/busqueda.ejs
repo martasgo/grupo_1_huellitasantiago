@@ -16,7 +16,7 @@
             <% if (productsDestacado.length > 0 ){%>
                 <% for (i=0; i< productsDestacado.length; i++){ %>
                     <article>
-                        <a href="/product/detalle/<%= productsDestacado[i].id %>"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
+                        <a href="/products/<%= productsDestacado[i].id %>/details"><img src="/images/productos/<%= productsDestacado[i].imagen %>" alt="Cinturon seguridad"></a>
                         <div class="detalle">
                             <p id=""><%= productsDestacado[i].nombre %></p>
                                 <% if (productsDestacado[i].descuento != 0) {
@@ -29,7 +29,7 @@
                                 <% } else {%>
                                     <p class="precioAhora" id="">$<%= toThousand(productsDestacado[i].precio) %> </p>
                                 <% } %>
-                            <a><input type="button" value="Comprar" id="btn-comprar"/></a>
+                            <a href="/products/<%= productsDestacado[i].id %>/details"><input type="button" value="Ver detalle" id="btn-comprar"/></a>
                         </div>
                     </article>    
                 <%  } %>

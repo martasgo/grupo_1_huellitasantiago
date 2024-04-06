@@ -1,7 +1,6 @@
 
-window.addEventListener('load', () => {
-    // Captura de los elementos necesarios de la vista allProducts.ejs
-
+window.addEventListener('load', () => {  
+     // Captura de los elementos necesarios de la vista allProducts.ejs
     let main = document.querySelector('main');
     let section = document.querySelector('section');
     let divProduct = document.querySelectorAll('div.product');

@@ -1,77 +1,79 @@
 const { validationResult } = require("express-validator");
-const userService = require("../model/userService");
-const shoppingCartService = require ('../model/shoppingCartService');
-const cartProductService = require ('../model/cartProductService');
 let bcrypt = require("bcryptjs");
 
+//Services
+const userService = require("../model/userService");
+const shoppingCartService = require("../model/shoppingCartService");
+const cartProductService = require("../model/cartProductService");
+
 const userController = {
-  loginController: async (req, res) => {
+  loginController: (req, res) => {
     try {
       res.render("../views/users/login.ejs", {
         title: "Login",
       });
     } catch (error) {
-      console.log(error.message);
-      res.send("Error inesperado").status(500);
+      res.status(500).send("Error en el servidor");
     }
   },
 
-  // Método para encriptar una contraseña
-  // Lo usamos para encriptar las contraseñas que en el JSON aún figuren como string
-  passwordHash: function (texto) {
-    let hasheadas = bcrypt.hashSync(texto, 10);
-    return hasheadas;
-  },
-
-  // Método para validar y procesar el login de usuarios
+  // Método para procesar el login de usuarios
   loginProcess: async (req, res) => {
     try {
-      let errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const resultLogin = await userService.login(req);
+
+      if (resultLogin.errors) {
         res.render("../views/users/login.ejs", {
           title: "Login",
-          /* errors: errors.array(), */
-          errors:errors.mapped(),
-          old:req.body
+          errors: resultLogin.errors,
+          old: req.body,
         });
       } else {
-        let userToLogin = await userService.getByField(req.body.email);
-        if (userToLogin) {
-          let isOkThePassword = bcrypt.compareSync(
-            req.body.contraseña,
-            userToLogin.contrasenia
-          );
-          if (isOkThePassword) {
-            req.session.userLogged = userToLogin;
-            if (req.body.recordarme) {
-              res.cookie("userEmail", req.body.email, { maxAge: 60000 * 60 });
-            }
-            return res.redirect("/user/profile");
-          }
-          return res.render("../views/users/login.ejs", {
-            title: "Login",
-            old:req.body,
-            errors: {
-              contrasenia: {
-                msg: "Credenciales inválidas",
-                
-              },
-            },
-          });
+        req.session.userLogged = resultLogin.user;
+        if (req.body.recordarme) {
+          res.cookie("userEmail", req.body.email, { maxAge: 60000 * 2 });
         }
-        return res.render("../views/users/login.ejs", {
-          title: "Login",
-          old:req.body,
-          errors: {
-            email: {
-              msg: "Este email no se encuentra registrado",
-            },
-          },
+        res.redirect(`${resultLogin.user.id}/profile`);
+      }
+    } catch (error) {
+      console.error("Error en el proceso de inicio de sesión:", error);
+      res.render("../views/users/login.ejs", {
+        title: "Login",
+        errors: { general: { msg: "Error al iniciar sesión" } },
+        old: req.body,
+      });
+    }
+  },
+
+  forgotPassController: (req, res) => {
+    try {
+      res.render("../views/users/olvidasteContraseña.ejs", {
+        title: "Recuperar Contraseña",
+        mensaje: "",
+      });
+    } catch (error) {
+      res.status(500).send("Error en el servidor");
+    }
+  },
+
+  forgotPassProcess: async (req, res) => {
+    try {
+      const userForgotPass = await userService.getByField(req.body.emailPass);
+
+      if (userForgotPass) {
+        return res.render("../views/users/contraseñaEnviada.ejs", {
+          title: "Contraseña Enviada",
+        });
+      } else {
+        res.render("../views/users/olvidasteContraseña.ejs", {
+          title: "Recuperar Contraseña",
+          mensaje: "Este email no se encuentra registrado",
+          oldData: req.body,
         });
       }
     } catch (error) {
-      console.log(error.message);
-      res.send("Error inesperado").status(500);
+      console.error("Error en el proceso:", error);
+      res.redirect("../views/users/olvidasteContraseña.ejs");
     }
   },
 
@@ -81,8 +83,7 @@ const userController = {
         title: "Registro de usuarios",
       });
     } catch (error) {
-      console.log(error.message);
-      res.send("Error inesperado").status(500);
+      res.status(500).send("Error inesperado del servido, intente más tarde");
     }
   },
 
@@ -99,86 +100,82 @@ const userController = {
       }
     } catch (error) {
       console.log(error.message);
-      res.send("Error inesperado").status(500);
+      res.status(500).send("Error en el servidor");
     }
   },
 
   //Controlador ruta listar ventas para admin
   salesListController: async (req, res) => {
     try {
-      let user = req.session.userLogged || {};
-      let ventas = await shoppingCartService.getAll();
-      console.log(ventas)
-      let orderedProducts = [];
-  
-      for (const venta of ventas) {
-        let productosEnVenta = await cartProductService.getByCartId(venta.id);
-        productosEnVenta.forEach(products => {
-          orderedProducts.push(products)
-        })
-      }; 
+      const user = req.session.userLogged || {};
+      const ventas = await shoppingCartService.getAll();
+      const orderedProducts = [];
+
+      if(ventas){
+        for (const venta of ventas) {
+          const productosEnVenta = await cartProductService.getByCartId(venta.id);
+          productosEnVenta.forEach((products) => {
+            orderedProducts.push(products);
+          });
+        }
+      }  
+
       res.render("../views/users/ventas.ejs", {
         title: "Listado de ventas",
         user,
         ventas,
-        orderedProducts
-      });      
-
+        orderedProducts,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).send("Error en el servidor");
     }
   },
 
-  //Controlador Ruta para almacenar el nuevo
+  //Controlador Ruta para almacenar el nuevo usuario
   addRegisterController: async (req, res) => {
     try {
-      let resultValidation = validationResult(req);
+      const resultValidation = validationResult(req);
       if (resultValidation.errors.length > 0) {
         if (req.file) {
           await userService.deleteImagen(req.file.filename);
         }
-        res.render("../views/users/register.ejs", {
+        return res.render("../views/users/register.ejs", {
           title: "Registro de usuarios",
           errors: resultValidation.mapped(),
           oldData: {
             ...req.body,
-            imagen: req.file ? req.file.filename : null,
+            imagen: req.file ? req.file.filename : "usuario-default.jpg",
           },
         });
-      } else {
-        let userInDB = await userService.getByField(req.body.email);
-        if (userInDB) {
-          res.render("../views/users/register.ejs", {
-            title: "Registro de usuarios",
-            errors: {
-              email: {
-                msg: "Este email ya está registrado",
-              },
-            },
-            oldData: req.body,
-          });
-        } else {
-          // Crear el usuario solo si no existe en la base de datos
-          const newUser = {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            email: req.body.email,
-            direccion: req.body.dir,
-            telefono: req.body.telefono,
-            contrasenia: bcrypt.hashSync(req.body.contrasenia, 10),
-            id_categoria: 2,
-            imagen: req.file ? req.file.filename : "usuario-default.jpg",
-          };
-          await userService.addUser(newUser);          
-          res.render("../views/users/login.ejs", {
-            title: "Login",
-          });
-        }
       }
+      const userInDB = await userService.getByField(req.body.email);
+      if (userInDB && userInDB.activo) {
+        return res.render("../views/users/register.ejs", {
+          title: "Registro de usuarios",
+          errors: {
+            email: {
+              msg: "Este email ya está registrado",
+            },
+          },
+          oldData: req.body,
+        });
+      }
+      const body = req.body;
+      (body.contrasenia = bcrypt.hashSync(req.body.contrasenia, 10)),
+        (body.foto = req.file ? req.file.filename : "usuario-default.jpg");
+
+      if (userInDB && !userInDB.activo) {
+        await userService.updateUser(body, userInDB.id);
+      } else {
+        await userService.addUser(body);
+      }
+      return res.render("../views/users/login.ejs", {
+        title: "Login",
+      });
     } catch (error) {
-      console.log(error.message);
-      res.send("No se pudo registrar el usuario").status(500);
+      console.error("Error en el controlador de registro:", error);
+      return res.status(500).send("No se pudo registrar el usuario");
     }
   },
 
@@ -202,28 +199,56 @@ const userController = {
     }
   },
 
-  compras: async (req, res) => {
+  purchasesController: async (req, res) => {
     try {
       let user = req.session.userLogged || {};
       let comprasUser = await shoppingCartService.getByUser(user.id);
       let orderedProducts = [];
-  
-      for (const compra of comprasUser) {
-        let productosEnCompra = await cartProductService.getByCartId(compra.id);
-        productosEnCompra.forEach(products => {
-          orderedProducts.push(products)
-        })
-      };
+
+      if (comprasUser) {
+        for (const compra of comprasUser) {
+          let productosEnCompra = await cartProductService.getByCartId(
+            compra.id
+          );
+          productosEnCompra.forEach((products) => {
+            orderedProducts.push(products);
+          });
+        }
+      }
       res.render("../views/users/comprasUser.ejs", {
         title: "Mis Compras",
         user,
         comprasUser,
-        orderedProducts
-      });      
-
+        orderedProducts,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).send("Error en el servidor");
+    }
+  },
+
+  informacionLegalController: async (req, res) => {
+    try {
+      let user = req.session.userLogged || {};
+      res.render("../views/users/informacionlegal.ejs", {
+        user: user,
+        title: "Informacion Legal",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
+    }
+  },
+  notificacionesController: async (req, res) => {
+    try {
+      let user = req.session.userLogged || {};
+      res.render("../views/users/notificaciones.ejs", {
+        user: user,
+        title: "notificaciones",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.send("Error inesperado").status(500);
     }
   },
 
@@ -242,7 +267,7 @@ const userController = {
   editController: async (req, res) => {
     try {
       const user = req.session.userLogged || {};
-      const idUser = parseInt(req.params.idUser);
+      const idUser = parseInt(req.params.id);
       const infoUser = await userService.getByPk(idUser);
       res.render("../views/users/editUser.ejs", {
         title: "Edición de usuarios",
@@ -260,7 +285,7 @@ const userController = {
     try {
       const resultValidation = validationResult(req);
       const user = req.session.userLogged || {};
-      const idUser = parseInt(req.params.idUser);
+      const idUser = parseInt(req.params.id);
       const infoUser = await userService.getByPk(idUser);
       const imagen = req.body.imageAnt;
       if (resultValidation.errors.length > 0) {
@@ -268,7 +293,7 @@ const userController = {
         if (req.file) {
           await userService.deleteImagen(req.file.filename);
         }
-        res.render("../views/users/editUser.ejs", {
+        return res.render("../views/users/editUser.ejs", {
           title: "Edición de usuarios",
           errors: resultValidation.mapped(),
           oldData: req.body,
@@ -276,82 +301,53 @@ const userController = {
           user,
           imagen,
         });
-      } else {
-        // En caso de cambiar el correo: se verifica que el mail no esté registrado
-        const userInDB = await userService.getByField(req.body.email);
-        if (userInDB) {
-          if (userInDB.id !== infoUser.id) {
-            //si existe el mail significa que no se puede guardar al edicion y borro la imagen que se ha subido
-            if (req.file) {
-              await userService.deleteImagen(req.file.filename);
-            }
-            // No se hace la edición del registro porque ya existe ese mail que esta editando.
-            res.render("../views/users/editUser.ejs", {
-              title: "Edición de usuarios",
-              errors: {
-                email: {
-                  msg: "Este email ya está registrado",
-                },
+      }
+      // En caso de cambiar el correo: se verifica que el mail no esté registrado
+      const userInDB = await userService.getByField(req.body.email);
+      if (userInDB) {
+        if (userInDB.id !== infoUser.id) {
+          //si existe el mail significa que no se puede guardar al edición y borro la imagen que se ha subido
+          if (req.file) {
+            await userService.deleteImagen(req.file.filename);
+          }
+          // No se hace la edición del registro porque ya existe ese mail que esta editando.
+          return res.render("../views/users/editUser.ejs", {
+            title: "Edición de usuarios",
+            errors: {
+              email: {
+                msg: "Este email ya está registrado",
               },
-              oldData: req.body,
-              infoUser,
-              user,
-              imagen,
-            });
-          } else {
-            const editUser = {
-              nombre: req.body.nombre,
-              apellido: req.body.apellido,
-              email: req.body.email,
-              direccion: req.body.dir,
-              telefono: req.body.telefono,
-              contrasenia: req.body.contrasenia
-                ? bcrypt.hashSync(req.body.contrasenia, 10)
-                : infoUser.contrasenia,
-              imagen: req.file ? req.file.filename : infoUser.imagen,
-              id_categoria: req.body.categoria
-            };
-            const newU = await userService.updateList(editUser, idUser);
-            // Actualiza la variable de sesión con los nuevos datos del usuario
-            if (req.session.userLogged.id == infoUser.id) {
-              req.session.userLogged = {
-                ...req.session.userLogged, // Mantiene los datos antiguos
-                ...editUser, // Agrega los nuevos datos
-              };
-              // Guarda la variable de sesión actualizada
-              req.session.save();
-            }
-            res.redirect("/user/profile");
-          }
-        } else {
-          //Cuando el usuario exite, se edita la información y se guarda.
-          const editUser = {
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-            email: req.body.email,
-            direccion: req.body.dir,
-            telefono: req.body.telefono,
-            contrasenia: req.body.contrasenia
-              ? bcrypt.hashSync(req.body.contrasenia, 10)
-              : infoUser.contrasenia,
-            imagen: req.file ? req.file.filename : infoUser.imagen,
-            id_categoria: req.body.categoria
-          };
-          const newU = await userService.updateList(editUser, idUser);
-          // Actualiza la variable de sesión con los nuevos datos del usuario
-          if (req.session.userLogged.id == infoUser.id) {
-            req.session.userLogged = {
-              ...req.session.userLogged, // Mantiene los datos antiguos
-              ...editUser, // Agrega los nuevos datos
-            };
-            // Guarda la variable de sesión actualizada
-            req.session.save();
-          }
-          res.redirect("/user/profile");
+            },
+            oldData: req.body,
+            infoUser,
+            user,
+            imagen,
+          });
         }
       }
+      const body = req.body;      
+      if (body.contrasenia && body.confirmar) {
+        body.contrasenia = bcrypt.hashSync(req.body.contrasenia, 10);
+      } else {
+        body.contrasenia = infoUser.contrasenia;
+      }
+      body.foto = req.file ? req.file.filename : imagen;
+
+      let newUser = await userService.updateList(body, idUser);
+      // Actualiza la variable de sesión con los nuevos datos del usuario
+      if (req.session.userLogged.id == infoUser.id) {
+        req.session.userLogged = {
+          ...newUser.editUser, // Agrega los nuevos datos,
+          id: infoUser.id
+        };
+        console.log(req.session.userLogged);
+        // Guarda la variable de sesión actualizada
+        res.clearCookie("userEmail");
+        req.session.save();
+      }
+      return res.redirect(`/users/${req.session.userLogged.id}/profile`);
     } catch (error) {
-      res.send(error);
+      return res.status(500).send("No se pudo editar el usuario");
     }
   },
 
@@ -375,14 +371,14 @@ const userController = {
     try {
       const user = req.session.userLogged || {};
       const idToDelete = parseInt(req.params.id);
-      if (user && user.id_categoria === 2 && user.id === idToDelete) {
+      if (user && user.id_categoria == 2 && user.id === idToDelete) {
         await userService.delete(user.id);
         res.clearCookie("userEmail");
         req.session.destroy();
         res.redirect("/");
-      } else if (user && user.id_categoria === 1) {
+      } else if (user && user.id_categoria == 1) {
         await userService.delete(idToDelete);
-        res.redirect("/user/profile");
+        res.redirect(`/users/${user.id}/profile`);
       }
     } catch (error) {
       console.log(error.message);

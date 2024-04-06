@@ -4,10 +4,9 @@ const Op = db.Sequelize.Op;
 const {body} = require ("express-validator");
 
 
-const loginValidations = [
+const forgotPassdValidation = [
     body("email").notEmpty().withMessage("El campo email no puede quedar vacío").bail()
-    .isEmail().withMessage("Debes ingresar un email válido"),
-    body("contrasenia").notEmpty().withMessage("El campo contraseña no puede quedar vacío")
+    .isEmail().withMessage("Debes ingresar un email válido")    
 ];
 
-module.exports = loginValidations;
+module.exports = forgotPassdValidation;

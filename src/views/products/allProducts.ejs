@@ -9,16 +9,23 @@
         <%- include('../partials/header') %>
             <main>
                 <p class="rutahome">
-                    <a href="/user/profile">Perfil</a> / Listado de productos /
+                    <a href="/users/<%= user.id %>/profile">Perfil</a> / Listado de productos /
                 </p>
                 <section>
 
                     <% allProducts.forEach(product=> { %>
-                        <div class="product">
-                            <a href="/product/detalle/<%=product.id%>">
+                        <div class="<%= (product.activo === 1) ? 'product' : 'product-nonActive' %>">
+                            <a href="/products/<%=product.id%>/details">
                                 <%= product.nombre %>
                             </a>
-                            <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
+                            <div class="actions">
+                                 <a href="/products/<%= product.id %>/edition"><i class="fa-solid fa-pen-to-square iconos"></i></a>
+                                 <% if(product.activo === 1) {%>
+                                    <a href="/products/<%= product.id %>/deletion"><i class="fa-solid fa-trash iconos"></i></a>
+                                 <% } %>   
+                                <img src="/images/productos/<%= product.imagen %>" height="50px" width="50px">
+                            </div>
+                            
                         </div>
                         <% }); %>
 

@@ -11,14 +11,20 @@ window.addEventListener('load', () => {
     }); 
     
     // MÉTODO PARA OBTENER EL ID DEL PRODUCTO QUE VIENE EN URL
-        // Obtenemos la URL actual
+        // Obtener la URL actual
         let url = window.location.href;
 
-        // Encontramos la posición de la última barra en la URL
-        let lastSlashIndex = url.lastIndexOf('/');
+        // Expresión regular para extraer el id del producto en URL
+        let match = url.match(/\/products\/(\d+)/);
 
-        // Obtenemos el ID del producto después de la última barra
-        let productId = url.substring(lastSlashIndex + 1);
+        let productId;
+
+        // Verificar si se encontró una coincidencia y obtener el número
+        if (match) {
+            productId = match[1]; // El número de ID del producto estará en el primer grupo de captura
+        } else {
+            productId = null;
+        }
 
     // FUNCIÓN PARA ACTUALIZAR EL TOTAL DE ITEMS DEL CARRITO DEL HEADER
     let cantidadCarrito = document.querySelector('.cantidadcarrito');
@@ -47,7 +53,7 @@ window.addEventListener('load', () => {
             item.remove();
         });
 
-        // Limpia el carrito en localStorage
+        // Limpia items en localStorage
         localStorage.removeItem('carrito');
 
         // Borra la variable 'order' si existe
@@ -61,18 +67,30 @@ window.addEventListener('load', () => {
         // Vacía el array de products
         products = [];
 
-        // Actualiza el subtotal descontando el producto eliminado
+        // Actualiza el total con envío
+        if (localStorage.getItem('envioAndreani')) {
+            localStorage.removeItem('envioAndreani');
+            document.querySelector('#envio-andreani').checked = false;
+            document.querySelector('#conenvio').style.display = 'none'
+        }
+        else if (localStorage.getItem('envioCorreo')) {
+            localStorage.removeItem('envioCorreo');
+            document.querySelector('#envio-correo-arg').checked = false;
+            document.querySelector('#conenvio').style.display = 'none'
+        };
+
+        // Actualiza el subtotal sin envío
         document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
     };
     
     linkVaciarCarrito.addEventListener('click', (event) => {
         event.preventDefault();
-        vaciarCarrito()
+        vaciarCarrito();
     });
     
     // FETCH CON LA API DE PRODUCTOS PARA TRAER UN PRODUCTO POR SU ID
 
-    fetch(`/api/product/${productId}`)
+    fetch(`/api/carts/products/${productId}`)
         .then((res) => res.json())
         .then((product) => {
             // Todas las operaciones relacionadas con productCart dentro de este bloque
@@ -110,7 +128,7 @@ window.addEventListener('load', () => {
                 event.preventDefault();
 
                 // Verificar si inputCantidad.value es un string vacío
-                if (inputCantidad.value == '') {
+                if (inputCantidad.value == '' || inputCantidad.value == 0) {
                     alert('Por favor, selecciona una cantidad válida.');
                     return; // Detener la ejecución si la cantidad no es válida
                 };
@@ -157,7 +175,7 @@ window.addEventListener('load', () => {
     if (localStorage.carrito) {
         let carrito = JSON.parse(localStorage.carrito);
         carrito.forEach((item, index) => {
-            fetch(`/api/product/${item.id}`)
+            fetch(`/api/carts/products/${item.id}`)
                 .then((res) => res.json())
                 .then((product) => {
                     if (product) {
@@ -189,48 +207,88 @@ window.addEventListener('load', () => {
                     
                 })
                 .then( () => {
-                    document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`
+                    document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+                    // FUNCIÓN PARA COMPLETAR EL TOTAL CON ENVÍO
+                    botonAndreani = document.querySelector('#envio-andreani');
+                    botonCorreoArgentino = document.querySelector('#envio-correo-arg');
+                    divTotalConEnvio = document.querySelector('#conenvio');
+                    if (localStorage.getItem('envioAndreani')) {
+                        botonAndreani.checked = true;
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`
+                    }
+                    else if (localStorage.getItem('envioCorreo')) {
+                        botonCorreoArgentino.checked = true;
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`
+                    } 
+                    botonAndreani.addEventListener('click', () => {
+                        localStorage.setItem('envioAndreani', botonAndreani.value);
+                        if (localStorage.getItem('envioCorreo')) {
+                            localStorage.removeItem('envioCorreo')
+                        }
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`
+                    });
+                    botonCorreoArgentino.addEventListener('click', () => {
+                        localStorage.setItem('envioCorreo', botonCorreoArgentino.value);
+                        if (localStorage.getItem('envioAndreani')) {
+                            localStorage.removeItem('envioAndreani')
+                        }
+                        divTotalConEnvio.style.display = 'block';
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`
+                    });
                 }
                 )
         });
-    };
+    };    
 
     // FUNCIÓN PARA MANEJAR EL PROCESO DE "INICIAR COMPRA" - FETCH POST
-    let checkoutCart = document.querySelector('#inicio-compra');
+    let checkoutCart = document.querySelector('#finalizar-compra');
     checkoutCart.addEventListener('click', (event) => {
         if (localStorage.getItem('carrito')) {
-            // Obtenemos la fecha y hora actuales
-            let fechaActual = new Date();
-            // Creamos el objeto para mandar por post al método checkout del controller
-            let order = {
-                cantidad_productos: itemsTotales(products),
-                monto_total: totalCarrito(products),
-                fecha: fechaActual.toISOString(),
-                productos: products 
-            };
-
-            // Realizamos la solicitud fetch directamente
-            fetch('/api/checkout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(order)
-            })
-            .then((result)=>result.json())
-            .then((data) => {
-                vaciarCarrito();
-                let userID = document.querySelector('#userId').value;
-                location.href = `/user/compras/${userID}`
-            })
-            .catch(error => {
-                console.error(error);
-                alert('Para iniciar la compra, primero debes loguearte');
-                location.href = '/user/login'
-            });
+            if (!document.querySelector('#envio-andreani').checked && !document.querySelector('#envio-correo-arg').checked) {
+                alert('Debes seleccionar una opción de envío')
+            } else {
+                // Obtenemos la fecha y hora actuales
+                let fechaActual = new Date();
+                // Creamos el objeto para mandar por post al método checkout del controller
+                let order = {
+                    cantidad_productos: itemsTotales(products),
+                    monto_total: totalCarrito(products),
+                    fecha: fechaActual.toISOString(),
+                    productos: products 
+                };
+    
+                // Realizamos la solicitud fetch directamente
+                fetch('/api/checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(order)
+                })
+                .then((result)=>result.json())
+                .then((data) => {
+                    vaciarCarrito();
+                    let userID = document.querySelector('#userId').value;
+                    location.href = `/users/${userID}/purchases`;
+                    if (localStorage.getItem('envioAndreani')) {
+                        localStorage.removeItem('envioAndreani')
+                    }
+                    else if (localStorage.getItem('envioCorreo')) {
+                        localStorage.removeItem('envioCorreo')
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Para iniciar la compra, primero debes loguearte');
+                    location.href = '/users/login'
+                });
+            }
         } else {
             event.preventDefault();
-            alert('No tienes productos en el carrito para iniciar una compra');
+            alert('No tienes productos en el carrito para iniciar una compra'); 
         }
     });
 
@@ -257,6 +315,28 @@ window.addEventListener('load', () => {
                         
                         // Actualiza el subtotal descontando el producto eliminado
                         document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+
+                        // Actualiza el total con envío descontando el producto eliminado
+                        if (products.length == 0) {
+                            localStorage.removeItem('carrito')
+                            if (localStorage.getItem('envioAndreani')) {
+                                localStorage.removeItem('envioAndreani');
+                                document.querySelector('#envio-andreani').checked = false;
+                                document.querySelector('#conenvio').style.display = 'none'
+                            }
+                            else if (localStorage.getItem('envioCorreo')) {
+                                localStorage.removeItem('envioCorreo');
+                                document.querySelector('#envio-correo-arg').checked = false;
+                                document.querySelector('#conenvio').style.display = 'none'
+                            }
+                        } else {
+                            if (botonAndreani.checked) {
+                                document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
+                            };
+                            if (botonCorreoArgentino.checked) {
+                                document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                            }
+                        }
                         
                         // Actualiza el texto de la cantidad de carrito
                         cantidadCarrito.innerText = 'Carrito: ' + productosEnElCarrito();
@@ -294,6 +374,14 @@ window.addEventListener('load', () => {
         
                     // Actualiza el subtotal final
                     document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+
+                    // Actualiza el total con envío
+                    if (botonAndreani.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
+                    };
+                    if (botonCorreoArgentino.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                    }
         
                     // Actualiza la variable order
                     let order = {
@@ -351,6 +439,14 @@ window.addEventListener('load', () => {
 
                     // Actualiza el subtotal final
                     document.querySelector('#subtotalfinal').innerText = `${totalCarrito(products)}`;
+
+                    // Actualiza el total con envío
+                    if (botonAndreani.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonAndreani.value)}`;
+                    };
+                    if (botonCorreoArgentino.checked) {
+                        document.querySelector('#totalconenvio').innerText = `${totalCarrito(products)+ parseInt(botonCorreoArgentino.value)}`;
+                    }
 
                     // Actualiza la variable order
                     let order = {

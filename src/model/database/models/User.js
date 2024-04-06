@@ -39,11 +39,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      activo: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+      },
     };
    
     let config = {
       timestamps: false, 
-      tablename: 'users'
+      tableName: 'users'
     };
     const User = sequelize.define(alias, cols, config);
   

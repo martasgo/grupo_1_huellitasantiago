@@ -17,7 +17,7 @@
                 <section class="listadoArticulos">    
                         <% for (i=0; i< productsDiscount.length; i++){ %>
                             <article>
-                                <a href="/product/detalle/<%= productsDiscount[i].id %>"><img src="/images/productos/<%= productsDiscount[i].imagen %>" alt="Cinturon seguridad"></a>
+                                <a href="/products/<%= productsDiscount[i].id %>/details"><img src="/images/productos/<%= productsDiscount[i].imagen %>" alt="Cinturon seguridad"></a>
                                 <div class="detalle">
                                     <p id=""><%= productsDiscount[i].nombre %></p>
                                         <% if (productsDiscount[i].descuento != 0) {
@@ -30,7 +30,7 @@
                                         <% } else {%>
                                             <p class="precioAhora" id="">$<%= toThousand(productsDiscount[i].precio) %> </p>
                                         <% } %>
-                                    <a href="/product/detalle/<%= productsDiscount[i].id %>"s><input type="button" value="Comprar" id="btn-comprar"/></a>
+                                    <a href="/products/<%= productsDiscount[i].id %>/details"><input type="button" value="Ver detalle" id="btn-comprar"/></a>
                                 </div>
                             </article>    
                         <%  } %>

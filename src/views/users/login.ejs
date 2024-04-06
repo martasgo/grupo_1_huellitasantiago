@@ -11,7 +11,7 @@
     <main class="mainlogin">
         <p class="rutahome"><a href="/">Home</a> / login</p>
 
-            <form id="formulario-login" action="/user/login" method="POST">
+            <form id="formulario-login" action="/users/login" method="POST">
 
                 <% if (locals.authError) {%>
                     <p class="msjError"> 
@@ -23,40 +23,29 @@
                 <input type="email" name="email" id="email" value="<%= locals.old ? old.email : null %>">
                 <small id="error-email" class="msjError"></small>
                 
-
                 <% if (typeof errors != "undefined" && errors.email) {%>
                     <p class="msjError"> <%= errors.email.msg  %> </p>
                 <% } %>
-
-                <br>
-                <br>
-                <label for="contraseña">Contraseña</label> 
-                <input type="password" name="contraseña" id="contraseña">
-                <small id="error-contraseña" class="msjError"></small>
-
-                <% if (typeof errors != "undefined" && errors.contraseña) {%>
-                    
-                    <p><%=errors.contraseña.msg  %></p>
-                <% } %>
+                
+                <label for="contrasenia">Contraseña</label> 
+                <input type="password" name="contrasenia" id="contrasenia">
+                <small id="error-contrasenia" class="msjError"></small>                
 
                 <% if (typeof errors != "undefined" && errors.contrasenia) {%>
                     <p class="msjError"> <%= errors.contrasenia.msg  %> </p>
                 <% } %>
 
-                <p class="olvidasteclave"><a href="#">¿Olvidaste tu contraseña?</a></p>
-                <br>
-                <br>
+                <p class="olvidasteclave"><a href="/users/forgotPassword">¿Olvidaste tu contraseña?</a></p>
+                
                 <div class="opcionrecordarme">
                     <label for="recordarme">Recordarme</label>
                     <input type="checkbox" name="recordarme">
                 </div>
                 <br>
-                <br>
                 <button type="submit">INICIAR SESIÓN</button>
-                <br>
-                <br>
+                
                 <p class="notenescuenta">¿No tenés cuenta? <br>
-                <a href="/user/register"><strong>Crear cuenta</strong></a></p>
+                <a href="/users/registration"><strong>Crear cuenta</strong></a></p>
             </form>
         
     </main>

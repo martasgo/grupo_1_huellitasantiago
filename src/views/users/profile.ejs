@@ -15,7 +15,7 @@
             <p class="nombre"> <%= user && user.nombre %> <%=user && user.apellido  %> </p>
             <p class="correo"> <%= user && user.email  %> </p>
             <% if (locals.adminError) { %>
-                <p style="color: red"> NO TIENES PERMISOS DE ADMINISTRADOR </p>
+                <p class="msjError"> NO TIENES PERMISOS DE ADMINISTRADOR </p>
             <% } %>
         </div>
         </div>
@@ -23,23 +23,22 @@
         <div class="actividad">
             <p><strong>Actividad</strong></p>
             <br>
-            <p class="opciones"><i class="fa-solid fa-money-check-dollar"></i> Medios de pago</p>
-            <p class="historial"><i class="fa-solid fa-basket-shopping"></i> <a href="/user/compras/<%= user.id %>">Ver compras</a></p>
+            <p class="opciones"><a target="_blank" href="/mediospago"><i class="fa-solid fa-money-check-dollar"></i> Medios de pago</a></p>            
+            <p class="historial"><a href="/users/<%= user.id %>/purchases"><i class="fa-solid fa-basket-shopping"></i> Ver compras</a></p>
         </div>
         <div class="configuracion">
             <p><strong>Configuración</strong></p>
             <br>
-            <p class="config"><i class="fa-solid fa-bell"></i> Notificaciones</p>
-            <p class="config"><i class="fa-solid fa-circle-info"></i> Información legal</p>
+            <p class="config"><a href="/users/notificaciones"><i class="fa-solid fa-bell"></i> Notificaciones</a></p>
+            <p class="config"><a href="/users/informacionLegal"><i class="fa-solid fa-circle-info"></i> Informacion Legal</a></p>
         </div>
         <br>
         <div id="form-buttons">  
-            <a href="/user/editUser/<%= user.id %>" class=""><button type="button" class="">EDITAR PERFIL</button></a>
-            <a href="/user/delete/<%= user.id %>" class=""><button type="button" class="">ELIMINAR PERFIL</button></a>
+            <a href="/users/<%= user.id %>/edition" class=""><button type="button" class="">EDITAR PERFIL</button></a>
+            <a href="/users/<%= user.id %>/deletion" class=""><button type="button" class="">ELIMINAR PERFIL</button></a>
         </div>
         <div class="sesiones">
-            <br>
-            <p class="sesion"><i class="fa-solid fa-right-from-bracket"></i> <a href="/user/logout">Cerrar sesión</a> </p>
+            <p class="sesion"><i class="fa-solid fa-right-from-bracket"></i> <a href="/users/logout">Cerrar sesión</a> </p>
         </div>
 
         

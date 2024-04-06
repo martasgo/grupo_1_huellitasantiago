@@ -12,6 +12,7 @@ const registerValidations = [
     body("dir").notEmpty().withMessage("La dirección no puede quedar vacía"),
     body("telefono").notEmpty().withMessage("El número de teléfono no puede quedar vacío"),    
     body("categoria").notEmpty().withMessage("La categoria no puede quedar vacía"),
+    body("activo").notEmpty().withMessage("El estado del usuario no puede quedar vacío"),
     body("contrasenia")
         .notEmpty().withMessage("Debe ingresar una contraseña").bail()
         .isLength({ min: 8 }).withMessage("La contraseña debe tener al menos 8 caracteres")

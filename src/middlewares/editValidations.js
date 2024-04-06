@@ -11,6 +11,7 @@ const editValidations = [
   body("dir").notEmpty().withMessage("La dirección no puede quedar vacía"),
   body("telefono").notEmpty().withMessage("El número de teléfono no puede quedar vacío"),    
   body("categoria").notEmpty().withMessage("La categoria no puede quedar vacía"),
+  body("activo").notEmpty().withMessage("El estado del usuario no puede quedar vacío"),
   body("contrasenia").custom((value, { req }) => {
     const valorContrasenia = req.body.contrasenia;
     if (valorContrasenia) {
@@ -30,8 +31,7 @@ const editValidations = [
   }),
   body("confirmar").custom((value, { req }) => {
     let valorContrasenia = req.body.contrasenia;
-    let valorConfirmar = req.body.confirmar;
-    console.log(valorContrasenia)
+    let valorConfirmar = req.body.confirmar;   
     if ((valorContrasenia.trim() !== "") && (valorContrasenia !== valorConfirmar)) {
       throw new Error("Las contraseñas no coinciden, verifique por favor.");
     }

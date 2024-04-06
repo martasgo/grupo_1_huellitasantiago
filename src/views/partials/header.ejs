@@ -16,14 +16,29 @@
           </div>
         <a href="/"> <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"/></a>
        
-        <div id="iconos-header">
-            <a href="/user/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
-            <a href="/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
+        <div class="mobileheader">
+            <% if(isLogged) {%>
+                <div id="iconos-header">
+                    <a href="/users/<%= userLogged.id %>/profile"> <i id="iconoUser" class="fa-solid fa-person"></i> </a>
+                    <a href="/carts"> <i id="iconoUser" class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="/users/logout"> <i id="iconoUser" class="fa-solid fa-right-from-bracket"></i> </a>
+                </div>
+                <div class="profilenamediv">
+                    <p class="profilewelcome">Bienvenido/a</p>
+                    <p class="profilename"><%=userLogged.nombre + " " + userLogged.apellido%></p>
+                </div>
+            <% } else {%>
+                <div id="iconos-header">
+                    <a href="/users/registration"> <i id="iconoUser" class="fa-solid fa-user-plus"></i> </a>
+                    <a href="/users/login"> <i id="iconoUser" class="fa-regular fa-circle-user"></i></a>
+                    <a href="/carts"> <i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+            <% } %>
         </div>
     </div>
     <div class="searchbox">
         <form action="/search" method="post">
-            <input type="text" id="buscarProd" name="buscarProd" placeholder="Buscar producto"><button type="submit" class="search-button"><i id="busqueda"
+            <input type="text" id="buscarProd1" name="buscarProd1" placeholder="Buscar producto"><button type="submit" class="search-button"><i id="busqueda"
                 class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </div>
@@ -32,7 +47,7 @@
         <a href="/">  <img class="logo" src="/images/logo-huellitasantiago-redondo.png" alt="Logo de la empresa"></a>
         <div class="searchboxTablet">
             <form action="/search" method="post">
-                <input type="text" id="buscarProd" name="buscarProd" placeholder="Buscar producto"> <button type="submit" class="search-button"><i id="busqueda"
+                <input type="text" id="buscarProd2" name="buscarProd2" placeholder="Buscar producto"> <button type="submit" class="search-button"><i id="busqueda"
                     class="fa-solid fa-magnifying-glass"></i></button>
 
             </form>
@@ -40,19 +55,19 @@
         <div class="box-header-right">
             <div class="carritoHeader">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <a href="/cart" class="cantidadcarrito">Carrito: </a>
-                <a class="vaciarcarrito" href=""><strong>Vaciar carrito</strong></a>
+                <a href="/carts" class="cantidadcarrito">Carrito: </a>
+                <a class="vaciarcarrito" href="">Vaciar carrito</a>
             </div>
                 
             <% if(!isLogged) { %>
                 <div class="header-login-register">
-                    <a id="registerButton" href="/user/register">Registro</a>
-                    <a id="loginButton" href="/user/login">Iniciar sesión</a>
+                    <a id="registerButton" href="/users/registration">Registro</a>
+                    <a id="loginButton" href="/users/login">Iniciar sesión</a>
                 </div>
             <% } else { %>
                 <div class="header-login-register">
-                    <a href="/user/profile"> Mi perfil </a>
-                    <a href="/user/logout"> Logout </a>
+                    <a href="/users/<%= userLogged.id %>/profile"> Mi perfil </a>
+                    <a href="/users/logout"> Logout </a>
                 </div>
                 <p>Bienvenido/a <%=userLogged.nombre + " " + userLogged.apellido%> </p>
                 <input type="hidden" value="<%= userLogged.id %>" id="userId">

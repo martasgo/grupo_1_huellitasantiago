@@ -1,38 +1,21 @@
 const { Router } = require("express");
-// IMPORTO EL SERVICE DE PRODUCT
-const productService = require('../model/productService');
 const productController = require("../controllers/productController");
 const router = require("./mainRoute");
-const path = require("path");
-const multer = require("multer");
 const authMiddleware = require ("../middlewares/authMiddleware");
 const adminMiddleware = require ("../middlewares/adminMiddleware");
+const multerMiddleware = require('../middlewares/multerMiddleware');
 const productValidations = require ("../middlewares/productValidations");
-
-
-// Multer - manejo del almacenamiento
-const storage = multer.diskStorage({
-	destination: (req , file , cb) => {
-		cb (null , path.resolve(__dirname , "../../public/images/productos"));
-	},
-	filename: (req , file , cb) => {
-		cb (null , file.fieldname + "-" + Date.now() + path.extname(file.originalname))
-	}
-});
-
-// Instanciar multer para manejar los métodos
-const upload = multer ({ storage });
 
 const routerProduct = Router();
 
 const routesProd = {
   indexProductRoute: "/",
   list: '/list',
-  detailProductRoute: "/detalle/:id",
-  productCrear: "/crear",
-  productEditar: "/editar/:id",
-  productDelete: '/delete/:id',
-  productFilters: "/filtros/:idMascota/:idCat?/:idSubCat?",
+  detailProductRoute: "/:id/details",
+  productCrear: "/form",
+  productEditar: "/:id/edition",
+  productDelete: '/:id/deletion',
+  productFilters: "/filters/:idMascota/:idCat?/:idSubCat?",
 
   //listado productos: "/product/perros",  /product/perro/alimento, product/perro/alimento/latas  
   productsList: "/:idMascota/:category?/:subCat?",
@@ -49,17 +32,18 @@ routerProduct.get(routesProd.detailProductRoute, productController.detailProduct
 
 // rutas para obtener form para crear productos
 routerProduct.get(routesProd.productCrear, authMiddleware , adminMiddleware , productController.crearProdController);
-routerProduct.post(routesProd.productCrear, authMiddleware , adminMiddleware , upload.single("foto") , productValidations, productController.guardarProd);
+routerProduct.post(routesProd.productCrear, authMiddleware , adminMiddleware , multerMiddleware.productUpload.single("foto"), productValidations, productController.guardarProd);
 
 // rutas para obtener form para editar productos
 routerProduct.get(routesProd.productEditar, authMiddleware , adminMiddleware , productController.editarProdController); //sole get de editar
-routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware ,  upload.single('foto'), productValidations, productController.updateProdController); //sole put de editar
+routerProduct.put(routesProd.productEditar, authMiddleware , adminMiddleware , multerMiddleware.productUpload.single("foto"), productValidations, productController.updateProdController); //sole put de editar
 
 // rutas para eliminar producto
-routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
+routerProduct.get(routesProd.productDelete, authMiddleware , adminMiddleware , productController.verificaEliminarController);
+routerProduct.delete(routesProd.productDelete, authMiddleware , adminMiddleware , productController.eliminarController);
 
 //filtros 
-routerProduct.post(routesProd.productFilters, productController.filtersApplied);
+routerProduct.post(routesProd.productFilters, productController.filtersAppliedController);
 
 //rutas para mascota=perro o mascota=gato
 routerProduct.get(routesProd.productsList, productController.CategoryListController);

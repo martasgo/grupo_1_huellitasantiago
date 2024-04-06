@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
   const formulario = document.getElementById("formulario-login");
   const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("contraseña");
+  const passwordInput = document.getElementById("contrasenia");
 
   // Agregar evento de input a los campos de email y contraseña para validación en tiempo real
   emailInput.addEventListener("blur", function () {
@@ -17,11 +17,9 @@ window.addEventListener("load", function () {
     // Expresión regular para validar el formato del correo electrónico
     var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (regex.test(email)) {
-      console.log("Email válido: " + email);
+    if (regex.test(email)) {      
       document.querySelector("#error-email").innerText = "";
-    } else {
-      console.log("Email inválido: " + email);
+    } else {      
       document.querySelector("#error-email").innerText =
         "El email debe ser en un formato valido";
     }
@@ -29,10 +27,10 @@ window.addEventListener("load", function () {
 
   passwordInput.addEventListener("blur", function () {
     if (passwordInput.value == "") {
-      document.querySelector("#error-contraseña").innerText =
+      document.querySelector("#error-contrasenia").innerText =
         "El campo contraseña no puede quedar vacio";
     } else {
-      document.querySelector("#error-contraseña").innerText = ""
+      document.querySelector("#error-contrasenia").innerText = ""
     }
   });
 });

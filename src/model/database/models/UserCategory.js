@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },    
-      mascota: {
+      nombre: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   
     let config = {
       timestamps: false,    
-      tablename: 'users_categories'
+      tableName: 'users_categories'
     };
     const UserCategory = sequelize.define(alias, cols, config);
   

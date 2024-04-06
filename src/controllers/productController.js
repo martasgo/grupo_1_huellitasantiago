@@ -2,15 +2,8 @@
 const db = require('../model/database/models');
 const Op = db.Sequelize.Op;
 
-//SERVICIOS
+//SERVICIO
 const productService = require('../model/productService');
-const brandService = require('../model/brandService');
-const packageService = require('../model/packageService');
-const petAgeService = require('../model/petAgeService');
-const petService = require('../model/petService');
-const prodCategoryService = require('../model/prodCategoryService');
-const subCategoryService = require('../model/subCategoryService');
-const petSizeService = require('../model/petSizeService');
 
 // Express validator para aplicar validaciones en formularios
 const { validationResult } = require ("express-validator");
@@ -32,470 +25,274 @@ const prodController = {
     // Controlador para obtener el listado total de productos, agrupados de a 7
     list: async (req, res) => {
       try {
+          const user = req.session.userLogged || {};
           const page = parseInt(req.query.page) || 1;
-          const allProducts = await productService.getAllByGroup(page, 5);
-  
-          // Obtener el número total de productos para calcular el número total de páginas
-          const totalProducts = await db.Product.count();
-          const totalPages = Math.ceil(totalProducts / 5); // Uso la misma cantidad de pagesize usada en el servicio
-  
+          const { allProducts, totalPages} = await productService.getPagination(page, 1, 10);
           return res.render('../views/products/allProducts.ejs', {
               title: 'Listado completo de productos',
-              allProducts,
+              allProducts: allProducts,
               currentPage: page,
-              totalPages,
+              totalPages: totalPages,
+              user:user
           });
       } catch (error) {
           console.log(error);
           return res.status(500).send('Error en la solicitud');
       }
-  },
+    },
   
     // controlador ruta detalle producto
     detailProductController: async (req, res) => {
-      let idProducto = parseInt(req.params.id);
-      let productsDestacado = await productService.getDestacados();
-      let producto = await productService.getByPk(idProducto)
-      return res.render('../views/products/detalle-producto.ejs', {
-        title: 'Detalle producto',
-        producto,
-        productsDestacado,
-        toThousand
-      });
-      
+      try {
+        let idProducto = parseInt(req.params.id);
+        let productsDestacado = await productService.getDestacados();
+        let producto = await productService.getByPk(idProducto)
+        return res.render('../views/products/detalle-producto.ejs', {
+          title: 'Detalle producto',
+          producto: producto,
+          productsDestacado: productsDestacado,
+          toThousand
+        });
+      } catch (error) {
+        console.error("Error al obtener detalle producto:", error)
+        return res.json([]);
+      }
     },
     //Controlador ruta para crear prod
-    crearProdController:(req, res) => {
-      let brandList = brandService.getAll();
-      let petList = petService.getAll();
-      let petAgeList = petAgeService.getAll();
-      let petSizeList = petSizeService.getAll();
-      let categoryList = prodCategoryService.getAll();
-      let subCategoryList = subCategoryService.getAll();
-      let packageList = packageService.getAll();
-      
-      Promise.all([brandList, petList, petAgeList, petSizeList, categoryList, subCategoryList, packageList ])
-            .then(function ([brand, pet, petAge, petSize, category, subCategory, packageRes]) {
-              res.render('../views/products/crear.ejs', {
-                title: 'Crear producto',
-                brand,
-                pet,
-                petAge,
-                petSize,
-                category,
-                subCategory,
-                packageRes
-            });
-            })
-            .catch(error => {
-              console.log(error)
-              return res.status(500).send('Error en la solicitud');
-            })
+    crearProdController: async (req, res) => {
+      try {
+        const user = req.session.userLogged || {};
+        let resultado = await productService.getAllServices();
+        res.render('../views/products/crear.ejs', {
+          title: 'Crear producto',
+          brand: resultado.brandList,
+          pet: resultado.petList,
+          petAge: resultado.petAgeList,
+          petSize: resultado.petSizeList,
+          category: resultado.categoryList,
+          subCategory: resultado.subCategoryList,
+          packageRes: resultado.packageList,
+          user: user
+        });
+      } catch (error) {
+        console.log(error)
+        return res.status(500).send('Error en la solicitud');
+      }
     },
     
     //Controlador Ruta para almacenar el producto creado
-    guardarProd: (req, res) => {
-      //Validacion de errores en el formulario de creacion de producto
-      let errors = validationResult(req);  
-      if (! errors.isEmpty()) {
-        // En caso de errores, verificamos si hay una imagen subida, para
-        // eliminarla
-        if (req.file) {
-          productService.deleteImagen(req.file.filename);
+    guardarProd: async (req, res) => {
+      try {
+        //Validacion de errores en el formulario de creacion de producto
+        let errors = validationResult(req);  
+        const user = req.session.userLogged || {};
+        if (! errors.isEmpty()) {
+          // En caso de errores, verificamos si hay una imagen subida, para
+          // eliminarla
+          if (req.file) {
+            await productService.deleteImagen(req.file.filename);
+          }
+          let resultado = await productService.getAllServices();
+          
+          res.render('../views/products/crear.ejs', {
+            title: 'Crear producto',
+            brand: resultado.brandList,
+            pet: resultado.petList,
+            petAge: resultado.petAgeList,
+            petSize: resultado.petSizeList,
+            category: resultado.categoryList,
+            subCategory: resultado.subCategoryList,
+            packageRes: resultado.packageList,
+            errors: errors.mapped(),
+            old: req.body,
+            user: user
+          });
+        } else {
+          let prodGuardado = await productService.createProdInfo(req);
+          if (prodGuardado) {
+            let idProd = prodGuardado.id
+            res.redirect(`/products/${idProd}/details`)
+          }
         }
-        let brandList = brandService.getAll();
-        let petList = petService.getAll();
-        let petAgeList = petAgeService.getAll();
-        let petSizeList = petSizeService.getAll();
-        let categoryList = prodCategoryService.getAll();
-        let subCategoryList = subCategoryService.getAll();
-        let packageList = packageService.getAll();
-        
-        Promise.all([brandList, petList, petAgeList, petSizeList, categoryList, subCategoryList, packageList ])
-              .then(function ([brand, pet, petAge, petSize, category, subCategory, packageRes]) {
-                res.render('../views/products/crear.ejs', {
-                  title: 'Crear producto',
-                  brand,
-                  pet,
-                  petAge,
-                  petSize,
-                  category,
-                  subCategory,
-                  packageRes,
-                  errors: errors.mapped(),
-                  old: req.body
-              });
-              })
-              .catch(error => {
-                console.log(error)
-                return res.status(500).send('Error en la solicitud');
-              })
-  
-      } else {
-        // Defino la variable que recibe la imagen del formulario
-      const image = req.file ? req.file.filename : "default-image.png";
-
-      // Defino la variable que evalúa si es un producto destacado
-      const esDestacado = (req.body.destacado === "true") ? 1 : 0;
-
-      // Variable para manejar subcategoría
-      let subCatFinal = "";
-            if (req.body.subCat != "") {
-        subCatFinal = parseInt(req.body.subCat);
-      } else if (req.body.subCatAcc != ""){
-        subCatFinal = parseInt(req.body.subCatAcc);
-      } else {
-        subCatFinal = null
-      };
-
-      // Variable para manejar si viene o no una presentacion
-      if (req.body.presentacion != "") {
-        presentacionFinal = parseInt(req.body.presentacion);
-      } else {
-        presentacionFinal = null
-      }
-
-      // Defino la variable que guarda el producto creado desde el formulario
-      const newProduct = {
-			  nombre: req.body.nombreprod,
-        descripcion: req.body.descripcion,
-			  precio: parseInt(req.body.precio),
-			  descuento: parseInt(req.body.descuento),
-        id_mascota: parseInt(req.body.mascota),
-        imagen: image,
-        id_marca: parseInt(req.body.marca),
-        id_edad_mascota: parseInt(req.body.edadmascota),
-        id_tamanio_mascota: parseInt(req.body.tamaniomascota),
-        destacado: esDestacado,
-			  id_categoria: parseInt(req.body.categoria),
-			  id_sub_Categoria: subCatFinal,
-        id_presentacion: presentacionFinal,
-        stock: parseInt(req.body.stock)
-      };    
-            
-        productService.add(newProduct)
-        .then((prodAdded) => {
-          let idProd = prodAdded.id
-          res.redirect(`/product/detalle/${idProd}`)
-        })
-      .catch((error) => {
+      } catch (error) {
         console.log(error)
-        res.send(error.message)
-      })
-     }
+        return res.status(500).send('Error en la solicitud para dar de alta el producto');
+      }
     },
-      
     //Controlador para renderizar el FORM de edición de un producto (GET)
     editarProdController: async (req, res) => {
       try {
         let idProd = parseInt(req.params.id);
         let producto = await productService.getByPk(idProd);
-        let brandList = await brandService.getAll();
-        let petList = await petService.getAll();
-        let petAgeList = await petAgeService.getAll();
-        let petSizeList = await petSizeService.getAll();
-        let categoryList = await prodCategoryService.getAll();
-        let subCategoryAlimentosList = await subCategoryService.getByCategoryId(1);
-        let subCategoryAccesoriosList = await subCategoryService.getByCategoryId(2);
-        let packageList = await packageService.getAll();
+        let resultado = await productService.getAllServices();
+        const user = req.session.userLogged || {};
 
         return res.render("../views/products/editar.ejs", 
-        {producto,
-        brandList,
-        petList,
-        petAgeList,
-        petSizeList,
-        categoryList,
-        subCategoryAlimentosList,
-        subCategoryAccesoriosList,
-        packageList});
+        {
+          producto: producto,
+          brandList: resultado.brandList,
+          petList: resultado.petList,
+          petAgeList: resultado.petAgeList,
+          petSizeList: resultado.petSizeList,
+          categoryList: resultado.categoryList,
+          subCategoryAlimentosList: resultado.subCategoryAlimentosList,
+          subCategoryAccesoriosList: resultado.subCategoryAccesoriosList,
+          packageList: resultado.packageList,
+          user: user
+        });
       } 
       catch (error) {
         console.log(error);
-        return res.status(500).send('Error en la solicitud');
+        return res.status(500).send('Error en la solicitud de edición de producto');
       }
     },
 
     //Controlador para guardar en la DB el producto editado (POST)
     updateProdController: async (req, res) => {
-      //Validacion de errores en el formulario de creacion de producto
-      let errors = validationResult(req);
-      let idProd = parseInt(req.params.id);
-      let producto = await productService.getByPk(idProd); 
-      if (! errors.isEmpty()) {
-        // En caso de errores, verificamos si hay una imagen subida, para
-        // eliminarla
-        if (req.file) {
-          productService.deleteImagen(req.file.filename);
-        };
-        let brandList = await brandService.getAll();
-        let petList = await petService.getAll();
-        let petAgeList = await petAgeService.getAll();
-        let petSizeList = await petSizeService.getAll();
-        let categoryList = await prodCategoryService.getAll();
-        let subCategoryAlimentosList = await subCategoryService.getByCategoryId(1);
-        let subCategoryAccesoriosList = await subCategoryService.getByCategoryId(2);
-        let packageList = await packageService.getAll();
+      try {
+         //Validacion de errores en el formulario de creacion de producto
+        let errors = validationResult(req);
+        let idProd = parseInt(req.params.id);
+        let producto = await productService.getByPk(idProd); 
+        const user = req.session.userLogged || {};
 
-        res.render("../views/products/editar.ejs", 
-        {producto,
-        brandList,
-        petList,
-        petAgeList,
-        petSizeList,
-        categoryList,
-        subCategoryAlimentosList,
-        subCategoryAccesoriosList,
-        packageList,
-        errors: errors.mapped(),
-        old: req.body});
-
-      } else {
-        try {
-          // Capturo el ID del producto
-          let idProd = parseInt(req.params.id);
-          
-          // Defino la variable que recibe la imagen del formulario
-          const image = req.file ? req.file.filename : producto.imagen;
-  
-          // Defino la variable que evalúa si es un producto destacado
-          const esDestacado = (req.body.destacado === "true") ? 1 : 0;
-  
-          // Variable para manejar subcategoría
-          let subCatFinal = "";
-          if (parseInt(req.body.categoria) == 1) {
-            if (req.body.subCat == "") {
-              subCatFinal = null
-            } else {
-              subCatFinal = parseInt(req.body.subCat);
-            }
-          } else if (parseInt(req.body.categoria) == 2) {
-            if (req.body.subCatAcc == "") {
-              subCatFinal = null
-            } else {
-              subCatFinal = parseInt(req.body.subCatAcc);
-            }
-          } else {
-            subCatFinal = null
-          }
-  
-          // Variable para manejar si viene o no una presentacion
-          let presentacionFinal = "";
-          if (parseInt(req.body.categoria) == 1) {
-            if (req.body.presentacion == "") {
-              presentacionFinal = null
-            } else {
-              presentacionFinal = req.body.presentacion;
-            }
-          } else {
-            presentacionFinal = null
+        if (! errors.isEmpty()) {
+          // En caso de errores, verificamos si hay una imagen subida, para
+          // eliminarla
+          if (req.file) {
+            await productService.deleteImagen(req.file.filename);
           };
-  
-          // Defino la variable que guarda el producto editado desde el formulario
-          const modifiedProduct = {
-            nombre: req.body.nombreprod,
-            descripcion: req.body.descripcion,
-            precio: parseInt(req.body.precio),
-            descuento: parseInt(req.body.descuento),
-            id_mascota: parseInt(req.body.mascota),
-            imagen: image,
-            id_marca: parseInt(req.body.marca),
-            id_edad_mascota: parseInt(req.body.edadmascota),
-            id_tamanio_mascota: parseInt(req.body.tamaniomascota),
-            destacado: esDestacado,
-            id_categoria: parseInt(req.body.categoria),
-            id_sub_categoria: subCatFinal,
-            id_presentacion: presentacionFinal,
-            stock: parseInt(req.body.stock)
-          };    
-  
-          // Incorporo a la DB el producto editado y redirecciono a product
-          await productService.updateById(modifiedProduct, idProd);
-          return res.redirect('/user/profile');
+          let resultado = await productService.getAllServices();
+          res.render("../views/products/editar.ejs", 
+          {
+            producto: producto,
+            brandList: resultado.brandList,
+            petList: resultado.petList,
+            petAgeList: resultado.petAgeList,
+            petSizeList: resultado.petSizeList,
+            categoryList: resultado.categoryList,
+            subCategoryAlimentosList: resultado.subCategoryAlimentosList,
+            subCategoryAccesoriosList: resultado.subCategoryAccesoriosList,
+            packageList: resultado.packageList,
+            errors: errors.mapped(),
+            old: req.body,
+            user: user
+          });
+
+        } else {
+            let resultEdit = await productService.editProdInfo(req, producto);
+            return res.redirect(`/products/${idProd}/edition?mensaje=procesado`);
         }
-        catch (error) {
-          console.log(error);
-          return res.status(500).send('Error en la solicitud');
-        }		 
+      } catch (error) {
+        console.log(error);
+        return res.status(500).send('Error en la solicitud de edición de producto');
       }
     },
+    
     //filtros procesamiento
-    filtersApplied: async (req, res) => {       
-      idCategory ='';
-      idSubCategory ='';
-      if (req.params.idMascota) {
-         mascota = req.params.idMascota
-         idPetList = await petService.getByMascota(mascota)
-         indices = idPetList.map(({ id }) => id);
-      }
-      
-      if (req.params.idCat) {
-         categoria = req.params.idCat.replace(/-/g, ' ');
-         idCategory = await prodCategoryService.getByField(categoria);
-      }
-      
-      if (req.params.idSubCat) {
-         subCategoria = req.params.idSubCat.replace(/-/g, ' ')
-         id = idCategory.id;
-         idSubCategory = await subCategoryService.getByField(subCategoria, idCategory.id)
-      }
-      
-      let brand = await brandService.getAll();
-      let petAge = await petAgeService.getAll();
-      let pestSize = await petSizeService.getAll();
-      let categorias = await prodCategoryService.getAll();
-      let subCat = await subCategoryService.getAll();
+    filtersAppliedController: async (req, res) => {  
+      try {
+        let filtrosList = await productService.getFilterSelected(req);
+        let resultadofiltros = await productService.getAllByFileters(req.body, filtrosList.indices, filtrosList.idCategory, filtrosList.idSubCategory)
+        let resultado = await productService.getAllServices();
 
-      productService.getAllByFileters(req.body, indices, idCategory, idSubCategory)
-      .then((productsMascotas)=>{
-         res.render('../views/products/listado.ejs', {
+        res.render('../views/products/listado.ejs', {
           title: 'Listado Productos',
-          productsMascotas,
-          mascota, 
-          categoria, 
-          subCategoria,
+          productsMascotas: resultadofiltros,
+          mascota: filtrosList.mascota, 
+          categoria: filtrosList.categoria, 
+          subCategoria: filtrosList.subCategoria,
           //listados para armar los filtros en la vista listado.ejs que incluye un partial
           //filtros-productos.ejs
-          brand,
-          petAge, 
-          pestSize, 
-          categorias, 
-          subCat,
+          brand: resultado.brandList,
+          petAge: resultado.petAgeList, 
+          pestSize: resultado.petSizeList, 
+          categorias: resultado.categoryList, 
+          subCat: resultado.subCategoryList,
           toThousand
         }) 
-      })
-      .catch((error) => {
+
+      } catch (error) {
         console.log(error)
         res.status(500).send('No se pudo procesar la solicitud correctamente - '+ error.message);
-      })  
+      }     
     },
+
+    //Verifica si va eliminar el producto
+    verificaEliminarController: async function (req, res) {
+      try {
+        const user = req.session.userLogged || {};
+        const idProdToDelete = parseInt(req.params.id);
+        const infoProd = await productService.getByPk(idProdToDelete);
+        res.render("../views/products/delete.ejs", {
+          title: "Borrar producto",
+          user,
+          infoProd,
+        });
+      } catch (error) {
+        console.log(error.message);
+        res.send("Error inesperado al eliminar producto").status(500);
+      }
+    },
+
     //Controlador para eliminar producto por su ID
     eliminarController: async (req, res) =>{
+      const user = req.session.userLogged || {};
       let idProduct = parseInt(req.params.id);
       try {
           await productService.destroyById(idProduct);
-          return res.redirect('/user/profile');
+          return res.redirect(`/users/${user.id}/profile?mensaje=procesado`);
         }
       catch (error) {
-          console.log(error);
-          res.send(error.message);
+        console.log(error)
+        res.status(500).send('No se pudo procesar la solicitud de baja del producto - '+ error.message);
       }
     },
 
-    // Controlador ruta para perros/categoria o gatos/categoria
-    CategoryListController:(req, res) => {
-      mascota = req.params.idMascota;
-      categoria = ''
-      subCategoria = '';
-      
-      if (req.params.category){
-        categoria = req.params.category.replace(/-/g, ' ');
-      } else {
-        categoria = null
-      }  
+    // Controlador ruta para perros/categoria o gatos/categoria/subcat
+    CategoryListController: async (req, res) => {
+      try {
+        mascota = req.params.idMascota;
+        categoria = ''
+        subCategoria = '';
+        
+        if (req.params.category){
+          categoria = req.params.category.replace(/-/g, ' ');
+        } else {
+          categoria = null
+        }  
 
-      if (req.params.subCat){
-        subCategoria = req.params.subCat.replace(/-/g, ' ');
-      } else {
-        subCategoria = null
-      }  
+        if (req.params.subCat){
+          subCategoria = req.params.subCat.replace(/-/g, ' ');
+        } else {
+          subCategoria = null
+        } 
 
-      // servicios para armar el filtro de productos que se muestra en la vista listado.ejs
-      let brandList =  brandService.getAll();
-      let petList =  petService.getAll();
-      let petAgeList =  petAgeService.getAll();
-      let petSizeList =  petSizeService.getAll();
-      let categoryList =  prodCategoryService.getAll();
-      let subCategList = subCategoryService.getAll();
-      
-      Promise.all([brandList, petList, petAgeList,petSizeList,categoryList, subCategList ])
-            .then(function ([brand, pet, petAge, pestSize, categorias, subCat]) {
-              //busco el id de mascotas
-              petService.getByMascota(mascota)
-              .then ((mascotasLista) => {
-                let indicesMascotas = []
-                indicesMascotas = mascotasLista.map(({ id }) => id);
-                if (req.params.category){
-                  //busco el id de categoria
-                  prodCategoryService.getByField(categoria)
-                    .then ((categoriaResult) =>{
-                      let indiceCat = categoriaResult.id;
-                      if (req.params.subCat){
-                          // SI VIENE subCATEGORIA
-                          //busco el id de la subcategoria + id de la categoria
-                          subCategoryService.getByField(subCategoria, indiceCat)
-                          .then((resultSubCat) =>{
-                              let indiceSubCat = resultSubCat.id
-                              productService.getAllBySubCategory(indicesMascotas, indiceCat, indiceSubCat)
-                              .then((productsMascotas)=>{
-                                res.render('../views/products/listado.ejs', {
-                                  title: 'Listado Productos',
-                                  categoria,
-                                  subCategoria,
-                                  mascota,
-                                  productsMascotas,
-                                  //listados para armar los filtros en la vista listado.ejs que incluye un partial
-                                  //filtros-productos.ejs
-                                  brand,
-                                  pet, 
-                                  petAge, 
-                                  pestSize, 
-                                  categorias, 
-                                  subCat,
-                                  toThousand
-                                }); 
-                              })
-                          })
-                      } else {
-                        //SI NO VIENE SUB-CATEGORIA
-                        productService.getAllByCategory(indicesMascotas, indiceCat)
-                          .then((productsMascotas)=>{
-                            res.render('../views/products/listado.ejs', {
-                                title: 'Listado Productos',
-                                categoria,
-                                subCategoria,
-                                mascota,
-                                productsMascotas,
-                                //listados para armar los filtros en la vista listado.ejs que incluye un partial
-                                //filtros-productos.ejs
-                                brand,
-                                pet, 
-                                petAge, 
-                                pestSize, 
-                                categorias, 
-                                subCat,
-                                toThousand
-                            }); 
-                          })
-                      } 
-                    })
-                } else {//no viene categoria
-                  productService.getAllByMascotas(indicesMascotas)
-                  .then ((productsMascotas) =>{
-                    res.render('../views/products/listado.ejs', {
-                      title: 'Listado Productos',
-                      categoria,
-                      subCategoria,
-                      mascota,
-                      productsMascotas,
-                      //listados para armar los filtros en la vista listado.ejs que incluye un partial
-                      //filtros-productos.ejs
-                      brand,
-                      pet, 
-                      petAge, 
-                      pestSize, 
-                      categorias, 
-                      subCat,
-                      toThousand
-                    })  
-                  })
-                }
-              })
-           })
-      .catch((error) => {
+        // servicios para armar el filtro de productos que se muestra en la vista listado.ejs
+        let resultado = await productService.getAllServices();
+
+        let resultadoMascotaCatSubcat = await productService.getBusqueda(mascota, categoria, subCategoria);
+
+        res.render('../views/products/listado.ejs', {
+          title: 'Listado Productos',
+          categoria: categoria,
+          subCategoria: subCategoria,
+          mascota: mascota,
+          productsMascotas : resultadoMascotaCatSubcat,
+          //listados para armar los filtros en la vista listado.ejs que incluye un partial
+          //filtros-productos.ejs
+          brand: resultado.brandList,
+          pet: resultado.petList, 
+          petAge: resultado.petAgeList, 
+          pestSize: resultado.petSizeList, 
+          categorias: resultado.categoryList, 
+          subCat: resultado.subCategoryList,
+          toThousand
+        }); 
+      } catch (error) {
         console.log(error)
-        res.send(error.message)
-      })      
+        res.status(500).send('No se pudo procesar la ruta de mascostas/categorias/subcategorias - '+ error.message);
+      }
     }
   };
   

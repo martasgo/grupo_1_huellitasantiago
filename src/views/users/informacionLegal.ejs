@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- include head -->
+  <%- include("../partials/head.ejs") %>
+  <script src="/js/cartView.js"></script>
+
+  <body>
+    <!-- include header -->
+    <%- include('../partials/header') %>
+    <main>
+      <p class="rutahome">
+        <a href="/users/<%= user.id %>/profile">Perfil</a>/ Informacion Legal
+      </p>
+      <section class="compra-user">
+        <div class="">
+          <h1 class="center">INFORMACION LEGAL</h1>
+          <p>
+            <b><u>POLÍTICA DE PRIVACIDAD:</u></b>En cumplimiento del artículo 6º de la ley
+            25.326 (Ley de protección de datos personales) debes saber que los
+            datos facilitados a <b>huellitasantiago</b> para el uso del website
+            son necesarios para establecer la relación contractual entre el
+            cliente y la empresa y serán tratados únicamente para las
+            operaciones relativas al cumplimiento de las Reglas, encuestas,
+            suscripciones, ofertas y cualquier otra acción comercial, en total
+            cumplimiento de las normativas aplicables. El usuario toma
+            conocimiento de la existencia de un banco de datos donde se almacena
+            su información personal, con sede en <b>huellitasantiago</b>, única
+            responsable del mismo y, en ningún caso, los datos facilitados serán
+            entregados a terceros, siendo dicha información totalmente
+            confidencial entre el usuario y <b>huellitasantiago</b>, salvo que
+            la información le sea requerida a <b>huellitasantiago</b> por una
+            resolución judicial o por una autoridad gubernamental competente.
+            Toda la información que nos proporciones deberá ser verdadera,
+            exacta y completa. El usuario es único y exclusivo responsable de la
+            información que brinda mediante el uso del website. En tal sentido,
+            el usuario será único y exclusivo responsable respecto de las
+            consecuencias que genere cualquier exactitud o falsedad de la
+            información brindada. El usuario toma conocimiento de la facultad de
+            ejercer el derecho de acceso a sus datos personales en forma
+            gratuita a intervalos no inferiores a seis meses, salvo que acredite
+            un interés legítimo al efecto y, asimismo, que tiene derecho de ser
+            procedente a rectificar y/o suprimir dichos datos. La Dirección
+            Nacional de Protección de Datos Personales es el órgano de control
+            de la Ley 25.326 y tiene la atribución de atender las denuncias y
+            reclamos que se interpongan en relación al incumplimiento de las
+            normas sobre protección de datos personales (arts. 14, 15 y 16 de la
+            Ley 25.326 y Disposición 10/08 de la DNPDP). Si tenés algún
+            comentario o pregunta acerca de esta Política de Privacidad o sobre
+            su información personal, por favor, contáctese a la siguiente
+            dirección de e-mail: info@huellitasantiago.com.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- include footer -->
+    <%- include('../partials/footer') %>
+  </body>
+</html>
