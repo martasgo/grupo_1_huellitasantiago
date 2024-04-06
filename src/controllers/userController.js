@@ -337,11 +337,6 @@ const userController = {
       // Actualiza la variable de sesión con los nuevos datos del usuario
       if (req.session.userLogged.id == infoUser.id) {
         req.session.userLogged = {
-          // ...req.session.userLogged, // Mantiene los datos antiguos
-          // // ...req.body,
-          // id_categoria: req.body.categoria,
-          // imagen: req.file ? req.file.filename : infoUser.imagen,
-          // ...req.session.userLogged, // Mantiene los datos antiguos
           ...newUser.editUser, // Agrega los nuevos datos,
           id: infoUser.id
         };
