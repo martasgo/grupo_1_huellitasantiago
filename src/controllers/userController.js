@@ -31,7 +31,7 @@ const userController = {
       } else {
         req.session.userLogged = resultLogin.user;
         if (req.body.recordarme) {
-          res.cookie("userEmail", req.body.email, { maxAge: 60000 * 60 });
+          res.cookie("userEmail", req.body.email, { maxAge: 60000 * 2 });
         }
         res.redirect(`${resultLogin.user.id}/profile`);
       }
@@ -329,22 +329,23 @@ const userController = {
       if (body.contrasenia && body.confirmar) {
         body.contrasenia = bcrypt.hashSync(req.body.contrasenia, 10);
       } else {
-        body.contrasenia = infoUser.constrasenia;
+        body.contrasenia = infoUser.contrasenia;
       }
       body.foto = req.file ? req.file.filename : imagen;
 
-      await userService.updateList(body, idUser, infoUser);
+      let newUser = await userService.updateList(body, idUser);
       // Actualiza la variable de sesión con los nuevos datos del usuario
       if (req.session.userLogged.id == infoUser.id) {
         req.session.userLogged = {
-          ...req.session.userLogged, // Mantiene los datos antiguos
-          ...req.body,
-          imagen: req.file ? req.file.filename : infoUser.imagen,
+          ...newUser.editUser, // Agrega los nuevos datos,
+          id: infoUser.id
         };
+        console.log(req.session.userLogged);
         // Guarda la variable de sesión actualizada
+        res.clearCookie("userEmail");
         req.session.save();
       }
-      return res.redirect(`/users/${infoUser.id}/profile`);
+      return res.redirect(`/users/${req.session.userLogged.id}/profile`);
     } catch (error) {
       return res.status(500).send("No se pudo editar el usuario");
     }

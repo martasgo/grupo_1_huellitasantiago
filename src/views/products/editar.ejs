@@ -80,7 +80,7 @@
                        <select class="margen-ancho" id="subCat" name="subCat">
                         <option value=""></option>
                         <% subCategoryAlimentosList.forEach (subCategory => { %>
-                            <option value=" <%= subCategory.id %> " <% if (producto.id_sub_categoria === subCategory.id) { %> selected <% } %>><%= subCategory.nombre_sub_category %></option>
+                            <option value="<%= subCategory.id %>" <% if (producto.id_sub_categoria === subCategory.id) { %> selected <% } %>><%= subCategory.nombre_sub_category %></option>
                         <% }) %>
                     </select><br>
                     <% if (typeof errors != "undefined" && errors.subCat) {%>

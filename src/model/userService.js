@@ -77,11 +77,12 @@ const userService = {
   updateList: async (body, id) => {
     try {      
       const editUser = new UserConstructor(body);  
-      return await db.User.update(editUser, {
+      let newUser =  await db.User.update(editUser, {
         where: {
           id: id,
         },
-      });
+      })
+      return {newUser, editUser};
     } catch (error) {
       throw new Error("No se pudo editar el usuario correctamente");
     }
