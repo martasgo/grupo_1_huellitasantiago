@@ -22,7 +22,7 @@ const prodController = {
       });
     },
 
-    // Controlador para obtener el listado total de productos, agrupados de a 7
+    // Controlador para obtener el listado total de productos, agrupados de a 10
     list: async (req, res) => {
       try {
           const user = req.session.userLogged || {};

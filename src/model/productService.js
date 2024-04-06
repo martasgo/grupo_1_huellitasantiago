@@ -50,9 +50,6 @@ const productService = {
     //Service para paginacion
     getPagination: async (page, allItems, itemsPerPage ) =>{
         try {
-            //const allProducts = await productService.getAllByGroup(page, 5);
-            // Obtener el número total de productos para calcular el número total de páginas
-            // const totalProducts = await db.Product.count();
             const pageSize = itemsPerPage; // Cantidad de productos por página
             const startIndex = (page - 1) * pageSize;
             const endIndex = page * pageSize;
