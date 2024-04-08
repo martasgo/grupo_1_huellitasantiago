@@ -12,7 +12,7 @@ SELECT * FROM pets;
 /* COMPLETAR LA TABLA brands */
 INSERT INTO brands
 VALUES
-(1, 'Pedrigree'),
+(1, 'Pedigree'),
 (2, 'Royal Canin'),
 (3, 'Sieger'),
 (4, 'Nutrique'),
