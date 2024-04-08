@@ -22,7 +22,7 @@
                                         <%= venta.fecha.toLocaleDateString() %>
                                             <%= venta.fecha.toLocaleTimeString() %>
                                                 <strong>- Cliente: </strong> <%= venta.users.nombre %> <%= venta.users.apellido %>
-                                                <strong> - Monto: </strong>$ <%= venta.monto_total %> <%= venta.total_compras %>  <%= venta.sumaTotal %>
+                                                <strong> - Monto: </strong>$<%= venta.monto_total %> 
                                                 <button id="detalle" data-compra-id="<%= venta.id %>" class="detalle-prod">
                                                     <strong>Detalle de productos</strong>
                                                 </button>
@@ -34,8 +34,7 @@
                                                                         <%= product.product.nombre %> - <label
                                                                                 class="txt-detalle">Cantidad:</label>
                                                                         <%= product.cantidad %> - <label
-                                                                                    class="txt-detalle">Precio:</label>
-                                                                        <%= product.precio %>
+                                                                                    class="txt-detalle">Precio: </label>$<%=product.precio %>
                                                                                     - <label
                                                                                         class="txt-detalle">Descuento:</label>
                                                                         <%= product.descuento %>%
