@@ -20,12 +20,15 @@
                                 <a href="/products/<%= productsDiscount[i].id %>/details"><img src="/images/productos/<%= productsDiscount[i].imagen %>" alt="Cinturon seguridad"></a>
                                 <div class="detalle">
                                     <p id=""><%= productsDiscount[i].nombre %></p>
-                                        <% if (productsDiscount[i].descuento != 0) {
-                                            precioFinal = (productsDiscount[i].precio - ((productsDiscount[i].precio * (productsDiscount[i].descuento/100)))) %>
+                                        <% if (productsDiscount[i].descuento != 0) {%>
+                                            <% precioFinal = (productsDiscount[i].precio - ((productsDiscount[i].precio * (productsDiscount[i].descuento/100)))) %>
                                             <div class="preciosOfertas">
                                                 <span id="prodOff"><%= productsDiscount[i].descuento %>% OFF</span>
                                                 <p class="precioAnt" id="">$<%= toThousand (productsDiscount[i].precio) %></p>
-                                                <p class="precioAhora" id="">$<%= toThousand (precioFinal) %> </p> 
+                                                <p class="precioAhora" id="">$<%= (precioFinal).toLocaleString('en-US', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                  }); %> </p> 
                                             </div>
                                         <% } else {%>
                                             <p class="precioAhora" id="">$<%= toThousand(productsDiscount[i].precio) %> </p>
