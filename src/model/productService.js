@@ -168,7 +168,7 @@ const productService = {
         const newProduct = {
                 nombre: req.body.nombreprod,
                 descripcion: req.body.descripcion,
-                precio: parseInt(req.body.precio),
+                precio: parseFloat(req.body.precio),
                 descuento: parseInt(req.body.descuento),
                 id_mascota: parseInt(req.body.mascota),
                 imagen: image,
@@ -332,7 +332,7 @@ const productService = {
             const modifiedProduct = {
             nombre: req.body.nombreprod,
             descripcion: req.body.descripcion,
-            precio: parseInt(req.body.precio),
+            precio: parseFloat(req.body.precio),
             descuento: parseInt(req.body.descuento),
             id_mascota: parseInt(req.body.mascota),
             imagen: image,
