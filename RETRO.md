@@ -144,3 +144,22 @@ Implementaciones extensas en el código que dificulte la detección de errores y
 5. Continuar Haciendo:
 Continuar con las revisiones semanales y las interconsultas entre los miembros del grupo a los fines de continuar con el correcto fluido del trabajo del sprint como así también seguir con la coordinación de horarios para las reuniones tendientes a la supervisión de los trabajos.
 Seguir con la implementacion de la rama develop para tener un mejor control sobre los avances de cada miembro y de ese modo realizar las pruebas necesarias dentro del proyecto sin afectar a la rama main.
+
+## RETRO Sprint-7
+
+1. Comenzar a hacer:
+
+Ideas nuevas o prácticas que el equipo desea comenzar a implementar en la próxima iteración para mejorar el proceso de trabajo.
+
+2. Hacer Más:
+
+Mayor interacción para cuando se trabaja en front y backend conjuntamente
+
+3. Hacer Menos:
+   Distracciones en temas que no son tan importantes para el sprint y que podrían retrasar la presentación del trabajo
+
+4. Dejar de Hacer
+Problemas recurrentes que han afectado negativamente al equipo durante el desarrollo del proyecto
+
+5. Continuar haciendo
+Continuar fomentando un ambiente de equipo abierto y colaborativo donde se valoren las opiniones de todos los miembros.

@@ -107,3 +107,8 @@ El equipo a cargo del desarrollo de este exitoso marketplace esta formado por:
 ## Tablero de trabajo
 Para planificar, organizar, dividir y controlar el cumplimiento de cada tarea, utilizamos el servicio Jira de Atlassian. A continuación dejamos el link al tablero de nuestro equipo:
 [Tablero en Jira](https://sole-smith.atlassian.net/jira/software/projects/HS/boards/1)
+
+## Retrospectiva de línea de tiempo.
+Línea de tiempo que incluye todos los sprints en la que podemos ubicar  post-its con cosas positivas (arriba de la
+línea) y negativas (debajo de la línea) que ocurrieron en cada etapa. [Link Miro] ( https://miro.com/app/board/uXjVKZILZHI=/ )
+
